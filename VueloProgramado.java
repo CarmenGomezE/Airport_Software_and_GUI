@@ -12,6 +12,15 @@ public class VueloProgramado{
     /** Hora del vuelo */
     private LocalTime hora;
     /** Dias en los que se repite el vuelo */
-    private List <?????> diasRecurrente;
+    private List <DayOfWeek> diasRecurrente;
+
+    /** Tipo de carga que transporta el vuelo */
+    private TipoCarga tipoCarga;
+     /** Tipo de embarque del vuelo */
+    private TipoModoEmbarque tipoModoEmbarque;
+     /** Tipo de periodicidad del vuelo */
+    private Periodicidad periodicidad;
+     /** Tipo de vuelo */
+    private TipoVuelo tipoVuelo;
 
 }

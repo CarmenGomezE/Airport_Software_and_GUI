@@ -7,5 +7,11 @@
  * @author Carmen Gómez, María Pozo, Claudia Municio.
  */
 public class Operador extends UsuarioConDni {
+    /** Lista de los vuelos que tiene programados */
+    private List<VueloProgramado> vuelosPorgramados;
+    /** Aerolinea para la que opera */
+    private Aerolinea aerolinea;
+    /** Estadísticas del operador sobre vuelos de su aerolinea */
+    private EstadisticasOperador estadisticas;
 
 }
