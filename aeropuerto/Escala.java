@@ -1,3 +1,4 @@
+package aeropuerto;
 import java.time.LocalTime;
 
 /**

@@ -1,3 +1,4 @@
+package aeropuerto;
 /**
  * La enumeración EstadoSolicitud define si una solicitud de vuelo
  * esta pendiente, aceptada o ha sido rechazada.

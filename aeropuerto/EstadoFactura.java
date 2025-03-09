@@ -1,3 +1,4 @@
+package aeropuerto;
 /**
  * La enumeración EstadoFactura define si está pagada o pendiente.
  * 

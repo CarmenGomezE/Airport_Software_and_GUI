@@ -1,3 +1,4 @@
+package aeropuerto;
 /**
  * Enumeración que representa el tipo de pista de un aeropuerto (despegue o aterrizaje)
  */

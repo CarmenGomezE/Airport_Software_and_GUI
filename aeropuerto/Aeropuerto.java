@@ -1,3 +1,5 @@
+package aeropuerto;
+
 /**
  * La clase Aeropuerto representa los distintos aeropuertos que interactuan con el aeropuerto.
  * 

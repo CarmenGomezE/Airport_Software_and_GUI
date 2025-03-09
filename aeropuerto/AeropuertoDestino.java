@@ -1,3 +1,4 @@
+package aeropuerto;
 /**
  * La clase AeropuertoDestino representa los aeropuertos de destino que interactuan con el aeropuerto.
  * 

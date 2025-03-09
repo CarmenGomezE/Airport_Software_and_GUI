@@ -1,3 +1,4 @@
+package aeropuerto;
 /**
  * La clase Avión representa un avión de una aerolinea que realizará una 
  * serie de vuelos diarios.

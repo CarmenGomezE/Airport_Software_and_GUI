@@ -1,3 +1,4 @@
+package aeropuerto;
 /**
  * La clase VueloProgramado representa los vuelos que se pretenden añadir a los
  * vuelos del aeropuerto. Este tendrá un tipo de vuelo, de modo de embarque y de 

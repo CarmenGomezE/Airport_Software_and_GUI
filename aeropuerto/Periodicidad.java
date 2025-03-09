@@ -1,3 +1,4 @@
+package aeropuerto;
 /**
  * La enumeración Periodicidad define si un vuelo es de puntual, 
  * recurrente algunos días de la semana o diario.

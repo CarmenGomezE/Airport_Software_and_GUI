@@ -1,3 +1,4 @@
+package aeropuerto;
 /**
  * La clase UsuarioConDni representa a los usuarios con Dni de la aplicación.
  * 

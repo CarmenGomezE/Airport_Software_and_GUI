@@ -1,3 +1,4 @@
+package aeropuerto;
 /**
  * La clase Usuario representa a los usuarios de la aplicación.
  * 

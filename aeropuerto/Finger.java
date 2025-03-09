@@ -1,3 +1,4 @@
+package aeropuerto;
 /**
  * Representa un finger de un aeropuerto.
  */

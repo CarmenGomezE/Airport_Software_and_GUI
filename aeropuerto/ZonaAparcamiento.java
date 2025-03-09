@@ -1,3 +1,4 @@
+package aeropuerto;
 /**
  * Representa una zona de aparcamiento en un aeropuerto.
  */

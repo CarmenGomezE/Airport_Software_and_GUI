@@ -1,3 +1,4 @@
+package aeropuerto;
 /** 
  * La clase TerminalMercancias representa las terminales de mercancias del aeropuerto.
  * 

@@ -1,3 +1,4 @@
+package aeropuerto;
 /**
  * La clase TerminalPasajeros representa las terminales de pasajeros del aeropuerto.
  * 

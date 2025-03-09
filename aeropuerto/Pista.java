@@ -1,4 +1,4 @@
-
+package aeropuerto;
 /**
  * Representa una pista de aeropuerto que puede ser de aterrizaje o despegue.
  */

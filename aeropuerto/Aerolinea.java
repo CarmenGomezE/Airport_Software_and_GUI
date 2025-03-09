@@ -1,3 +1,5 @@
+package aeropuerto;
+
 /**
  * La clase Aerolinea representa una aerolinea que opera en el aeropuerto.
  * 

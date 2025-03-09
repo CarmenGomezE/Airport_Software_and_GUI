@@ -1,3 +1,4 @@
+package aeropuerto;
 /**
  * La enumeración TipoVuelo define si un vuelo es de salida o llegada.
  * 

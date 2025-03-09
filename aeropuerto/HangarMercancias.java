@@ -1,3 +1,4 @@
+package aeropuerto;
 /**
  * La clase HangarMercancias representa los hangares de mercancias del aeropuerto.
  * 

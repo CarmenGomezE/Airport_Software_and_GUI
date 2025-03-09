@@ -1,3 +1,4 @@
+package aeropuerto;
 /**
  * La clase ControladorAereo representa al usuario controlador de la aplicación
  * 

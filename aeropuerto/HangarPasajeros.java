@@ -1,3 +1,4 @@
+package aeropuerto;
 /**
  * La clase HangarPasajeros representa los hangares de pasajeros del aeropuerto.
  * 

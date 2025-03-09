@@ -1,3 +1,4 @@
+package aeropuerto;
 /**
  * La clase Hangar representa los hangares del aeropuerto.
  * 

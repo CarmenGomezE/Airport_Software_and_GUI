@@ -1,3 +1,4 @@
+package aeropuerto;
 /**
  * La clase AvionPasajeros representa un avión de pasajeros que realizará una 
  * serie de vuelos diarios. 

@@ -1,3 +1,4 @@
+package aeropuerto;
 /**
  * La clase PuertaEmbarque representa las puertas de embarque del aeropuerto.
  * 

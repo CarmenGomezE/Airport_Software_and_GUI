@@ -1,3 +1,4 @@
+package aeropuerto;
 /**
  * Clase abstracta que representa el modo de embarque. 
  * Puede ser o bien finger o bien zona de aparcamiento.

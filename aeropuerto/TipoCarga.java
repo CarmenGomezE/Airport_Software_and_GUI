@@ -1,3 +1,4 @@
+package aeropuerto;
 /**
  * La enumeración TipoCarga define si un vuelo es de mercancías
  * o de pasajeros.

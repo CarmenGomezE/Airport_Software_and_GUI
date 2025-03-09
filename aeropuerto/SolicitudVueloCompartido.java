@@ -1,3 +1,4 @@
+package aeropuerto;
 /**
  * La clase Operador representa un tipo de usuario con dni, este usuario es el encargado
  * de cambiar los estados de vuelo de embarque y desembarque, así como el de en preparación

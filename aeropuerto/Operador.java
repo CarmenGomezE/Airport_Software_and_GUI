@@ -1,3 +1,6 @@
+package aeropuerto;
+import java.util.ArrayList;
+import java.util.List;
 /**
  * La clase Operador representa un tipo de usuario con dni, este usuario es el encargado
  * de cambiar los estados de vuelo de embarque y desembarque, así como el de en preparación
@@ -21,7 +24,7 @@ public class Operador extends UsuarioConDni {
      * @param aerolinea             Aerolinea a la que pertenece.
      * @param estadisticas          Estadísticas sobre vuelos.
      */
-    public SolicitudVueloCompartido( List<VueloProgramado> vuelosPorgramados, Aerolinea aerolinea, EstadisticasOperador estadisticas){
+    public Operador( List<VueloProgramado> vuelosPorgramados, Aerolinea aerolinea, EstadisticasOperador estadisticas){
         this.vuelosPorgramados=new ArrayList<>();
         if(vuelosPorgramados!=null){
             for(VueloProgramado v: vuelosPorgramados){

@@ -1,3 +1,4 @@
+package aeropuerto;
 /**
  * La clase AeropuertoPropio representa el aeropuerto.
  * 

@@ -1,3 +1,4 @@
+package aeropuerto;
 /**
  * La enumeración TipoModoEmbarque define si un vuelo embarca mediante
  * finger o zona de aparcamiento.

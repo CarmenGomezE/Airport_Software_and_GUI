@@ -1,7 +1,7 @@
+package aeropuerto;
 /**
- * La clase VueloProgramado representa los vuelos que se pretenden añadir a los
- * vuelos del aeropuerto. Este tendrá un tipo de vuelo, de modo de embarque y de 
- * carga, y una periodicidad.
+ * La clase EstadisticasOperador representa las estadísticas que el 
+ * operador puede ver sobre los vuelos de su aerolínea.
  * 
  * @author Carmen Gómez, María Pozo, Claudia Municio.
  */
