@@ -31,5 +31,50 @@ public abstract class Hangar {
         this.dimPlazaAlto = dimPlazaAlto;
         this.dimPlazaLargo = dimPlazaLargo;
         this.costePorHora = costePorHora;
-    } 
+    }
+
+    /**
+     * Método para obtener el número máximo de aviones del hangar.
+     * 
+     * @return Número máximo de aviones del hangar.
+     */
+    public int getNumeroMaxAviones() {
+        return this.numeroMaxAviones;
+    }
+
+    /**
+     * Método para obtener el ancho de cada plaza del hangar.
+     * 
+     * @return Ancho de cada plaza del hangar.
+     */
+    public double getDimPlazaAncho() {
+        return this.dimPlazaAncho;
+    }
+
+    /**
+     * Método para obtener el alto de cada plaza del hangar.
+     * 
+     * @return Alto de cada plaza del hangar.
+     */
+    public double getDimPlazaAlto() {
+        return this.dimPlazaAlto;
+    }
+
+    /**
+     * Método para obtener el largo de cada plaza del hangar.
+     * 
+     * @return Largo de cada plaza del hangar.
+     */
+    public double getDimPlazaLargo() {
+        return this.dimPlazaLargo;
+    }
+
+    /**
+     * Método para obtener el coste por hora del hangar.
+     * 
+     * @return Coste por hora del hangar.
+     */
+    public double getCostePorHora() {
+        return this.costePorHora;
+    }
 }

@@ -19,6 +19,15 @@ public class HangarPasajeros extends Hangar {
     public HangarPasajeros(int numeroMaxAviones, double dimPlazaAncho, double dimPlazaAlto, double dimPlazaLargo, double costePorHora) {
         super(numeroMaxAviones, dimPlazaAncho, dimPlazaAlto, dimPlazaLargo, costePorHora);
     }
+
+    /**
+     * Método para obtener los aviones de pasajeros que hay en un hangar de pasajeros.
+     * 
+     * @return Lista de aviones de pasajeros que hay en un hangar de pasajeros.
+     */
+    public List<AvionPasajeros> getAviones() {
+        return this.aviones;
+    }
     
     /**
      * Método para añadir un avión al hangar.

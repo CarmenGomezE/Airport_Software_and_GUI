@@ -8,7 +8,7 @@ public class HangarMercancias extends Hangar {
     /** Permiso para mercancías peligrosas*/
     private boolean mercaPeligrosa;
     /** Aviones de mercancías en el hangar*/
-    private List<AvionMercancias> = aviones;
+    private List<AvionMercancias> aviones;
 
     /** 
      * Constructor de la clase HangarMercancias.
@@ -22,7 +22,25 @@ public class HangarMercancias extends Hangar {
     public HangarMercancias(int numeroMaxAviones, double dimPlazaAncho, double dimPlazaAlto, double dimPlazaLargo, double costePorHora, boolean mercaPeligrosa) {
         super(numeroMaxAviones, dimPlazaAncho, dimPlazaAlto, dimPlazaLargo, costePorHora);
         this.mercaPeligrosa = mercaPeligrosa;
-    }       
+    }
+
+    /**
+     * Método para obtener los aviones de mercancías en un hangar de mercancías.
+     * 
+     * @return Lista de aviones de mercancías en un hangar de mercancías.
+     */
+    public List<AvionMercancias> getAviones() {
+        return this.aviones;
+    }
+
+    /**
+     * Método para obtener el permiso para mercancías peligrosas.
+     * 
+     * @return true si el hangar de mercancías tiene permiso para mercancías peligrosas o false si no.
+     */
+    public boolean getMercaPeligrosa() {
+        return this.mercaPeligrosa;
+    }
 
     /**
      * Método para añadir un avión al hangar.
