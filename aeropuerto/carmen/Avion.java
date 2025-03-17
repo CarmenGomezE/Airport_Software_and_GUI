@@ -1,4 +1,5 @@
-package aeropuerto;
+package aeropuerto.carmen;
+import java.util.*;
 /**
  * La clase Avión representa un avión de una aerolinea que realizará una 
  * serie de vuelos diarios.
@@ -21,7 +22,7 @@ public class Avion{
     /** Año de compra del avión */
     private int anoCompra;
     /** Fecha de la última revisión del avión */
-    private Date ultimaFechaRevision;
+    private Date fechaUltimaRevision;
     /** Matrícula del avión */
     private String matricula;
 
@@ -56,7 +57,7 @@ public class Avion{
      * 
      * @return Marca.
      */
-    public Stirng getMarca(){
+    public String getMarca(){
         return this.marca;
     }
 
@@ -65,7 +66,7 @@ public class Avion{
      * 
      * @return Modelo.
      */
-    public Stirng getModelo(){
+    public String getModelo(){
         return this.modelo;
     }
 
@@ -128,7 +129,7 @@ public class Avion{
      * 
      * @return Matrícula.
      */
-    public Stirng getMatricula(){
+    public String getMatricula(){
         return this.matricula;
     }
 }

@@ -1,4 +1,5 @@
-package aeropuerto;
+package aeropuerto.carmen;
+import java.util.*;
 /**
  * La enumeración Periodicidad define si un vuelo es de puntual, 
  * recurrente algunos días de la semana o diario.
@@ -7,11 +8,11 @@ package aeropuerto;
  */
 public enum Periodicidad{
     /** El vuelo es puntutal */
-    PUNTUAL,
+    PUNTUAL(null, null),
     /** El vuelo es diario */
-    DIARIO,
+    DIARIO(null, null),
     /** El vuelo es recurrente */
-    RECURRENTE;
+    RECURRENTE(null, null);
     
     /** Cuando se programa por primera vez el vuelo */
     private Date fechaInicio;
@@ -24,7 +25,7 @@ public enum Periodicidad{
      * @param fechaInicio            Código del vuelo.
      * @param fechaFinal             Fecha del vuelo.
      */
-    public Periodicidad(Date fechaInicio, Date fechaFinal) {
+    private Periodicidad(Date fechaInicio, Date fechaFinal) {
         this.fechaInicio=fechaInicio;
         this.fechaFinal=fechaFinal;
     }

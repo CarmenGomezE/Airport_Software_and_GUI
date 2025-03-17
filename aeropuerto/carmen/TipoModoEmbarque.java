@@ -1,4 +1,5 @@
-package aeropuerto;
+package aeropuerto.carmen;
+import java.util.*;
 /**
  * La enumeración TipoModoEmbarque define si un vuelo embarca mediante
  * finger o zona de aparcamiento.

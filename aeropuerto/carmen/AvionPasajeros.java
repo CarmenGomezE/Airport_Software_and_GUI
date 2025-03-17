@@ -1,4 +1,5 @@
-package aeropuerto;
+package aeropuerto.carmen;
+import java.util.*;
 /**
  * La clase AvionPasajeros representa un avión de pasajeros que realizará una 
  * serie de vuelos diarios. 
@@ -7,7 +8,7 @@ package aeropuerto;
  */
 public class AvionPasajeros extends Avion {
     /** Capacidad máxima de pasajeros del avión de mercancías */
-    private double capacidadMaxPasajeros;
+    private int capacidadMaxPasajeros;
 
     /**
      * Constructor de la clase AvionPasajeros.
@@ -25,7 +26,7 @@ public class AvionPasajeros extends Avion {
      */
     public AvionPasajeros(String marca, String modelo, double dimAlto, double dimAncho, double dimLargo,
                          double autonomia, int anoCompra, Date fechaUltimaRevision, String matricula,
-                         double capacidadMaxPasajeros) {
+                         int capacidadMaxPasajeros) {
         super(marca, modelo, dimAlto, dimAncho, dimLargo, autonomia, anoCompra, fechaUltimaRevision, matricula);
         this.capacidadMaxPasajeros=capacidadMaxPasajeros;
     }
@@ -35,7 +36,7 @@ public class AvionPasajeros extends Avion {
      * 
      * @return Capacidad máxima de pasajeros.
      */
-    public double getCapacidadMaxPasajeros(){
+    public int getCapacidadMaxPasajeros(){
         return this.capacidadMaxPasajeros;
     }
 

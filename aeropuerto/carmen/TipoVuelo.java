@@ -1,4 +1,5 @@
-package aeropuerto;
+package aeropuerto.carmen;
+import java.util.*;
 /**
  * La enumeración TipoVuelo define si un vuelo es de salida o llegada.
  * 

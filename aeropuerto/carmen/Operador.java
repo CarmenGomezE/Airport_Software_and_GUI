@@ -1,6 +1,9 @@
-package aeropuerto;
-import java.util.ArrayList;
-import java.util.List;
+package aeropuerto.carmen;
+import aeropuerto.claudia.*;
+import aeropuerto.maria.*;
+import java.util.*;
+import java.time.*;
+
 /**
  * La clase Operador representa un tipo de usuario con dni, este usuario es el encargado
  * de cambiar los estados de vuelo de embarque y desembarque, así como el de en preparación
@@ -70,6 +73,49 @@ public class Operador extends UsuarioConDni {
      */
     public EstadisticasOperador getEstadisticasOperador(){
         return this.estadisticas;
+    }
+
+    public void cambiarEstadoEnPreparacionDespegar(Vuelo vuelo){
+        if(vuelo.getEstado()==EstadoVuelo.OPERATIVO){
+            vuelo.cambiarEstado(EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR);
+        }
+    }
+
+    public void cambiarEstadoInicioEmbarque(Vuelo vuelo){
+        LocalTime horaActual= LocalTime.now();
+        long minutosDeDiferencia= Duration.between(horaActual, vuelo.getHora()).toMinutes();
+
+        if( vuelo.getAvion() instanceof AvionMercancias){
+            AvionMercancias avion = (AvionMercancias)vuelo.getAvion();
+            double capacidadCarga= avion.getCapacidadMaxCarga();
+            if(minutosDeDiferencia<=30 && (capacidadCarga<1000) || (minutosDeDiferencia<=45 && capacidadCarga>1000)){
+                if(vuelo.getEstado()==EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR){
+                    vuelo.cambiarEstado(EstadoVuelo.INICIO_DEL_EMBARQUE); 
+                }
+            }
+        }
+        else if( vuelo.getAvion() instanceof AvionPasajeros){
+            AvionPasajeros avion = (AvionPasajeros)vuelo.getAvion();
+            int numeroPasajeros= avion.getCapacidadMaxPasajeros();
+            if((minutosDeDiferencia<=30 && numeroPasajeros<100) || (minutosDeDiferencia<=45 && numeroPasajeros>100)){
+                if(vuelo.getEstado()==EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR){
+                    vuelo.cambiarEstado(EstadoVuelo.INICIO_DEL_EMBARQUE); 
+                }
+            }
+        }
+    }
+
+    public void cambiarEstadoFinEmbarque(Vuelo vuelo){
+        
+        
+    }
+
+    public void cambiarEstadoInicioDesembarque(Vuelo vuelo){
+        
+    }
+
+    public void cambiarEstadoFinDesembarque(Vuelo vuelo){
+        
     }
 
 }
