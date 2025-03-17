@@ -13,10 +13,30 @@ public abstract class Terminal {
     /**
      * Constructor de la clase Terminal.
      * 
-     * @param codigo Código de la terminal.
+     * @param codigo            Código de la terminal.
+     * @param puertaEmbarque    Una de las puertas de embarque de la terminal.
      */
-    public Terminal(String codigo) {
+    public Terminal(String codigo, PuertaEmbarque puertaEmbarque) {
         this.codigo = codigo;
+        this.puertasEmbarque.add(puertaEmbarque);
+    }
+
+    /**
+     * Método para obtener el código de la terminal.
+     * 
+     * @return Código de la terminal.
+     */
+    public String getCodigo() {
+        return this.codigo;
+    }
+
+    /**
+     * Método para obtener las puertas de embarque de la terminal.
+     * 
+     * @return Lista de las puertas de embarque de la terminal.
+     */
+    public void getCodigo() {
+        return this.codigo;
     }
 
     /**
@@ -25,6 +45,6 @@ public abstract class Terminal {
      * @param puertaEmbarque Nueva puerta de embarque.
      */
     public void añadirPuertaEmbarque(PuertaEmbarque puertaEmbarque) {
-        puertasEmbarque.add(puertaEmbarque);
+        this.puertasEmbarque.add(puertaEmbarque);
     }
 }
