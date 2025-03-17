@@ -1,4 +1,5 @@
-package aeropuerto;
+package aeropuerto.carmen;
+import java.util.*;
 /**
  * La enumeración EstadoFactura define si está pagada o pendiente.
  * 

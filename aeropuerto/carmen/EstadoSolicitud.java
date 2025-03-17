@@ -1,4 +1,5 @@
-package aeropuerto;
+package aeropuerto.carmen;
+import java.util.*;
 /**
  * La enumeración EstadoSolicitud define si una solicitud de vuelo
  * esta pendiente, aceptada o ha sido rechazada.

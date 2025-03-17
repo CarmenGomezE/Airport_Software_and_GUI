@@ -1,4 +1,5 @@
-package aeropuerto;
+package aeropuerto.carmen;
+import java.util.*;
 /**
  * La clase Operador representa un tipo de usuario con dni, este usuario es el encargado
  * de cambiar los estados de vuelo de embarque y desembarque, así como el de en preparación
@@ -28,9 +29,9 @@ public class SolicitudVueloCompartido{
      */
     public SolicitudVueloCompartido(int porcentaje, EstadoSolicitud estadoSolicitud, Aerolinea aerolineaQueSolicita, Aerolinea aerolineaOriginal){
         this.porcentaje=porcentaje;
-        this.estadoSolicitud=vuelosEnHora;
-        this.aerolineaQueSolicita=vuelosRetrasados;
-        this.aerolineaOriginal=tiempoMedioRetraso;
+        this.estadoSolicitud=estadoSolicitud;
+        this.aerolineaQueSolicita=aerolineaQueSolicita;
+        this.aerolineaOriginal=aerolineaOriginal;
     }
 
     /**

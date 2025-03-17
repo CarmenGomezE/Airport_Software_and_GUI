@@ -1,4 +1,5 @@
-package aeropuerto;
+package aeropuerto.carmen;
+import java.util.*;
 /**
  * La clase AvionMercancias representa un avión de mercancias que realizará una 
  * serie de vuelos diarios. 

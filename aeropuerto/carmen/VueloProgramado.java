@@ -1,4 +1,6 @@
-package aeropuerto;
+package aeropuerto.carmen;
+import java.util.*;
+import java.time.*;
 /**
  * La clase VueloProgramado representa los vuelos que se pretenden añadir a los
  * vuelos del aeropuerto. Este tendrá un tipo de vuelo, de modo de embarque y de 
@@ -26,6 +28,8 @@ public class VueloProgramado{
      /** Tipo de vuelo */
     private TipoVuelo tipoVuelo;
 
+    private Avion avion;
+
 
     /**
      * Constructor de la clase VueloProgramado.
@@ -40,7 +44,7 @@ public class VueloProgramado{
      * @param tipoVuelo         Tipo de vuelo.
      */
     public VueloProgramado(String codigo, Date fecha, LocalTime hora, List<DayOfWeek> diasRecurrente, TipoCarga tipoCarga, 
-                            TipoModoEmbarque tipoModoEmbarque, Periodicidad periodicidad, TipoVuelo tipoVuelo) {
+                            TipoModoEmbarque tipoModoEmbarque, Periodicidad periodicidad, TipoVuelo tipoVuelo, Avion avion) {
         this.codigo=codigo;
         this.fecha=fecha;
         this.hora=hora;
@@ -49,6 +53,7 @@ public class VueloProgramado{
         this.tipoModoEmbarque=tipoModoEmbarque;
         this.periodicidad=periodicidad;
         this.tipoVuelo= tipoVuelo;
+        this.avion=avion;
     }
 
      /**
@@ -66,7 +71,7 @@ public class VueloProgramado{
      * @return Fecha del vuelo.
      */
     public Date getFecha(){
-        return this.capacidadMaxCarga;
+        return this.fecha;
     }
 
      /**
@@ -83,7 +88,7 @@ public class VueloProgramado{
      * 
      * @return Días de la semana en los que se repite el vuelo.
      */
-    public List<DayOfWee> getDiasRecurrente(){
+    public List<DayOfWeek> getDiasRecurrente(){
         return this.diasRecurrente;
     }
 
@@ -121,6 +126,10 @@ public class VueloProgramado{
      */
     public TipoVuelo getTipoVuelo(){
         return this.tipoVuelo;
+    }
+
+    public Avion getAvion(){
+        return this.avion;
     }
 
 }

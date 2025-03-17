@@ -1,5 +1,5 @@
-package aeropuerto;
-
+package aeropuerto.carmen;
+import java.util.*;
 /**
  * La clase Aerolinea representa una aerolinea que opera en el aeropuerto.
  * 
@@ -18,5 +18,7 @@ public class Aerolinea {
     private List<SolicitudVueloCompartido> solicitudesEnviadas;
     /** Facturas de la aerolínea */
     private List<Factura> facturas;
+
+
 
 }

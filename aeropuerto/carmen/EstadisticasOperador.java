@@ -1,9 +1,7 @@
-package aeropuerto;
-
-import java.time.Month;
-import java.time.ZoneId;
-import java.util.HashMap;
-import java.util.Map;
+package aeropuerto.carmen;
+import aeropuerto.claudia.*;
+import java.util.*;
+import java.time.*;
 /**
  * La clase EstadisticasOperador representa las estadísticas que el 
  * operador puede ver sobre los vuelos de su aerolínea.
@@ -16,11 +14,11 @@ public class EstadisticasOperador {
     /** Estadísticas de los vuelos retrasados en promedio */
     private double vuelosRetrasados;
     /** Estadísticas del tiempo medio de retraso por mes */
-    private Map<Month, double> tiempoMedioRetrasoPorMes;
+    private Map<Month, Double> tiempoMedioRetrasoPorMes;
     /** Estadísticas del tiempo medio de retraso por franja horaria */
-    private Map<ZoneId, double> tiempoMedioRetrasoPorFranjaHoraria;
+    private Map<ZoneId, Double> tiempoMedioRetrasoPorFranjaHoraria;
     /** Estadísticas del tiempo medio de retraso por vuelo*/
-    private Map<Vuelo, double> tiempoMedioRetrasoPorVuelo;
+    private Map<Vuelo, Double> tiempoMedioRetrasoPorVuelo;
 
 
     /**
@@ -34,12 +32,6 @@ public class EstadisticasOperador {
      */
     public EstadisticasOperador(double vuelosEnHora, double vuelosRetrasados, Map<String, Double> tiempoMedioRetrasoPorMes,
                                 Map<String, Double> tiempoMedioRetrasoPorFranjaHoraria, Map<String, Double> tiempoMedioRetrasoPorVuelo){
-        this.vuelosEnHora=vuelosEnHora;
-        this.vuelosRetrasados=vuelosRetrasados;
-        
-        this.tiempoMedioRetrasoPorMes = (tiempoMedioRetrasoPorMes != null) ? tiempoMedioRetrasoPorMes : new HashMap<>();
-        this.tiempoMedioRetrasoPorFranjaHoraria = (tiempoMedioRetrasoPorFranjaHoraria != null) ? tiempoMedioRetrasoPorFranjaHoraria : new HashMap<>();
-        this.tiempoMedioRetrasoPorVuelo = (tiempoMedioRetrasoPorVuelo != null) ? tiempoMedioRetrasoPorVuelo : new HashMap<>();
     }
 
     public double numeroVuelosEnHora(Month mes){
