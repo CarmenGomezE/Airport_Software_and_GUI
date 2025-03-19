@@ -26,7 +26,7 @@ public class TerminalPasajeros extends Terminal {
      * @return Número máximo de la terminal de pasajeros.
      */
     public int getNumeroMaxAviones() {
-        return this.numeroMaxPasajeros;
+        return numeroMaxPasajeros;
     }
     
 }

@@ -30,7 +30,7 @@ public class HangarMercancias extends Hangar {
      * @return Lista de aviones de mercancías en un hangar de mercancías.
      */
     public List<AvionMercancias> getAviones() {
-        return this.aviones;
+        return aviones;
     }
 
     /**
@@ -39,7 +39,7 @@ public class HangarMercancias extends Hangar {
      * @return true si el hangar de mercancías tiene permiso para mercancías peligrosas o false si no.
      */
     public boolean getMercaPeligrosa() {
-        return this.mercaPeligrosa;
+        return mercaPeligrosa;
     }
 
     /**
@@ -58,8 +58,8 @@ public class HangarMercancias extends Hangar {
      */
     public void sacarAvion(AvionMercancias avion) {
         for (AvionMercancias a: this.aviones) {
-            if (a.equals(avion)) {
-                this.aviones.remove(avion);
+            if (a == avion) {
+                aviones.remove(avion);
             }
         }
     }
@@ -72,6 +72,6 @@ public class HangarMercancias extends Hangar {
      * @return true si está, false si no.
      */
     public boolean comprobarAvionEnHangar(AvionMercancias avion) {
-        return this.aviones.contains(avion);
+        return aviones.contains(avion);
     }
 }

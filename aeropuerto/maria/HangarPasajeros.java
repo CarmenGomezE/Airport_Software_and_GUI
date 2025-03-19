@@ -26,7 +26,7 @@ public class HangarPasajeros extends Hangar {
      * @return Lista de aviones de pasajeros que hay en un hangar de pasajeros.
      */
     public List<AvionPasajeros> getAviones() {
-        return this.aviones;
+        return aviones;
     }
     
     /**
@@ -45,8 +45,8 @@ public class HangarPasajeros extends Hangar {
      */
     public void sacarAvion(AvionPasajeros avion) {
         for (AvionPasajeros a: this.aviones) {
-            if (a.equals(avion)) {
-                this.aviones.remove(avion);
+            if (a == avion) {
+                aviones.remove(avion);
             }
         }
     }
@@ -59,6 +59,6 @@ public class HangarPasajeros extends Hangar {
      * @return true si está, false si no.
      */
     public boolean comprobarAvionEnHangar(AvionPasajeros avion) {
-        return this.aviones.contains(avion);
+        return aviones.contains(avion);
     }
 }

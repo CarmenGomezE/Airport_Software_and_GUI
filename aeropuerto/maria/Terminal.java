@@ -27,7 +27,7 @@ public abstract class Terminal {
      * @return Código de la terminal.
      */
     public String getCodigo() {
-        return this.codigo;
+        return codigo;
     }
 
     /**
@@ -35,8 +35,8 @@ public abstract class Terminal {
      * 
      * @return Lista de las puertas de embarque de la terminal.
      */
-    public void getCodigo() {
-        return this.codigo;
+    public void getPuertasEmbarque() {
+        return puertasEmbarque;
     }
 
     /**
@@ -45,6 +45,6 @@ public abstract class Terminal {
      * @param puertaEmbarque Nueva puerta de embarque.
      */
     public void añadirPuertaEmbarque(PuertaEmbarque puertaEmbarque) {
-        this.puertasEmbarque.add(puertaEmbarque);
+        puertasEmbarque.add(puertaEmbarque);
     }
 }

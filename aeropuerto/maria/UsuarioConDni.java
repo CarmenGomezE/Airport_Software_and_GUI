@@ -30,4 +30,13 @@ public abstract class UsuarioConDni extends Usuario {
         super(nombre, contraseña);
         this.dni = dni;
     }
+
+    /**
+     * Método para obtener el dni de un usuario.
+     * 
+     * @return el dni del usuario.
+     */
+    public String getDni() {
+        return dni;
+    }
 }

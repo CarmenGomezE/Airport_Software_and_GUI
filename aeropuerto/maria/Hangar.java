@@ -39,7 +39,7 @@ public abstract class Hangar {
      * @return Número máximo de aviones del hangar.
      */
     public int getNumeroMaxAviones() {
-        return this.numeroMaxAviones;
+        return numeroMaxAviones;
     }
 
     /**
@@ -48,7 +48,7 @@ public abstract class Hangar {
      * @return Ancho de cada plaza del hangar.
      */
     public double getDimPlazaAncho() {
-        return this.dimPlazaAncho;
+        return dimPlazaAncho;
     }
 
     /**
@@ -57,7 +57,7 @@ public abstract class Hangar {
      * @return Alto de cada plaza del hangar.
      */
     public double getDimPlazaAlto() {
-        return this.dimPlazaAlto;
+        return dimPlazaAlto;
     }
 
     /**
@@ -66,7 +66,7 @@ public abstract class Hangar {
      * @return Largo de cada plaza del hangar.
      */
     public double getDimPlazaLargo() {
-        return this.dimPlazaLargo;
+        return dimPlazaLargo;
     }
 
     /**
@@ -75,6 +75,6 @@ public abstract class Hangar {
      * @return Coste por hora del hangar.
      */
     public double getCostePorHora() {
-        return this.costePorHora;
+        return costePorHora;
     }
 }
