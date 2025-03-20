@@ -25,3 +25,11 @@
 # clase puerta de embarque debería tener fingers?
 
 # clase operador no tiene vuelos vuelos no aceptados, como los programa?
+
+# las aerolineas no tienen ni aviones ni vuelos?
+
+# he separado el método dar de alta avion en pasajeros y mercancias
+
+# tipo de avión?
+
+# en usuario con los que está relacionado
