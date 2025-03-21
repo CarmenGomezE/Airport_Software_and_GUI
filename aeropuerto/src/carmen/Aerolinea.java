@@ -68,6 +68,10 @@ public class Aerolinea {
 	public void addFactura(Factura factura) {
 		this.facturas.add(factura);
 	}
+	
+	public List<Vuelo> getVuelos(){
+		return this.vuelos;
+	}
 
 
 }

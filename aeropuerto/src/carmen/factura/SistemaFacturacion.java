@@ -1,6 +1,7 @@
 package aeropuerto.src.carmen.factura;
 
 import aeropuerto.src.carmen.vuelo.*;
+import aeropuerto.src.claudia.Vuelo;
 import aeropuerto.src.carmen.*;
 import java.util.*;
 import java.time.*;
@@ -20,7 +21,7 @@ public class SistemaFacturacion {
     }
 
     public Factura generarFactura(Aerolinea aerolinea) {
-        List<VueloProgramado> vuelosMensuales= aerolinea.vuelosMensuales(LocalDate.now());
+        List<Vuelo> vuelosMensuales= aerolinea.vuelosMensuales(LocalDate.now().getMonth());
         if(vuelosMensuales.isEmpty()){
             return null;
         }
@@ -28,7 +29,7 @@ public class SistemaFacturacion {
         int precioBase=0;
         int precioRecargo=0;
         List<IResourceUsageInfo> recursos = new ArrayList<>();
-        for (VueloProgramado vuelo: vuelosMensuales) {
+        for (Vuelo vuelo: vuelosMensuales) {
             if (vuelo.getTipoCarga()==TipoCarga.MERCANCIAS) {
                 recursos.add(new UsoRecursos("Recargo de mercancías",this.recargoAvionMercancias, 1));
                 precioRecargo += this.recargoAvionMercancias;

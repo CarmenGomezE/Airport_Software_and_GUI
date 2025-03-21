@@ -15,24 +15,24 @@ import aeropuerto.src.carmen.avion.*;
 public class VueloProgramado {
 
     /** Codigo del vuelo */
-    private String codigo;
+    protected String codigo;
     /** Fecha del vuelo */
-    private LocalDate fecha;
+    protected LocalDate fecha;
     /** Hora del vuelo */
-    private LocalTime hora;
+    protected LocalTime hora;
     /** Dias en los que se repite el vuelo */
-    private List<DayOfWeek> diasRecurrente;
+    protected List<DayOfWeek> diasRecurrente;
 
     /** Tipo de carga que transporta el vuelo */
-    private TipoCarga tipoCarga;
+    protected TipoCarga tipoCarga;
     /** Tipo de embarque del vuelo */
-    private TipoModoEmbarque tipoModoEmbarque;
+    protected TipoModoEmbarque tipoModoEmbarque;
     /** Tipo de periodicidad del vuelo */
-    private Periodicidad periodicidad;
+    protected Periodicidad periodicidad;
     /** Tipo de vuelo */
-    private TipoVuelo tipoVuelo;
+    protected TipoVuelo tipoVuelo;
 
-    private Avion avion;
+    protected Avion avion;
 
     /**
      * Constructor de la clase VueloProgramado.

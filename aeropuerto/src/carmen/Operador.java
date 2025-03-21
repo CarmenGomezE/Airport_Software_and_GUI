@@ -1,10 +1,15 @@
 package aeropuerto.src.carmen;
 
 import aeropuerto.src.carmen.vuelo.*;
+import aeropuerto.src.carmen.factura.*;
 import aeropuerto.src.carmen.avion.*;
 import aeropuerto.src.carmen.*;
 import aeropuerto.src.claudia.*;
 import aeropuerto.src.maria.*;
+import es.uam.eps.padsof.telecard.FailedInternetConnectionException;
+import es.uam.eps.padsof.telecard.InvalidCardNumberException;
+import es.uam.eps.padsof.telecard.TeleChargeAndPaySystem;
+
 import java.util.*;
 import java.time.*;
 
@@ -26,7 +31,7 @@ public class Operador extends UsuarioConDni {
     private Aerolinea aerolinea;
     /** Estadísticas del operador sobre vuelos de su aerolinea */
     private EstadisticasOperador estadisticas;
-
+    
     private List<Vuelo> vuelos;
 
     /**
@@ -36,17 +41,9 @@ public class Operador extends UsuarioConDni {
      * @param aerolinea         Aerolinea a la que pertenece.
      * @param estadisticas      Estadísticas sobre vuelos.
      */
-    public Operador(List<Notificacion> notificaciones, List<VueloProgramado> vuelosPorgramados, Aerolinea aerolinea,
-            EstadisticasOperador estadisticas, List<Vuelo> vuelos) {
-        this.vuelosPorgramados = new ArrayList<>();
-        if (vuelosPorgramados != null) {
-            for (VueloProgramado v : vuelosPorgramados) {
-                this.vuelosPorgramados.add(v);
-            }
-        }
+    public Operador(String nombre, String dni, Aerolinea aerolinea) {
+    	super(nombre, dni);
         this.aerolinea = aerolinea;
-        this.estadisticas = estadisticas;
-        this.vuelos = vuelos;
     }
 
     /**
@@ -167,8 +164,7 @@ public class Operador extends UsuarioConDni {
     }
 
     public void recibirNotificacionFacturaEmitida(Factura factura) {
-        System.out.println("Operador notificado: Nueva factura generada para " + factura.getAerolinea().getNombre()
-                + " por un total de " + factura.getPrecioTotal() + "€.");
+        System.out.println("Operador notificado: Nueva factura generada para " + factura.getAirline()+ " por un total de " + factura.getPrice() + "€.");
     }
 
     }

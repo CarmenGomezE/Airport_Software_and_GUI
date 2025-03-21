@@ -12,7 +12,7 @@ import java.time.*;
  * @author Carmen Gómez, María Pozo, Claudia Municio.
  */
 public class EstadisticasOperador {
-    /* Operador que ve las estadísticas */
+    /** Operador que ve las estadísticas */
     private Operador operador;
     /** Estadísticas del tiempo medio de retraso por mes */
     private Map<Month, Double> tiempoMedioRetrasoPorMes;
@@ -24,30 +24,27 @@ public class EstadisticasOperador {
     /**
      * Constructor de la clase EstadisticasOperador.
      * 
-     * @param vuelosEnHora                       Vuelos en hora del aeropuerto.
-     * @param vuelosRetrasados                   Vuelos retrasados del aeropuerto.
-     * @param tiempoMedioRetrasoPorMes           Tiempo medio de retraso del
-     *                                           aeropuerto por mes.
-     * @param tiempoMedioRetrasoPorFranjaHoraria Tiempo medio de retraso del
-     *                                           aeropuerto por franja horaria.
-     * @param tiempoMedioRetrasoPorVuelo         Tiempo medio de retraso del
-     *                                           aeropuerto por vuelo.
+     * @param operador Operador que recibe las estadísticas.
      */
     public EstadisticasOperador(Operador operador) {
         this.operador = operador;
         this.tiempoMedioRetrasoPorMes = new HashMap<>();
         this.tiempoMedioRetrasoPorFranjaHoraria = new HashMap<>();
         this.tiempoMedioRetrasoPorVuelo = new HashMap<>();
-
+        cargarDatosEstadisticasTiempoMedio();
     }
 
+    /**
+     * Método que genera los datos de tiempos medios.
+     * 
+     */
     private void cargarDatosEstadisticasTiempoMedio() {
         Map<Month, List<Integer>> retrasosPorMes = new HashMap<>();
         Map<ZoneId, List<Integer>> retrasosPorFranjaHoraria = new HashMap<>();
         Map<Vuelo, List<Integer>> retrasosPorVuelo = new HashMap<>();
 
         for (Vuelo vuelo : operador.getVuelos()) {
-            Month mes = vuelo.getFecha().getMes();
+            Month mes = vuelo.getFecha().getMonth();
             ZoneId franjaHoraria = vuelo.getAeropuertoDestino().getDiferenciaHoraria();
             int retraso = vuelo.getRetraso();
 
@@ -74,64 +71,124 @@ public class EstadisticasOperador {
         }
 
     }
-
-    public double numeroVuelosEnHora(Month mes) {
-        int count = 0;
-        for (Vuelo vuelo : this.operador.getAerolinea().vuelosMensuales(mes)) {
-            if (vuelo.getMes().equals(mes) && vuelo.getRetraso() == 0) {
-                count++;
-            }
-        }
-        return count;
-    }
-
-    public double numeroVuelosRetrasados(Month mes) {
-        int count = 0;
-        for (Vuelo vuelo : vuelosRetrasados) {
-            if (vuelo.getMes().equals(mes) && vuelo.getRetraso() > 0) {
-                count++;
-            }
-        }
-        return count;
-    }
-
-    public double tiempoMedioRetrasoPorMes(Month mes) {
-        double sumaRetrasos = 0;
-        int count = 0;
-        for (Vuelo vuelo : vuelosRetrasados) {
-            if (vuelo.getMes().equals(mes)) {
-                sumaRetrasos += vuelo.getRetraso();
-                count++;
-            }
-        }
-        return count == 0 ? 0 : sumaRetrasos / count;
-    }
-
-    public double tiempoMedioRetrasoPorFranjaHoraria(ZoneId franjaHoraria) {
-        double sumaRetrasos = 0;
-        int count = 0;
-        for (Vuelo vuelo : vuelosRetrasados) {
-            if (vuelo.getFranjaHoraria().equals(franjaHoraria)) {
-                sumaRetrasos += vuelo.getRetraso();
-                count++;
-            }
-        }
-        return count == 0 ? 0 : sumaRetrasos / count;
-    }
-
-    public double tiempoMedioRetrasoPorVuelo(Vuelo vuelo) {
-        return tiempoMedioRetrasoPorVuelo.getOrDefault(vuelo, 0.0);
-    }
-
+    
+    /**
+     * Método que genera los datos de tiempos medios.
+     * 
+     * @param retrasos 		Lista de todos los retrasos registrados.
+     * @return La media de retraso.
+     */
     private double calcularMedia(List<Integer> retrasos) {
-        if (retrasos.isEmpty())
-            return 0;
-
+        if (retrasos.isEmpty()) {
+        	return 0;
+        }
+    
         double suma = 0;
         for (int retraso : retrasos) {
             suma += retraso;
         }
-
         return suma / retrasos.size();
+    }
+
+    /**
+     * Método que genera los vuelos en hora.
+     * 
+     * 
+     * @return Número de vuelos en hora.
+     */
+    public int numeroVuelosEnHora( ) {
+        int count = 0;
+        for (Vuelo vuelo : operador.getAerolinea().getVuelos()) {
+            if (vuelo.getRetraso() == 0) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /**
+     * Método que genera los vuelos retrasados.
+     * 
+     * 
+     * @return Número de vuelos retrasados.
+     */
+    public int numeroVuelosRetrasados( ) {
+        int count = 0;
+        for (Vuelo vuelo : operador.getAerolinea().getVuelos()) {
+            if (vuelo.getRetraso() > 0) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /**
+     * Método que calcula el tiempo medio de retraso por mes.
+     * 
+     * @param mes 	Mes del que se devuelve el tiempo medio de retraso.
+     * @return Tiempo medio de retraso por mes.
+     */
+    public double tiempoMedioRetrasoPorMes(Month mes) {
+        return tiempoMedioRetrasoPorMes.getOrDefault(mes, 0.0);
+    }
+
+    /**
+     * Método que calcula el tiempo medio de retraso por franja horaria.
+     * 
+     * @param franjaHoraria 	 Franja horaria de la que se devuelve el tiempo medio de retraso.
+     * @return Tiempo medio de retraso por franja horaria.
+     */
+    public double tiempoMedioRetrasoPorFranjaHoraria(ZoneId franjaHoraria) {
+        return tiempoMedioRetrasoPorFranjaHoraria.getOrDefault(franjaHoraria, 0.0);
+    }
+
+    /**
+     * Método que calcula el tiempo medio de retraso por vuelo.
+     * 
+     * @param vuelo 	Vuelo del que se devuelve el tiempo medio de retraso.
+     * @return Tiempo medio de retraso por vuelo.
+     */
+    public double tiempoMedioRetrasoPorVuelo(Vuelo vuelo) {
+        return tiempoMedioRetrasoPorVuelo.getOrDefault(vuelo, 0.0);
+    }
+    
+    /**
+     * Método que imprime el número de vuelos en hora.
+     * 
+     */
+    public void imprimirNumeroVuelosEnHora() {
+        System.out.println("Número de vuelos en hora: " +  numeroVuelosEnHora());
+    }
+    
+    /**
+     * Método que imprime el número de vuelos retrasados.
+     * 
+     */
+    public void imprimirNumeroVuelosRetrasados() {
+        System.out.println("Número de vuelos en hora: " +  numeroVuelosRetrasados());
+    }
+    
+    /**
+     * Método que imprime el tiempo medio para un mes.
+     * 
+     */
+    public void imprimirTiempoMedioRetraso(Month mes) {
+        System.out.println("Tiempo medio de retraso: " + tiempoMedioRetrasoPorMes(mes) + " minutos.");
+    }
+    
+    /**
+     * Método que imprime el tiempo medio para una franja horaria.
+     * 
+     */
+    public void imprimirTiempoMedioRetraso(ZoneId franjaHoraria) {
+        System.out.println("Tiempo medio de retraso: " + tiempoMedioRetrasoPorFranjaHoraria(franjaHoraria) + " minutos.");
+    }
+    
+    /**
+     * Método que imprime el tiempo medio para un vuelo.
+     * 
+     */
+    public void imprimirTiempoMedioRetraso(Vuelo vuelo) {
+        System.out.println("Tiempo medio de retraso:"+ tiempoMedioRetrasoPorVuelo(vuelo) + " minutos.");
     }
 }
