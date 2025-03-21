@@ -4,6 +4,7 @@ import java.util.*;
 import java.time.*;
 import aeropuerto.src.carmen.vuelo.*;
 import aeropuerto.src.carmen.factura.*;
+import aeropuerto.src.claudia.*;
 
 /**
  * La clase Aerolinea representa una aerolinea que opera en el aeropuerto.
@@ -24,7 +25,8 @@ public class Aerolinea {
     /** Facturas de la aerolínea */
     private List<Factura> facturas;
 
-    private List<VueloProgramado> vuelos;
+    private List<VueloProgramado> vuelosProgramados;
+    private List<Vuelo> vuelos;
 
     public Aerolinea(String nombre, String codigo, Operador operador) {
         this.nombre = nombre;
@@ -41,11 +43,10 @@ public class Aerolinea {
         return this.operador;
     }
 
-    public List<VueloProgramado> vuelosMensuales(LocalDate fecha) {
-        List<VueloProgramado> vuelosMensuales = new ArrayList<>();
-        for (VueloProgramado vuelo : this.vuelos) {
-            if ((vuelo.getFecha().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()).getMonth() == fecha
-                    .getMonth()) {
+    public List<Vuelo> vuelosMensuales(Month mes) {
+        List<Vuelo> vuelosMensuales = new ArrayList<>();
+        for (Vuelo vuelo : this.vuelos) {
+            if (vuelo.getFecha().getMonth() == mes) {
                 vuelosMensuales.add(vuelo);
             }
         }

@@ -17,7 +17,7 @@ public class VueloProgramado {
     /** Codigo del vuelo */
     private String codigo;
     /** Fecha del vuelo */
-    private Date fecha;
+    private LocalDate fecha;
     /** Hora del vuelo */
     private LocalTime hora;
     /** Dias en los que se repite el vuelo */
@@ -46,9 +46,9 @@ public class VueloProgramado {
      * @param periodicidad     Periodicidad del vuelo.
      * @param tipoVuelo        Tipo de vuelo.
      */
-    public VueloProgramado(String codigo, Date fecha, LocalTime hora, List<DayOfWeek> diasRecurrente,
-            TipoCarga tipoCarga,
-            TipoModoEmbarque tipoModoEmbarque, Periodicidad periodicidad, TipoVuelo tipoVuelo, Avion avion) {
+    public VueloProgramado(String codigo, LocalDate fecha, LocalTime hora, List<DayOfWeek> diasRecurrente,
+            TipoCarga tipoCarga, TipoModoEmbarque tipoModoEmbarque, Periodicidad periodicidad, TipoVuelo tipoVuelo,
+            Avion avion) {
         this.codigo = codigo;
         this.fecha = fecha;
         this.hora = hora;
@@ -74,7 +74,7 @@ public class VueloProgramado {
      * 
      * @return Fecha del vuelo.
      */
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return this.fecha;
     }
 

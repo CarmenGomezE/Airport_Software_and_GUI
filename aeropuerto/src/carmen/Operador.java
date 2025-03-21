@@ -27,6 +27,8 @@ public class Operador extends UsuarioConDni {
     /** Estadísticas del operador sobre vuelos de su aerolinea */
     private EstadisticasOperador estadisticas;
 
+    private List<Vuelo> vuelos;
+
     /**
      * Constructor de la clase SolicitudVueloCompartido.
      * 
@@ -35,7 +37,7 @@ public class Operador extends UsuarioConDni {
      * @param estadisticas      Estadísticas sobre vuelos.
      */
     public Operador(List<Notificacion> notificaciones, List<VueloProgramado> vuelosPorgramados, Aerolinea aerolinea,
-            EstadisticasOperador estadisticas) {
+            EstadisticasOperador estadisticas, List<Vuelo> vuelos) {
         this.vuelosPorgramados = new ArrayList<>();
         if (vuelosPorgramados != null) {
             for (VueloProgramado v : vuelosPorgramados) {
@@ -44,6 +46,7 @@ public class Operador extends UsuarioConDni {
         }
         this.aerolinea = aerolinea;
         this.estadisticas = estadisticas;
+        this.vuelos = vuelos;
     }
 
     /**
@@ -53,6 +56,15 @@ public class Operador extends UsuarioConDni {
      */
     public List<VueloProgramado> getVuelosProgramados() {
         return this.vuelosPorgramados;
+    }
+
+    /**
+     * Método que devuelve los vuelos programados del Operador.
+     * 
+     * @return Vuelos programados del Operador.
+     */
+    public List<Vuelo> getVuelos() {
+        return this.vuelos;
     }
 
     /**
