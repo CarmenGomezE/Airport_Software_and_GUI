@@ -18,10 +18,6 @@ public class Aerolinea {
     private String codigo;
     /** Operador de la aerolínea */
     private Operador operador;
-    /** Lista de solicitudes recibidas de vuelos compartidos de la aerolínea */
-    private List<SolicitudVueloCompartido> solicitudesRecibidas;
-    /** Lista de solicitudes enviadas de vuelos compartidos de la aerolínea */
-    private List<SolicitudVueloCompartido> solicitudesEnviadas;
     /** Facturas de la aerolínea */
     private List<Factura> facturas;
 
@@ -55,14 +51,6 @@ public class Aerolinea {
 
 	public String getCodigo() {
 		return this.codigo;
-	}
-	
-	public void addVueloCompartidoSolicitudRecibida() {
-		
-	}
-	
-	public void addVueloCompartidoSolicitudEnviada() {
-		
 	}
 	
 	public void addFactura(Factura factura) {

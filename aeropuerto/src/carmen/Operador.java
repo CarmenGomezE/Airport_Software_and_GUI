@@ -8,6 +8,7 @@ import aeropuerto.src.claudia.*;
 import aeropuerto.src.maria.*;
 import es.uam.eps.padsof.telecard.FailedInternetConnectionException;
 import es.uam.eps.padsof.telecard.InvalidCardNumberException;
+import es.uam.eps.padsof.telecard.OrderRejectedException;
 import es.uam.eps.padsof.telecard.TeleChargeAndPaySystem;
 
 import java.util.*;
@@ -26,7 +27,11 @@ import java.time.*;
  */
 public class Operador extends UsuarioConDni {
     /** Lista de los vuelos que tiene programados */
-    private List<VueloProgramado> vuelosPorgramados;
+    private List<VueloProgramado> vuelosProgramados;
+    /** Lista de solicitudes recibidas de vuelos compartidos de la aerolínea */
+    private List<SolicitudVueloCompartido> solicitudesRecibidas;
+    /** Lista de solicitudes enviadas de vuelos compartidos de la aerolínea */
+    private List<SolicitudVueloCompartido> solicitudesEnviadas;
     /** Aerolinea para la que opera */
     private Aerolinea aerolinea;
     /** Estadísticas del operador sobre vuelos de su aerolinea */
@@ -44,6 +49,10 @@ public class Operador extends UsuarioConDni {
     public Operador(String nombre, String dni, Aerolinea aerolinea) {
     	super(nombre, dni);
         this.aerolinea = aerolinea;
+        this.vuelosProgramados = new ArrayList<>();
+        this.solicitudesRecibidas = new ArrayList<>();
+        this.solicitudesEnviadas = new ArrayList<>();
+        this.estadisticas = new EstadisticasOperador(this);
     }
 
     /**
@@ -155,18 +164,12 @@ public class Operador extends UsuarioConDni {
                 matricula, capacidadMaxCarga, mercaPeligrosa, controlTemperatura);
     }
 
-    public String verEstadisticas() {
-
-    }
-
     public void recibirNotificacionOpcionesReprogramacion() {
 
     }
 
     public void recibirNotificacionFacturaEmitida(Factura factura) {
         System.out.println("Operador notificado: Nueva factura generada para " + factura.getAirline()+ " por un total de " + factura.getPrice() + "€.");
-    }
-
     }
 
     public void pagarFactura(Factura factura, String numeroDeTarjeta) {
@@ -185,21 +188,42 @@ public class Operador extends UsuarioConDni {
             System.err.println("Error desconocido: " + e.getMessage());
         }
     }
-
-    public void solicitarCompartirVuelo() {
-
+    
+    public void programarVuelo(VueloProgramado vuelo) {
+        this.vuelosProgramados.add(vuelo);
     }
 
-    public void aceptarSolicitud() {
-
+    public void solicitarCompartirVuelo(VueloProgramado vuelo, Operador operadorReceptor, double porcentajeCarga) {
+        SolicitudVueloCompartido solicitud = new SolicitudVueloCompartido(vuelo, this);
+        solicitud.agregarOperadorCompartido(operadorReceptor, porcentajeCarga);
+        
+        operadorReceptor.getSolicitudesRecibidas().add(solicitud);
+        
+        System.out.println("Solicitud de compartir vuelo enviada por " + this.getName() + " a " + operadorReceptor.getName());
     }
 
-    public void rechazarSolicitud() {
+    private List<SolicitudVueloCompartido> getSolicitudesRecibidas() {
+		return this.solicitudesRecibidas;
+	}
 
+    public void aceptarSolicitud(SolicitudVueloCompartido solicitud) {
+            solicitud.aceptar();
+            System.out.println("Solicitud aceptada por " + this.getName());
+    }
+
+    public void rechazarSolicitud(SolicitudVueloCompartido solicitud) {
+        solicitud.rechazar();
+        System.out.println("Solicitud rechazada por " + this.getName());
     }
 
     public void verSolicitudes() {
-
+        if (this.solicitudesRecibidas.isEmpty()) {
+            System.out.println("No hay solicitudes de vuelo compartido.");
+        } else {
+            for (SolicitudVueloCompartido solicitud : solicitudesRecibidas) {
+                System.out.println("Solicitud de vuelo compartido: " + solicitud.getVueloOriginal().getCodigo());
+            }
+        }
     }
 
 }

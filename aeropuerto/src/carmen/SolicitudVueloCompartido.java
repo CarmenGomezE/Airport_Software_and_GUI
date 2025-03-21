@@ -31,13 +31,12 @@ public class SolicitudVueloCompartido {
      * @param aerolineaQueSolicita Aerolinea que ha realizado la solicitud.
      * @param aerolineaOriginal    Aerolinea que ha recibido la solicitud.
      */
-    public SolicitudVueloCompartido(Vuelo vueloOriginal, Operador operadorSolicitante) {
-        this.vueloOriginal = vueloOriginal;
+    public SolicitudVueloCompartido(VueloProgramado vuelo, Operador operadorSolicitante) {
+        this.vueloOriginal = vuelo;
         this.operadorSolicita = operadorSolicitante;
         this.operadoresCompartidos = new ArrayList<>();
         this.porcentajesCarga = new ArrayList<>();
         this.estadoSolicitud = EstadoSolicitud.PENDIENTE;
-    }
     }
 
     /**
@@ -45,8 +44,8 @@ public class SolicitudVueloCompartido {
      * 
      * @return Porcentaje.
      */
-    public double getPorcentaje() {
-        return this.porcentaje;
+    public List<Double> getPorcentajes() {
+        return this.porcentajes;
     }
 
     /**
@@ -64,15 +63,32 @@ public class SolicitudVueloCompartido {
     }
 
     public void aceptar() {
-        if (esSolicitudValida()) {
-            this.estado = EstadoSolicitud.ACEPTADA;
-            this.aceptadoPorAerolíneaOriginal = true;
-        } else {
-            this.estado = EstadoSolicitud.RECHAZADA;
+        try {
+            if (esSolicitudValida()) {
+                this.estadoSolicitud = EstadoSolicitud.ACEPTADA;
+            }
+        } catch (SolicitudInvalidaExcepcion e) {
+            this.estadoSolicitud = EstadoSolicitud.RECHAZADA;
+            System.out.println("Error al aceptar la solicitud: " + e.getMessage());
         }
     }
 
     public void rechazar() {
-        this.estado = EstadoSolicitud.RECHAZADA;
+        this.estadoSolicitud = EstadoSolicitud.RECHAZADA;
     }
+    
+    private boolean esSolicitudValida() throws SolicitudInvalidaExcepcion {
+        double totalPorcentaje = 0.0;
+        for (Double porcentaje : porcentajesCarga) {
+            totalPorcentaje += porcentaje;
+        }
+        if (totalPorcentaje > 100.0 || porcentajesCarga.get(0) < 50.0) {
+            throw new SolicitudInvalidaExcepcion("La solicitud de vuelo compartido es inválida: la aerolínea original debe tener al menos el 50% de la carga.");
+        }
+        return true;
+    }
+
+	public VueloProgramado getVueloOriginal() {
+		return this.vueloOriginal;
+	}
 }
