@@ -1,4 +1,9 @@
 package aeropuerto;
+import java.time.ZoneOffset;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 /**
  * La clase Aeropuerto representa los distintos aeropuertos que interactuan con el aeropuerto.
  * 
@@ -18,11 +23,11 @@ public abstract class Aeropuerto {
     /** Dirección relativa a la ciudad más cercana al aeropuerto*/
     private DireccionRelativaCiudad direccionCiudad;
     /** Diferencia horaria UTC*/
-    private int diferenciaHoraria; /** <-------------mirar como se pone esto no se que de UTC-------------*/
-    /** Horario de verano del aeropuerto*/
-    private String horarioVerano; /** <-------------mirar esto me parece que habia un ejemplo en moodle-------------*/
-    /** Horario de invierno del aeropuerto*/
-    private Stirng horarioInvierno; /** <-------------mirar esto me parece que habia un ejemplo en moodle-------------*/
+    private ZoneOffset diferenciaHoraria; 
+    /** Número de temporadas del aeropuerto*/
+    private int numTemporadas;
+    /** Temporadas del aeropuerto*/
+    private Temporada[] temporadas;
 
     /**
      * Constructor de la clase Aeropuerto.
@@ -32,20 +37,122 @@ public abstract class Aeropuerto {
      * @param ciudad                Ciudad más cercana al aeropuerto.
      * @param pais                  País del aeropuerto.
      * @param distanciaCiudad       Distancia hasta la ciudad más cercana al aeropuerto.
-     * @param diferenciaHoraria     Diferencia horaria UTC.
-     * @param horarioVerano         Horario de verano del aeropuerto.
-     * @param horarioInvierno       Horario de invierno del aeropuerto.
-     * @param direccionCiudad
+     * @param diferenciaHoraria     Diferencia horaria UTC del aeropuerto.
+     * @param numTemporadas         Número de temporadas del aeropuerto.
+     * @param direccionCiudad       Dirección relativa a la ciudad más cercana del aeropuerto.
      */
-    public Aeropuerto(String nombre, String codigo, String ciudad, String pais, double distanciaCiudad, int diferenciaHoraria, String horarioVerano, String horarioInvierno, DireccionRelativaCiudad direccionCiudad) {
+    public Aeropuerto(String nombre, String codigo, String ciudad, String pais, double distanciaCiudad, ZoneOffset diferenciaHoraria, int numTemporadas, DireccionRelativaCiudad direccionCiudad) {
         this.nombre = nombre;
         this.codigo = codigo;
         this.ciudad = ciudad;
         this.pais = pais;
         this.distanciaCiudad = distanciaCiudad;
         this.diferenciaHoraria = diferenciaHoraria;
-        this.horarioVerano = horarioVerano;
-        this.horarioInvierno = horarioInvierno;
+        this.numTemporadas = numTemporadas;
+        this.temporadas = new Temporada[numTemporadas];
         this.direccionCiudad = direccionCiudad;
     }
+
+    /**
+     * Método para obtener el nombre de un aeropuerto.
+     * 
+     * @return el nombre del aeropuerto.
+     */
+    public String getNombre() {
+        return nombre;
+    }
+
+    /**
+     * Método para obtener el código de un aeropuerto.
+     * 
+     * @return el código del aeropuerto.
+     */
+    public String getCodigo() {
+        return codigo;
+    }
+
+    /**
+     * Método para obtener la ciudad de un aeropuerto.
+     * 
+     * @return la ciudad del aeropuerto.
+     */
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    /**
+     * Método para obtener el país de un aeropuerto.
+     * 
+     * @return el país del aeropuerto.
+     */
+    public String getPais() {
+        return pais;
+    }
+
+    /**
+     * Método para obtener la distancia a la ciudad más cercana de un aeropuerto.
+     * 
+     * @return la distancia a la ciudad más cercana del aeropuerto.
+     */
+    public double getDistanciaCiudad() {
+        return distanciaCiudad;
+    }
+
+    /**
+     * Método para obtener la diferencia del horario de un aeropuerto.
+     * 
+     * @return la diferencia horaria del aeropuerto.
+     */
+    public ZoneOffset getDiferenciaHoraria() {
+        return diferenciaHoraria;
+    }
+
+    /**
+     * Método para obtener el número de temporadas de un aeropuerto.
+     * 
+     * @return el número de temporadas del aeropuerto.
+     */
+    public int getNumTemporadas() {
+        return numTemporadas;
+    }
+
+    /**
+     * Método para obtener la dirección relativa a la ciudad más cercana de un aeropuerto.
+     * 
+     * @return la dirección relativa a la ciudad más cercana del aeropuerto.
+     */
+    public DireccionRelativaCiudad getDireccionCiudad() {
+        return direccionCiudad;
+    }
+
+    /**
+     * Método para obtener las temporadas de un aeropuerto.
+     * 
+     * @return las temporadas del aeropuerto.
+     */
+    public Temporada[] getTemporadas() {
+        return temporadas;
+    }
+
+    /**
+     * Método para añadir una temporada al aeropuerto.
+     * 
+     * @param nuevaTemporada    Nueva temporada del aeropuerto.
+     */
+    public void agregarTemporada(Temporada nuevaTemporada) {
+        ArrayList<Temporada> listaTemporadas = new ArrayList<>(Array.asList(temporadas));
+
+        for (Temporada t: listaTemporadas) {
+            if (t != null && t.comprobarTemporada(nuevaTemporada)) {
+                return;
+            }
+        }
+
+        listaTemporadas.add(nuevaTemporada);
+        listaTemporadas.sort(Comparator.comparing(Temporada::getFechaInicio));
+
+        temporadas = listaTemporada.toArray(new Temporada[0]);
+        numTemporadas++;
+    }
+
 }
