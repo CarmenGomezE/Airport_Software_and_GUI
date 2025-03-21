@@ -1,10 +1,10 @@
 package aeropuerto.src.carmen.factura;
 
-import aeropuerto.src.carmen.avion.*;
 import aeropuerto.src.carmen.vuelo.*;
 import aeropuerto.src.carmen.*;
 import java.util.*;
 import java.time.*;
+import es.uam.eps.padsof.invoices.IResourceUsageInfo;
 
 public class SistemaFacturacion {
     private double costeBaseVueloSalida;
@@ -25,20 +25,20 @@ public class SistemaFacturacion {
             return null;
         }
 
-        int precioBase;
-        int precioRecargo;
+        int precioBase=0;
+        int precioRecargo=0;
         List<IResourceUsageInfo> recursos = new ArrayList<>();
         for (VueloProgramado vuelo: vuelosMensuales) {
             if (vuelo.getTipoCarga()==TipoCarga.MERCANCIAS) {
-                recursosUtilizados.add(new UsoRecursos("Recargo de mercancías",this.recargoMercancias, NO ENTIENDO));
-                precioRecargo += this.recargoMercancias;
+                recursos.add(new UsoRecursos("Recargo de mercancías",this.recargoAvionMercancias, 1));
+                precioRecargo += this.recargoAvionMercancias;
             }
             if(vuelo.getTipoVuelo()==TipoVuelo.SALIDA){
-                recursosUtilizados.add(new UsoRecursos("Vuelo de salida", this.costeBaseVueloSalida, NO ENTIENDO));
+            	recursos.add(new UsoRecursos("Vuelo de salida", this.costeBaseVueloSalida, 1));
                 precioBase+=this.costeBaseVueloSalida;
             }
             else if(vuelo.getTipoVuelo()==TipoVuelo.SALIDA){
-                recursosUtilizados.add(new UsoRecursos("Vuelo de llegada", this.costeBaseVueloLlegada, NO ENTIENDO));
+            	recursos.add(new UsoRecursos("Vuelo de llegada", this.costeBaseVueloLlegada, 1));
                 precioBase+=this.costeBaseVueloLlegada;
             }
         }

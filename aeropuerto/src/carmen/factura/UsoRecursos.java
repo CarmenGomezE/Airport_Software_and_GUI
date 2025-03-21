@@ -5,9 +5,9 @@ import es.uam.eps.padsof.invoices.IResourceUsageInfo;
 class UsoRecursos implements IResourceUsageInfo {
     private String descripcion;
     private double precioPorHora;
-    private double tiempoDeUso;
+    private int tiempoDeUso;
 
-    public UsoRecursos(String descripcion, double precioPorHora, String tiempoDeUso) {
+    public UsoRecursos(String descripcion, double precioPorHora, int tiempoDeUso) {
         this.descripcion = descripcion;
         this.precioPorHora = precioPorHora;
         this.tiempoDeUso = tiempoDeUso;
@@ -25,7 +25,7 @@ class UsoRecursos implements IResourceUsageInfo {
 
     @Override
     public String getUsageTime() {
-        return tiempoDeUso;
+        return String.valueOf(tiempoDeUso);
     }
 
     @Override

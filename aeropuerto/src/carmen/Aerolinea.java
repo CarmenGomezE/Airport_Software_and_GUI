@@ -52,4 +52,21 @@ public class Aerolinea {
         return vuelosMensuales;
     }
 
+	public String getCodigo() {
+		return this.codigo;
+	}
+	
+	public void addVueloCompartidoSolicitudRecibida() {
+		
+	}
+	
+	public void addVueloCompartidoSolicitudEnviada() {
+		
+	}
+	
+	public void addFactura(Factura factura) {
+		this.facturas.add(factura);
+	}
+
+
 }

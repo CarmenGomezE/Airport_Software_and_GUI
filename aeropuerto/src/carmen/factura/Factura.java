@@ -1,24 +1,24 @@
 package aeropuerto.src.carmen.factura;
 
-import java.util.Arrays;
-import java.util.List;
+import aeropuerto.src.carmen.*;
+import java.util.*;
+import java.time.*;
+import java.time.format.*;
 
-import aeropuerto.libs.es.uam.eps.padsof.invoices.IInvoiceInfo;
-import aeropuerto.libs.es.uam.eps.padsof.invoices.InvoiceSystem;
-import aeropuerto.libs.es.uam.eps.padsof.invoices.NonExistentFileException;
-import aeropuerto.libs.es.uam.eps.padsof.invoices.UnsupportedImageTypeException;
+import es.uam.eps.padsof.invoices.IInvoiceInfo;
+import es.uam.eps.padsof.invoices.IResourceUsageInfo;
 
 public class Factura implements IInvoiceInfo {
     private Aerolinea aerolinea;
-    private Date fecha;
+    private LocalDate fecha;
     private double precioBase;
     private double recargo;
     private String codigo;
     private List<IResourceUsageInfo> recursos;
     private EstadoFactura estado;
 
-    public Factura(Aerolinea aerolinea, Date fecha, double precioBase, double recargo, String codigo,
-            List<IResourceUsageInfo> recursos, EstadoFcatura estado) {
+    public Factura(Aerolinea aerolinea, LocalDate fecha, double precioBase, double recargo, String codigo,
+            List<IResourceUsageInfo> recursos, EstadoFactura estado) {
         this.aerolinea = aerolinea;
         this.fecha = fecha;
         this.codigo = codigo;
@@ -40,7 +40,7 @@ public class Factura implements IInvoiceInfo {
 
     /** Método de la interfaz */
     public String getAirline() {
-        return this.aerolinea;
+        return this.aerolinea.getNombre();
     }
 
     /** Método de la interfaz */
@@ -50,7 +50,8 @@ public class Factura implements IInvoiceInfo {
 
     /** Método de la interfaz */
     public String getInvoiceDate() {
-        return this.fecha;
+    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return this.fecha.format(formatter);
     }
 
     public double getBasePrice() {
@@ -70,11 +71,11 @@ public class Factura implements IInvoiceInfo {
     }
 
     public void marcarComoPagada() {
-        this.estado = EstadoFcatura.PAGADA;
+        this.estado = EstadoFactura.PAGADA;
     }
 
     public double getPrice() {
-        double precioTotal;
+        double precioTotal=0;
         for (IResourceUsageInfo r : recursos) {
             precioTotal += r.getPrice();
         }
