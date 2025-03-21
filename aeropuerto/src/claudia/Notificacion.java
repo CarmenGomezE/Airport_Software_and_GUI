@@ -20,9 +20,9 @@ public class Notificacion {
      * @param fecha                 Fecha de la notificación.
      * @param tipoNotificacion      Tipo de la notificación.
      */ 
-    public Notificacion(String mensaje, Date fecha, TipoNotificacion tipoNotificacion) {
+    public Notificacion(String mensaje, TipoNotificacion tipoNotificacion) {
         this.mensaje = mensaje;
-        this.fecha = fecha;
+        this.fecha = new Date();
         this.tipoNotificacion = tipoNotificacion;
     }
 

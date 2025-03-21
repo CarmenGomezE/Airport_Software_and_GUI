@@ -9,6 +9,10 @@ public class ZonaAparcamiento extends ModoEmbarque {
      /**La dimensión de largo de la plaza de aparcamiento */
     private double dimPlazaLargo;
 
+    private double horasUso;
+    private int id;
+    private static int contador = 1
+
     /**
      * Constructor de la clase ZonaAparcamiento
      * @param codigo                    Código de la zona de aparcamiento.
@@ -20,6 +24,8 @@ public class ZonaAparcamiento extends ModoEmbarque {
         super(codigo, costePorHora);
         this.dimPlazaAncho = dimPlazaAncho;
         this.dimPlazaLargo = dimPlazaLargo;
+        this.horasUso = 0;
+        this.id = contador ++;
     }
 
     /**
@@ -38,5 +44,19 @@ public class ZonaAparcamiento extends ModoEmbarque {
         return this.dimPlazaLargo;
     }
 
+    public double getHorasUso() {
+        return this.horasUso;
+    }
 
+    public void addHorasUso(double horas) {
+        this.horasUso += horas;
+    }
+
+    public void horasUsoReset() {
+        this.horasUso = 0;
+    }
+
+    public int getId(){
+        return this.id;
+    }
 }

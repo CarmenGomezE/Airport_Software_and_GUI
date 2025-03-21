@@ -8,17 +8,31 @@ public class Finger extends ModoEmbarque {
 
     /**La dimensión de alto del finger. */
     private double dimAlto;
+    /**Las puertas de embarque a las que está conectado (solo puede ser 1 o 2) */
+    private Set <PuertaEmbarque> puertasEmbarque;
+
+    private double horasUso;
+    private int id;
+    private static int contador = 1;
 
     /**
     * Constructor de la clase Finger
     * @param codigo                 Código del finger.
     * @param costePorHora           Coste por hora del finger.
     * @param dimAlto                Dimensión de alto del finger.
+    * @param puertasEmbarque        Puertas de embarque a las que está conectado el finger.
     */
-    public Finger(String codigo, double costePorHora, double dimAlto) {
+    public Finger(String codigo, double costePorHora, double dimAlto, Set<PuertaEmbarque> puertasEmbarque) {
+
+        if (puertasEmbarque.size() < 1 || puertasEmbarque.size() > 2) {
+            throw new IllegalArgumentException("Un finger debe estar conectado a una o dos puertas de embarque");
+        }
         super(codigo, costePorHora);
         this.dimAlto = dimAlto;
-        /*Falta poner puerta de embarque*/ 
+        this.puertasEmbarque = new HashSet<>(puertasEmbarque);
+        this.horasUso = 0;
+        this.id = contador ++;
+        
     }
 
     /**
@@ -43,6 +57,30 @@ public class Finger extends ModoEmbarque {
      */
     public double getDimAlto() {
         return this.dimAlto;
+    }
+
+    /**
+     * Método que devuelve las puertas de embarque a las que está conectado el finger.
+     * @return Puertas de embarque a las que está conectado el finger.
+     */
+    public Set<PuertaEmbarque> getPuertasEmbarque(){
+        return this.puertasEmbarque;
+    }
+
+    public double getHorasUso() {
+        return this.horasUso;
+    }
+
+    public void addHorasUso(double horas) {
+        this.horasUso += horas;
+    }
+
+    public void horasUsoReset() {
+        this.horasUso = 0;
+    }
+
+    public int getId(){
+        return this.id;
     }
 
 

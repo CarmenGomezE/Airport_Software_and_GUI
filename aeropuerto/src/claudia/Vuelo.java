@@ -1,5 +1,5 @@
 package aeropuerto.claudia;
-import aeropuerto.src.carmen.vuelo.*;
+import aeropuerto.carmen.*;
 import java.time.*;
 import java.util.*;
 
@@ -10,6 +10,7 @@ import java.util.*;
 public class Vuelo extends VueloProgramado{
     /**El estado del vuelo*/
     EstadoVuelo estado;
+    double tiempoRetraso;
 
     /**
      * Constructor de la clase Vuelo .
@@ -24,12 +25,14 @@ public class Vuelo extends VueloProgramado{
      * @param tipoVuelo             Tipo de vuelo.
      * @param avion                 Avion del vuelo.
      * @param estado                Estado del vuelo.
+     * @param tiempoRetraso         El tiempo de retraso del vuelo.
      */
     public Vuelo(String codigo, Date fecha, LocalTime hora, List<DayOfWeek> diasRecurrente, TipoCarga tipoCarga, 
                             TipoModoEmbarque tipoModoEmbarque, Periodicidad periodicidad, TipoVuelo tipoVuelo,
-                            Avion avion, EstadoVuelo estado) {
+                            Avion avion, EstadoVuelo estado, double tiempoRetraso) {
         super(codigo,fecha,hora,diasRecurrente,tipoCarga,tipoModoEmbarque,periodicidad,tipoVuelo,avion);
         this.estado=estado;
+        this.tiempoRetraso = tiempoRetraso;
     }
 
 
@@ -49,4 +52,13 @@ public class Vuelo extends VueloProgramado{
     public EstadoVuelo getEstado(){
         return this.estado;
     }
+
+    /**
+     * Método que devuelve el tiempo de retraso del vuelo.
+     * @return Tiempo de retraso del vuelo.
+     */
+    public double getRetraso() {
+        return this.tiempoRetraso;
+    }
+
 }

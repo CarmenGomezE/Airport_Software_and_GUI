@@ -1,145 +1,54 @@
-package aeropuerto.src.claudia;
-
-import aeropuerto.src.claudia.*;
-import aeropuerto.src.maria.*;
-
+package aeropuerto.claudia;
+import aeropuerto.maria;
 import java.util.*;
 
 /**
- * La clase EstadisticasGestor representa las estadísticas que el
- * gestor puede ver sobre la infraestructura del aeropuerto.
+ * La clase EstadisiticasGestor representa las estadisticas que puede 
+ * ver el gestor acerca del tiempo medio de uso de finger, zona de aparcamiento
+ * puerta de embarque y hangar.
  * 
- * @author Carmen Gómez, María Pozo, Claudia Municio.
+ * @author Claudia Municio, María Pozo, Carmen Gómez 
  */
 public class EstadisticasGestor {
-	/** Gestor que ve las estadísticas */
-    private Gestor gestor;
-    /** Estadísticas de los fingers del aeropuerto */
-    private Map<Finger, Double> horasUsoFinger;
-    /** Estadísticas de las puerta de embarque del aeropuerto */
-    private Map<PuertaEmbarque, Double> horasUsoPuertaEmbarque;
-    /** Estadísticas de las zonas de aparcamiento del aeropuerto */
-    private Map<ZonaAparcamiento, Double> horasUsoZonaAparcamiento;
-    /** Estadísticas de los hangares del aeropuerto */
-    private Map<Hangar, Double> horasUsoHangar;
+    /**El tiempo medio de uso */
+    String tiempoMedio;
 
-    /**
-     * Constructor de la clase EstadisticasGestor.
-     * 
-     * @param getsor	 Gestor que recibe las estadísticas.
+    /**Constructor de la clase EstadisticasGestor.
+     * @param tiempoMedio       Tiempo medio de uso.
      */
-    public EstadisticasGestor(Gestor gestor) {
-        this.gestor = gestor;
-        this.horasUsoFinger = new HashMap<>();
-        this.horasUsoPuertaEmbarque = new HashMap<>();
-        this.horasUsoZonaAparcamiento = new HashMap<>();
-        this.horasUsoHangar = new HashMap<>();
-        cargarDatosEstadisticas(); 
+    public EstadisticasGestor(String tiempoMedio) {
+        this.tiempoMedio = tiempoMedio;
     }
 
     /**
-     * Método que carga los datos necesarios para las estadísticas del gestor.
-     * 
+     * Método que devuelve el tiempo medio de uso de un finger.
+     * @param f            Finger del que se ve el tiempo medio de uso.
      */
-    private void cargarDatosEstadisticas() {
-        for (Finger finger : gestor.getAeropuerto().getFingers()) {
-            horasUsoFinger.put(finger, finger.getHorasUso()/gestor.getAeropuerto().getHorasOperacion());
-        }
-        
-        for (PuertaEmbarque puerta : gestor.getAeropuerto().getPuertasEmbarque()) {
-            horasUsoPuertaEmbarque.put(puerta, puerta.getHorasUso()/gestor.getAeropuerto().getHorasOperacion());
-        }
-        
-        for (ZonaAparcamiento zona : gestor.getAeropuerto().getZonasAparcamiento()) {
-            horasUsoZonaAparcamiento.put(zona, zona.getHorasUso()/gestor.getAeropuerto().getHorasOperacion());
-        }
-        
-        for (Hangar hangar : gestor.getAeropuerto().getHangares()) {
-            horasUsoHangar.put(hangar, hangar.getHorasUso()/gestor.getAeropuerto().getHorasOperacion());
-        }
+    public int tiempoMedioFinger(Finger f) {
+
     }
 
     /**
-     * Método que devuelve las horas de uso medio diario de un finger.
-     * 
-     * @param finger	 Finger.
-     * @return Horas de uso medio de un finger.
+     * Método que devuelve el tiempo medio de uso de una zona de aparcamiento.
+     * @param  z          Zona de aparcamiento de la que se ve el tiempo medio de uso.
      */
-    public double getUsoMedioDiarioFinger(Finger finger) {
-    	return horasUsoFinger.getOrDefault(finger, 0.0);
+    public int tiempoMedioZonaAparcamiento(ZonaAparcamiento z) {
+
     }
 
     /**
-     * Método que devuelve las horas de uso medio diario de una puerta de embarque.
-     * 
-     * @param puerta	 PuertaEmbarque.
-     * @return Horas de uso medio de una puerta de embarque.
+     * Método que devuelve el tiempo medio de uso de una puerta de embarque.
+     * @param p          Puerta de embarque de la que se ve el tiempo medio de uso.
      */
-    public double getUsoMedioDiarioPuertaEmbarque(PuertaEmbarque puerta) {
-    	return horasUsoPuertaEmbarque.getOrDefault(puerta, 0.0);
-    }
-    
-    /**
-     * Método que devuelve las horas de uso medio diario de una zona de aparcamiento.
-     * 
-     * @param zona	 ZonaAparcamiento.
-     * @return Horas de uso medio de una zona de aparcamiento.
-     */
-    public double getUsoMedioDiarioZonaAparcamiento(ZonaAparcamiento zona) {
-    	return horasUsoZonaAparcamiento.getOrDefault(zona, 0.0);
+    public int tiempoMedioPuertaEmbarque (PuertaEmbarque p) {
+
     }
 
     /**
-     * Método que devuelve las horas de uso medio diario de un hangar.
-     * 
-     * @param hangar	 Hangar.
-     * @return Horas de uso medio de un hangar.
+     * Método que devuelve el tiempo medio de uso de un hangar.
+     * @param h           Hangar del que se ve el tiempo medio de uso.
      */
-    public double getUsoMedioDiarioHangar(Hangar hangar) {
-        return horasUsoHangar.getOrDefault(hangar, 0.0);
-    }
-    
-    /**
-     * Método que imprime los tiempos medios de cada finger.
-     * 
-     */
-    public void imprimirUsoMedioFingers() {
-        System.out.println("Estadísticas de uso de los fingers:");
-        for (Finger finger : gestor.getAeropuerto().getFingers()) {
-            System.out.println("Finger: " + finger.getId() + ", Tiempo de uso medio diario: " + getUsoMedioDiarioFinger(finger) + " horas.");
-        }
-    }
-    
-    /**
-     * Método que imprime los tiempos medios de cada puerta de embarque.
-     * 
-     */
-    public void imprimirUsoMedioPuertasEmbarque() {
-        System.out.println("Estadísticas de uso de las puertas de embarque:");
-        for (PuertaEmbarque puerta : gestor.getAeropuerto().getFingers()) {
-            System.out.println("Puerta de embarque: " + puerta.getId() + ", Tiempo de uso medio diario: " + getUsoMedioDiarioPuertaEmbarque(puerta) + " horas.");
-        }
-    }
-    
-    /**
-     * Método que imprime los tiempos medios de cada zona de aparcamiento.
-     * 
-     */
-    public void imprimirUsoMedioZonasAparcamiento() {
-        System.out.println("Estadísticas de uso de las zonas de aparcamiento:");
-        for (ZonaAparcamiento zona : gestor.getAeropuerto().getFingers()) {
-            System.out.println("Zona de aparcamiento: " + zona.getId() + ", Tiempo de uso medio diario: " + getUsoMedioDiarioZonaAparcamiento(zona) + " horas.");
-        }
-    }
-    
-    /**
-     * Método que imprime los tiempos medios de cada hangar.
-     * 
-     */
-    public void imprimirUsoMedioHangares() {
-        System.out.println("Estadísticas de uso de los hangares:");
-        for (Hangar hangar : gestor.getAeropuerto().getFingers()) {
-            System.out.println("Hangar: " + hangar.getId() + ", Tiempo de uso medio diario: " + getUsoMedioDiarioHangar(hangar) + " horas.");
-        }
+    public int tiempoMedioHangar (Hangar h) {
+
     }
 }
