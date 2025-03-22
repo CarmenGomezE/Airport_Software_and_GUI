@@ -79,7 +79,7 @@ public class Operador extends UsuarioConDni {
      * @param vueloProgramado Vuelo a añadir.
      */
     public void addVueloProgramado(VueloProgramado vueloPorgramado) {
-        this.vuelosPorgramados.add(vueloPorgramado);
+        this.vuelosProgramados.add(vueloPorgramado);
     }
 
     /**
@@ -149,17 +149,17 @@ public class Operador extends UsuarioConDni {
         }
     }
 
-    public void darDeAltaAvionPasajeros(String marca, String modelo, double dimAlto, double dimAncho, double dimLargo,
+    public AvionPasajeros darDeAltaAvionPasajeros(String marca, String modelo, double dimAlto, double dimAncho, double dimLargo,
             double autonomia, int anoCompra, Date fechaUltimaRevision, String matricula,
             int capacidadMaxPasajeros) {
-        AvionPasajeros avion = new AvionPasajeros(marca, modelo, dimAlto, dimAncho, dimLargo, autonomia, anoCompra,
+        return new AvionPasajeros(marca, modelo, dimAlto, dimAncho, dimLargo, autonomia, anoCompra,
                 fechaUltimaRevision, matricula, capacidadMaxPasajeros);
     }
 
-    public void darDeAltaAvionMercancías(String marca, String modelo, double dimAlto, double dimAncho, double dimLargo,
+    public AvionMercancias darDeAltaAvionMercancias(String marca, String modelo, double dimAlto, double dimAncho, double dimLargo,
             double autonomia, int anoCompra, Date fechaUltimaRevision, String matricula,
             double capacidadMaxCarga, boolean mercaPeligrosa, boolean controlTemperatura) {
-        AvionMercancias avion = new AvionMercancias(marca, modelo, dimAlto, dimAncho, dimLargo, autonomia, anoCompra,
+        return new AvionMercancias(marca, modelo, dimAlto, dimAncho, dimLargo, autonomia, anoCompra,
                 fechaUltimaRevision,
                 matricula, capacidadMaxCarga, mercaPeligrosa, controlTemperatura);
     }
@@ -169,6 +169,7 @@ public class Operador extends UsuarioConDni {
     }
 
     public void recibirNotificacionFacturaEmitida(Factura factura) {
+    	getAerolinea().addFactura(factura);
         System.out.println("Operador notificado: Nueva factura generada para " + factura.getAirline()+ " por un total de " + factura.getPrice() + "€.");
     }
 
@@ -189,8 +190,62 @@ public class Operador extends UsuarioConDni {
         }
     }
     
-    public void programarVuelo(VueloProgramado vuelo) {
-        this.vuelosProgramados.add(vuelo);
+   
+        public boolean programarVuelo(String codigoVuelo, Avion avion, String aeropuertoSalida,
+                                      String aeropuertoLlegada, LocalDateTime horarioSalida,
+                                      LocalDateTime horarioLlegada, List<Escala> escalas,
+                                      TipoVuelo tipo, Periodicidad periodicidad, LocalDate fechaInicio,
+                                      LocalDate fechaFin, List<Integer> diasRecurrentes) {
+
+        if (ChronoUnit.DAYS.between(LocalDate.now(), fechaInicio) < DIAS_ANTICIPACION_MINIMA) {
+            throw new AnticipacionInsuficienteException("Los vuelos deben programarse con al menos " 
+                    + DIAS_ANTICIPACION_MINIMA + " días de anticipación.");
+        }
+
+        // Verifica que el avión esté disponible
+        if (!avion.estaDisponible()) {
+            throw new AvionNoDisponibleException("El avión seleccionado no está disponible.");
+        }
+
+        // Verifica que la hora de llegada sea posterior a la de salida
+        if (horarioLlegada.isBefore(horarioSalida)) {
+            throw new HorarioInvalidoException("La hora de llegada no puede ser anterior a la de salida.");
+        }
+
+        // Verifica que las escalas sean válidas
+        for (Escala escala : escalas) {
+            if (escala.getHoraSalida().isBefore(escala.getHoraLlegada().plusHours(1))) {
+                throw new EscalaInvalidaException("La escala en " + escala.getDestino() + 
+                    " tiene menos de una hora de permanencia.");
+            }
+        }
+
+        // Creación y programación del vuelo según el tipo de periodicidad
+        if (periodicidad == Periodicidad.PUNTUAL) {
+            vuelosProgramados.add(new Vuelo(codigoVuelo, avion, aeropuertoSalida, aeropuertoLlegada,
+                    horarioSalida, horarioLlegada, escalas, tipo, periodicidad));
+        } else if (periodicidad == Periodicidad.DIARIO) {
+            LocalDate fecha = fechaInicio;
+            while (!fecha.isAfter(fechaFin)) {
+                vuelosProgramados.add(new Vuelo(codigoVuelo + "-" + fecha, avion, aeropuertoSalida,
+                        aeropuertoLlegada, horarioSalida.withDayOfMonth(fecha.getDayOfMonth()),
+                        horarioLlegada.withDayOfMonth(fecha.getDayOfMonth()), escalas, tipo, periodicidad));
+                fecha = fecha.plusDays(1);
+            }
+        } else if (periodicidad == Periodicidad.RECURRENTE) {
+            LocalDate fecha = fechaInicio;
+            while (!fecha.isAfter(fechaFin)) {
+                if (diasRecurrentes.contains(fecha.getDayOfWeek().getValue())) {
+                    vuelosProgramados.add(new Vuelo(codigoVuelo + "-" + fecha, avion, aeropuertoSalida,
+                            aeropuertoLlegada, horarioSalida.withDayOfMonth(fecha.getDayOfMonth()),
+                            horarioLlegada.withDayOfMonth(fecha.getDayOfMonth()), escalas, tipo, periodicidad));
+                }
+                fecha = fecha.plusDays(1);
+            }
+        }
+
+        System.out.println("Vuelo programado exitosamente.");
+        return true;
     }
 
     public void solicitarCompartirVuelo(VueloProgramado vuelo, Operador operadorReceptor, double porcentajeCarga) {

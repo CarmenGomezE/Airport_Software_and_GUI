@@ -1,7 +1,7 @@
 package aeropuerto.src.carmen.factura;
 
 import aeropuerto.src.carmen.vuelo.*;
-import aeropuerto.src.claudia.Vuelo;
+import aeropuerto.src.claudia.*;
 import aeropuerto.src.carmen.*;
 import java.util.*;
 import java.time.*;

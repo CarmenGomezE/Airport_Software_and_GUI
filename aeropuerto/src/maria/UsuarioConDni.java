@@ -1,4 +1,4 @@
-package aeropuerto;
+package aeropuerto.src.maria;
 /**
  * La clase UsuarioConDni representa a los usuarios con Dni de la aplicación.
  * 
