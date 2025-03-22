@@ -1,4 +1,4 @@
-package aeropuerto;
+package aeropuerto.src.maria;
 /**
  * La clase AeropuertoDestino representa los aeropuertos de destino que interactuan con el aeropuerto.
  * 

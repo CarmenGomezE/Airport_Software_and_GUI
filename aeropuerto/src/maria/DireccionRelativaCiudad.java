@@ -1,4 +1,4 @@
-package aeropuerto;
+package aeropuerto.src.maria;
 /**
  * La enumeración DireccionRelativaCiudad representa las direcciones relativas a la ciudad del aeropuerto.
  * 

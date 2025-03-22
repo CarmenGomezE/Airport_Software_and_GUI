@@ -1,4 +1,4 @@
-package aeropuerto;
+package aeropuerto.src.maria;
 import java.time.ZoneOffset;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -56,7 +56,7 @@ public abstract class Aeropuerto {
     /**
      * Método para obtener el nombre de un aeropuerto.
      * 
-     * @return el nombre del aeropuerto.
+     * @return El nombre del aeropuerto.
      */
     public String getNombre() {
         return nombre;
@@ -65,7 +65,7 @@ public abstract class Aeropuerto {
     /**
      * Método para obtener el código de un aeropuerto.
      * 
-     * @return el código del aeropuerto.
+     * @return El código del aeropuerto.
      */
     public String getCodigo() {
         return codigo;
@@ -74,7 +74,7 @@ public abstract class Aeropuerto {
     /**
      * Método para obtener la ciudad de un aeropuerto.
      * 
-     * @return la ciudad del aeropuerto.
+     * @return La ciudad del aeropuerto.
      */
     public String getCiudad() {
         return ciudad;
@@ -83,7 +83,7 @@ public abstract class Aeropuerto {
     /**
      * Método para obtener el país de un aeropuerto.
      * 
-     * @return el país del aeropuerto.
+     * @return El país del aeropuerto.
      */
     public String getPais() {
         return pais;
@@ -92,7 +92,7 @@ public abstract class Aeropuerto {
     /**
      * Método para obtener la distancia a la ciudad más cercana de un aeropuerto.
      * 
-     * @return la distancia a la ciudad más cercana del aeropuerto.
+     * @return La distancia a la ciudad más cercana del aeropuerto.
      */
     public double getDistanciaCiudad() {
         return distanciaCiudad;
@@ -101,7 +101,7 @@ public abstract class Aeropuerto {
     /**
      * Método para obtener la diferencia del horario de un aeropuerto.
      * 
-     * @return la diferencia horaria del aeropuerto.
+     * @return La diferencia horaria del aeropuerto.
      */
     public ZoneOffset getDiferenciaHoraria() {
         return diferenciaHoraria;
@@ -110,7 +110,7 @@ public abstract class Aeropuerto {
     /**
      * Método para obtener el número de temporadas de un aeropuerto.
      * 
-     * @return el número de temporadas del aeropuerto.
+     * @return El número de temporadas del aeropuerto.
      */
     public int getNumTemporadas() {
         return numTemporadas;
@@ -119,7 +119,7 @@ public abstract class Aeropuerto {
     /**
      * Método para obtener la dirección relativa a la ciudad más cercana de un aeropuerto.
      * 
-     * @return la dirección relativa a la ciudad más cercana del aeropuerto.
+     * @return La dirección relativa a la ciudad más cercana del aeropuerto.
      */
     public DireccionRelativaCiudad getDireccionCiudad() {
         return direccionCiudad;
@@ -128,7 +128,7 @@ public abstract class Aeropuerto {
     /**
      * Método para obtener las temporadas de un aeropuerto.
      * 
-     * @return las temporadas del aeropuerto.
+     * @return Las temporadas del aeropuerto.
      */
     public Temporada[] getTemporadas() {
         return temporadas;
