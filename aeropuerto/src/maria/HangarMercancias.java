@@ -50,7 +50,7 @@ public class HangarMercancias extends Hangar {
      * 
      * @param avion Avión que entra al hangar.
      */
-    public void añadirAvion(AvionMercancias avion) {
+    public void addAvion(AvionMercancias avion) {
         aviones.add(avion);
     }
 
