@@ -1,4 +1,4 @@
-package aeropuerto;
+package aeropuerto.src.maria;
 /**
  * La clase AeropuertoDestino representa los aeropuertos de destino que interactuan con el aeropuerto.
  * 
@@ -17,7 +17,7 @@ public class AeropuertoDestino extends Aeropuerto{
      * @param numTemporadas         Número de temporadas del aeropuerto destino.
      * @param direccionCiudad       Dirección relativa a la ciudad más cercana del aeropuerto destino.
      */
-    public Aeropuerto(String nombre, String codigo, String ciudad, String pais, double distanciaCiudad, ZoneOffset diferenciaHoraria, int numTemporadas, DireccionRelativaCiudad direccionCiudad) {
+    public AeropuertoDestino(String nombre, String codigo, String ciudad, String pais, double distanciaCiudad, ZoneOffset diferenciaHoraria, int numTemporadas, DireccionRelativaCiudad direccionCiudad) {
         super(nombre, codigo, ciudad, pais, distanciaCiudad, diferenciaHoraria, numTemporadas, direccionCiudad);
     }
 }

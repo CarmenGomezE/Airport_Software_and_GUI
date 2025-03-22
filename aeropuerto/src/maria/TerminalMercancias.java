@@ -1,4 +1,4 @@
-package aeropuerto;
+package aeropuerto.src.maria;
 /** 
  * La clase TerminalMercancias representa las terminales de mercancias del aeropuerto.
  * 

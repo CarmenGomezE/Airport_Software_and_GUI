@@ -1,4 +1,4 @@
-package aeropuerto;
+package aeropuerto.src.maria;
 /**
  * La clase HangarPasajeros representa los hangares de pasajeros del aeropuerto.
  * 

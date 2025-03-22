@@ -1,4 +1,4 @@
-package aeropuerto;
+package aeropuerto.src.maria;
 /**
  * La clase ControladorAereo representa al usuario controlador de la aplicación
  * 

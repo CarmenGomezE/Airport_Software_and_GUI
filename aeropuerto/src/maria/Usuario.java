@@ -1,4 +1,4 @@
-package aeropuerto;
+package aeropuerto.src.maria;
 /**
  * La clase Usuario representa a los usuarios de la aplicación.
  * 

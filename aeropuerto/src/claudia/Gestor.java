@@ -8,6 +8,7 @@ import aeropuerto.src.carmen.factura.*;
 import aeropuerto.src.carmen.vuelo.*;
 import java.util.*;
 import java.io.*;
+import java.time.*;
 
 
 public class Gestor extends Usuario{
@@ -129,9 +130,46 @@ public class Gestor extends Usuario{
 
     }
 
-    public void darDeAltaAeropuertoDestino(String rutaFichero) {
-        /**Lo del fichero ni idea */
+    public void darDeAltaAeropuertoDestino(String nombreFichero) {
+    	try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(nombreFichero)))) {
+            String linea = reader.readLine();
+            
+            if (linea != null) {
+                String[] campos = linea.split(";");
 
+                if (campos.length >= 9) {
+                    String nombre = campos[0];
+                    String codigo = campos[1];
+                    String ciudadMasCercana = campos[2];
+                    String pais = campos[3];
+                    double distanciaCiudad = Double.parseDouble(campos[4]);
+                    String direccionRespectoCiudad = campos[5];
+                    ZoneOffset diferenciaHoraria = ZoneOffset.ofHours(Integer.parseInt(campos[6]));
+                    int numeroTemporadas = Integer.parseInt(campos[7]);
+
+                    List<Temporada> temporadas = new ArrayList<>();
+                    int i = 8;
+                    while (i < campos.length) {
+                        // Leer las 3 partes de cada temporada
+                        String fechaInicio = campos[i];
+                        String horarioApertura = campos[i + 1].split("-")[0];
+                        String horarioCierre = campos[i + 1].split("-")[1];
+                        String fechaFin = campos[i + 2];
+
+                        Temporada temporada = new Temporada(fechaInicio, horarioApertura, horarioCierre,
+                                fechaFin);
+                        temporadas.add(temporada);
+
+                        i += 4;
+                    }
+
+                    AeropuertoDestino aeropuerto = new AeropuertoDestino(nombre, codigo, ciudadMasCercana, pais,
+                            distanciaCiudad, diferenciaHoraria, numeroTemporadas, temporadas, direccionRespectoCiudad);
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.err.println("Error al leer el archivo: " + e.getMessage());
+        }
     }
 
     public void configurarAeropuertoPropio(String nombre, String codigo, String ciudadMasCercana, String pais, double distancia, int diferenciaHoraria, int numTemporadas, String horarioVerano, String horarioInvierno, DireccionRelativaCiudad direccion) {

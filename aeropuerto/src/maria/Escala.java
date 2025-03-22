@@ -1,4 +1,4 @@
-package aeropuerto;
+package aeropuerto.src.maria;
 import java.time.LocalTime;
 
 /**

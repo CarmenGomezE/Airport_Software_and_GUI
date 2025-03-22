@@ -1,4 +1,4 @@
-package aeropuerto;
+package aeropuerto.src.maria;
 /**
  * La enumeración CriterioBusqueda representa los distintos criterios para la búsqueda de vuelos.
  * 
