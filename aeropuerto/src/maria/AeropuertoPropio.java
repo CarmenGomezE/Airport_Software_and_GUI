@@ -21,9 +21,11 @@ public class AeropuertoPropio extends Aeropuerto {
     private List<Usuario> usuarios;
     /** Pistas del aeropuerto propio*/
     private List<Pista> pistas;
-    /** Aerolineas del aeropuerto propio*/
+    /** Aerolíneas del aeropuerto propio*/
     private List<Aerolinea> aerolineas;
+    /** Vuelos aceptados del aeropuerto propio*/
     private List<Vuelo> vuelosAceptados;
+    /** Aeropuertos de destino del aeropuerto propio*/
     private List<Aeropuerto> aeropuertosDestino;
 
     /**
@@ -40,16 +42,16 @@ public class AeropuertoPropio extends Aeropuerto {
      */
     public AeropuertoPropio(String nombre, String codigo, String ciudad, String pais, double distanciaCiudad, ZoneOffset diferenciaHoraria, int numTemporadas, DireccionRelativaCiudad direccionCiudad) {
         super(nombre, codigo, ciudad, pais, distanciaCiudad, diferenciaHoraria, numTemporadas, direccionCiudad);
-        this.vuelosAceptados=new ArrayList<>();
-        this.fingers=new ArrayList<>();
-        this.hangares=new ArrayList<>();
-        this.zonasAparcamiento=new ArrayList<>();
-        this.terminales=new ArrayList<>();
-	this.usuarios= new ArrayList<>();
-        this.pistas=new ArrayList<>();
-	this.aerolineas= new ArrayList<>();
-	this.vuelosAceptados= new ArrayList<>();
-        this.aeropuertosDestino= new ArrayList<>();
+        this.vuelosAceptados = new ArrayList<>();
+        this.fingers = new ArrayList<>();
+        this.hangares = new ArrayList<>();
+        this.zonasAparcamiento  =new ArrayList<>();
+        this.terminales = new ArrayList<>();
+	    this.usuarios = new ArrayList<>();
+        this.pistas = new ArrayList<>();
+	    this.aerolineas = new ArrayList<>();
+	    this.vuelosAceptados = new ArrayList<>();
+        this.aeropuertosDestino = new ArrayList<>();
     }
 
     /**
@@ -82,7 +84,7 @@ public class AeropuertoPropio extends Aeropuerto {
     /**
      * Método para obtener las terminales del aeropuerto propio.
      * 
-     * @return Temrinales del aeropuerto propio.
+     * @return Terminales del aeropuerto propio.
      */
     public List<Terminal> getTerminales() {
         return terminales;
@@ -100,12 +102,30 @@ public class AeropuertoPropio extends Aeropuerto {
     /**
      * Método para obtener las pistas del aeropuerto propio.
      * 
-     * @return Temrinales del aeropuerto propio.
+     * @return Pistas del aeropuerto propio.
      */
     public List<Pista> getPistas() {
         return pistas;
     }
+
+    /**
+     * Método para obtener las aerolineas del aeropuerto propio.
+     * 
+     * @return Aerolineas del aeropuerto propio.
+     */
+    public List<Aerolinea> getAerolineas() {
+        return aerolineas;
+    }
+
+    public List<Vuelo> getVuelosAceptados() {
+		return vuelosAceptados;
+	}
     
+    /**
+     * Método para obtener los aeropuertos de destino del aeropuerto propio.
+     * 
+     * @return Aeropuertos de destino del aeropuerto propio.
+     */
     public List<Aeropuerto> getAeropuertosDestino() {
         return aeropuertosDestino;
     }
@@ -126,19 +146,6 @@ public class AeropuertoPropio extends Aeropuerto {
     }
 
     /**
-     * Método para añadir una terminal al aeropuerto propio.
-     * 
-     * @param terminal La terminal que se añade.
-     */
-    public void addTerminal(Terminal terminal) {
-        if (terminal == null) {
-            throw new IllegalArgumentException("La terminal no puede ser null");
-        } 
-
-        terminales.add(terminal);
-    }
-
-    /**
      * Método para añadir un finger al aeropuerto propio.
      * 
      * @param finger El finger que se añade.
@@ -149,19 +156,6 @@ public class AeropuertoPropio extends Aeropuerto {
         } 
 
         fingers.add(finger);
-    }
-
-    /**
-     * Método para añadir una zona de aparcamiento al aeropuerto propio.
-     * 
-     * @param zonaAparcamiento La zona de aparcamiento que se añade.
-     */
-    public void addZonaAparcamiento(ZonaAparcamiento zonaAparcamiento) {
-        if (zonaAparcamiento == null) {
-            throw new IllegalArgumentException("La zona de aparcamiento no puede ser null");
-        } 
-
-        zonasAparcamiento.add(zonaAparcamiento);
     }
 
     /**
@@ -178,6 +172,32 @@ public class AeropuertoPropio extends Aeropuerto {
     }
 
     /**
+     * Método para añadir una zona de aparcamiento al aeropuerto propio.
+     * 
+     * @param zonaAparcamiento La zona de aparcamiento que se añade.
+     */
+    public void addZonaAparcamiento(ZonaAparcamiento zonaAparcamiento) {
+        if (zonaAparcamiento == null) {
+            throw new IllegalArgumentException("La zona de aparcamiento no puede ser null");
+        } 
+
+        zonasAparcamiento.add(zonaAparcamiento);
+    }
+
+    /**
+     * Método para añadir una terminal al aeropuerto propio.
+     * 
+     * @param terminal La terminal que se añade.
+     */
+    public void addTerminal(Terminal terminal) {
+        if (terminal == null) {
+            throw new IllegalArgumentException("La terminal no puede ser null");
+        } 
+
+        terminales.add(terminal);
+    }
+
+    /**
      * Método para añadir un usuario al aeropuerto propio.
      * 
      * @param usuario El usuario que se añade.
@@ -190,6 +210,11 @@ public class AeropuertoPropio extends Aeropuerto {
         usuarios.add(usuario);
     }
     
+    /**
+     * Método para añadir una pista al aeropuerto propio.
+     * 
+     * @param pista La pista que se añade.
+     */
     public void addPista(Pista pista) {
         if (pista == null) {
             throw new IllegalArgumentException("La pista no puede ser null");
@@ -197,6 +222,46 @@ public class AeropuertoPropio extends Aeropuerto {
 
         pistas.add(pista);
     }
+
+    /**
+     * Método para añadir una aerolínea al aeropuerto propio.
+     * 
+     * @param aerolinea La aerolínea que se añade.
+     */
+    public void addAerolinea(Aerolinea aerolinea) {
+        if (aerolinea == null) {
+            throw new IllegalArgumentException("La aerolínea no puede ser null");
+        } 
+
+        aerolineas.add(aerolinea);
+    }
+
+    /**
+     * Método para añadir un vuelo aceptado al aeropuerto propio.
+     * 
+     * @param vuelo El vuelo aceptado que se añade.
+     */
+    public void addVueloAceptado(Vuelo vuelo) {
+		if (vuelo == null) {
+            throw new IllegalArgumentException("El vuelo aceptado no puede ser null");
+        } 
+
+		this.vuelosAceptados.add(vuelo);
+	}
+
+    /**
+     * Método para añadir un aeropuerto de destino al aeropuerto propio.
+     * 
+     * @param aeropuerto El aeropuerto de destino que se añade.
+     */
+	public void addAeropuertoDestino(AeropuertoDestino aeropuerto) {
+        if (aeropuerto == null) {
+            throw new IllegalArgumentException("El aeropuerto de destino no puede ser null");
+        }
+
+		this.aeropuertosDestino.add(aeropuerto);
+		
+	}
 
     /**
      * Método para obtener el número de horas de operación del aeropuerto propio.
@@ -229,22 +294,4 @@ public class AeropuertoPropio extends Aeropuerto {
     public double calcularHorasEntre(LocalTime hora1, LocalTime hora2) {
         return (double) (hora2.toSecondOfDay() - hora1.toSecondOfDay()) / 3600;
     }
-
-	public List<Vuelo> getVuelosAceptados() {
-		return this.vuelosAceptados;
-	}
-	
-	public void agregarVueloAceptado(Vuelo vuelo) {
-		if (vuelo == null) {
-            throw new IllegalArgumentException("La pista no puede ser null");
-        } 
-		this.vuelosAceptados.add(vuelo);
-	}
-
-	public void agregarAeropuertoDestino(AeropuertoDestino aeropuertoDestino) {
-		this.aeropuertosDestino.add(aeropuertoDestino);
-		
-	}
-
-
 }
