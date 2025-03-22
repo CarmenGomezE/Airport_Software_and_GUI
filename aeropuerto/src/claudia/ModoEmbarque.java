@@ -1,4 +1,4 @@
-package aeropuerto;
+package aeropuerto.src.claudia;
 /**
  * La clase abstracta ModoEmbarque representa el modo de embarque. 
  * Puede ser o bien finger o bien zona de aparcamiento.
@@ -6,9 +6,9 @@ package aeropuerto;
  */
 public abstract class ModoEmbarque {
     /**Código del modo de embarque */
-    private String codigo;
+    protected String codigo;
     /**Coste por hora del modo de embarque */
-    private double costePorHora;
+    protected double costePorHora;
     /**Vuelo que ocupa el modo de embarque */
     private Vuelo vuelo;
 

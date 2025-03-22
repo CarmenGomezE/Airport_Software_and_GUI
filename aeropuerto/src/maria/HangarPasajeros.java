@@ -1,4 +1,7 @@
 package aeropuerto.src.maria;
+
+import aeropuerto.src.carmen.avion.*;
+import java.util.*;
 /**
  * La clase HangarPasajeros representa los hangares de pasajeros del aeropuerto.
  * 
@@ -6,7 +9,7 @@ package aeropuerto.src.maria;
  */
 public class HangarPasajeros extends Hangar {
     /** Aviones de pasajeros en el hanagar*/
-    private List<AvionPasajeros> = aviones;
+    private List<AvionPasajeros> aviones;
 
     /** 
      * Constructor de la clase HangarPasajeros.

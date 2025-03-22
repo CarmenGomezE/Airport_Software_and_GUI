@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import aeropuerto.src.maria.CriterioBusqueda;
 
 /**
  * La clase Usuario representa a los usuarios de la aplicación.
@@ -21,7 +20,7 @@ public abstract class Usuario {
     /** Notificaciones del usuario*/
     protected List<Notificacion> notificaciones;
     /** Vuelos del usuario*/
-    private List<Vuelo> vuelos;
+    protected List<Vuelo> vuelos;
     /** Vuelos programados del usuario*/
     private List<VueloProgramado> vuelosProgramados;
 

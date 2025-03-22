@@ -1,4 +1,7 @@
 package aeropuerto.src.maria;
+
+import aeropuerto.src.claudia.*;
+import java.util.*;
 /**
  * La clase PuertaEmbarque representa las puertas de embarque del aeropuerto.
  * 

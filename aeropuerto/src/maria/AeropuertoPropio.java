@@ -1,9 +1,8 @@
 package aeropuerto.src.maria;
 import aeropuerto.src.claudia.*;
 import java.time.*;
-import java.util.List;
+import java.util.*;
 
-import aeropuerto.src.carmen.vuelo.VueloProgramado;
 /**
  * La clase AeropuertoPropio representa el aeropuerto que se gestiona.
  * 
@@ -18,7 +17,10 @@ public class AeropuertoPropio extends Aeropuerto {
     private List<ZonaAparcamiento> zonasAparcamiento;
     /** Terminales del aeropuerto propio*/
     private List<Terminal> terminales;
+    private List<Pista> pistas;
+    
     private List<Vuelo> vuelosAceptados;
+    private List<Aeropuerto> aeropuertosDestino;
 
     /**
      * Constructor de la clase AeropuertoPropio.
@@ -35,6 +37,12 @@ public class AeropuertoPropio extends Aeropuerto {
     public AeropuertoPropio(String nombre, String codigo, String ciudad, String pais, double distanciaCiudad, ZoneOffset diferenciaHoraria, int numTemporadas, DireccionRelativaCiudad direccionCiudad) {
         super(nombre, codigo, ciudad, pais, distanciaCiudad, diferenciaHoraria, numTemporadas, direccionCiudad);
         this.vuelosAceptados=new ArrayList<>();
+        this.fingers=new ArrayList<>();
+        this.hangares=new ArrayList<>();
+        this.zonasAparcamiento=new ArrayList<>();
+        this.terminales=new ArrayList<>();
+        this.pistas=new ArrayList<>();
+        this.aeropuertosDestino= new ArrayList<>();
     }
 
     /**
@@ -71,6 +79,19 @@ public class AeropuertoPropio extends Aeropuerto {
      */
     public List<Terminal> getTerminales() {
         return terminales;
+    }
+    
+    /**
+     * Método para obtener las terminales del aeropuerto propio.
+     * 
+     * @return Temrinales del aeropuerto propio.
+     */
+    public List<Pista> getPistas() {
+        return pistas;
+    }
+    
+    public List<Aeropuerto> getAeropuertosDestino() {
+        return aeropuertosDestino;
     }
 
     /**
@@ -139,6 +160,14 @@ public class AeropuertoPropio extends Aeropuerto {
 
         hangares.add(hangar);
     }
+    
+    public void addPista(Pista pista) {
+        if (pista == null) {
+            throw new IllegalArgumentException("La pista no puede ser null");
+        } 
+
+        pistas.add(pista);
+    }
 
     /**
      * Método para obtener el número de horas de operación del aeropuerto propio.
@@ -177,7 +206,15 @@ public class AeropuertoPropio extends Aeropuerto {
 	}
 	
 	public void agregarVueloAceptado(Vuelo vuelo) {
+		if (vuelo == null) {
+            throw new IllegalArgumentException("La pista no puede ser null");
+        } 
 		this.vuelosAceptados.add(vuelo);
+	}
+
+	public void agregarAeropuertoDestino(AeropuertoDestino aeropuertoDestino) {
+		this.aeropuertosDestino.add(aeropuertoDestino);
+		
 	}
 
 

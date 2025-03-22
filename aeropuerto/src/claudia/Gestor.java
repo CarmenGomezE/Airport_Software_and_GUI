@@ -20,7 +20,7 @@ public class Gestor extends Usuario{
     private List<Pista> pistas;
     private List<Hangar> hangares;
     private List<Terminal> terminales;
-    private AeropuertoPropio aeropuerto;
+    private AeropuertoPropio aeropuertoPropio;
     private List<Aerolinea> aerolineas;
     private EstadisticasGestor estadisticas;
     private SistemaFacturacion sistemaFacturacion;
@@ -127,7 +127,7 @@ public class Gestor extends Usuario{
     public void darDeAltaControlador(String nombre, String dni, String contrasena, Terminal terminal) {
 
         ControladorAereo controlador;
-        controlador = new Controlador(nombre, dni, contrasena); /**Falta terminal */
+        controlador = new ControladorAereo(nombre, dni, contrasena); /**Falta terminal */
 
     }
 
@@ -168,7 +168,7 @@ public class Gestor extends Usuario{
                     for(Temporada temporada: temporadas) {
                     	aeropuertoDestino.agregarTemporada(temporada);
                     }  	
-                    this.aeropuerto.agregarAeropuertoDestino(aeropuertoDestino);
+                    this.aeropuertoPropio.agregarAeropuertoDestino(aeropuertoDestino);
                 }
             }
         } catch (FileNotFoundException e) {
@@ -247,7 +247,8 @@ public class Gestor extends Usuario{
             throw new IllegalArgumentException("Un finger debe estar conectado a 1 o 2 puertas de embarque");
         }
 
-        puertasSet = new HashSet<PuertaEmbarque>(puertasEmbarque);
+        puertasSet = new HashSet<>();
+        puertasSet.addAll(puertasEmbarque);
         finger = new Finger(codigo, costePorHora, dimAlto, puertasSet);
     
 
@@ -275,7 +276,7 @@ public class Gestor extends Usuario{
     public void gestionarVuelos() {
     	for(VueloProgramado vuelo: vuelosPropuestos) {
     		if(puedeProgramarse(vuelo)) {
-    			aeropuerto.agregarVueloAceptado(vuelo);
+    			aeropuertoPropio.agregarVueloAceptado((Vuelo)vuelo);
     		}
     		else{
     			vuelo.getAvion().getAerolinea().getOperador().recibirNotificacionOpcionesReprogramacion();
@@ -286,9 +287,9 @@ public class Gestor extends Usuario{
     
     public boolean puedeProgramarse(VueloProgramado vuelo) {
     	boolean puedeProgramarse=false;
-    	for (Vuelo vueloExistente : aeropuerto.getVuelosAceptados()) {
+    	for (Vuelo vueloExistente : aeropuertoPropio.getVuelosAceptados()) {
             
-            for (Terminal terminal : aeropuerto.getTerminales()) {
+            for (Terminal terminal : aeropuertoPropio.getTerminales()) {
             	if ((vuelo.getTipoCarga() == TipoCarga.MERCANCIAS && !(terminal instanceof TerminalMercancias)) ||
                         (vuelo.getTipoCarga() == TipoCarga.PASAJEROS && !(terminal instanceof TerminalPasajeros))) {
                         continue;
@@ -316,7 +317,6 @@ public class Gestor extends Usuario{
         LocalTime nuevaHora = vuelo.getHora().plusMinutes(rangoMinutosMaximoCambioVuelo);  
 
         if (puedeProgramarseEnNuevaHora(vuelo, nuevaFecha, nuevaHora, terminal, controlador)) {
-            // Si se puede mover, actualizamos el vuelo con la nueva fecha y hora
             vuelo.setFecha(nuevaFecha);
             vuelo.setHora(nuevaHora);
             
@@ -328,7 +328,7 @@ public class Gestor extends Usuario{
 	}
     
     private boolean puedeProgramarseEnNuevaHora(VueloProgramado vuelo, LocalDate nuevaFecha, LocalTime nuevaHora, Terminal terminal, ControladorAereo controlador) {
-        for (Vuelo vueloExistente : aeropuerto.getVuelosAceptados()) {
+        for (Vuelo vueloExistente : aeropuertoPropio.getVuelosAceptados()) {
             if (vuelosSeSolapan(vuelo, vueloExistente, terminal, controlador)) {
                 return false;
             }
@@ -430,8 +430,8 @@ public class Gestor extends Usuario{
         recargoAvionMercancias = nuevorecargoAvionMercancias;
     }
 
-    public List<Aeropuerto> getAeropuerto() {
-        return this.aeropuertos;
+    public AeropuertoPropio getAeropuertoPropio() {
+        return this.aeropuertoPropio;
     }
 
 

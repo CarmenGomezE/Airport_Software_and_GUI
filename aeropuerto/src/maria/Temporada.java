@@ -81,7 +81,7 @@ public class Temporada {
      * @return true si se solapan, false si no
      */
     public boolean comprobarTemporada(Temporada nuevaTemporada) {
-        if (nuevaTemporada.getFechaInicio.isAfter(getFechaFinal) || nuevaTemporada.getFechaFinal.isBefore(getFechaInicio)) {
+        if (nuevaTemporada.getFechaInicio().isAfter(getFechaFin()) || nuevaTemporada.getFechaFin().isBefore(getFechaInicio())) {
             return false;
         } 
 

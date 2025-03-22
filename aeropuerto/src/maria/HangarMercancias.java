@@ -1,4 +1,7 @@
 package aeropuerto.src.maria;
+
+import aeropuerto.src.carmen.avion.*;
+import java.util.*;
 /**
  * La clase HangarMercancias representa los hangares de mercancias del aeropuerto.
  * 

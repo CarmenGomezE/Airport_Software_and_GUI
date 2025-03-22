@@ -15,7 +15,7 @@ public class TerminalPasajeros extends Terminal {
      * @param puertaEmbarque        Una de las puertas de embarque de la terminal de pasajeros.
      * @param numeroMaxPasajeros    Número máximo de pasajeros de la terminal de pasajeros.
      */
-    public Terminal(String codigo, PuertaEmbarque puertaEmbarque, int numeroMaxPasajeros) {
+    public TerminalPasajeros(String codigo, PuertaEmbarque puertaEmbarque, int numeroMaxPasajeros) {
         super(codigo, puertaEmbarque);
         this.numeroMaxPasajeros = numeroMaxPasajeros;
     }

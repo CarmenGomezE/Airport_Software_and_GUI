@@ -1,6 +1,5 @@
 package aeropuerto.src.carmen;
 
-import aeropuerto.src.claudia.*;
 import aeropuerto.src.carmen.vuelo.*;
 import java.util.*;
 
@@ -40,15 +39,6 @@ public class SolicitudVueloCompartido {
     }
 
     /**
-     * Método que devuelve el porcentaje que se solicita compartir.
-     * 
-     * @return Porcentaje.
-     */
-    public List<Double> getPorcentajes() {
-        return this.porcentajes;
-    }
-
-    /**
      * Método que devuelve el estado de la solicitud.
      * 
      * @return Estado de la solicitud.
@@ -57,7 +47,16 @@ public class SolicitudVueloCompartido {
         return this.estadoSolicitud;
     }
 
-    public void agregarOperadorCompartido(Operador operador, double porcentajeCarga) {
+    public void agregarOperadorCompartido(Operador operador, double porcentajeCarga) throws SolicitudInvalidaExcepcion {
+    	double totalPorcentaje = porcentajeCarga;
+        for (Double porcentaje : porcentajesCarga) {
+            totalPorcentaje += porcentaje;
+        }
+
+        if (totalPorcentaje > 100.0) {
+            throw new SolicitudInvalidaExcepcion("El porcentaje total de carga no puede superar el 100%.");
+        }
+        
         this.operadoresCompartidos.add(operador);
         this.porcentajesCarga.add(porcentajeCarga);
     }
@@ -78,6 +77,10 @@ public class SolicitudVueloCompartido {
     }
     
     private boolean esSolicitudValida() throws SolicitudInvalidaExcepcion {
+    	if (porcentajesCarga.isEmpty()) {
+            throw new SolicitudInvalidaExcepcion("No se han agregado operadores compartidos.");
+        }
+    	
         double totalPorcentaje = 0.0;
         for (Double porcentaje : porcentajesCarga) {
             totalPorcentaje += porcentaje;

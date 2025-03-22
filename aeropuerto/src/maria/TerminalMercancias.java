@@ -11,7 +11,7 @@ public class TerminalMercancias extends Terminal {
      * @param codigo            Código de la terminal de mercancías.
      * @param puertaEmbarque    Una de las puertas de embarque de la terminal de mercancías.
      */
-    public Terminal(String codigo, PuertaEmbarque puertaEmbarque) {
+    public TerminalMercancias(String codigo, PuertaEmbarque puertaEmbarque) {
         super(codigo, puertaEmbarque);
     }
 }

@@ -1,4 +1,5 @@
-package aeropuerto.claudia;
+package aeropuerto.src.claudia;
+import aeropuerto.src.maria.*;
 import java.util.*;
 /**
  * La clase Finger representa un finger de un aeropuerto.
@@ -23,32 +24,15 @@ public class Finger extends ModoEmbarque {
     * @param puertasEmbarque        Puertas de embarque a las que está conectado el finger.
     */
     public Finger(String codigo, double costePorHora, double dimAlto, Set<PuertaEmbarque> puertasEmbarque) {
-
+    	super(codigo, costePorHora);
         if (puertasEmbarque.size() < 1 || puertasEmbarque.size() > 2) {
             throw new IllegalArgumentException("Un finger debe estar conectado a una o dos puertas de embarque");
         }
-        super(codigo, costePorHora);
         this.dimAlto = dimAlto;
         this.puertasEmbarque = new HashSet<>(puertasEmbarque);
         this.horasUso = 0;
         this.id = contador ++;
         
-    }
-
-    /**
-     * Método que devuelve el código del finger.
-     * @return Código del finger.
-     */
-    public String getCodigo() {
-        return this.codigo;
-    }
-
-     /**
-     * Método que devuelve el coste por hora del finger.
-     * @return Coste por hora del finger.
-     */
-    public double getCostePorHora() {
-        return this.costePorHora;
     }
     
      /**
@@ -72,6 +56,9 @@ public class Finger extends ModoEmbarque {
     }
 
     public void addHorasUso(double horas) {
+    	if (horas < 0) {
+            throw new IllegalArgumentException("Las horas deben ser positivas");
+        } 
         this.horasUso += horas;
     }
 
@@ -82,7 +69,5 @@ public class Finger extends ModoEmbarque {
     public int getId(){
         return this.id;
     }
-
-
 
 }
