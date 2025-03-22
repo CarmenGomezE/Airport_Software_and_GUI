@@ -18,6 +18,8 @@ public class PuertaEmbarque {
     private Finger finger;
     /** Número de horas de uso de la puerta de embarque*/
     private double horasUso;
+    /** Vuelo que ocupa la puerta de embarque*/
+    private Vuelo vuelo;
 
     /**
      * Constructor de la clase PuertaEmbarque.
@@ -26,6 +28,7 @@ public class PuertaEmbarque {
         this.id = contadorId++;
         this.zonasAparcamiento = new ArrayList<>();
         this.horasUso = 0;
+        this.vuelo = null; 
     }
 
     /**
@@ -108,5 +111,23 @@ public class PuertaEmbarque {
         }
 
         this.finger = finger;
+    }
+
+    /**
+     * Método para obtener el vuelo que ocupa una puerta de embarque.
+     * 
+     * @return El vuelo que ocupa la puerta de embarque.
+     */
+    public Vuelo getVuelo() {
+        return vuelo;
+    }
+
+    /**
+     * Método para cambiar el vuelo que ocupa una puerta de embarque.
+     * 
+     * @param vuelo  El vuelo que ocupa la puerta de embarque.
+     */
+    public void setVuelo(Vuelo vuelo) {
+        this.vuelo = vuelo;
     }
 }
