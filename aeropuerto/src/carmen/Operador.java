@@ -27,7 +27,7 @@ import java.time.*;
  */
 public class Operador extends UsuarioConDni {
     /** Lista de los vuelos que tiene programados */
-    private List<VueloProgramado> vuelosProgramados;
+    private List<VueloProgramado> vuelosPropuestos;
     /** Lista de solicitudes recibidas de vuelos compartidos de la aerolínea */
     private List<SolicitudVueloCompartido> solicitudesRecibidas;
     /** Lista de solicitudes enviadas de vuelos compartidos de la aerolínea */
@@ -149,19 +149,18 @@ public class Operador extends UsuarioConDni {
         }
     }
 
-    public AvionPasajeros darDeAltaAvionPasajeros(String marca, String modelo, double dimAlto, double dimAncho, double dimLargo,
+    public void darDeAltaAvionPasajeros(String marca, String modelo, double dimAlto, double dimAncho, double dimLargo,
             double autonomia, int anoCompra, Date fechaUltimaRevision, String matricula,
             int capacidadMaxPasajeros) {
-        return new AvionPasajeros(marca, modelo, dimAlto, dimAncho, dimLargo, autonomia, anoCompra,
-                fechaUltimaRevision, matricula, capacidadMaxPasajeros);
+        getAerolinea().agregarAvion(new AvionPasajeros(marca, modelo, dimAlto, dimAncho, dimLargo, autonomia, anoCompra,
+                fechaUltimaRevision, matricula, capacidadMaxPasajeros));
     }
 
-    public AvionMercancias darDeAltaAvionMercancias(String marca, String modelo, double dimAlto, double dimAncho, double dimLargo,
+    public void darDeAltaAvionMercancias(String marca, String modelo, double dimAlto, double dimAncho, double dimLargo,
             double autonomia, int anoCompra, Date fechaUltimaRevision, String matricula,
             double capacidadMaxCarga, boolean mercaPeligrosa, boolean controlTemperatura) {
-        return new AvionMercancias(marca, modelo, dimAlto, dimAncho, dimLargo, autonomia, anoCompra,
-                fechaUltimaRevision,
-                matricula, capacidadMaxCarga, mercaPeligrosa, controlTemperatura);
+    	getAerolinea().agregarAvion(new AvionMercancias(marca, modelo, dimAlto, dimAncho, dimLargo, autonomia, anoCompra,
+                fechaUltimaRevision,matricula, capacidadMaxCarga, mercaPeligrosa, controlTemperatura));
     }
 
     public void recibirNotificacionOpcionesReprogramacion() {
@@ -191,36 +190,28 @@ public class Operador extends UsuarioConDni {
     }
     
    
-        public boolean programarVuelo(String codigoVuelo, Avion avion, String aeropuertoSalida,
+        public VueloProgramado proponerVuelo(String codigoVuelo, Avion avion, String aeropuertoSalida,
                                       String aeropuertoLlegada, LocalDateTime horarioSalida,
                                       LocalDateTime horarioLlegada, List<Escala> escalas,
                                       TipoVuelo tipo, Periodicidad periodicidad, LocalDate fechaInicio,
                                       LocalDate fechaFin, List<Integer> diasRecurrentes) {
 
-        if (ChronoUnit.DAYS.between(LocalDate.now(), fechaInicio) < DIAS_ANTICIPACION_MINIMA) {
-            throw new AnticipacionInsuficienteException("Los vuelos deben programarse con al menos " 
-                    + DIAS_ANTICIPACION_MINIMA + " días de anticipación.");
-        }
-
-        // Verifica que el avión esté disponible
+       
         if (!avion.estaDisponible()) {
             throw new AvionNoDisponibleException("El avión seleccionado no está disponible.");
         }
 
-        // Verifica que la hora de llegada sea posterior a la de salida
         if (horarioLlegada.isBefore(horarioSalida)) {
             throw new HorarioInvalidoException("La hora de llegada no puede ser anterior a la de salida.");
         }
 
-        // Verifica que las escalas sean válidas
         for (Escala escala : escalas) {
             if (escala.getHoraSalida().isBefore(escala.getHoraLlegada().plusHours(1))) {
-                throw new EscalaInvalidaException("La escala en " + escala.getDestino() + 
+                throw new EscalaInvalidaException("La escala en " + escala.getAeropuertoDestino().getCiudad() + 
                     " tiene menos de una hora de permanencia.");
             }
         }
 
-        // Creación y programación del vuelo según el tipo de periodicidad
         if (periodicidad == Periodicidad.PUNTUAL) {
             vuelosProgramados.add(new Vuelo(codigoVuelo, avion, aeropuertoSalida, aeropuertoLlegada,
                     horarioSalida, horarioLlegada, escalas, tipo, periodicidad));

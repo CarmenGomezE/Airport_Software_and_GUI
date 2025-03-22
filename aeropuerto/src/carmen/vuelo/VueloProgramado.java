@@ -1,6 +1,7 @@
 package aeropuerto.src.carmen.vuelo;
 
 import java.util.*;
+import aeropuerto.src.maria.*;
 import java.time.*;
 
 import aeropuerto.src.carmen.avion.*;
@@ -22,7 +23,6 @@ public class VueloProgramado {
     protected LocalTime hora;
     /** Dias en los que se repite el vuelo */
     protected List<DayOfWeek> diasRecurrente;
-
     /** Tipo de carga que transporta el vuelo */
     protected TipoCarga tipoCarga;
     /** Tipo de embarque del vuelo */
@@ -31,24 +31,45 @@ public class VueloProgramado {
     protected Periodicidad periodicidad;
     /** Tipo de vuelo */
     protected TipoVuelo tipoVuelo;
-
+    protected Aeropuerto aeropuertoDestino;
+    protected Aeropuerto aeropuertoSalida;
+    protected List<Escala> escalas;
     protected Avion avion;
 
-    /**
-     * Constructor de la clase VueloProgramado.
-     * 
-     * @param codigo           Código del vuelo.
-     * @param fecha            Fecha del vuelo.
-     * @param hora             Hora del vuelo.
-     * @param diasRecurrente   Días en los que es recurrente del vuelo.
-     * @param tipoCarga        Tipo de carga del vuelo.
-     * @param tipoModoEmbarque Modo de embarque del vuelo.
-     * @param periodicidad     Periodicidad del vuelo.
-     * @param tipoVuelo        Tipo de vuelo.
-     */
+    /*Constructor puntual*/
     public VueloProgramado(String codigo, LocalDate fecha, LocalTime hora, List<DayOfWeek> diasRecurrente,
             TipoCarga tipoCarga, TipoModoEmbarque tipoModoEmbarque, Periodicidad periodicidad, TipoVuelo tipoVuelo,
-            Avion avion) {
+            Avion avion, Aeropuerto aeropuertoDestino, Aeropuerto aeropuertoSalida, List<Escala> escalas) {
+        this.codigo = codigo;
+        this.fecha = fecha;
+        this.hora = hora;
+        this.diasRecurrente = diasRecurrente;
+        this.tipoCarga = tipoCarga;
+        this.tipoModoEmbarque = tipoModoEmbarque;
+        this.periodicidad = periodicidad;
+        this.tipoVuelo = tipoVuelo;
+        this.avion = avion;
+    }
+    
+    /*Constructor diario*/
+    public VueloProgramado(String codigo, LocalDate fecha, LocalTime hora, List<DayOfWeek> diasRecurrente,
+            TipoCarga tipoCarga, TipoModoEmbarque tipoModoEmbarque, Periodicidad periodicidad, TipoVuelo tipoVuelo,
+            Avion avion, Aeropuerto aeropuertoDestino, Aeropuerto aeropuertoSalida, List<Escala> escalas) {
+        this.codigo = codigo;
+        this.fecha = fecha;
+        this.hora = hora;
+        this.diasRecurrente = diasRecurrente;
+        this.tipoCarga = tipoCarga;
+        this.tipoModoEmbarque = tipoModoEmbarque;
+        this.periodicidad = periodicidad;
+        this.tipoVuelo = tipoVuelo;
+        this.avion = avion;
+    }
+    
+    /*Constructor recurrente*/
+    public VueloProgramado(String codigo, LocalDate fecha, LocalTime hora, List<DayOfWeek> diasRecurrente,
+            TipoCarga tipoCarga, TipoModoEmbarque tipoModoEmbarque, Periodicidad periodicidad, TipoVuelo tipoVuelo,
+            Avion avion, Aeropuerto aeropuertoDestino, Aeropuerto aeropuertoSalida, List<Escala> escalas) {
         this.codigo = codigo;
         this.fecha = fecha;
         this.hora = hora;

@@ -3,6 +3,7 @@ package aeropuerto.src.carmen;
 import java.util.*;
 import java.time.*;
 import aeropuerto.src.carmen.vuelo.*;
+import aeropuerto.src.carmen.avion.*;
 import aeropuerto.src.carmen.factura.*;
 import aeropuerto.src.claudia.*;
 
@@ -20,8 +21,11 @@ public class Aerolinea {
     private Operador operador;
     /** Facturas de la aerolínea */
     private List<Factura> facturas;
-
+    /** Aviones de la aerolínea */
+    private List<Avion> aviones;
+    /** VuelosProgramados de la aerolínea */
     private List<VueloProgramado> vuelosProgramados;
+    /** Vuelos de la aerolínea */
     private List<Vuelo> vuelos;
 
     public Aerolinea(String nombre, String codigo, Operador operador) {
@@ -63,6 +67,18 @@ public class Aerolinea {
 
 	public List<Factura>getFacturas() {
 		return this.facturas;
+	}
+	
+	public List<Avion> getAviones(){
+		return this.aviones;
+	}
+	
+	public void agregarAvion(Avion avion) {
+		this.aviones.add(avion);
+	}
+	
+	public List<VueloProgramado> getVuelosProgramados(){
+		return this.vuelosProgramados;
 	}
 
 
