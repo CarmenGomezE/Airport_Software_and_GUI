@@ -58,8 +58,7 @@ public abstract class UsuarioConDni extends Usuario {
      */
     public void recibirNotificacionCambioEstado(Vuelo vuelo) {
         String mensaje = "El vuelo " + vuelo.getCodigo() + " ha cambiado su estado a " + vuelo.getEstado() + ".";
-        LocalDateTime fecha = LocalDateTime.now();
-        Notificacion notificacion = new Notificacion(mensaje, fecha, TipoNotificacion.CAMBIO_ESTADO_VUELO);
+        Notificacion notificacion = new Notificacion(mensaje, TipoNotificacion.CAMBIO_ESTADO_VUELO);
 
         recibirNotificacion(notificicacion);
     }

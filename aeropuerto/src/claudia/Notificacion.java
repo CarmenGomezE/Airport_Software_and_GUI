@@ -8,11 +8,11 @@ import java.time.*;
 public class Notificacion {
 
     /**Mensaje de la notificación */
-    String mensaje;
+    private String mensaje;
     /**Fecha de la notificación */
-    Date fecha;
+    private LocalDateTime fecha;
     /**Tipo de la notificación */
-    TipoNotificacion tipoNotificacion;
+    private TipoNotificacion tipoNotificacion;
 
     /**
      * Constructor de la clase Notificacion.
@@ -22,7 +22,7 @@ public class Notificacion {
      */ 
     public Notificacion(String mensaje, TipoNotificacion tipoNotificacion) {
         this.mensaje = mensaje;
-        this.fecha = new Date();
+        this.fecha = LocalDateTime.now();
         this.tipoNotificacion = tipoNotificacion;
     }
 
@@ -38,7 +38,7 @@ public class Notificacion {
      * Método que devuelve la fecha de la notificación.
      * @return Fecha de la notificación.
      */
-    public Date getFecha()  {
+    public LocalDateTimeDate getFecha()  {
         return this.fecha;
     }
 
