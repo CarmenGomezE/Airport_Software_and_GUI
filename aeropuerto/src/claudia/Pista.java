@@ -10,6 +10,8 @@ public class Pista {
     private double longitud;
     /**Tipo de la pista */
     private TipoPista tipoPista;
+    /**Vuelo si la pista está ocupada */
+    private Vuelo vuelo;
 
     /**
      * Constructor de la clase Pista.
@@ -21,6 +23,7 @@ public class Pista {
         this.codigo = codigo;
         this.longitud = longitud;
         this.tipoPista = tipoPista;
+        this.vuelo = null;
     }
 
     /**
@@ -39,12 +42,30 @@ public class Pista {
         return this.longitud;
     }
 
-      /**
+    /**
      * Método que devuelve el tipo de la pista.
      * @return Tipo de la pista.
      */
     public TipoPista getTipoPista() {
         return this.tipoPista;
     }
+
+    /**
+     * Método que devuelve el vuelo que ocupa la pista.
+     * @return Vuelo de la pista.
+     */
+    public Vuelo getVuelo() {
+        return this.vuelo;
+    }
+
+    /**
+     * Método que cambia el vuelo que ocupa la pista.
+     * @param vuelo Vuelo de la pista.
+     */
+    public void setVuelo(Vuelo vuelo) {
+        this.vuelo = vuelo;
+    }
+
+
 }
 
