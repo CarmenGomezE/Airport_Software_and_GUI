@@ -1,4 +1,7 @@
 package aeropuerto.src.maria;
+
+import java.time.LocalDateTime;
+
 /**
  * La clase UsuarioConDni representa a los usuarios con Dni de la aplicación.
  * 
@@ -38,5 +41,26 @@ public abstract class UsuarioConDni extends Usuario {
      */
     public String getDni() {
         return dni;
+    }
+
+    /**
+     * Método para cambiar el estado de un vuelo.
+     * 
+     * @param vuelo     Vuelo al que se le cambia el estado.
+     * @param estado    Nuevo estado del vuelo.
+     */
+    public abstract void cambiarEstadoVuelo(Vuelo vuelo, EstadoVuelo estado);
+
+    /**
+     * Método para recibir una notificación de cambio de estado de un vuelo.
+     * 
+     * @param vuelo     El vuelo del que trata la notificación.
+     */
+    public void recibirNotificacionCambioEstado(Vuelo vuelo) {
+        String mensaje = "El vuelo " + vuelo.getCodigo() + " ha cambiado su estado a " + vuelo.getEstado() + ".";
+        LocalDateTime fecha = LocalDateTime.now();
+        Notificacion notificacion = new Notificacion(mensaje, fecha, TipoNotificacion.CAMBIO_ESTADO_VUELO);
+
+        recibirNotificacion(notificicacion);
     }
 }

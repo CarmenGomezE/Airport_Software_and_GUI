@@ -3,6 +3,7 @@ package aeropuerto.src.maria;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import aeropuerto.src.maria.CriterioBusqueda;
 
 /**
  * La clase Usuario representa a los usuarios de la aplicación.
@@ -11,15 +12,15 @@ import java.time.format.DateTimeFormatter;
  */
 public abstract class Usuario {
     /** Nombre del usuario*/
-    private String name;
+    private String nombre;
     /** Contraseña del usuario*/
     private String contrasena;
-    /** Criterio de búsqueda del usuario*/
-    private CriterioBusqueda criterioBusqueda; /** <-----------------mirar esto que no tiene buena pinta------------------*/
     /** Notificaciones del usuario*/
     private List<Notificacion> notificaciones;
     /** Vuelos del usuario*/
     private List<Vuelo> vuelos;
+    /** Vuelos programados del usuario*/
+    private List<VueloProgramado> vuelosProgramados;
 
     private static final DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private static final DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm");
@@ -33,6 +34,7 @@ public abstract class Usuario {
         this.nombre = nombre;
         this.notificaciones = new ArrayList<>();
         this.vuelos = new ArrayList<>();
+        this.vuelosProgramados = new ArrayList<>();
     }
 
     /**
@@ -46,6 +48,7 @@ public abstract class Usuario {
         this.contrasena = contrasena;
         this.notificaciones = new ArrayList<>();
         this.vuelos = new ArrayList<>();
+        this.vuelosProgramados = new ArrayList<>();
     }
 
     /**
@@ -53,8 +56,8 @@ public abstract class Usuario {
      * 
      * @return El nombre del usuario.
      */
-    public String getName() {
-        return name;
+    public String getNombre() {
+        return nombre;
     }
 
     /**
@@ -82,6 +85,33 @@ public abstract class Usuario {
      */
     public List<Vuelo> getVuelos() {
         return vuelos;
+    }
+
+    /**
+     * Método para obtener los vuelos programados de un usuario.
+     * 
+     * @return Los vuelos programados del usuario.
+     */
+    public List<VueloProgramado> getVuelosProgramados() {
+        return vuelosProgramados;
+    }
+
+    /**
+     * Método para cambiar el nombre de un usuario.
+     * 
+     * @param nombre El nuevo nombre del usuario.
+     */
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    /**
+     * Método para cambiar la contraseña de un usuario.
+     * 
+     * @param contrasena La nueva contraseña del usuario.
+     */
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
     /** 
@@ -213,6 +243,45 @@ public abstract class Usuario {
         }
 
         return mapaVuelos;
+    }
+
+    /**
+     * Método para recibir una notificación.
+     * 
+     * @param notificacion  La notificación que se recibe.
+     */
+    public void recibirNotificacion(Notificacion notificacion) {
+        if (notificacion == null) {
+            throw new IllegalArgumentException("La notificación reicbida no puede ser null");
+        }
+
+        notificaciones.add(notificacion);
+    }
+
+    /**
+     * Método para añadir un vuelo programado.
+     * 
+     * @param vuelo  El vuelo programado que se añade.
+     */
+    public void addVueloProgramado(VueloProgramado vuelo) {
+        if (vuelo == null) {
+            throw new IllegalArgumentException("El vuelo programado no puede ser null");
+        }
+
+        vuelosProgramados.add(vuelo);
+    }
+
+    /**
+     * Método para añadir un vuelo.
+     * 
+     * @param vuelo  El vuelo que se añade.
+     */
+    public void addVuelo(Vuelo vuelo) {
+        if (vuelo == null) {
+            throw new IllegalArgumentException("El vuelo no puede ser null");
+        }
+
+        vuelos.add(vuelo);
     }
 
 
