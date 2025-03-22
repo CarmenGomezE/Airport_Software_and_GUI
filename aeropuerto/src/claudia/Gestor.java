@@ -118,9 +118,11 @@ public class Gestor extends Usuario{
 
     }
 
-    public void darDeAltaAerolinea(String nombre, String codigo) {
+    public void darDeAltaAerolinea(String nombre, String codigo, Operador operador) {
 
-      /**Operador?? */
+        Aerolinea aerolinea;
+        aerolinea = new Aerolinea(nombre, codigo, operador);
+        aerolineas.add(aerolinea);
 
     }
 
@@ -395,18 +397,40 @@ public class Gestor extends Usuario{
     }
 
     public void configurarNotificaciones(List<TipoNotificacion> tipos){
+        this.tiposPermitidosNotificaciones = new ArrayList<>(tipos);
 
     }
 
     public void recibirNotificaciones(Notificacion notificacion) {
+        notificaciones.add(notificacion);
+        System.out.println("Nueva notificación: "+ notificacion.getMensaje());
 
     }
 
+    
     public void iniciarSesion(String contrasena) {
+
+        if (this.contrasena.equals(contrasena)) {
+            System.out.println("Inicio de sesión exitoso");
+        }
+
+        else {
+            System.out.println("Contraseña incorrecta. Inténtelo de nuevo");
+        }
 
     }
 
     public void modificarUsuario(String nombre, String contrasena, UsuarioConDni usuario) {
+
+        if (usuario != null){
+            usuario.setNombre(nombre);
+            usuario.setContrasena(contrasena);
+            System.out.println("Usuario modificado correctamente");
+        }
+
+        else {
+            System.out.println("Error. El usuario no existe");
+        }
 
     }
 
