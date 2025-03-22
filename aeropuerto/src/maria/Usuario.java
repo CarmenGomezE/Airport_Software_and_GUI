@@ -23,6 +23,8 @@ public abstract class Usuario {
     protected List<Vuelo> vuelos;
     /** Vuelos programados del usuario*/
     private List<VueloProgramado> vuelosProgramados;
+    /** Aeropuerto en el que trabaja el usuario*/
+    private AeropuertoPropio aeropuerto;
 
     private static final DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private static final DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm");
@@ -31,12 +33,14 @@ public abstract class Usuario {
      * Constructor sin contraseña de la clase Usuario.
      * 
      * @param nombre                Nombre del usuario.
+     * @param aeropuerto            Aeropuerto en el que trabaja el usuario.
      */
-    public Usuario(String nombre) {
+    public Usuario(String nombre, AeropuertoPropio aeropuerto) {
         this.nombre = nombre;
         this.notificaciones = new ArrayList<>();
         this.vuelos = new ArrayList<>();
         this.vuelosProgramados = new ArrayList<>();
+        this.aeropuerto = aeropuerto;
     }
 
     /**
@@ -44,15 +48,16 @@ public abstract class Usuario {
      * 
      * @param nombre                Nombre del usuario.
      * @param contraseña            Contraseña del usuario.
+     * @param aeropuerto            Aeropuerto en el que trabaja el usuario.
      */
-    public Usuario(String nombre, String contrasena) {
+    public Usuario(String nombre, String contrasena, AeropuertoPropio aeropuerto) {
         this.nombre = nombre;
         this.contrasena = contrasena;
         this.notificaciones = new ArrayList<>();
         this.vuelos = new ArrayList<>();
         this.vuelosProgramados = new ArrayList<>();
+        this.aeropuerto = aeropuerto;
     }
-
     /**
      * Método para obtener el nombre de un usuario.
      * 
