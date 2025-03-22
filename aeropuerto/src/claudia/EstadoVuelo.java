@@ -23,6 +23,8 @@ public enum EstadoVuelo{
     ESPERANDO_PISTA_DE_DESPEGUE(null),
     /**El vuelo se encuentra esperando pista de aterrizaje */
     ESPERANDO_PISTA_DE_ATERRIZAJE(null),
+    /**El vuelo se encuentra esperando el aterrizaje */
+    ESPERANDO_ATERRIZAJE(null),
     /**El vuelo se encuentra en aterrizaje */
     ATERRIZAJE(null),
     /**El vuelo se va a dirigir a hangar */
