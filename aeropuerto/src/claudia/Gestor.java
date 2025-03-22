@@ -20,7 +20,7 @@ public class Gestor extends Usuario{
     private List<Pista> pistas;
     private List<Hangar> hangares;
     private List<Terminal> terminales;
-    private List<Factura> facturas;
+    private AeropuertoPropio aeropuerto;
     private List<Aerolinea> aerolineas;
     private EstadisticasGestor estadisticas;
     private SistemaFacturacion sistemaFacturacion;
@@ -130,7 +130,7 @@ public class Gestor extends Usuario{
 
     }
 
-    public void darDeAltaAeropuertoDestino(String nombreFichero) {
+    public void darDeAltaAeropuertoDestino(String nombreFichero) throws IOException {
     	try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(nombreFichero)))) {
             String linea = reader.readLine();
             
@@ -143,7 +143,7 @@ public class Gestor extends Usuario{
                     String ciudadMasCercana = campos[2];
                     String pais = campos[3];
                     double distanciaCiudad = Double.parseDouble(campos[4]);
-                    String direccionRespectoCiudad = campos[5];
+                    DireccionRelativaCiudad direccionRespectoCiudad =DireccionRelativaCiudad.valueOf(campos[5]);
                     ZoneOffset diferenciaHoraria = ZoneOffset.ofHours(Integer.parseInt(campos[6]));
                     int numeroTemporadas = Integer.parseInt(campos[7]);
 
@@ -161,9 +161,13 @@ public class Gestor extends Usuario{
 
                         i +=3;
                     }
-
-                    AeropuertoDestino aeropuerto = new AeropuertoDestino(nombre, codigo, ciudadMasCercana, pais,
-                            distanciaCiudad, diferenciaHoraria, numeroTemporadas, temporadas, direccionRespectoCiudad);
+                    
+                    AeropuertoDestino aeropuertoDestino = new AeropuertoDestino(nombre, codigo, ciudadMasCercana, pais,
+                            distanciaCiudad, diferenciaHoraria, numeroTemporadas, direccionRespectoCiudad);
+                    for(Temporada temporada: temporadas) {
+                    	aeropuertoDestino.agregarTemporada(temporada);
+                    }  	
+                    this.aeropuerto.agregarAeropuertoDestino(aeropuertoDestino);
                 }
             }
         } catch (FileNotFoundException e) {
@@ -172,7 +176,6 @@ public class Gestor extends Usuario{
     }
 
     public void configurarAeropuertoPropio(String nombre, String codigo, String ciudadMasCercana, String pais, double distancia, int diferenciaHoraria, int numTemporadas, String horarioVerano, String horarioInvierno, DireccionRelativaCiudad direccion) {
-
         AeropuertoPropio aeropuertoPropio;
         aeropuertoPropio = new AeropuertoPropio(nombre, codigo, ciudadMasCercana, pais, distancia, diferenciaHoraria, numTemporadas, horarioVerano, horarioInvierno, direccion);
         aeropuertos.add(aeropuertoPropio);
