@@ -1,8 +1,12 @@
 package aeropuerto.src.claudia;
-import aeropuerto.src.carmen.*;
+
+import aeropuerto.src.maria.*;
 import aeropuerto.src.carmen.vuelo.*;
+import aeropuerto.src.carmen.avion.*;
+
 import java.time.*;
 import java.util.*;
+
 
 /**
  * La clase Vuelo representa los vuelos 
@@ -11,9 +15,12 @@ import java.util.*;
 public class Vuelo extends VueloProgramado{
     /**El estado del vuelo*/
     private EstadoVuelo estado;
-    private double tiempoRetraso;
+    private HistorialEstadoVuelo historialEstadoVuelo;
+    private int tiempoRetraso;
     private ModoEmbarque modoEmbarque;
     private PuertaEmbarque puertaEmbarque;
+    private Terminal terminal;
+    private ControladorAereo controladorAereo;
 
 
     /**
@@ -31,12 +38,16 @@ public class Vuelo extends VueloProgramado{
      * @param estado                Estado del vuelo.
      * @param tiempoRetraso         El tiempo de retraso del vuelo.
      */
-    public Vuelo(String codigo, Date fecha, LocalTime hora, List<DayOfWeek> diasRecurrente, TipoCarga tipoCarga, 
-                            TipoModoEmbarque tipoModoEmbarque, Periodicidad periodicidad, TipoVuelo tipoVuelo,
-                            Avion avion, EstadoVuelo estado, double tiempoRetraso) {
-        super(codigo,fecha,hora,diasRecurrente,tipoCarga,tipoModoEmbarque,periodicidad,tipoVuelo,avion);
-        this.estado=estado;
-        this.tiempoRetraso = tiempoRetraso;
+    public Vuelo(String codigo, LocalDate fecha,LocalDate fechaInicio, LocalDate fechaFinal, LocalTime hora, List<DayOfWeek> diasRecurrente, TipoCarga tipoCarga, 
+                            TipoModoEmbarque tipoModoEmbarque, Periodicidad periodicidad, TipoVuelo tipoVuelo,Avion avion,Aeropuerto aeropuertoDestino, 
+                            Aeropuerto aeropuertoSalida, Escala escala) {
+        super(codigo,fecha,fechaInicio, fechaFinal,hora, diasRecurrente,tipoCarga,tipoModoEmbarque,periodicidad,tipoVuelo,avion,aeropuertoDestino, aeropuertoSalida,escala);
+        this.estado=EstadoVuelo.ACEPTADO;
+        this.historialEstadoVuelo=new HistorialEstadoVuelo();
+        this.tiempoRetraso = 0;
+        this.puertaEmbarque=null;
+        this.terminal=null;
+        this.controladorAereo=null;
     }
 
 
@@ -44,8 +55,9 @@ public class Vuelo extends VueloProgramado{
      * Método que cambia el estado de un vuelo.
      * @param estado El nuevo estado del vuelo
      */
-    public void cambiarEstado(EstadoVuelo estado){
-        this.estado=estado;
+    public void cambiarEstado(EstadoVuelo nuevoEstado) {
+        this.estado = nuevoEstado;
+        this.historialEstadoVuelo.agregarCambioEstado(nuevoEstado, LocalTime.now());
     }
 
     /**
@@ -61,8 +73,25 @@ public class Vuelo extends VueloProgramado{
      * Método que devuelve el tiempo de retraso del vuelo.
      * @return Tiempo de retraso del vuelo.
      */
-    public double getRetraso() {
+    public int getRetraso() {
         return this.tiempoRetraso;
+    }
+    
+    /**
+     * Método que devuelve el tiempo de retraso del vuelo.
+     * @return Tiempo de retraso del vuelo.
+     */
+    public void addRetraso(int retraso) {
+        this.tiempoRetraso+=retraso;
+    }
+    
+    /**
+     * Método que devuelve el historial de cambios de estado.
+     * 
+     * @return Historial de cambios de estado.
+     */
+    public HistorialEstadoVuelo getHistorialEstadoVuelo() {
+        return this.historialEstadoVuelo;
     }
 
     public ModoEmbarque getModoEmbarque() {
@@ -80,5 +109,21 @@ public class Vuelo extends VueloProgramado{
     public void setPuertaEmbarque(PuertaEmbarque puerta) {
         this.puertaEmbarque = puerta;
     }
+    
+	public void setTerminal(Terminal terminal) {
+		this.terminal=terminal;
+	}
+
+	public void setControlador(ControladorAereo controladorAereo) {
+		this.controladorAereo=controladorAereo;
+	}
+
+	public Terminal getTerminal() {
+		return this.terminal;
+	}
+
+	public ControladorAereo getControlador() {
+		return this.controladorAereo;
+	}
 
 }
