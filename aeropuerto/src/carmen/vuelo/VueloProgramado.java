@@ -19,6 +19,8 @@ public class VueloProgramado {
     protected String codigo;
     /** Fecha del vuelo */
     protected LocalDate fecha;
+    protected LocalDate fechaInicio;
+    protected LocalDate fechaFinal;
     /** Hora del vuelo */
     protected LocalTime hora;
     /** Dias en los que se repite el vuelo */
@@ -36,51 +38,58 @@ public class VueloProgramado {
     protected List<Escala> escalas;
     protected Avion avion;
 
-    /*Constructor puntual*/
-    public VueloProgramado(String codigo, LocalDate fecha, LocalTime hora, List<DayOfWeek> diasRecurrente,
-            TipoCarga tipoCarga, TipoModoEmbarque tipoModoEmbarque, Periodicidad periodicidad, TipoVuelo tipoVuelo,
-            Avion avion, Aeropuerto aeropuertoDestino, Aeropuerto aeropuertoSalida, List<Escala> escalas) {
-        this.codigo = codigo;
-        this.fecha = fecha;
-        this.hora = hora;
-        this.diasRecurrente = diasRecurrente;
-        this.tipoCarga = tipoCarga;
-        this.tipoModoEmbarque = tipoModoEmbarque;
-        this.periodicidad = periodicidad;
-        this.tipoVuelo = tipoVuelo;
-        this.avion = avion;
-    }
-    
-    /*Constructor diario*/
-    public VueloProgramado(String codigo, LocalDate fecha, LocalTime hora, List<DayOfWeek> diasRecurrente,
-            TipoCarga tipoCarga, TipoModoEmbarque tipoModoEmbarque, Periodicidad periodicidad, TipoVuelo tipoVuelo,
-            Avion avion, Aeropuerto aeropuertoDestino, Aeropuerto aeropuertoSalida, List<Escala> escalas) {
-        this.codigo = codigo;
-        this.fecha = fecha;
-        this.hora = hora;
-        this.diasRecurrente = diasRecurrente;
-        this.tipoCarga = tipoCarga;
-        this.tipoModoEmbarque = tipoModoEmbarque;
-        this.periodicidad = periodicidad;
-        this.tipoVuelo = tipoVuelo;
-        this.avion = avion;
-    }
-    
-    /*Constructor recurrente*/
-    public VueloProgramado(String codigo, LocalDate fecha, LocalTime hora, List<DayOfWeek> diasRecurrente,
-            TipoCarga tipoCarga, TipoModoEmbarque tipoModoEmbarque, Periodicidad periodicidad, TipoVuelo tipoVuelo,
-            Avion avion, Aeropuerto aeropuertoDestino, Aeropuerto aeropuertoSalida, List<Escala> escalas) {
-        this.codigo = codigo;
-        this.fecha = fecha;
-        this.hora = hora;
-        this.diasRecurrente = diasRecurrente;
-        this.tipoCarga = tipoCarga;
-        this.tipoModoEmbarque = tipoModoEmbarque;
-        this.periodicidad = periodicidad;
-        this.tipoVuelo = tipoVuelo;
-        this.avion = avion;
+    public VueloProgramado(String codigo, LocalDate fecha, LocalDate fechaInicio, LocalDate fechaFinal, 
+            LocalTime hora, List<DayOfWeek> diasRecurrente, TipoCarga tipoCarga, TipoModoEmbarque tipoModoEmbarque, 
+            Periodicidad periodicidad, TipoVuelo tipoVuelo, Avion avion, Aeropuerto aeropuertoDestino, 
+            Aeropuerto aeropuertoSalida, List<Escala> escalas) {
+    	
+		this.codigo = codigo;
+		this.hora = hora;
+		this.tipoCarga = tipoCarga;
+		this.tipoModoEmbarque = tipoModoEmbarque;
+		this.tipoVuelo = tipoVuelo;
+		this.avion = avion;
+		this.aeropuertoDestino = aeropuertoDestino;
+		this.aeropuertoSalida = aeropuertoSalida;
+		this.escalas = escalas;
+		
+		if (periodicidad == Periodicidad.PUNTUAL) {
+			this.fecha = fecha;
+			this.fechaInicio = null;
+			this.fechaFinal = null;
+			this.diasRecurrente = null;
+		} else if (periodicidad == Periodicidad.DIARIO) {
+			this.fechaInicio = fechaInicio;
+			this.fechaFinal = fechaFinal;
+			this.diasRecurrente = null; 
+		} else if (periodicidad == Periodicidad.RECURRENTE) {
+			this.fechaInicio = fechaInicio;
+			this.fechaFinal = fechaFinal;
+			this.diasRecurrente = diasRecurrente;
+		} else {
+			throw new IllegalArgumentException("Periodicidad no válida");
+		}
+		this.periodicidad = periodicidad;
+	}
+
+    /**
+     * Método que devuelve la fecha de inicio de una Periodicidad
+     * 
+     * @return Fecha de inicio.
+     */
+    public LocalDate getFechaInicio() {
+        return this.fechaInicio;
     }
 
+    /**
+     * Método que devuelve la fecha de fin de una Periodicidad
+     * 
+     * @return Fecha de fin.
+     */
+    public LocalDate getFechaFinal() {
+        return this.fechaFinal;
+    }
+    
     /**
      * Método que devuelve el código del VueloProgramado.
      * 
