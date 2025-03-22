@@ -10,8 +10,11 @@ import java.util.*;
  */
 public class Vuelo extends VueloProgramado{
     /**El estado del vuelo*/
-    EstadoVuelo estado;
-    double tiempoRetraso;
+    private EstadoVuelo estado;
+    private double tiempoRetraso;
+    private ModoEmbarque modoEmbarque;
+    private PuertaEmbarque puertaEmbarque;
+
 
     /**
      * Constructor de la clase Vuelo .
@@ -60,6 +63,22 @@ public class Vuelo extends VueloProgramado{
      */
     public double getRetraso() {
         return this.tiempoRetraso;
+    }
+
+    public ModoEmbarque getModoEmbarque() {
+        return this.modoEmbarque;
+    }
+
+    public void setModoEmbarque(ModoEmbarque modo) {
+        this.modoEmbarque = modo;
+    }
+
+    public PuertaEmbarque getPuertaEmbarque() {
+        return this.puertaEmbarque;
+    }
+
+    public void setPuertaEmbarque(PuertaEmbarque puerta) {
+        this.puertaEmbarque = puerta;
     }
 
 }
