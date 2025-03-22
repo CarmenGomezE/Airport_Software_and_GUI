@@ -42,9 +42,10 @@ public class Operador extends UsuarioConDni {
      * @param vuelosPorgramados Vuelos programados asignados al operador.
      * @param aerolinea         Aerolinea a la que pertenece.
      * @param estadisticas      Estadísticas sobre vuelos.
+     * @param aeropuerto        Aeropuerto propio del Operador.
      */
-    public Operador(String nombre, String dni, Aerolinea aerolinea) {
-    	super(nombre, dni);
+    public Operador(String nombre, String dni, Aerolinea aerolinea, AeropuertoPropio aeropuerto) {
+    	super(nombre, dni, aeropuerto);
         this.aerolinea = aerolinea;
         this.solicitudesRecibidas = new ArrayList<>();
         this.solicitudesEnviadas = new ArrayList<>();

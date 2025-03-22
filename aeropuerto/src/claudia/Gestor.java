@@ -32,8 +32,8 @@ public class Gestor extends Usuario{
     private static double costeBaseVueloSalida= 105.9;
     private static double costeBaseVueloLlegada= 105.9;
 
-    public Gestor(String nombre, String contrasena, EstadisticasGestor estadisticas){
-        super(nombre, contrasena);
+    public Gestor(String nombre, String contrasena, EstadisticasGestor estadisticas, AeropuertoPropio aeropuerto){
+        super(nombre, contrasena, aeropuerto);
         this.tiposPermitidosNotificaciones = new ArrayList<>();
         this.usuarios = new ArrayList<>();
         this.hangares = new ArrayList<>();
