@@ -24,7 +24,10 @@ public class Gestor extends Usuario{
     private List<Aerolinea> aerolineas;
     private EstadisticasGestor estadisticas;
     private SistemaFacturacion sistemaFacturacion;
+    private List<VueloProgramado> vuelosPropuestos;
     private static int diasAnticipacionMinima = 30;
+    private static int rangoMinutosMaximoCambioVuelo=30;
+    private static int horasMaximasReprogramacion=48;
     private static double recargoAvionMercancias= 105.9;
     private static double costeBaseVueloSalida= 105.9;
     private static double costeBaseVueloLlegada= 105.9;
@@ -38,7 +41,6 @@ public class Gestor extends Usuario{
         this.modoEmbarques = new ArrayList<>();
         this.pistas = new ArrayList<>();
         this.terminales = new ArrayList<>();
-        this.facturas = new ArrayList<>();
         this.aerolineas = new ArrayList<>();
         this.estadisticas = estadisticas;
         this.sistemaFacturacion= establecerSistemaFacturacion();
@@ -107,13 +109,12 @@ public class Gestor extends Usuario{
 
         if (usuario != null) {
             notificacion = new Notificacion("Problema con la contraseña. Contacta con el gestor", TipoNotificacion.OLVIDO_CONTRASENA);
+            notificaciones.add(notificacion);
         }
 
         else {
             System.out.println("Usuario con DNI" + dni + "no encontrado.");
         }
-
-        notificaciones.add(notificacion);
 
     }
 
@@ -258,17 +259,117 @@ public class Gestor extends Usuario{
         pista = new Pista(codigo, longitud, tipoPista);
         pistas.add(pista);
     }
+    
+    public void recibirNotificacionProposicionVuelo(List<VueloProgramado> vuelosPropuestosOperador) throws AntelacionInvalidaException {
+    	for(VueloProgramado vuelo: vuelosPropuestosOperador) {
+    		if(!vuelo.getFecha().isBefore(LocalDate.now().plusDays(diasAnticipacionMinima))) {
+    			throw new AntelacionInvalidaException("La propuesta del vuelo " + vuelo.getCodigo() + " no cumple con la antelación mínima de días.");
+    		}
+    		else{
+    			vuelosPropuestos.add(vuelo);
+    		}
+    	}
+    	notificaciones.add(new Notificacion("Nuevo vuelo propuesto", TipoNotificacion.SOLICITUD_VUELO_PROGRAMADO));
+    }
 
-    public void gestionarVuelo(VueloProgramado vuelo, ControladorAereo controlador) {
-        /**ASIGNAR TERMINAL Y CONTROLADOR AL VUELO */
-        /**CONTROLADOR YA LO TENGO */
-        /**BUSCAR SI ES POSIBLE TERMINAL */
-        /**HACER UN METODO A LO MEJOR EN TERMINAL QUE DEVUELVA LA PRIMERA PUERTA DE EMBARQUE QUE ESTÉ DISPONIBLE O UN BOOLEAN O ALGO DE ESO */
-        /**MIRO CAPACIDAD */
-        /**ESTAS DOS ULTIMAS HAY QUE TENER EN CUENTA LA HORA DEL VUELO (VALE TAMBIEN 30 MINUTOS) */
-
+    public void gestionarVuelos() {
+    	for(VueloProgramado vuelo: vuelosPropuestos) {
+    		if(puedeProgramarse(vuelo)) {
+    			aeropuerto.agregarVueloAceptado(vuelo);
+    		}
+    		else{
+    			vuelo.getAvion().getAerolinea().getOperador().recibirNotificacionOpcionesReprogramacion();
+    		}
+    	}
 
     }
+    
+    public boolean puedeProgramarse(VueloProgramado vuelo) {
+    	boolean puedeProgramarse=false;
+    	for (Vuelo vueloExistente : aeropuerto.getVuelosAceptados()) {
+            
+            for (Terminal terminal : aeropuerto.getTerminales()) {
+            	if ((vuelo.getTipoCarga() == TipoCarga.MERCANCIAS && !(terminal instanceof TerminalMercancias)) ||
+                        (vuelo.getTipoCarga() == TipoCarga.PASAJEROS && !(terminal instanceof TerminalPasajeros))) {
+                        continue;
+                }
+                for (ControladorAereo controlador : terminal.getControladores()) {
+                    
+                    if (vuelosSeSolapan(vuelo, vueloExistente, terminal, controlador)) {
+                        if (!moverVuelo(vuelo, terminal, controlador)) {
+                        	buscarAlternativas(vuelo,vueloExistente, terminal, controlador);
+                        } else {
+                            System.out.println("Vuelo movido exitosamente para evitar solapamiento.");
+                        }
+                        puedeProgramarse = true;
+                        break; 
+                    }
+                }
+            }
+        }
+
+        return puedeProgramarse;
+    }
+    
+    private boolean moverVuelo(VueloProgramado vuelo, Terminal terminal, ControladorAereo controlador) {
+    	LocalDate nuevaFecha = vuelo.getFecha();
+        LocalTime nuevaHora = vuelo.getHora().plusMinutes(rangoMinutosMaximoCambioVuelo);  
+
+        if (puedeProgramarseEnNuevaHora(vuelo, nuevaFecha, nuevaHora, terminal, controlador)) {
+            // Si se puede mover, actualizamos el vuelo con la nueva fecha y hora
+            vuelo.setFecha(nuevaFecha);
+            vuelo.setHora(nuevaHora);
+            
+            System.out.println("Vuelo movido a " + nuevaFecha + " " + nuevaHora);
+            return true; 
+        }
+
+        return false;
+	}
+    
+    private boolean puedeProgramarseEnNuevaHora(VueloProgramado vuelo, LocalDate nuevaFecha, LocalTime nuevaHora, Terminal terminal, ControladorAereo controlador) {
+        for (Vuelo vueloExistente : aeropuerto.getVuelosAceptados()) {
+            if (vuelosSeSolapan(vuelo, vueloExistente, terminal, controlador)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void buscarAlternativas(VueloProgramado vuelo, Vuelo vueloExistente, Terminal terminal, ControladorAereo controlador) {
+		LocalDate fechaLimite = LocalDate.now().plusDays(horasMaximasReprogramacion%24);
+
+	    for (int i = 0; i < horasMaximasReprogramacion; i++) {
+	        LocalDate nuevaFecha = vuelo.getFecha().plusDays(i);
+	        
+	        for  (int j = 0; j < 24 * 60 / rangoMinutosMaximoCambioVuelo; j++) {
+	            LocalTime nuevaHora = LocalTime.of((j * rangoMinutosMaximoCambioVuelo) / 60, (j * rangoMinutosMaximoCambioVuelo) % 60);
+	            
+	            vuelo.setFecha(nuevaFecha);
+	            vuelo.setHora(nuevaHora);
+	            
+	            if (!vuelosSeSolapan(vuelo, vueloExistente, terminal, controlador)) {
+	                System.out.println("Alternativa encontrada: " + nuevaFecha + " " + nuevaHora);
+	                // Aquí se podrían enviar las opciones alternativas al gestor u operador
+	                return;
+	            }
+	        }
+	    }
+	    
+	    // Si no encontramos alternativas dentro de las 48 horas
+	    throw new VueloSolapadoException("No se pudo programar el vuelo. No hay disponibilidad dentro de las siguientes 48 horas.");
+	}
+		
+
+	private boolean vuelosSeSolapan(VueloProgramado vuelo, Vuelo vueloExistente, Terminal terminal,
+			ControladorAereo controlador) {
+		
+		if (vuelo.getFecha().equals(vueloExistente.getFecha()) && vuelo.getHora().equals(vueloExistente.getHora()) 
+		            && terminal.equals(vueloExistente.getTerminal()) && controlador.equals(vueloExistente.getControlador())) {
+	        return true; 
+	    }
+	    return false; 
+	}
 
     public EstadisticasGestor getEstadisticasAeropuerto(){
     	return this.estadisticas;

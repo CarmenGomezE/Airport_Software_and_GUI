@@ -1,4 +1,4 @@
-package aeropuerto.claudia;
+package aeropuerto.src.claudia;
 import java.util.*;
 
 /**

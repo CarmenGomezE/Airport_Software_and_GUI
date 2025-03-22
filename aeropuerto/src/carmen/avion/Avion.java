@@ -1,6 +1,7 @@
 package aeropuerto.src.carmen.avion;
 
 import aeropuerto.src.carmen.vuelo.*;
+import aeropuerto.src.carmen.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
@@ -31,6 +32,7 @@ public class Avion {
     private Date fechaUltimaRevision;
     /** Matrícula del avión */
     private String matricula;
+    private Aerolinea aerolinea;
     private List<VueloProgramado> vuelos;
     
     /**
@@ -58,6 +60,7 @@ public class Avion {
         this.fechaUltimaRevision = fechaUltimaRevision;
         this.matricula = matricula;
         this.vuelos=new ArrayList<VueloProgramado>();
+        this.aerolinea=null;
     }
 
     /**
@@ -139,6 +142,13 @@ public class Avion {
      */
     public String getMatricula() {
         return this.matricula;
+    }
+    
+    public void setAerolinea(Aerolinea aerolinea) {
+    	this.aerolinea=aerolinea;
+    }
+    public Aerolinea getAerolinea() {
+    	return this.aerolinea;
     }
     
     public void agregarVuelo(VueloProgramado vuelo) {

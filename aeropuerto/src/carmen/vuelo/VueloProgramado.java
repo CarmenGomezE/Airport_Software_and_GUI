@@ -170,4 +170,14 @@ public class VueloProgramado {
         return this.avion;
     }
 
+	public void setHora(LocalTime nuevaHora) {
+		this.hora=nuevaHora;
+		
+	}
+
+	public void setFecha(LocalDate nuevaFecha) {
+		this.fecha=nuevaFecha;
+		
+	}
+
 }

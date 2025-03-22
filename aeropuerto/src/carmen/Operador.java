@@ -46,21 +46,11 @@ public class Operador extends UsuarioConDni {
     public Operador(String nombre, String dni, Aerolinea aerolinea) {
     	super(nombre, dni);
         this.aerolinea = aerolinea;
-        this.vuelosPropuestos = new ArrayList<>();
         this.solicitudesRecibidas = new ArrayList<>();
         this.solicitudesEnviadas = new ArrayList<>();
         this.estadisticas = new EstadisticasOperador(this);
     }
 
-    /**
-     * Método que devuelve los vuelos programados del Operador.
-     * 
-     * @return Vuelos programados del Operador.
-     */
-    public List<VueloProgramado> getVuelosPropuestos() {
-        return this.vuelosPropuestos;
-    }
-    
     /**
      * Método que añade vuelos programados a los del Operador.
      * 
@@ -71,6 +61,7 @@ public class Operador extends UsuarioConDni {
             Periodicidad periodicidad, TipoVuelo tipoVuelo, Avion avion, Aeropuerto aeropuertoDestino, 
             Aeropuerto aeropuertoSalida, Escala escala) { 
         
+    	List<VueloProgramado> vueloPropuestos=new ArrayList<>();
     	
         if (aeropuertoSalida == null || aeropuertoDestino == null) {
             throw new IllegalArgumentException("El aeropuerto de salida y el de llegada no pueden ser nulos.");
@@ -109,14 +100,18 @@ public class Operador extends UsuarioConDni {
         VueloProgramado vueloPropuesto= new VueloProgramado(codigo,fecha,fechaInicio,fechaFinal,hora,diasRecurrente,tipoCarga,tipoModoEmbarque, 
                 periodicidad,tipoVuelo,avion,aeropuertoDestino, aeropuertoSalida,escala);
             	
-        this.vuelosPropuestos.add(vueloPropuesto);
+        vueloPropuestos.add(vueloPropuesto);
 
         if (periodicidad == Periodicidad.PUNTUAL) {
-        	vuelosPropuestos.add(vueloPropuesto);
+        	vueloPropuestos.add(vueloPropuesto);
         } else if (periodicidad == Periodicidad.DIARIO) {
             LocalDate fechaIterativa = fechaInicio;
             while (!fechaIterativa.isAfter(fechaFinal)) {
-            	this.vuelosPropuestos.add(new VueloProgramado(codigo + "-" + fechaIterativa, null, fechaIterativa, fechaIterativa,
+            	if (!avion.estaDisponible(fechaIterativa, hora)) {
+                    throw new AvionNoDisponibleException("El avión no está disponible para el vuelo diario en la fecha " + fechaIterativa);
+                }
+            	
+            	vueloPropuestos.add(new VueloProgramado(codigo + "-" + fechaIterativa, null, fechaIterativa, fechaIterativa,
                         hora, null, tipoCarga, tipoModoEmbarque, periodicidad, tipoVuelo, avion, 
                         aeropuertoDestino, aeropuertoSalida, escala));
                 fechaIterativa = fechaIterativa.plusDays(1);
@@ -124,15 +119,20 @@ public class Operador extends UsuarioConDni {
         } else if (periodicidad == Periodicidad.RECURRENTE) {
             LocalDate fechaIterativa = fechaInicio;
             while (!fechaIterativa.isAfter(fechaFinal)) {
+            	if (!avion.estaDisponible(fechaIterativa, hora)) {
+                    throw new AvionNoDisponibleException("El avión no está disponible para el vuelo diario en la fecha " + fechaIterativa);
+                }
+            	
                 if (diasRecurrente.contains(fechaIterativa.getDayOfWeek())) {
-                	this.vuelosPropuestos.add(new VueloProgramado(codigo + "-" + fechaIterativa, null, fechaIterativa, fechaIterativa,
+                	vueloPropuestos.add(new VueloProgramado(codigo + "-" + fechaIterativa, null, fechaIterativa, fechaIterativa,
                             hora, diasRecurrente, tipoCarga, tipoModoEmbarque, periodicidad, tipoVuelo, avion, 
                             aeropuertoDestino, aeropuertoSalida, escala));
                 }
                 fechaIterativa = fechaIterativa.plusDays(1); 
             }
         }
-        /*ENVIAR NOTIFICACIÓN AL GESTOR*/
+        getGestor().recibirNotificacionProposicionVuelo(vuelosPropuestos);
+        
         System.out.println("Vuelo propuesto exitosamente.");
     }
 
@@ -255,7 +255,7 @@ public class Operador extends UsuarioConDni {
 
     public void recibirNotificacionFacturaEmitida(Factura factura) {
     	getAerolinea().addFactura(factura);
-        System.out.println("Operador notificado: Nueva factura generada para " + factura.getAirline()+ " por un total de " + factura.getPrice() + "€.");
+        new Notificacion("Factura emitida", TipoNotificacion.FACTURA_EMITIDA);
     }
 
     public void pagarFactura(Factura factura, String numeroDeTarjeta) {

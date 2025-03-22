@@ -1,8 +1,11 @@
 package aeropuerto.src.maria;
 
+import aeropuerto.src.claudia.*;
+import aeropuerto.src.carmen.vuelo.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.*;
 import aeropuerto.src.maria.CriterioBusqueda;
 
 /**
@@ -16,7 +19,7 @@ public abstract class Usuario {
     /** Contraseña del usuario*/
     private String contrasena;
     /** Notificaciones del usuario*/
-    private List<Notificacion> notificaciones;
+    protected List<Notificacion> notificaciones;
     /** Vuelos del usuario*/
     private List<Vuelo> vuelos;
     /** Vuelos programados del usuario*/

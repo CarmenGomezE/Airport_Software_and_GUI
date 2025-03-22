@@ -1,7 +1,9 @@
 package aeropuerto.src.maria;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import aeropuerto.src.claudia.*;
+import java.time.*;
 import java.util.List;
+
+import aeropuerto.src.carmen.vuelo.VueloProgramado;
 /**
  * La clase AeropuertoPropio representa el aeropuerto que se gestiona.
  * 
@@ -16,6 +18,7 @@ public class AeropuertoPropio extends Aeropuerto {
     private List<ZonaAparcamiento> zonasAparcamiento;
     /** Terminales del aeropuerto propio*/
     private List<Terminal> terminales;
+    private List<Vuelo> vuelosAceptados;
 
     /**
      * Constructor de la clase AeropuertoPropio.
@@ -29,8 +32,9 @@ public class AeropuertoPropio extends Aeropuerto {
      * @param numTemporadas         Número de temporadas del aeropuerto propio.
      * @param direccionCiudad       Dirección relativa a la ciudad más cercana del aeropuerto propio.
      */
-    public Aeropuerto(String nombre, String codigo, String ciudad, String pais, double distanciaCiudad, ZoneOffset diferenciaHoraria, int numTemporadas, DireccionRelativaCiudad direccionCiudad) {
+    public AeropuertoPropio(String nombre, String codigo, String ciudad, String pais, double distanciaCiudad, ZoneOffset diferenciaHoraria, int numTemporadas, DireccionRelativaCiudad direccionCiudad) {
         super(nombre, codigo, ciudad, pais, distanciaCiudad, diferenciaHoraria, numTemporadas, direccionCiudad);
+        this.vuelosAceptados=new ArrayList<>();
     }
 
     /**
@@ -65,7 +69,7 @@ public class AeropuertoPropio extends Aeropuerto {
      * 
      * @return Temrinales del aeropuerto propio.
      */
-    public List<Temrinal> getTerminales() {
+    public List<Terminal> getTerminales() {
         return terminales;
     }
 
@@ -78,7 +82,7 @@ public class AeropuertoPropio extends Aeropuerto {
         List<PuertaEmbarque> puertasEmbarque = new ArrayList<>();
 
         for (Terminal t: terminales) {
-            puertasEmbarque.add(t.getPuertasEmbarque());
+            puertasEmbarque.addAll(t.getPuertasEmbarque());
         }
 
         return puertasEmbarque;
@@ -145,9 +149,9 @@ public class AeropuertoPropio extends Aeropuerto {
         LocalDate hoy = LocalDate.now();
 
         for (Temporada t: temporadas) {
-            if (temporada.estaEnTemporada(hoy)) {
-                LocalTime apertura = temporada.getHorarioApertura();
-                LocalTime cierre = temporada.getHorarioCierre();
+            if (t.estaEnTemporada(hoy)) {
+                LocalTime apertura = t.getHorarioApertura();
+                LocalTime cierre = t.getHorarioCierre();
 
                 return calcularHorasEntre(apertura, cierre);
             }
@@ -167,6 +171,14 @@ public class AeropuertoPropio extends Aeropuerto {
     public double calcularHorasEntre(LocalTime hora1, LocalTime hora2) {
         return (double) (hora2.toSecondOfDay() - hora1.toSecondOfDay()) / 3600;
     }
+
+	public List<Vuelo> getVuelosAceptados() {
+		return this.vuelosAceptados;
+	}
+	
+	public void agregarVueloAceptado(Vuelo vuelo) {
+		this.vuelosAceptados.add(vuelo);
+	}
 
 
 }

@@ -1,5 +1,6 @@
-package aeropuerto;
-import java.util.*;
+package aeropuerto.src.claudia;
+
+
 import java.time.*;
 /**
  * La clase Notificacion representa las notificaciones que reciben los distintos usuarios.
@@ -38,7 +39,7 @@ public class Notificacion {
      * Método que devuelve la fecha de la notificación.
      * @return Fecha de la notificación.
      */
-    public LocalDateTimeDate getFecha()  {
+    public LocalDateTime getFecha()  {
         return this.fecha;
     }
 

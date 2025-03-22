@@ -1,4 +1,5 @@
 package aeropuerto.src.maria;
+import java.util.*;
 /**
  * La clase Terminal representa las terminales del aeropuerto.
  * 
@@ -9,6 +10,7 @@ public abstract class Terminal {
     private String codigo;
     /** Puertas de embarque de la terminal*/
     private List<PuertaEmbarque> puertasEmbarque;
+    private List<ControladorAereo> controladores;
 
     /**
      * Constructor de la clase Terminal.
@@ -35,7 +37,7 @@ public abstract class Terminal {
      * 
      * @return Lista de las puertas de embarque de la terminal.
      */
-    public void getPuertasEmbarque() {
+    public List<PuertaEmbarque> getPuertasEmbarque() {
         return puertasEmbarque;
     }
 
@@ -47,4 +49,8 @@ public abstract class Terminal {
     public void añadirPuertaEmbarque(PuertaEmbarque puertaEmbarque) {
         puertasEmbarque.add(puertaEmbarque);
     }
+
+	public List<ControladorAereo> getControladores() {
+		return this.controladores;
+	}
 }

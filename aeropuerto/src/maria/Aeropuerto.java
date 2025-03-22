@@ -1,9 +1,8 @@
 package aeropuerto.src.maria;
 import java.time.ZoneOffset;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
+import java.util.*;
+
 /**
  * La clase Aeropuerto representa los distintos aeropuertos que interactuan con el aeropuerto.
  * 
@@ -27,7 +26,7 @@ public abstract class Aeropuerto {
     /** Número de temporadas del aeropuerto*/
     private int numTemporadas;
     /** Temporadas del aeropuerto*/
-    private Temporada[] temporadas;
+    protected Temporada[] temporadas;
 
     /**
      * Constructor de la clase Aeropuerto.
@@ -44,7 +43,7 @@ public abstract class Aeropuerto {
     public Aeropuerto(String nombre, String codigo, String ciudad, String pais, double distanciaCiudad, ZoneOffset diferenciaHoraria, int numTemporadas, DireccionRelativaCiudad direccionCiudad) {
         this.nombre = nombre;
         this.codigo = codigo;
-        this.ciudad = ciudad;
+        this.ciudadMasCercana = ciudad;
         this.pais = pais;
         this.distanciaCiudad = distanciaCiudad;
         this.diferenciaHoraria = diferenciaHoraria;
@@ -77,7 +76,7 @@ public abstract class Aeropuerto {
      * @return La ciudad del aeropuerto.
      */
     public String getCiudad() {
-        return ciudad;
+        return ciudadMasCercana;
     }
 
     /**
@@ -138,13 +137,14 @@ public abstract class Aeropuerto {
      * Método para añadir una temporada al aeropuerto.
      * 
      * @param nuevaTemporada    Nueva temporada del aeropuerto.
+     * @throws TemporadasSolapadasException 
      */
-    public void agregarTemporada(Temporada nuevaTemporada) {
+    public void agregarTemporada(Temporada nuevaTemporada) throws TemporadasSolapadasException {
         if (nuevaTemporada == null) {
             throw new IllegalArgumentException("La nueva temporada no puede ser nula");
         }
 
-        ArrayList<Temporada> listaTemporadas = new ArrayList<>(Array.asList(temporadas));
+        ArrayList<Temporada> listaTemporadas = new ArrayList<>(Arrays.asList(temporadas));
 
         for (Temporada t: listaTemporadas) {
             if (t != null && t.comprobarTemporada(nuevaTemporada) == true) {
@@ -155,7 +155,7 @@ public abstract class Aeropuerto {
         listaTemporadas.add(nuevaTemporada);
         listaTemporadas.sort(Comparator.comparing(Temporada::getFechaInicio));
 
-        temporadas = listaTemporada.toArray(new Temporada[0]);
+        temporadas = listaTemporadas.toArray(new Temporada[0]);
         numTemporadas++;
     }
 

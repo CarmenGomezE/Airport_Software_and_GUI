@@ -1,4 +1,4 @@
-package aeropuerto.claudia;
+package aeropuerto.src.claudia;
 
 /**
  * La enumeraciónTipoNotificacion representa el tipo de notificación.
@@ -14,5 +14,6 @@ public enum TipoNotificacion{
     /**La notificación es acerca de una factura emitida  */
     FACTURA_EMITIDA,
     /**La notificación es acerca de opciones de reprogramar el vuelo */
-    OPCIONES_REPROGRAMAR_VUELO;
+    OPCIONES_REPROGRAMAR_VUELO, 
+    SOLICITUD_VUELO_PROGRAMADO;
 }

@@ -74,6 +74,7 @@ public class Aerolinea {
 	}
 	
 	public void agregarAvion(Avion avion) {
+		avion.setAerolinea(this);
 		this.aviones.add(avion);
 	}
 	
