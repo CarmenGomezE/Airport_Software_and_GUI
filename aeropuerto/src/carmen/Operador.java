@@ -71,6 +71,7 @@ public class Operador extends UsuarioConDni {
             Periodicidad periodicidad, TipoVuelo tipoVuelo, Avion avion, Aeropuerto aeropuertoDestino, 
             Aeropuerto aeropuertoSalida, Escala escala) { 
         
+    	
         if (aeropuertoSalida == null || aeropuertoDestino == null) {
             throw new IllegalArgumentException("El aeropuerto de salida y el de llegada no pueden ser nulos.");
         }
