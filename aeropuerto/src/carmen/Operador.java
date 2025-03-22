@@ -100,6 +100,38 @@ public class Operador extends UsuarioConDni {
         return this.estadisticas;
     }
 
+    /**
+     * Método para cambiar el estado de un vuelo.
+     * 
+     * @param vuelo     Vuelo al que se le cambia el estado.
+     * @param estado    Nuevo estado del vuelo.
+     */
+    @Override
+    public void cambiarEstadoVuelo(Vuelo vuelo, EstadoVuelo estado) {
+        if (vuelo == null || estado == null) {
+            throw new IllegalArgumentException("El vuelo y el nuevo estado no pueden ser null");
+        }
+
+        if (vuelos.contains(vuelo) == false) {
+            throw new VueloNoDelUsuarioException("Este vuelo no está asignado a este usuario");
+        }
+
+        switch (estado) {
+            case EN_PREPARACION_PARA_DESPEGAR:
+                return cambiarEstadoEnPreparacionDespegar(vuelo);
+            case INICIO_DEL_EMBARQUE:
+                return cambiarEstadoInicioEmbarque(vuelo);
+            case FIN_DEL_EMBARQUE:
+                return cambiarEstadoFinEmbarque(vuelo);
+            case INICIO_DEL_DESEMBARQUE:
+                return cambiarEstadoInicioDesembarque(vuelo);
+            case FIN_DEL_DESEMBARQUE:
+                return cambiarEstadoFinDesembarque(vuelo);
+            default:
+                throw new EstadoNoDelUsuarioException("Este usuario no puede cambiar a ese estado");
+        }
+    }
+
     public void cambiarEstadoEnPreparacionDespegar(Vuelo vuelo) {
         if (vuelo.getEstado() == EstadoVuelo.OPERATIVO) {
             vuelo.cambiarEstado(EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR);
