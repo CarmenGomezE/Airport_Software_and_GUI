@@ -61,5 +61,9 @@ public class Aerolinea {
 		return this.vuelos;
 	}
 
+	public List<Factura>getFacturas() {
+		return this.facturas;
+	}
+
 
 }

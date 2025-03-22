@@ -1,7 +1,7 @@
 package aeropuerto.src.carmen.factura;
 
 import aeropuerto.src.carmen.vuelo.*;
-import aeropuerto.src.claudia.Vuelo;
+import aeropuerto.src.claudia.*;
 import aeropuerto.src.carmen.*;
 import java.util.*;
 import java.time.*;
@@ -49,5 +49,29 @@ public class SistemaFacturacion {
 
     public String generarCodigoFactura(Aerolinea aerolinea) {
         return aerolinea.getCodigo() + String.format("%06d", contadorFactura++);
+    }
+    
+    public void setCosteBaseVueloSalida(double costeBaseVueloSalida) {
+    	this.costeBaseVueloSalida=costeBaseVueloSalida;
+    }
+    
+    public void setCosteBaseVueloLlegada(double costeBaseVueloLlegada) {
+    	this.costeBaseVueloLlegada=costeBaseVueloLlegada;
+    }
+    
+    public void setRecargoAvionMercancias(double recargoAvionMercancias) {
+    	this.recargoAvionMercancias=recargoAvionMercancias;
+    }
+    
+    public double getCosteBaseVueloSalida() {
+    	return this.costeBaseVueloSalida;
+    }
+    
+    public double getCosteBaseVueloLlegada() {
+    	return this.costeBaseVueloLlegada;
+    }
+    
+    public double getRecargoAvionMercancias() {
+    	return this.recargoAvionMercancias;
     }
 }

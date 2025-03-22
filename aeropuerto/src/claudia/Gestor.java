@@ -1,9 +1,13 @@
-package aeropuerto.claudia;
-import aeropuerto.maria;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashMap;
+package aeropuerto.src.claudia;
+import aeropuerto.src.maria.*;
+import es.uam.eps.padsof.invoices.InvoiceSystem;
+import es.uam.eps.padsof.invoices.NonExistentFileException;
+import es.uam.eps.padsof.invoices.UnsupportedImageTypeException;
+import aeropuerto.src.carmen.*;
+import aeropuerto.src.carmen.factura.*;
+import aeropuerto.src.carmen.vuelo.*;
+import java.util.*;
+import java.io.*;
 
 
 public class Gestor extends Usuario{
@@ -18,7 +22,11 @@ public class Gestor extends Usuario{
     private List<Factura> facturas;
     private List<Aerolinea> aerolineas;
     private EstadisticasGestor estadisticas;
+    private SistemaFacturacion sistemaFacturacion;
     private static int diasAnticipacionMinima = 30;
+    private static double recargoAvionMercancias= 105.9;
+    private static double costeBaseVueloSalida= 105.9;
+    private static double costeBaseVueloLlegada= 105.9;
 
     public Gestor(String nombre, String contrasena, EstadisticasGestor estadisticas){
         super(nombre, contrasena);
@@ -32,22 +40,42 @@ public class Gestor extends Usuario{
         this.facturas = new ArrayList<>();
         this.aerolineas = new ArrayList<>();
         this.estadisticas = estadisticas;
-
+        this.sistemaFacturacion= establecerSistemaFacturacion();
     }
 
-    public void generarFacturaYNotificar(Aerolinea aerolinea, SistemaFacturacion sistemaFacturacion) {
-         Factura factura = sistemaFacturacion.generarFactura(aerolinea);
+    public SistemaFacturacion establecerSistemaFacturacion( ) {
+    	return new SistemaFacturacion(recargoAvionMercancias,costeBaseVueloSalida, costeBaseVueloLlegada);
+    	
+    }
+    
+    public void emitirFactura(Aerolinea aerolinea) {
+         Factura factura = this.sistemaFacturacion.generarFactura(aerolinea);
         
-        if (factura != null) {
-            try {
-                InvoiceSystem.createInvoice(factura, "./facturas/Factura_" + factura.getInvoiceIdentifier() + ".pdf");
-                System.out.println("Factura generada correctamente.");
-            } catch (NonExistentFileException | UnsupportedImageTypeException e) {
-                System.err.println("Error al generar el PDF: " + e.getMessage());
-            }
-        } else {
-            System.out.println("No se generaron vuelos para la factura.");
-        }
+         if (factura == null) {
+             System.out.println("No se generaron vuelos para la factura.");
+             return;
+         }
+
+         try {
+             File directorio = new File("./facturas/");
+             if (!directorio.exists() && !directorio.mkdirs()) {
+                 System.err.println("Error: No se pudo crear el directorio de facturas.");
+                 return;
+             }
+
+             String filePath = "./facturas/Factura_" + factura.getInvoiceIdentifier() + ".pdf";
+             InvoiceSystem.createInvoice(factura, filePath);
+             
+             System.out.println("Factura generada correctamente: " + filePath);
+         } catch (NonExistentFileException e) {
+             System.err.println("Error: El archivo o directorio no existe. " + e.getMessage());
+         } catch (UnsupportedImageTypeException e) {
+             System.err.println("Error: Tipo de imagen no soportado en la factura. " + e.getMessage());
+         } catch (Exception e) {
+             System.err.println("Error inesperado al generar la factura: " + e.getMessage());
+         }
+         
+         aerolinea.getOperador().recibirNotificacionFacturaEmitida(factura);
     }
 
     public EstadoFactura verEstadoFactura(Factura factura) {
@@ -61,7 +89,7 @@ public class Gestor extends Usuario{
         for (Usuario usuario: usuarios) {
             if (usuario instanceof UsuarioConDni) {
                 usuarioDni = (UsuarioConDni) usuario;
-                if (UsuarioConDni.getDni().equals(dni)) {
+                if (usuarioDni.getDni().equals(dni)) {
                     return usuarioDni;
                 }
             }
@@ -122,7 +150,7 @@ public class Gestor extends Usuario{
         }
 
         else if (tipo.equals("Mercancías")) {
-            hangar = new HangarMercancias(numeroMaxAviones, dimPlazaAncho, dimPlazaAlto, dimPlazaLargo, costePorHora, mercaPeligrosa);
+            hangar = new HangarMercancias(numeroMaximoAviones, dimPlazaAncho, dimPlazaAlto, dimPlazaLargo, costePorHora, mercaPeligrosa);
         }
 
         else {
@@ -133,10 +161,10 @@ public class Gestor extends Usuario{
         
     }
 
-    public void darDeAltaTerminal(String codigo, String tipo, int aforo, Map<String, ZonaAparcamiento> puetasEmbarque) {
+    public void darDeAltaTerminal(String codigo, String tipo, int aforo, Map<String, ZonaAparcamiento> puertasEmbarque) {
 
         Terminal terminal;
-        List<PuertaEmbarque> listapuertas;
+        List<PuertaEmbarque> listaPuertas;
         String codigoPuerta;
         ZonaAparcamiento zona;
         PuertaEmbarque puerta;
@@ -163,7 +191,7 @@ public class Gestor extends Usuario{
         }
 
         for (i = 1; i < listaPuertas.size(); i++) {
-            terminal.añadirPuertaEmbarque(listapuertas.get(i));
+            terminal.añadirPuertaEmbarque(listaPuertas.get(i));
         }
 
         terminales.add(terminal);
@@ -171,15 +199,14 @@ public class Gestor extends Usuario{
     }
 
     public void darDeAltaFinger (String codigo, double dimAlto, double costePorHora, List<PuertaEmbarque> puertasEmbarque){
-
         Finger finger;
-        Set<PuertaEmbarque> puertasSet;
+        HashSet<PuertaEmbarque> puertasSet;
 
         if (puertasEmbarque.size() < 1 || puertasEmbarque.size() > 2) {
             throw new IllegalArgumentException("Un finger debe estar conectado a 1 o 2 puertas de embarque");
         }
 
-        puertasSet = new HashSet<>(puertasEmbarque);
+        puertasSet = new HashSet<PuertaEmbarque>(puertasEmbarque);
         finger = new Finger(codigo, costePorHora, dimAlto, puertasSet);
     
 
@@ -192,7 +219,7 @@ public class Gestor extends Usuario{
         pistas.add(pista);
     }
 
-    public void gestionarVuelo(VueloProgramado vuelo, Controlador controlador) {
+    public void gestionarVuelo(VueloProgramado vuelo, ControladorAereo controlador) {
         /**ASIGNAR TERMINAL Y CONTROLADOR AL VUELO */
         /**CONTROLADOR YA LO TENGO */
         /**BUSCAR SI ES POSIBLE TERMINAL */
@@ -203,16 +230,27 @@ public class Gestor extends Usuario{
 
     }
 
-    public String verEstadisticasAeropuerto(){
-
+    public EstadisticasGestor getEstadisticasAeropuerto(){
+    	return this.estadisticas;
     }
-
-    public void emitirFactura(Aerolinea aerolinea, Date fecha) {
-
+    
+    public Map<String, EstadoFactura> cargarFacturas(){
+    	Map<String, EstadoFactura> facturasEstado= new HashMap<String, EstadoFactura>();
+    	
+    	for(Aerolinea aerolinea: this.aerolineas) {
+    		for(Factura factura: aerolinea.getFacturas()) {
+    			facturasEstado.put(factura.getInvoiceIdentifier(), factura.getEstado());
+    		}
+    	}
+    	return facturasEstado;
     }
-
-    public Map<String, EstadoFactura> verFacturas(){
-
+    
+    public void verFacturas() {
+    	Map<String, EstadoFactura> facturasEstado= cargarFacturas();
+    	
+	    for (Map.Entry<String, EstadoFactura> entry : facturasEstado.entrySet()) {
+	        System.out.println("Factura ID: " + entry.getKey() + " | Estado: " + entry.getValue());
+	    }
     }
 
     public void configurarNotificaciones(List<TipoNotificacion> tipos){
@@ -232,11 +270,23 @@ public class Gestor extends Usuario{
     }
 
     public static int getDiasAnticipacionMinima(){
-        return this.diasAnticipacionMinima;
+        return diasAnticipacionMinima;
     }
 
-    public void setDiasAnticipacionMinima(int diasAnticipacionMinima) {
-        this.diasAnticipacionMinima = diasAnticipacionMinima;
+    public void setDiasAnticipacionMinima(int nuevosDiasAnticipacionMinima) {
+        diasAnticipacionMinima = nuevosDiasAnticipacionMinima;
+    }
+    
+    public void setCosteBaseVueloSalida(double nuevocosteBaseVueloSalida) {
+        costeBaseVueloSalida = nuevocosteBaseVueloSalida;
+    }
+    
+    public void setCosteBaseVueloLlegada(double nuevocosteBaseVueloLlegada) {
+        costeBaseVueloLlegada = nuevocosteBaseVueloLlegada;
+    }
+    
+    public void setRecargoAvionMercancias(double nuevorecargoAvionMercancias) {
+        recargoAvionMercancias = nuevorecargoAvionMercancias;
     }
 
     public List<Aeropuerto> getAeropuerto() {

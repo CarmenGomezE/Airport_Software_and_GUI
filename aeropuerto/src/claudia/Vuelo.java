@@ -1,5 +1,6 @@
-package aeropuerto.claudia;
-import aeropuerto.carmen.*;
+package aeropuerto.src.claudia;
+import aeropuerto.src.carmen.*;
+import aeropuerto.src.carmen.vuelo.*;
 import java.time.*;
 import java.util.*;
 
