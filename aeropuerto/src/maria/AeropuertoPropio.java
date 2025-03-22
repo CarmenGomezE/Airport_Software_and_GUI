@@ -90,9 +90,11 @@ public class AeropuertoPropio extends Aeropuerto {
      * @param terminal La terminal que se añade.
      */
     public void addTerminal(Terminal terminal) {
-        if (terminal != null) {
-            terminales.add(terminal);
+        if (terminal == null) {
+            throw new IllegalArgumentException("La terminal no puede ser null");
         } 
+
+        terminales.add(terminal);
     }
 
     /**
@@ -101,9 +103,11 @@ public class AeropuertoPropio extends Aeropuerto {
      * @param finger El finger que se añade.
      */
     public void addFinger(Finger finger) {
-        if (finger != null) {
-            fingers.add(finger);
+        if (finger == null) {
+            throw new IllegalArgumentException("El finger no puede ser null");
         } 
+
+        fingers.add(finger);
     }
 
     /**
@@ -112,9 +116,11 @@ public class AeropuertoPropio extends Aeropuerto {
      * @param zonaAparcamiento La zona de aparcamiento que se añade.
      */
     public void addZonaAparcamiento(ZonaAparcamiento zonaAparcamiento) {
-        if (zonaAparcamiento != null) {
-            zonasAparcamiento.add(zonaAparcamiento);
+        if (zonaAparcamiento == null) {
+            throw new IllegalArgumentException("La zona de aparcamiento no puede ser null");
         } 
+
+        zonasAparcamiento.add(zonaAparcamiento);
     }
 
     /**
@@ -123,9 +129,11 @@ public class AeropuertoPropio extends Aeropuerto {
      * @param hangar El hangar que se añade.
      */
     public void addHangar(Hangar hangar) {
-        if (hangar != null) {
-            hangares.add(hangar);
+        if (hangar == null) {
+            throw new IllegalArgumentException("El hangar no puede ser null");
         } 
+
+        hangares.add(hangar);
     }
 
     /**

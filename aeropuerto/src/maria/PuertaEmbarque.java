@@ -5,19 +5,105 @@ package aeropuerto.src.maria;
  * @author María Pozo, Carmen Gómez, Claudia Municio.
  */
 public class PuertaEmbarque {
-    /** Código de la puerta de embarque*/
-    private String codigo;
+    private static int contadorId = 1; 
+
+    /** Código único de la puerta de embarque*/
+    private int id;
     /** Zonas de aparcamiento de la puerta de embarque*/
     private List<ZonaAparcamiento> zonasAparcamiento;
+    /** Finger conectados a la puerta de embarque*/
+    private Finger finger;
+    /** Número de horas de uso de la puerta de embarque*/
+    private double horasUso;
 
     /**
      * Constructor de la clase PuertaEmbarque.
-     * 
-     * @param codigo            Código de la puerta de embarque.
-     * @param zonasAparcamiento Zonas de aparcamiento de la puerta de embarque.
      */
-    public PuertaEmbarque (String codigo, List<ZonaAparcamiento> zonasAparcamiento) {
-        this.codigo = codigo;
-        this.zonasAparcamiento = zonasAparcamiento;
+    public PuertaEmbarque () {
+        this.id = contadorId++;
+        this.zonasAparcamiento = new ArrayList<>();
+        this.horasUso = 0;
+    }
+
+    /**
+     * Método para obtener el código único de una puerta de embarque.
+     * 
+     * @return El código único de una puerta de embarque.
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * Método para obtener las zonas de aparcamiento de una puerta de embarque.
+     * 
+     * @return Las zonas de aparcamiento de una puerta de embarque.
+     */
+    public List<ZonaAparcamiento> getZonasAparcamiento() {
+        return zonasAparcamiento;
+    }
+
+    /**
+     * Método para obtener el finger conectado a una puerta de embarque.
+     * 
+     * @return El finger conectado a la puerta de embarque.
+     */
+    public Finger getFinger() {
+        return finger;
+    }
+
+    /**
+     * Método para obtener el número de horas de uso de la puerta de embarque.
+     * 
+     * @return Número de horas de uso de la puerta de embarque.
+     */
+    public double getHorasUso() {
+        return horasUso;
+    }
+
+    /**
+     * Método para añadir horas de uso a la puerta de embarque.
+     * 
+     * @param horas Horas que se suman.
+     */
+    public void addHorasUso(double horas) {
+        if (horas <= 0) {
+            throw new IllegalArgumentException("Las horas deben ser un número positivo");
+        }
+
+        horasUso += horas;
+    }
+
+    /**
+     * Método para reiniciar a 0 las horas de uso de la puerta de embarque.
+     */
+    public void resetHorasUso() {
+        horasUso = 0;
+    }
+
+    /**
+     * Método para añadir una zona de aparcamiento a una puerta de embarque.
+     * 
+     * @param zonaAparcamiento Zona de aparcamiento que se añade.
+     */
+    public void addZonaAparcamiento(ZonaAparcamiento zonaAparcamiento) {
+        if (zonaAparcamiento == null) {
+            throw new IllegalArgumentException("La zona de aparcamiento no puede ser nula");
+        }
+
+        zonasAparcamiento.add(zonaAparcamiento);
+    }
+
+    /**
+     * Método para conectar un finger a una puerta de embarque.
+     * 
+     * @param finger Finger que se conecta.
+     */
+    public void setFinger(Finger finger) {
+        if (finger == null) {
+            throw new IllegalArgumentException("El finger no puede ser null");
+        }
+
+        this.finger = finger;
     }
 }

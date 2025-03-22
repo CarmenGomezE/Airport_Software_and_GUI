@@ -19,7 +19,7 @@ public abstract class Hangar {
     private double dimPlazaLargo;
     /** Coste por hora del hangar*/
     private double costePorHora;
-    /** Horas de uso del hangar*/
+    /** Número de horas de uso del hangar*/
     private double horasUso;
 
     /**
@@ -111,7 +111,7 @@ public abstract class Hangar {
      */
     public void addHorasUso(double horas) {
         if (horas <= 0) {
-            return;
+            throw new IllegalArgumentException("Las horas deben ser un número positivo");
         }
 
         horasUso += horas;

@@ -10,9 +10,11 @@ public abstract class Usuario {
     /** Contraseña del usuario*/
     private String contrasena;
     /** Criterio de búsqueda del usuario*/
-    private CriterioBusqeda criterioBusqueda; /** <-----------------mirar esto que no tiene buena pinta------------------*/
+    private CriterioBusqueda criterioBusqueda; /** <-----------------mirar esto que no tiene buena pinta------------------*/
     /** Notificaciones del usuario*/
     private List<Notificacion> notificaciones;
+    /** Vuelos del usuario*/
+    private List<Vuelo> vuelos;
 
     /**
      * Constructor sin contraseña de la clase Usuario.
@@ -22,6 +24,7 @@ public abstract class Usuario {
     public Usuario(String nombre) {
         this.nombre = nombre;
         this.notificaciones = new ArrayList<>();
+        this.vuelos = new ArrayList<>();
     }
 
     /**
@@ -34,12 +37,13 @@ public abstract class Usuario {
         this.nombre = nombre;
         this.contrasena = contrasena;
         this.notificaciones = new ArrayList<>();
+        this.vuelos = new ArrayList<>();
     }
 
     /**
      * Método para obtener el nombre de un usuario.
      * 
-     * @return nombre del usuario.
+     * @return El nombre del usuario.
      */
     public String getName() {
         return name;
@@ -48,9 +52,94 @@ public abstract class Usuario {
     /**
      * Método para obtener la contraseña de un usuario.
      * 
-     * @return contrasena del usuario.
+     * @return La contraseña del usuario.
      */
     public String getContrasena() {
         return contrasena;
     }
+
+    /**
+     * Método para obtener las notificaciones de un usuario.
+     * 
+     * @return Las notificaciones del usuario.
+     */
+    public List<Notificacion> getNotificaciones() {
+        return notificaciones;
+    }
+
+    /**
+     * Método para obtener los vuelos de un usuario.
+     * 
+     * @return Los vuelos del usuario.
+     */
+    public List<Vuelo> getVuelos() {
+        return vuelos;
+    }
+
+    /** 
+     * Método para obtener la lista de vuelos del usuario con sus estados.
+     * 
+     * @return Un mapa con el código del vuelo y su estado.
+     */
+    public Map<String, EstadoVuelo> verListaVuelos() {
+        Map<String, EstadoVuelo> mapaVuelos = new HashMap<>();
+        for (Vuelo v : vuelos) {
+            mapaVuelos.put(v.getCodigo(), v.getEstado());
+        }
+        return mapaVuelos;
+    }
+
+    /**
+     * Método para buscar un vuelo según un criterio.
+     * 
+     * @param criterio      Criterio de búsqueda.
+     * @param valor         Valor del criterio.
+     * 
+     * @return El mapa con los vuelos encontrados.
+     */
+    public Map<String, EstadoVuelo> buscarVuelo(CriterioBusqueda criterio, String valor) {
+        switch (criterio) {
+            case CODIGO:
+                return buscarVueloPorCodigo(valor);
+            case ORIGEN:
+                return buscarVueloPorOrigen(valor);
+            case DESTINO:
+                return buscarVueloPorDestino(valor);
+            case TERMINAL:
+                return buscarVueloPorTerminal(valor);
+            default:
+                return new HashMap<>();
+        }
+    }
+
+    private Map<String, EstadoVuelo> buscarVueloPorCodigo(String codigo) {
+        return buscarVueloPorAtributo(v -> v.getCodigo().equalsIgnoreCase(codigo));
+    }
+
+    private Map<String, EstadoVuelo> buscarVueloPorOrigen(String origen) {
+        return buscarVueloPorAtributo(v -> v.getOrigen().equalsIgnoreCase(origen));
+    }
+
+    private Map<String, EstadoVuelo> buscarVueloPorDestino(String destino) {
+        return buscarVueloPorAtributo(v -> v.getDestino().equalsIgnoreCase(destino));
+    }
+
+    private Map<String, EstadoVuelo> buscarVueloPorFecha(Date fecha) {
+        return buscarVueloPorAtributo(v -> v.getFecha().equals(fecha));
+    }
+
+    private Map<String, EstadoVuelo> buscarVueloPorHoraSalida(LocalTime horaSalida) {
+        return buscarVueloPorAtributo(v -> v.getHoraSalida().equals(horaSalida));
+    }
+
+    private Map<String, EstadoVuelo> buscarVueloPorHoraLlegada(LocalTime horaLlegada) {
+        return buscarVueloPorAtributo(v -> v.getHoraLlegada().equals(horaLlegada));
+    }
+
+    private Map<String, EstadoVuelo> buscarVueloPorTerminal(String codigoTerminal) {
+        return buscarVueloPorAtributo(v -> v.getCodigoTerminal().equalsIgnoreCase(codigoTerminal));
+    }
+
+
+
 }
