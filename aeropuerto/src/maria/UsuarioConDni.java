@@ -10,15 +10,18 @@ import aeropuerto.src.claudia.*;
 public abstract class UsuarioConDni extends Usuario {
     /** Dni del usuario con dni*/
     private String dni;
+    /** Getor del usuario con dni*/
+    private Gestor gestor;
 
     /**
      * Constructor sin contraseña de la clase UsuarioConDni.
      * 
      * @param nombre             Nombre del usuario con dni.
      * @param dni                Dni del usuario con dni.
+     * @param aeropuerto         Aeropuerto en el que trabaja el usuario con dni.
      */
-    public UsuarioConDni(String nombre, String dni) {
-        super(nombre);
+    public UsuarioConDni(String nombre, String dni, AeropuertoPropio aeropuerto) {
+        super(nombre, aeropuerto);
         this.dni = dni;
     }
 
@@ -28,9 +31,10 @@ public abstract class UsuarioConDni extends Usuario {
      * @param nombre             Nombre del usuario con dni.
      * @param contraseña         Contraseña del usuario con dni.
      * @param dni                Dni del usuario con dni.
+     * @param aeropuerto         Aeropuerto en el que trabaja el usuario con dni.
      */
-    public UsuarioConDni(String nombre, String contraseña, String dni) {
-        super(nombre, contraseña);
+    public UsuarioConDni(String nombre, String contraseña, String dni, AeropuertoPropio aeropuerto) {
+        super(nombre, contraseña, aeropuerto);
         this.dni = dni;
     }
 
@@ -41,6 +45,15 @@ public abstract class UsuarioConDni extends Usuario {
      */
     public String getDni() {
         return dni;
+    }
+
+    /**
+     * Método para obtener el gestor de un usuario con dni.
+     * 
+     * @return El gestor del usuario con dni.
+     */
+    public Gestor getGestor() {
+        return gestor;
     }
 
     /**
