@@ -17,8 +17,12 @@ public class AeropuertoPropio extends Aeropuerto {
     private List<ZonaAparcamiento> zonasAparcamiento;
     /** Terminales del aeropuerto propio*/
     private List<Terminal> terminales;
+    /** Usuarios que trabajan en el aeropuerto propio*/
+    private List<Usuario> usuarios;
+    /** Pistas del aeropuerto propio*/
     private List<Pista> pistas;
-    
+    /** Aerolineas del aeropuerto propio*/
+    private List<Aerolinea> aerolineas;
     private List<Vuelo> vuelosAceptados;
     private List<Aeropuerto> aeropuertosDestino;
 
@@ -41,7 +45,10 @@ public class AeropuertoPropio extends Aeropuerto {
         this.hangares=new ArrayList<>();
         this.zonasAparcamiento=new ArrayList<>();
         this.terminales=new ArrayList<>();
+	this.usuarios= new ArrayList<>();
         this.pistas=new ArrayList<>();
+	this.aerolineas= new ArrayList<>();
+	this.vuelosAceptados= new ArrayList<>();
         this.aeropuertosDestino= new ArrayList<>();
     }
 
@@ -80,9 +87,18 @@ public class AeropuertoPropio extends Aeropuerto {
     public List<Terminal> getTerminales() {
         return terminales;
     }
+
+    /**
+     * Método para obtener los usuarios que trabajan en el aeropuerto propio.
+     * 
+     * @return Los usuarios que trabajan en el aeropuerto propio.
+     */
+    public List<Usuario> getUsuarios() {
+        return usuarios;
+    }
     
     /**
-     * Método para obtener las terminales del aeropuerto propio.
+     * Método para obtener las pistas del aeropuerto propio.
      * 
      * @return Temrinales del aeropuerto propio.
      */
@@ -159,6 +175,19 @@ public class AeropuertoPropio extends Aeropuerto {
         } 
 
         hangares.add(hangar);
+    }
+
+    /**
+     * Método para añadir un usuario al aeropuerto propio.
+     * 
+     * @param usuario El usuario que se añade.
+     */
+    public void addUsuario(Usuario usuario) {
+        if (usuario == null) {
+            throw new IllegalArgumentException("El usuario no puede ser null");
+        } 
+
+        usuarios.add(usuario);
     }
     
     public void addPista(Pista pista) {
