@@ -37,7 +37,7 @@ public class HangarPasajeros extends Hangar {
      * 
      * @param avion Avión que entra al hangar.
      */
-    public void añadirAvion(AvionPasajeros avion) {
+    public void addAvion(AvionPasajeros avion) {
         aviones.add(avion);
     }
 
