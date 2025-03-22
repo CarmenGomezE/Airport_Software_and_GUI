@@ -21,6 +21,7 @@ public class Vuelo extends VueloProgramado{
     private PuertaEmbarque puertaEmbarque;
     private Terminal terminal;
     private ControladorAereo controladorAereo;
+    private Pista pista;
 
 
     /**
@@ -48,6 +49,8 @@ public class Vuelo extends VueloProgramado{
         this.puertaEmbarque=null;
         this.terminal=null;
         this.controladorAereo=null;
+        this.pista=null;
+        this.modoEmbarque = null;
     }
 
 
@@ -126,4 +129,11 @@ public class Vuelo extends VueloProgramado{
 		return this.controladorAereo;
 	}
 
+    public Pista getPista() {
+        return this.pista;
+    }
+
+    public void setPista(Pista pista) {
+        this.pista = pista;
+    }
 }
