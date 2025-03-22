@@ -35,13 +35,13 @@ public class VueloProgramado {
     protected TipoVuelo tipoVuelo;
     protected Aeropuerto aeropuertoDestino;
     protected Aeropuerto aeropuertoSalida;
-    protected List<Escala> escalas;
+    protected Escala escala;
     protected Avion avion;
 
     public VueloProgramado(String codigo, LocalDate fecha, LocalDate fechaInicio, LocalDate fechaFinal, 
             LocalTime hora, List<DayOfWeek> diasRecurrente, TipoCarga tipoCarga, TipoModoEmbarque tipoModoEmbarque, 
             Periodicidad periodicidad, TipoVuelo tipoVuelo, Avion avion, Aeropuerto aeropuertoDestino, 
-            Aeropuerto aeropuertoSalida, List<Escala> escalas) {
+            Aeropuerto aeropuertoSalida, Escala escala) {
     	
 		this.codigo = codigo;
 		this.hora = hora;
@@ -51,7 +51,7 @@ public class VueloProgramado {
 		this.avion = avion;
 		this.aeropuertoDestino = aeropuertoDestino;
 		this.aeropuertoSalida = aeropuertoSalida;
-		this.escalas = escalas;
+		this.escala = escala;
 		
 		if (periodicidad == Periodicidad.PUNTUAL) {
 			this.fecha = fecha;
@@ -72,6 +72,9 @@ public class VueloProgramado {
 		this.periodicidad = periodicidad;
 	}
 
+    public Aeropuerto getAeropuertoDestino() {
+    	return this.aeropuertoDestino;
+    }
     /**
      * Método que devuelve la fecha de inicio de una Periodicidad
      * 

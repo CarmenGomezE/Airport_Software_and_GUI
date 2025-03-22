@@ -1,6 +1,6 @@
 package aeropuerto.src.carmen;
 
-import aeropuerto.src.carmen.vuelo.VueloProgramado;
+import aeropuerto.src.carmen.vuelo.*;
 import aeropuerto.src.claudia.*;
 import java.util.*;
 import java.time.*;
@@ -43,7 +43,7 @@ public class EstadisticasOperador {
         Map<ZoneId, List<Integer>> retrasosPorFranjaHoraria = new HashMap<>();
         Map<Vuelo, List<Integer>> retrasosPorVuelo = new HashMap<>();
 
-        for (Vuelo vuelo : operador.getVuelos()) {
+        for (Vuelo vuelo : operador.getAerolinea().getVuelos()) {
             Month mes = vuelo.getFecha().getMonth();
             ZoneId franjaHoraria = vuelo.getAeropuertoDestino().getDiferenciaHoraria();
             int retraso = vuelo.getRetraso();

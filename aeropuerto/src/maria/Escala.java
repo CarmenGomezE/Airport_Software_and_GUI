@@ -8,9 +8,9 @@ import java.time.LocalTime;
  */
 public class Escala {
     /** Origen de la escala*/
-    private String origen;
+    private Aeropuerto aeropuertoOrigen;
     /** Destino de la escala*/
-    private String destino;
+    private Aeropuerto aeropuertoDestino;
     /** Hora de salida de la escala*/
     private LocalTime horaSalida;
     /** Hora de llegada de la escala*/
@@ -24,11 +24,24 @@ public class Escala {
      * @param horaSalida    Hora de salida de la escala.
      * @param horaLlegada   Hora de llegada de la escala.
      */
-    public Escala(String origen, String destino, LocalTime horaLlegada, LocalTime horaSalida) {
-        this.origen = origen;
-        this.destino = destino;
+    public Escala(Aeropuerto aeropuertoOrigen, Aeropuerto aeropuertoDestino, LocalTime horaLlegada, LocalTime horaSalida) {
+        this.aeropuertoOrigen = aeropuertoOrigen;
+        this.aeropuertoDestino = aeropuertoDestino;
         this.horaSalida = horaSalida;
         this.horaLlegada = horaLlegada;
+    }
+    
+    public Aeropuerto getAeropuertoDestino() {
+    	return this.aeropuertoDestino;
+    }
+    public Aeropuerto getAeropuertoOrigen() {
+    	return this.aeropuertoOrigen;
+    }
+    public LocalTime getHoraLlegada() {
+    	return this.horaSalida;
+    }
+    public LocalTime getHoraSalida() {
+    	return this.horaLlegada;
     }
 }
 
