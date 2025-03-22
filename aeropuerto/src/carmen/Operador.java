@@ -26,8 +26,6 @@ import java.time.*;
  * @author Carmen Gómez, María Pozo, Claudia Municio.
  */
 public class Operador extends UsuarioConDni {
-    /** Lista de los vuelos que tiene programados */
-    private List<VueloProgramado> vuelosPropuestos;
     /** Lista de solicitudes recibidas de vuelos compartidos de la aerolínea */
     private List<SolicitudVueloCompartido> solicitudesRecibidas;
     /** Lista de solicitudes enviadas de vuelos compartidos de la aerolínea */
@@ -36,7 +34,6 @@ public class Operador extends UsuarioConDni {
     private Aerolinea aerolinea;
     /** Estadísticas del operador sobre vuelos de su aerolinea */
     private EstadisticasOperador estadisticas;
-    
     private List<Vuelo> vuelos;
 
     /**
@@ -49,7 +46,7 @@ public class Operador extends UsuarioConDni {
     public Operador(String nombre, String dni, Aerolinea aerolinea) {
     	super(nombre, dni);
         this.aerolinea = aerolinea;
-        this.vuelosProgramados = new ArrayList<>();
+        this.vuelosPropuestos = new ArrayList<>();
         this.solicitudesRecibidas = new ArrayList<>();
         this.solicitudesEnviadas = new ArrayList<>();
         this.estadisticas = new EstadisticasOperador(this);
@@ -60,26 +57,82 @@ public class Operador extends UsuarioConDni {
      * 
      * @return Vuelos programados del Operador.
      */
-    public List<VueloProgramado> getVuelosProgramados() {
-        return this.vuelosPorgramados;
+    public List<VueloProgramado> getVuelosPropuestos() {
+        return this.vuelosPropuestos;
     }
-
-    /**
-     * Método que devuelve los vuelos programados del Operador.
-     * 
-     * @return Vuelos programados del Operador.
-     */
-    public List<Vuelo> getVuelos() {
-        return this.vuelos;
-    }
-
+    
     /**
      * Método que añade vuelos programados a los del Operador.
      * 
      * @param vueloProgramado Vuelo a añadir.
      */
-    public void addVueloProgramado(VueloProgramado vueloPorgramado) {
-        this.vuelosProgramados.add(vueloPorgramado);
+    public void proponerVuelo(String codigo, LocalDate fecha, LocalDate fechaInicio, LocalDate fechaFinal, 
+            LocalTime hora, List<DayOfWeek> diasRecurrente, TipoCarga tipoCarga, TipoModoEmbarque tipoModoEmbarque, 
+            Periodicidad periodicidad, TipoVuelo tipoVuelo, Avion avion, Aeropuerto aeropuertoDestino, 
+            Aeropuerto aeropuertoSalida, Escala escala) { 
+        
+        if (aeropuertoSalida == null || aeropuertoDestino == null) {
+            throw new IllegalArgumentException("El aeropuerto de salida y el de llegada no pueden ser nulos.");
+        }
+        
+        if (escala == null) {
+            if (aeropuertoSalida.equals(aeropuertoDestino)) {
+                throw new IllegalArgumentException("El aeropuerto de salida no puede ser igual al de llegada si no hay escalas.");
+            }
+        }
+
+        if (tipoVuelo == TipoVuelo.LLEGADA && !aeropuertoDestino.equals(getAeropuertoPropio())) {
+            throw new IllegalArgumentException("El aeropuerto destino debe ser el actual si el vuelo es de llegada.");
+        }
+
+        if (tipoVuelo == TipoVuelo.SALIDA && !aeropuertoSalida.equals(getAeropuertoPropio())) {
+            throw new IllegalArgumentException("El aeropuerto de salida debe ser el actual si el vuelo es de salida.");
+        }
+     
+        if ((avion instanceof AvionMercancias && tipoCarga==TipoCarga.PASAJEROS) || (avion instanceof AvionPasajeros && tipoCarga==TipoCarga.MERCANCIAS)) {
+            throw new AvionNoValidoException("El avión seleccionado no concuerda con la carga que transporta.");
+        }
+        
+        if (!avion.estaDisponible(fecha, hora)) {
+            throw new AvionNoDisponibleException("El avión seleccionado no está disponible.");
+        }
+
+        if (escala.getAeropuertoOrigen().equals(aeropuertoSalida) && !escala.getAeropuertoDestino().equals(aeropuertoDestino)) {
+            throw new IllegalArgumentException("No se puede hacer escala en el aeropuerto de salida sin pasar por el de llegada.");
+        }
+        	 
+        if (escala.getHoraSalida().isBefore(escala.getHoraLlegada().plusHours(1))) {
+            throw new EscalaInvalidaException("La escala en " + escala.getAeropuertoDestino().getCiudad() + " tiene menos de una hora de permanencia.");
+        }
+
+        VueloProgramado vueloPropuesto= new VueloProgramado(codigo,fecha,fechaInicio,fechaFinal,hora,diasRecurrente,tipoCarga,tipoModoEmbarque, 
+                periodicidad,tipoVuelo,avion,aeropuertoDestino, aeropuertoSalida,escala);
+            	
+        this.vuelosPropuestos.add(vueloPropuesto);
+
+        if (periodicidad == Periodicidad.PUNTUAL) {
+        	vuelosPropuestos.add(vueloPropuesto);
+        } else if (periodicidad == Periodicidad.DIARIO) {
+            LocalDate fechaIterativa = fechaInicio;
+            while (!fechaIterativa.isAfter(fechaFinal)) {
+            	this.vuelosPropuestos.add(new VueloProgramado(codigo + "-" + fechaIterativa, null, fechaIterativa, fechaIterativa,
+                        hora, null, tipoCarga, tipoModoEmbarque, periodicidad, tipoVuelo, avion, 
+                        aeropuertoDestino, aeropuertoSalida, escala));
+                fechaIterativa = fechaIterativa.plusDays(1);
+            }
+        } else if (periodicidad == Periodicidad.RECURRENTE) {
+            LocalDate fechaIterativa = fechaInicio;
+            while (!fechaIterativa.isAfter(fechaFinal)) {
+                if (diasRecurrente.contains(fechaIterativa.getDayOfWeek())) {
+                	this.vuelosPropuestos.add(new VueloProgramado(codigo + "-" + fechaIterativa, null, fechaIterativa, fechaIterativa,
+                            hora, diasRecurrente, tipoCarga, tipoModoEmbarque, periodicidad, tipoVuelo, avion, 
+                            aeropuertoDestino, aeropuertoSalida, escala));
+                }
+                fechaIterativa = fechaIterativa.plusDays(1); 
+            }
+        }
+        /*ENVIAR NOTIFICACIÓN AL GESTOR*/
+        System.out.println("Vuelo propuesto exitosamente.");
     }
 
     /**
@@ -118,15 +171,15 @@ public class Operador extends UsuarioConDni {
 
         switch (estado) {
             case EN_PREPARACION_PARA_DESPEGAR:
-                return cambiarEstadoEnPreparacionDespegar(vuelo);
+                cambiarEstadoEnPreparacionDespegar(vuelo);
             case INICIO_DEL_EMBARQUE:
-                return cambiarEstadoInicioEmbarque(vuelo);
+                cambiarEstadoInicioEmbarque(vuelo);
             case FIN_DEL_EMBARQUE:
-                return cambiarEstadoFinEmbarque(vuelo);
+                cambiarEstadoFinEmbarque(vuelo);
             case INICIO_DEL_DESEMBARQUE:
-                return cambiarEstadoInicioDesembarque(vuelo);
+                cambiarEstadoInicioDesembarque(vuelo);
             case FIN_DEL_DESEMBARQUE:
-                return cambiarEstadoFinDesembarque(vuelo);
+                cambiarEstadoFinDesembarque(vuelo);
             default:
                 throw new EstadoNoDelUsuarioException("Este usuario no puede cambiar a ese estado");
         }
@@ -219,56 +272,6 @@ public class Operador extends UsuarioConDni {
         } catch (Exception e) {
             System.err.println("Error desconocido: " + e.getMessage());
         }
-    }
-    
-   
-        public VueloProgramado proponerVuelo(String codigoVuelo, Avion avion, String aeropuertoSalida,
-                                      String aeropuertoLlegada, LocalDateTime horarioSalida,
-                                      LocalDateTime horarioLlegada, List<Escala> escalas,
-                                      TipoVuelo tipo, Periodicidad periodicidad, LocalDate fechaInicio,
-                                      LocalDate fechaFin, List<Integer> diasRecurrentes) {
-
-       
-        if (!avion.estaDisponible()) {
-            throw new AvionNoDisponibleException("El avión seleccionado no está disponible.");
-        }
-
-        if (horarioLlegada.isBefore(horarioSalida)) {
-            throw new HorarioInvalidoException("La hora de llegada no puede ser anterior a la de salida.");
-        }
-
-        for (Escala escala : escalas) {
-            if (escala.getHoraSalida().isBefore(escala.getHoraLlegada().plusHours(1))) {
-                throw new EscalaInvalidaException("La escala en " + escala.getAeropuertoDestino().getCiudad() + 
-                    " tiene menos de una hora de permanencia.");
-            }
-        }
-
-        if (periodicidad == Periodicidad.PUNTUAL) {
-            vuelosProgramados.add(new Vuelo(codigoVuelo, avion, aeropuertoSalida, aeropuertoLlegada,
-                    horarioSalida, horarioLlegada, escalas, tipo, periodicidad));
-        } else if (periodicidad == Periodicidad.DIARIO) {
-            LocalDate fecha = fechaInicio;
-            while (!fecha.isAfter(fechaFin)) {
-                vuelosProgramados.add(new Vuelo(codigoVuelo + "-" + fecha, avion, aeropuertoSalida,
-                        aeropuertoLlegada, horarioSalida.withDayOfMonth(fecha.getDayOfMonth()),
-                        horarioLlegada.withDayOfMonth(fecha.getDayOfMonth()), escalas, tipo, periodicidad));
-                fecha = fecha.plusDays(1);
-            }
-        } else if (periodicidad == Periodicidad.RECURRENTE) {
-            LocalDate fecha = fechaInicio;
-            while (!fecha.isAfter(fechaFin)) {
-                if (diasRecurrentes.contains(fecha.getDayOfWeek().getValue())) {
-                    vuelosProgramados.add(new Vuelo(codigoVuelo + "-" + fecha, avion, aeropuertoSalida,
-                            aeropuertoLlegada, horarioSalida.withDayOfMonth(fecha.getDayOfMonth()),
-                            horarioLlegada.withDayOfMonth(fecha.getDayOfMonth()), escalas, tipo, periodicidad));
-                }
-                fecha = fecha.plusDays(1);
-            }
-        }
-
-        System.out.println("Vuelo programado exitosamente.");
-        return true;
     }
 
     public void solicitarCompartirVuelo(VueloProgramado vuelo, Operador operadorReceptor, double porcentajeCarga) {

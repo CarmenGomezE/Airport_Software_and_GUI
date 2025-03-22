@@ -1,6 +1,10 @@
 package aeropuerto.src.carmen.avion;
 
+import aeropuerto.src.carmen.vuelo.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
+
 
 /**
  * La clase Avión representa un avión de una aerolinea que realizará una
@@ -27,7 +31,8 @@ public class Avion {
     private Date fechaUltimaRevision;
     /** Matrícula del avión */
     private String matricula;
-
+    private List<VueloProgramado> vuelos;
+    
     /**
      * Constructor de la clase Avion.
      * 
@@ -52,6 +57,7 @@ public class Avion {
         this.anoCompra = anoCompra;
         this.fechaUltimaRevision = fechaUltimaRevision;
         this.matricula = matricula;
+        this.vuelos=new ArrayList<VueloProgramado>();
     }
 
     /**
@@ -134,4 +140,17 @@ public class Avion {
     public String getMatricula() {
         return this.matricula;
     }
+    
+    public void agregarVuelo(VueloProgramado vuelo) {
+    	this.vuelos.add(vuelo);
+    }
+
+	public boolean estaDisponible(LocalDate fecha, LocalTime hora) {
+		for(VueloProgramado vuelo: this.vuelos) {
+			if(!vuelo.getHora().equals(hora) &&!vuelo.getFecha().equals(fecha)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
