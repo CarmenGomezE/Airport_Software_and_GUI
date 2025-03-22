@@ -140,11 +140,15 @@ public abstract class Aeropuerto {
      * @param nuevaTemporada    Nueva temporada del aeropuerto.
      */
     public void agregarTemporada(Temporada nuevaTemporada) {
+        if (nuevaTemporada == null) {
+            throw new IllegalArgumentException("La nueva temporada no puede ser nula");
+        }
+
         ArrayList<Temporada> listaTemporadas = new ArrayList<>(Array.asList(temporadas));
 
         for (Temporada t: listaTemporadas) {
-            if (t != null && t.comprobarTemporada(nuevaTemporada)) {
-                return;
+            if (t != null && t.comprobarTemporada(nuevaTemporada) == true) {
+                throw new TemporadasSolapadasException("La nueva temporada se solapa con otra existente");
             }
         }
 

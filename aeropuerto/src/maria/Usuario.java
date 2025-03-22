@@ -1,4 +1,9 @@
 package aeropuerto.src.maria;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
 /**
  * La clase Usuario representa a los usuarios de la aplicación.
  * 
@@ -15,6 +20,9 @@ public abstract class Usuario {
     private List<Notificacion> notificaciones;
     /** Vuelos del usuario*/
     private List<Vuelo> vuelos;
+
+    private static final DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static final DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm");
 
     /**
      * Constructor sin contraseña de la clase Usuario.
@@ -105,6 +113,12 @@ public abstract class Usuario {
                 return buscarVueloPorOrigen(valor);
             case DESTINO:
                 return buscarVueloPorDestino(valor);
+            case FECHA: 
+                return buscarVueloPorFecha(valor);
+            case HORA_SALIDA: 
+                return buscarVueloPorHoraSalida(valor);
+            case HORA_LLEGADA: 
+                return buscarVueloPorHoraLlegada(valor);
             case TERMINAL:
                 return buscarVueloPorTerminal(valor);
             default:
@@ -113,31 +127,92 @@ public abstract class Usuario {
     }
 
     private Map<String, EstadoVuelo> buscarVueloPorCodigo(String codigo) {
-        return buscarVueloPorAtributo(v -> v.getCodigo().equalsIgnoreCase(codigo));
+        Map<String, EstadoVuelo> mapaVuelos = new HashMap<>();
+
+        for (Vuelo v: vuelos) {
+            if (v.getCodigo() == codigo) {
+                mapaVuelos.put(codigo, v.getEstado());
+            }
+        }
+
+        return mapaVuelos;
     }
 
     private Map<String, EstadoVuelo> buscarVueloPorOrigen(String origen) {
-        return buscarVueloPorAtributo(v -> v.getOrigen().equalsIgnoreCase(origen));
+        Map<String, EstadoVuelo> mapaVuelos = new HashMap<>();
+
+        for (Vuelo v: vuelos) {
+            if (v.getTipoVuelo() == TipoVuelo.LLEGADA && v.getAeropuertoDestino().getPais() == origen) {
+                mapaVuelos.put(v.getCodigo(), v.getEstado());
+            }
+        }
+
+        return mapaVuelos;
     }
 
     private Map<String, EstadoVuelo> buscarVueloPorDestino(String destino) {
-        return buscarVueloPorAtributo(v -> v.getDestino().equalsIgnoreCase(destino));
+        Map<String, EstadoVuelo> mapaVuelos = new HashMap<>();
+
+        for (Vuelo v: vuelos) {
+            if (v.getTipoVuelo() == TipoVuelo.SALIDA && v.getAeropuertoDestino().getPais() == destino) {
+                mapaVuelos.put(v.getCodigo(), v.getEstado());
+            }
+        }
+
+        return mapaVuelos;
     }
 
-    private Map<String, EstadoVuelo> buscarVueloPorFecha(Date fecha) {
-        return buscarVueloPorAtributo(v -> v.getFecha().equals(fecha));
+    private Map<String, EstadoVuelo> buscarVueloPorFecha(String fecha) {
+        Map<String, EstadoVuelo> mapaVuelos = new HashMap<>();
+
+        LocalDate fechaVuelo = LocalDate.parse(fecha, formatoFecha);
+        
+        for (Vuelo v: vuelos) {
+            if (v.getFecha() == fechaVuelo) {
+                mapaVuelos.put(v.getCodigo(), v.getEstado());
+            }
+        }
+        return mapaVuelos;
     }
 
-    private Map<String, EstadoVuelo> buscarVueloPorHoraSalida(LocalTime horaSalida) {
-        return buscarVueloPorAtributo(v -> v.getHoraSalida().equals(horaSalida));
+    private Map<String, EstadoVuelo> buscarVueloPorHoraSalida(String horaSalida) {
+        Map<String, EstadoVuelo> mapaVuelos = new HashMap<>();
+
+        LocalTime horaVuelo = LocalTime.parse(horaSalida, formatoHora);
+
+        for (Vuelo v: vuelos) {
+            if (v.getTipoVuelo() == TipoVuelo.SALIDA && v.getHora() == horaVuelo) {
+                mapaVuelos.put(v.getCodigo(), v.getEstado());
+            }
+        }
+
+        return mapaVuelos;
     }
 
-    private Map<String, EstadoVuelo> buscarVueloPorHoraLlegada(LocalTime horaLlegada) {
-        return buscarVueloPorAtributo(v -> v.getHoraLlegada().equals(horaLlegada));
+    private Map<String, EstadoVuelo> buscarVueloPorHoraLlegada(String horaLlegada) {
+        Map<String, EstadoVuelo> mapaVuelos = new HashMap<>();
+
+        LocalTime horaVuelo = LocalTime.parse(horaLlegada, formatoHora);
+
+        for (Vuelo v: vuelos) {
+            if (v.getTipoVuelo() == TipoVuelo.LLEGADA && v.getHora() == horaVuelo) {
+                mapaVuelos.put(v.getCodigo(), v.getEstado());
+            }
+        }
+
+        return mapaVuelos;
     }
 
     private Map<String, EstadoVuelo> buscarVueloPorTerminal(String codigoTerminal) {
-        return buscarVueloPorAtributo(v -> v.getCodigoTerminal().equalsIgnoreCase(codigoTerminal));
+        Map<String, EstadoVuelo> mapaVuelos = new HashMap<>();
+
+        for (Vuelo v: vuelos) {
+            if (v.getControlador().getTerminal().getCodigo() == codigoTerminal) {
+                mapaVuelos.put(v.getCodigo(), v.getEstado());
+            }
+        }
+
+        return mapaVuelos;
     }
 
 
