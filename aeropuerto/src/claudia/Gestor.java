@@ -150,7 +150,6 @@ public class Gestor extends Usuario{
                     List<Temporada> temporadas = new ArrayList<>();
                     int i = 8;
                     while (i < campos.length) {
-                        // Leer las 3 partes de cada temporada
                         String fechaInicio = campos[i];
                         String horarioApertura = campos[i + 1].split("-")[0];
                         String horarioCierre = campos[i + 1].split("-")[1];
@@ -160,7 +159,7 @@ public class Gestor extends Usuario{
                                 fechaFin);
                         temporadas.add(temporada);
 
-                        i += 4;
+                        i +=3;
                     }
 
                     AeropuertoDestino aeropuerto = new AeropuertoDestino(nombre, codigo, ciudadMasCercana, pais,
