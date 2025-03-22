@@ -9,6 +9,8 @@ public abstract class ModoEmbarque {
     private String codigo;
     /**Coste por hora del modo de embarque */
     private double costePorHora;
+    /**Vuelo que ocupa el modo de embarque */
+    private Vuelo vuelo;
 
     /**
      * Constructor de la clase ModoEmbarque
@@ -18,6 +20,7 @@ public abstract class ModoEmbarque {
     public ModoEmbarque (String codigo, double costePorHora) {
         this.codigo = codigo;
         this.costePorHora = costePorHora;
+        this.vuelo = null;
     }
 
     /**
@@ -25,15 +28,33 @@ public abstract class ModoEmbarque {
      * @return Código del modo de embarque.
      */
     public String getCodigo() {
-        this.codigo = codigo;
+        return codigo;
     }
 
-     /**
+    /**
      * Método que devuelve el coste por hora de un modo de embarque.
      * @return Coste por hora del modo de embarque.
      */
     public double getCostePorHora() {
-        this.costePorHora = costePorHora;
+        return costePorHora;
     }
+
+    /**
+     * Método que devuelve el vuelo que ocupa un modo de embarque.
+     * @return Vuelo que ocupa el modo de embarque.
+     */
+    public Vuelo getVuelo() {
+        return vuelo;
+    }
+
+    /**
+     * Método que cambia el vuelo que ocupa un modo de embarque.
+     * @param vuelo  Vuelo que ocupa el modo de embarque.
+     */
+    public void setVuelo(Vuelo vuelo) {
+        this.vuelo = vuelo;
+    }
+
+
 
 }
