@@ -22,7 +22,11 @@ public class Gestor extends Usuario{
     private List<Factura> facturas;
     private List<Aerolinea> aerolineas;
     private EstadisticasGestor estadisticas;
+    private SistemaFacturacion sistemaFacturacion;
     private static int diasAnticipacionMinima = 30;
+    private static double recargoAvionMercancias= 105.9;
+    private static double costeBaseVueloSalida= 105.9;
+    private static double costeBaseVueloLlegada= 105.9;
 
     public Gestor(String nombre, String contrasena, EstadisticasGestor estadisticas){
         super(nombre, contrasena);
@@ -36,11 +40,16 @@ public class Gestor extends Usuario{
         this.facturas = new ArrayList<>();
         this.aerolineas = new ArrayList<>();
         this.estadisticas = estadisticas;
-
+        this.sistemaFacturacion= establecerSistemaFacturacion();
     }
 
-    public void emitirFactura(Aerolinea aerolinea, SistemaFacturacion sistemaFacturacion) {
-         Factura factura = sistemaFacturacion.generarFactura(aerolinea);
+    public SistemaFacturacion establecerSistemaFacturacion( ) {
+    	return new SistemaFacturacion(recargoAvionMercancias,costeBaseVueloSalida, costeBaseVueloLlegada);
+    	
+    }
+    
+    public void emitirFactura(Aerolinea aerolinea) {
+         Factura factura = this.sistemaFacturacion.generarFactura(aerolinea);
         
          if (factura == null) {
              System.out.println("No se generaron vuelos para la factura.");
@@ -67,7 +76,6 @@ public class Gestor extends Usuario{
          }
          
          aerolinea.getOperador().recibirNotificacionFacturaEmitida(factura);
-     }
     }
 
     public EstadoFactura verEstadoFactura(Factura factura) {
@@ -267,6 +275,18 @@ public class Gestor extends Usuario{
 
     public void setDiasAnticipacionMinima(int nuevosDiasAnticipacionMinima) {
         diasAnticipacionMinima = nuevosDiasAnticipacionMinima;
+    }
+    
+    public void setCosteBaseVueloSalida(double nuevocosteBaseVueloSalida) {
+        costeBaseVueloSalida = nuevocosteBaseVueloSalida;
+    }
+    
+    public void setCosteBaseVueloLlegada(double nuevocosteBaseVueloLlegada) {
+        costeBaseVueloLlegada = nuevocosteBaseVueloLlegada;
+    }
+    
+    public void setRecargoAvionMercancias(double nuevorecargoAvionMercancias) {
+        recargoAvionMercancias = nuevorecargoAvionMercancias;
     }
 
     public List<Aeropuerto> getAeropuerto() {
