@@ -1,9 +1,9 @@
 package aeropuerto.src.maria;
 
 /**
- * Excepción para cuando un avion no tiene vuelo en menos de una hora.
+ * Excepción para cuando un avion tiene vuelo en menos de una hora.
  * 
- * @author Carmen Gómez, María Pozo, Claudia Municio.
+ * @author María Pozo, Carmen Gómez, Claudia Municio.
  */
 public class VueloEnMenosDe1HoraException extends Exception {
 	/** Número de versión de la clase*/
