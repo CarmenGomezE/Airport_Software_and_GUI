@@ -15,9 +15,7 @@ public class AvionMercancias extends Avion {
     private boolean mercaPeligrosa;
     /** Capacidad máxima de la carga del avión de mercancías */
     private double capacidadMaxCarga;
-    /**
-     * Bandera que indica si un avion de mercancias requiere control de temperatura
-     */
+    /** Bandera que indica si un avion de mercancias requiere control de temperatura */
     private boolean controlTemperatura;
 
     /**

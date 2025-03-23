@@ -20,9 +20,7 @@ public abstract class Usuario {
     /** Notificaciones del usuario*/
     protected List<Notificacion> notificaciones;
     /** Vuelos del usuario*/
-    protected List<Vuelo> vuelos;
-    /** Vuelos programados del usuario*/
-    private List<VueloProgramado> vuelosProgramados;
+    protected List<Vuelo> vuelosQueControla;
     /** Aeropuerto en el que trabaja el usuario*/
     private AeropuertoPropio aeropuerto;
 
@@ -38,8 +36,7 @@ public abstract class Usuario {
     public Usuario(String nombre, AeropuertoPropio aeropuerto) {
         this.nombre = nombre;
         this.notificaciones = new ArrayList<>();
-        this.vuelos = new ArrayList<>();
-        this.vuelosProgramados = new ArrayList<>();
+        this.vuelosQueControla = new ArrayList<>();
         this.aeropuerto = aeropuerto;
     }
 
@@ -54,10 +51,14 @@ public abstract class Usuario {
         this.nombre = nombre;
         this.contrasena = contrasena;
         this.notificaciones = new ArrayList<>();
-        this.vuelos = new ArrayList<>();
-        this.vuelosProgramados = new ArrayList<>();
+        this.vuelosQueControla = new ArrayList<>();
         this.aeropuerto = aeropuerto;
     }
+    
+    public Aeropuerto getAeropuerto() {
+    	return this.aeropuerto;
+    }
+    
     /**
      * Método para obtener el nombre de un usuario.
      * 
@@ -91,16 +92,7 @@ public abstract class Usuario {
      * @return Los vuelos del usuario.
      */
     public List<Vuelo> getVuelos() {
-        return vuelos;
-    }
-
-    /**
-     * Método para obtener los vuelos programados de un usuario.
-     * 
-     * @return Los vuelos programados del usuario.
-     */
-    public List<VueloProgramado> getVuelosProgramados() {
-        return vuelosProgramados;
+        return vuelosQueControla;
     }
 
     /**
@@ -128,7 +120,7 @@ public abstract class Usuario {
      */
     public Map<String, EstadoVuelo> verListaVuelos() {
         Map<String, EstadoVuelo> mapaVuelos = new HashMap<>();
-        for (Vuelo v : vuelos) {
+        for (Vuelo v : vuelosQueControla) {
             mapaVuelos.put(v.getCodigo(), v.getEstado());
         }
         return mapaVuelos;
@@ -166,7 +158,7 @@ public abstract class Usuario {
     private Map<String, EstadoVuelo> buscarVueloPorCodigo(String codigo) {
         Map<String, EstadoVuelo> mapaVuelos = new HashMap<>();
 
-        for (Vuelo v: vuelos) {
+        for (Vuelo v: vuelosQueControla) {
             if (v.getCodigo().equals(codigo)) {
                 mapaVuelos.put(codigo, v.getEstado());
             }
@@ -178,7 +170,7 @@ public abstract class Usuario {
     private Map<String, EstadoVuelo> buscarVueloPorOrigen(String origen) {
         Map<String, EstadoVuelo> mapaVuelos = new HashMap<>();
 
-        for (Vuelo v: vuelos) {
+        for (Vuelo v: vuelosQueControla) {
             if (v.getTipoVuelo() == TipoVuelo.LLEGADA && v.getAeropuertoDestino().getPais().equals(origen)) {
                 mapaVuelos.put(v.getCodigo(), v.getEstado());
             }
@@ -190,7 +182,7 @@ public abstract class Usuario {
     private Map<String, EstadoVuelo> buscarVueloPorDestino(String destino) {
         Map<String, EstadoVuelo> mapaVuelos = new HashMap<>();
 
-        for (Vuelo v: vuelos) {
+        for (Vuelo v: vuelosQueControla) {
             if (v.getTipoVuelo() == TipoVuelo.SALIDA && v.getAeropuertoDestino().getPais().equals(destino)) {
                 mapaVuelos.put(v.getCodigo(), v.getEstado());
             }
@@ -204,7 +196,7 @@ public abstract class Usuario {
 
         LocalDate fechaVuelo = LocalDate.parse(fecha, formatoFecha);
         
-        for (Vuelo v: vuelos) {
+        for (Vuelo v: vuelosQueControla) {
             if (v.getFecha() == fechaVuelo) {
                 mapaVuelos.put(v.getCodigo(), v.getEstado());
             }
@@ -217,7 +209,7 @@ public abstract class Usuario {
 
         LocalTime horaVuelo = LocalTime.parse(horaSalida, formatoHora);
 
-        for (Vuelo v: vuelos) {
+        for (Vuelo v: vuelosQueControla) {
             if (v.getTipoVuelo() == TipoVuelo.SALIDA && v.getHora().equals(horaVuelo)) {
                 mapaVuelos.put(v.getCodigo(), v.getEstado());
             }
@@ -231,7 +223,7 @@ public abstract class Usuario {
 
         LocalTime horaVuelo = LocalTime.parse(horaLlegada, formatoHora);
 
-        for (Vuelo v: vuelos) {
+        for (Vuelo v: vuelosQueControla) {
             if (v.getTipoVuelo() == TipoVuelo.LLEGADA && v.getHora().equals(horaVuelo)) {
                 mapaVuelos.put(v.getCodigo(), v.getEstado());
             }
@@ -243,7 +235,7 @@ public abstract class Usuario {
     private Map<String, EstadoVuelo> buscarVueloPorTerminal(String codigoTerminal) {
         Map<String, EstadoVuelo> mapaVuelos = new HashMap<>();
 
-        for (Vuelo v: vuelos) {
+        for (Vuelo v: vuelosQueControla) {
             if (v.getControlador().getTerminal().getCodigo().equals(codigoTerminal)) {
                 mapaVuelos.put(v.getCodigo(), v.getEstado());
             }
@@ -266,19 +258,6 @@ public abstract class Usuario {
     }
 
     /**
-     * Método para añadir un vuelo programado.
-     * 
-     * @param vuelo  El vuelo programado que se añade.
-     */
-    public void addVueloProgramado(VueloProgramado vuelo) {
-        if (vuelo == null) {
-            throw new IllegalArgumentException("El vuelo programado no puede ser null");
-        }
-
-        vuelosProgramados.add(vuelo);
-    }
-
-    /**
      * Método para añadir un vuelo.
      * 
      * @param vuelo  El vuelo que se añade.
@@ -288,7 +267,7 @@ public abstract class Usuario {
             throw new IllegalArgumentException("El vuelo no puede ser null");
         }
 
-        vuelos.add(vuelo);
+        vuelosQueControla.add(vuelo);
     }
 
 

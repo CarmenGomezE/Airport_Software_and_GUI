@@ -1,7 +1,6 @@
 package aeropuerto.src.carmen;
 
-import aeropuerto.src.carmen.vuelo.*;
-import java.util.*;
+import aeropuerto.src.claudia.*;
 
 /**
  * La clase Operador representa un tipo de usuario con dni, este usuario es el
@@ -14,9 +13,11 @@ import java.util.*;
  */
 public class SolicitudVueloCompartido {
     /** Porcentaje de vuelo que se solicita compartir */
-    private VueloProgramado vueloOriginal;  
-    private List<Operador> operadoresCompartidos; 
-    private List<Double> porcentajesCarga;  
+    private Vuelo vueloOriginal;  
+    /** Operador que recibe la solicitud*/
+    private Operador operadorReceptor;
+    /** Porcentaje de carga a compartir de la solicitud*/
+    private double porcentajeCarga;  
     /** Estado de la solicitud */
     private EstadoSolicitud estadoSolicitud;
     /** Aerolinea que solicita compartir vuelo */
@@ -25,16 +26,16 @@ public class SolicitudVueloCompartido {
     /**
      * Constructor de la clase SolicitudVueloCompartido.
      * 
-     * @param porcentaje           Porcentaje de vuelo solicitado.
-     * @param estadoSolicitud      Estado de la solicitud.
-     * @param aerolineaQueSolicita Aerolinea que ha realizado la solicitud.
-     * @param aerolineaOriginal    Aerolinea que ha recibido la solicitud.
+     * @param vuelo		           Vuelo que se solicita compartir.
+     * @param operadorSolicitante  Estado de la solicitud.
+     * @param operadorReceptor	   Aerolinea que ha realizado la solicitud.
+     * @param porcentaje		   Aerolinea que ha recibido la solicitud.
      */
-    public SolicitudVueloCompartido(VueloProgramado vuelo, Operador operadorSolicitante) {
+    public SolicitudVueloCompartido(Vuelo vuelo, Operador operadorSolicitante, Operador operadorReceptor, double porcentaje) {
         this.vueloOriginal = vuelo;
         this.operadorSolicita = operadorSolicitante;
-        this.operadoresCompartidos = new ArrayList<>();
-        this.porcentajesCarga = new ArrayList<>();
+        this.operadorReceptor = operadorReceptor;
+        this.porcentajeCarga = porcentaje;
         this.estadoSolicitud = EstadoSolicitud.PENDIENTE;
     }
 
@@ -46,25 +47,43 @@ public class SolicitudVueloCompartido {
     public EstadoSolicitud getEstadoSolicitud() {
         return this.estadoSolicitud;
     }
-
-    public void agregarOperadorCompartido(Operador operador, double porcentajeCarga) throws SolicitudInvalidaExcepcion {
-    	double totalPorcentaje = porcentajeCarga;
-        for (Double porcentaje : porcentajesCarga) {
-            totalPorcentaje += porcentaje;
-        }
-
-        if (totalPorcentaje > 100.0) {
-            throw new SolicitudInvalidaExcepcion("El porcentaje total de carga no puede superar el 100%.");
-        }
-        
-        this.operadoresCompartidos.add(operador);
-        this.porcentajesCarga.add(porcentajeCarga);
+    
+    /**
+     * Método que devuelve el porcentaje de la solicitud.
+     * 
+     * @return Porcentaje de carga a compartir de la solicitud.
+     */
+    public double getPorcentaje() {
+    	return this.porcentajeCarga;
     }
 
+    /**
+     * Método que devuelve el operador que hace la solicitud.
+     * 
+     * @return Operador solicitante.
+     */
+    public Operador getOperadorSolicitante() {
+        return this.operadorSolicita;
+    }
+
+    /**
+     * Método que devuelve el operador que recibe la solicitud.
+     * 
+     * @return Operador receptor.
+     */
+    public Operador getOperadorReceptor() {
+        return this.operadorReceptor;
+    }
+    
+    /**
+     * Método que acepta una solicitud.
+     */
     public void aceptar() {
         try {
             if (esSolicitudValida()) {
+                vueloOriginal.agregarOperadorSecundario(operadorSolicita, porcentajeCarga);
                 this.estadoSolicitud = EstadoSolicitud.ACEPTADA;
+                System.out.println("Solicitud aceptada: " + operadorSolicita.getNombre() + " ahora comparte el vuelo " + vueloOriginal.getCodigo());
             }
         } catch (SolicitudInvalidaExcepcion e) {
             this.estadoSolicitud = EstadoSolicitud.RECHAZADA;
@@ -72,26 +91,40 @@ public class SolicitudVueloCompartido {
         }
     }
 
+    /**
+     * Método que rechaza la solicitud.
+     */
     public void rechazar() {
         this.estadoSolicitud = EstadoSolicitud.RECHAZADA;
+        System.out.println("Solicitud rechazada: " + operadorSolicita.getNombre() + " no compartirá el vuelo " + vueloOriginal.getCodigo());
     }
     
-    private boolean esSolicitudValida() throws SolicitudInvalidaExcepcion {
-    	if (porcentajesCarga.isEmpty()) {
-            throw new SolicitudInvalidaExcepcion("No se han agregado operadores compartidos.");
+    /**
+     * Método que verifica si la solicitud cumple las condiciones para ser aceptada.
+     * 
+     * @return true si la solicitud es válida.
+     * @throws SolicitudInvalidaExcepcion si la solicitud no cumple los requisitos.
+     */
+    boolean esSolicitudValida() throws SolicitudInvalidaExcepcion {
+        double cargaActual = vueloOriginal.getCargaTotalAsignada();
+        double cargaPrincipal = vueloOriginal.getCargaAsignada(vueloOriginal.getOperadorPrincipal());
+
+        if (cargaActual + porcentajeCarga > 100.0) {
+            throw new SolicitudInvalidaExcepcion("El porcentaje total de carga no puede superar el 100%.");
         }
-    	
-        double totalPorcentaje = 0.0;
-        for (Double porcentaje : porcentajesCarga) {
-            totalPorcentaje += porcentaje;
-        }
-        if (totalPorcentaje > 100.0 || porcentajesCarga.get(0) < 50.0) {
-            throw new SolicitudInvalidaExcepcion("La solicitud de vuelo compartido es inválida: la aerolínea original debe tener al menos el 50% de la carga.");
+
+        if (cargaPrincipal - porcentajeCarga < 50.0) {
+            throw new SolicitudInvalidaExcepcion("El operador principal debe conservar al menos el 50% de la carga.");
         }
         return true;
     }
 
-	public VueloProgramado getVueloOriginal() {
-		return this.vueloOriginal;
-	}
+    /**
+     * Método que devuelve el vuelo original de la solicitud.
+     * 
+     * @return Vuelo original.
+     */
+    public Vuelo getVueloOriginal() {
+        return this.vueloOriginal;
+    }
 }
