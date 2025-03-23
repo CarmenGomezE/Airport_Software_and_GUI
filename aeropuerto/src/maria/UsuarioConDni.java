@@ -19,10 +19,12 @@ public abstract class UsuarioConDni extends Usuario {
      * @param nombre             Nombre del usuario con dni.
      * @param dni                Dni del usuario con dni.
      * @param aeropuerto         Aeropuerto en el que trabaja el usuario con dni.
+     * @param gestor             Gestor del usuario con dni.
      */
-    public UsuarioConDni(String nombre, String dni, AeropuertoPropio aeropuerto) {
+    public UsuarioConDni(String nombre, String dni, AeropuertoPropio aeropuerto, Gestor gestor) {
         super(nombre, aeropuerto);
         this.dni = dni;
+        this.gestor = gestor;
     }
 
     /**

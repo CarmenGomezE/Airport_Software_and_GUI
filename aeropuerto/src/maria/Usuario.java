@@ -167,7 +167,7 @@ public abstract class Usuario {
         Map<String, EstadoVuelo> mapaVuelos = new HashMap<>();
 
         for (Vuelo v: vuelos) {
-            if (v.getCodigo() == codigo) {
+            if (v.getCodigo().equals(codigo)) {
                 mapaVuelos.put(codigo, v.getEstado());
             }
         }
@@ -179,7 +179,7 @@ public abstract class Usuario {
         Map<String, EstadoVuelo> mapaVuelos = new HashMap<>();
 
         for (Vuelo v: vuelos) {
-            if (v.getTipoVuelo() == TipoVuelo.LLEGADA && v.getAeropuertoDestino().getPais() == origen) {
+            if (v.getTipoVuelo() == TipoVuelo.LLEGADA && v.getAeropuertoDestino().getPais().equals(origen)) {
                 mapaVuelos.put(v.getCodigo(), v.getEstado());
             }
         }
@@ -191,7 +191,7 @@ public abstract class Usuario {
         Map<String, EstadoVuelo> mapaVuelos = new HashMap<>();
 
         for (Vuelo v: vuelos) {
-            if (v.getTipoVuelo() == TipoVuelo.SALIDA && v.getAeropuertoDestino().getPais() == destino) {
+            if (v.getTipoVuelo() == TipoVuelo.SALIDA && v.getAeropuertoDestino().getPais().equals(destino)) {
                 mapaVuelos.put(v.getCodigo(), v.getEstado());
             }
         }
@@ -218,7 +218,7 @@ public abstract class Usuario {
         LocalTime horaVuelo = LocalTime.parse(horaSalida, formatoHora);
 
         for (Vuelo v: vuelos) {
-            if (v.getTipoVuelo() == TipoVuelo.SALIDA && v.getHora() == horaVuelo) {
+            if (v.getTipoVuelo() == TipoVuelo.SALIDA && v.getHora().equals(horaVuelo)) {
                 mapaVuelos.put(v.getCodigo(), v.getEstado());
             }
         }
@@ -232,7 +232,7 @@ public abstract class Usuario {
         LocalTime horaVuelo = LocalTime.parse(horaLlegada, formatoHora);
 
         for (Vuelo v: vuelos) {
-            if (v.getTipoVuelo() == TipoVuelo.LLEGADA && v.getHora() == horaVuelo) {
+            if (v.getTipoVuelo() == TipoVuelo.LLEGADA && v.getHora().equals(horaVuelo)) {
                 mapaVuelos.put(v.getCodigo(), v.getEstado());
             }
         }
@@ -244,7 +244,7 @@ public abstract class Usuario {
         Map<String, EstadoVuelo> mapaVuelos = new HashMap<>();
 
         for (Vuelo v: vuelos) {
-            if (v.getControlador().getTerminal().getCodigo() == codigoTerminal) {
+            if (v.getControlador().getTerminal().getCodigo().equals(codigoTerminal)) {
                 mapaVuelos.put(v.getCodigo(), v.getEstado());
             }
         }

@@ -42,10 +42,11 @@ public class Operador extends UsuarioConDni {
      * @param vuelosPorgramados Vuelos programados asignados al operador.
      * @param aerolinea         Aerolinea a la que pertenece.
      * @param estadisticas      Estadísticas sobre vuelos.
-     * @param aeropuerto        Aeropuerto propio del Operador.
+     * @param aeropuerto        Aeropuerto propio del operador.
+     * @param gestor            Gestor del operador.
      */
-    public Operador(String nombre, String dni, Aerolinea aerolinea, AeropuertoPropio aeropuerto) {
-    	super(nombre, dni, aeropuerto);
+    public Operador(String nombre, String dni, Aerolinea aerolinea, AeropuertoPropio aeropuerto, Gestor gestor) {
+    	super(nombre, dni, aeropuerto, gestor);
         this.aerolinea = aerolinea;
         this.solicitudesRecibidas = new ArrayList<>();
         this.solicitudesEnviadas = new ArrayList<>();
@@ -174,14 +175,19 @@ public class Operador extends UsuarioConDni {
         switch (estado) {
             case EN_PREPARACION_PARA_DESPEGAR:
                 cambiarEstadoEnPreparacionDespegar(vuelo);
+                break;
             case INICIO_DEL_EMBARQUE:
                 cambiarEstadoInicioEmbarque(vuelo);
+                break;
             case FIN_DEL_EMBARQUE:
                 cambiarEstadoFinEmbarque(vuelo);
+                break;
             case INICIO_DEL_DESEMBARQUE:
                 cambiarEstadoInicioDesembarque(vuelo);
+                break;
             case FIN_DEL_DESEMBARQUE:
                 cambiarEstadoFinDesembarque(vuelo);
+                break;
             default:
                 throw new EstadoNoDelUsuarioException("Este usuario no puede cambiar a ese estado");
         }
