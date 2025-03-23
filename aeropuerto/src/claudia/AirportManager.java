@@ -145,20 +145,6 @@ public class AirportManager {
         System.out.println("Estado de vuelo actualizado: " + v.getEstado());
     }
 
-
-    private void validarUsuario(String dni, String contrasena) throws UsuarioNoEncontradoException, ContrasenaInvalidaException {
-
-        if (!credenciales.containsKey(dni)) {
-            throw new UsuarioNoEncontradoException("El usuario con DNI" + dni + "no existe");
-        }
-
-        if (!credenciales.get(dni).equals(contrasena)) {
-            throw new ContrasenaInvalidaException("Contraseña incorrecta");
-        }
-
-        System.out.println("Usuario validado correctamente");
-    }
-
     private boolean validarDni(String dni) {
 
         return credenciales.containsKey(dni);
@@ -166,11 +152,6 @@ public class AirportManager {
     }
 
     private boolean validarContrasena(String dni, String contrasena) throws UsuarioNoEncontradoException {
-
-        if (!credenciales.containsKey(dni)) {
-            throw new UsuarioNoEncontradoException("El usuario con DNI" + dni + "no existe");
-        }
-
         return credenciales.get(dni).equals(contrasena);
     }
 
@@ -239,6 +220,40 @@ public class AirportManager {
 
         return vuelosEnEspera;
 
+    }
+    
+    /**
+     * Método auxiliar para validar un usuario con dni.
+     * @param dni							Dni del usuario con dni.
+     * @param contrasena					Contraseña del usuario con dni.
+     * @throws UsuarioNoEncontradoException	Si el usuario no existe.
+     * @throws ContrasenaInvalidaException	Si el usuario existe pero la contraseña es incorrecta.
+     */
+    public void validarUsuario(String dni, String contrasena) throws UsuarioNoEncontradoException, ContrasenaInvalidaException {
+
+        if (!validarDni(dni)) {
+            throw new UsuarioNoEncontradoException("El usuario con DNI" + dni + "no existe");
+        }
+
+        if (!validarContrasena(dni, contrasena)) {
+            throw new ContrasenaInvalidaException("Contraseña incorrecta");
+        }
+
+        System.out.println("Usuario validado correctamente");
+    }
+    
+    /**
+     * Método para añadir un credencial.
+     * 
+     * @param dni			Dni que se añade.
+     * @param contrasena	Contraseña que se añade.
+     */
+    public void addCredencial(String dni, String contrasena) {
+    	if (dni == null || contrasena == null) {
+    		throw new IllegalArgumentException("El dni y la contraseña no pueden ser null.");
+    	}
+    	
+    	credenciales.put(dni, contrasena);
     }
 
 }
