@@ -1,6 +1,6 @@
 package aeropuerto.src.carmen.avion;
 
-import aeropuerto.src.carmen.vuelo.*;
+import aeropuerto.src.claudia.*;
 import aeropuerto.src.carmen.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -32,8 +32,10 @@ public class Avion {
     private Date fechaUltimaRevision;
     /** Matrícula del avión */
     private String matricula;
+    /** Aerolinea del avión */
     private Aerolinea aerolinea;
-    private List<VueloProgramado> vuelos;
+    /** Vuelos del avión */
+    private List<Vuelo> vuelos;
     
     /**
      * Constructor de la clase Avion.
@@ -59,7 +61,7 @@ public class Avion {
         this.anoCompra = anoCompra;
         this.fechaUltimaRevision = fechaUltimaRevision;
         this.matricula = matricula;
-        this.vuelos=new ArrayList<VueloProgramado>();
+        this.vuelos=new ArrayList<Vuelo>();
         this.aerolinea=null;
     }
 
@@ -144,19 +146,43 @@ public class Avion {
         return this.matricula;
     }
     
+    /**
+     * Método que establece la Aerolinea de un Avion.
+     * 
+     * @param aerolinea 	Aerolinea a la que pertenece.
+     */
     public void setAerolinea(Aerolinea aerolinea) {
     	this.aerolinea=aerolinea;
     }
+    
+    /**
+     * Método que devuelve la aerolinea de un Avion.
+     * 
+     * @return Aerolinea.
+     */
     public Aerolinea getAerolinea() {
     	return this.aerolinea;
     }
     
-    public void agregarVuelo(VueloProgramado vuelo) {
+    /**
+     * Método que añade un vuelo al Avion.
+     * 
+     * @param vuelo		 Nuevo vuelo.
+     */
+    public void agregarVuelo(Vuelo vuelo) {
     	this.vuelos.add(vuelo);
     }
 
+    /**
+     * Método que devuelve si un avión está disponible a una hora y fecha determinada.
+     * 
+     * @param fecha		Día que se quiere verificar.
+     * @param hora		Hora que se quiere verificar.
+     * 
+     * @return True si está disponible, false en caso contrario.
+     */
 	public boolean estaDisponible(LocalDate fecha, LocalTime hora) {
-		for(VueloProgramado vuelo: this.vuelos) {
+		for(Vuelo vuelo: this.vuelos) {
 			if(!vuelo.getHora().equals(hora) &&!vuelo.getFecha().equals(fecha)) {
 				return true;
 			}
