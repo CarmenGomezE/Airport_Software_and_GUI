@@ -10,13 +10,13 @@ import java.time.*;
  * La clase Sistema representa el sistema del aeropuerto
  * @author Claudia Municio, Carmen Gómez, María Pozo.
  */
-public class Sistema {
+public class AirportManager {
    
     private List<Usuario> usuarios; 
     private List<Vuelo> vuelos;
     private Map<String, String> credenciales;
 
-    public Sistema() {
+    public AirportManager() {
         this.usuarios = new ArrayList<>();
         this.vuelos = new ArrayList<>();
         this.credenciales = new HashMap<>();
