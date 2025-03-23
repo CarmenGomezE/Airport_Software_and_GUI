@@ -136,4 +136,20 @@ public class Vuelo extends VueloProgramado{
     public void setPista(Pista pista) {
         this.pista = pista;
     }
+
+    public int getTiempoEspera() {
+        LocalTime horaCambio;
+
+        if (this.getEstado() != EstadoVuelo.ESPERANDO_DESPEGUE) {
+            return 0;
+        }
+
+        horaCambio = this.historialEstadoVuelo.getHoraCambio(EstadoVuelo.ESPERANDO_DESPEGUE);
+
+        if (horaCambio == null) {
+            return 0;
+        }
+
+        return (int) Duration.between(horaCambio, LocalTime.now()).toMinutes();
+    }
 }

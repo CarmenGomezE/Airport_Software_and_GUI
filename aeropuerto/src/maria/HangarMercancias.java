@@ -25,6 +25,7 @@ public class HangarMercancias extends Hangar {
     public HangarMercancias(int numeroMaxAviones, double dimPlazaAncho, double dimPlazaAlto, double dimPlazaLargo, double costePorHora, boolean mercaPeligrosa) {
         super(numeroMaxAviones, dimPlazaAncho, dimPlazaAlto, dimPlazaLargo, costePorHora);
         this.mercaPeligrosa = mercaPeligrosa;
+        this.aviones = new ArrayList<>();
     }
 
     /**
@@ -60,11 +61,7 @@ public class HangarMercancias extends Hangar {
      * @param avion Avión que sale del hangar.
      */
     public void sacarAvion(AvionMercancias avion) {
-        for (AvionMercancias a: this.aviones) {
-            if (a == avion) {
-                aviones.remove(avion);
-            }
-        }
+        aviones.remove(avion);
     }
 
     /**
@@ -76,5 +73,31 @@ public class HangarMercancias extends Hangar {
      */
     public boolean comprobarAvionEnHangar(AvionMercancias avion) {
         return aviones.contains(avion);
+    }
+
+    /**
+     * Método para ver si hay espacio en el hangar.
+     * 
+     * @return true si hay espacio, false si no.
+     */
+    public boolean hayEspacioEnHangar() {
+        if (aviones.size() < numeroMaxAviones) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Método para comprobar si un avión con mercancía peligrosa puede entrar en el hangar.
+     * 
+     * @param vuelo Vuelo que tiene el avión que entra a hangar.
+     */
+    public boolean comprobarMercaPeligrosa(Vuelo vuelo) {
+        if (vuelo.getAvion().getMercaPeligrosa() == true && mercaPeligrosa == false) {
+            return false;
+        }
+
+        return true;
     }
 }

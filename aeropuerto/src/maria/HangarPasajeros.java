@@ -21,6 +21,7 @@ public class HangarPasajeros extends Hangar {
      */
     public HangarPasajeros(int numeroMaxAviones, double dimPlazaAncho, double dimPlazaAlto, double dimPlazaLargo, double costePorHora) {
         super(numeroMaxAviones, dimPlazaAncho, dimPlazaAlto, dimPlazaLargo, costePorHora);
+        this.aviones = new ArrayList<>();
     }
 
     /**
@@ -47,11 +48,7 @@ public class HangarPasajeros extends Hangar {
      * @param avion Avión que sale del hangar.
      */
     public void sacarAvion(AvionPasajeros avion) {
-        for (AvionPasajeros a: this.aviones) {
-            if (a == avion) {
-                aviones.remove(avion);
-            }
-        }
+        aviones.remove(avion);
     }
 
     /**
@@ -63,5 +60,18 @@ public class HangarPasajeros extends Hangar {
      */
     public boolean comprobarAvionEnHangar(AvionPasajeros avion) {
         return aviones.contains(avion);
+    }
+
+    /**
+     * Método para ver si hay espacio en el hangar.
+     * 
+     * @return true si hay espacio, false si no.
+     */
+    public boolean hayEspacioEnHangar() {
+        if (aviones.size() < numeroMaxAviones) {
+            return true;
+        }
+
+        return false;
     }
 }
