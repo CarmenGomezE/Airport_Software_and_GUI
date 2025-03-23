@@ -21,6 +21,7 @@ public class HangarPasajeros extends Hangar {
      */
     public HangarPasajeros(int numeroMaxAviones, double dimPlazaAncho, double dimPlazaAlto, double dimPlazaLargo, double costePorHora) {
         super(numeroMaxAviones, dimPlazaAncho, dimPlazaAlto, dimPlazaLargo, costePorHora);
+        this.aviones = new ArrayList<>();
     }
 
     /**
@@ -47,11 +48,7 @@ public class HangarPasajeros extends Hangar {
      * @param avion Avión que sale del hangar.
      */
     public void sacarAvion(AvionPasajeros avion) {
-        for (AvionPasajeros a: this.aviones) {
-            if (a == avion) {
-                aviones.remove(avion);
-            }
-        }
+        aviones.remove(avion);
     }
 
     /**
