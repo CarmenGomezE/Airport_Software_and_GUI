@@ -3,6 +3,7 @@ package aeropuerto.src.claudia;
 import aeropuerto.src.maria.*;
 import aeropuerto.src.carmen.vuelo.*;
 import aeropuerto.src.carmen.avion.*;
+import aeropuerto.src.carmen.*;
 
 import java.time.*;
 import java.util.*;
@@ -21,8 +22,9 @@ public class Vuelo extends VueloProgramado{
     private PuertaEmbarque puertaEmbarque;
     private Terminal terminal;
     private ControladorAereo controladorAereo;
+    private Operador operadorPrincipal;
     private Pista pista;
-
+    private Map<Operador, Double> cargaPorOperador;
 
     /**
      * Constructor de la clase Vuelo .
@@ -41,7 +43,7 @@ public class Vuelo extends VueloProgramado{
      */
     public Vuelo(String codigo, LocalDate fecha,LocalDate fechaInicio, LocalDate fechaFinal, LocalTime hora, List<DayOfWeek> diasRecurrente, TipoCarga tipoCarga, 
                             TipoModoEmbarque tipoModoEmbarque, Periodicidad periodicidad, TipoVuelo tipoVuelo,Avion avion,Aeropuerto aeropuertoDestino, 
-                            Aeropuerto aeropuertoSalida, Escala escala) {
+                            Aeropuerto aeropuertoSalida, Escala escala, Operador operadorPrincipal) {
         super(codigo,fecha,fechaInicio, fechaFinal,hora, diasRecurrente,tipoCarga,tipoModoEmbarque,periodicidad,tipoVuelo,avion,aeropuertoDestino, aeropuertoSalida,escala);
         this.estado=EstadoVuelo.ACEPTADO;
         this.historialEstadoVuelo=new HistorialEstadoVuelo();
@@ -51,6 +53,8 @@ public class Vuelo extends VueloProgramado{
         this.controladorAereo=null;
         this.pista=null;
         this.modoEmbarque = null;
+        this.cargaPorOperador= new HashMap<>();
+        this.operadorPrincipal=operadorPrincipal;
     }
 
 
@@ -136,6 +140,34 @@ public class Vuelo extends VueloProgramado{
     public void setPista(Pista pista) {
         this.pista = pista;
     }
+    
+    public void agregarOperadorSecundario(Operador operador, double porcentajeCarga) {
+        this.cargaPorOperador.put(operador, porcentajeCarga);
+    }
+
+    public double getCargaAsignada(Operador operador) {
+        return this.cargaPorOperador.getOrDefault(operador, 0.0);
+    }
+
+    public double getCargaTotalAsignada() {
+        return cargaPorOperador.values().stream().mapToDouble(Double::doubleValue).sum();
+    }
+
+    public Operador getOperadorPrincipal() {
+        return this.operadorPrincipal;
+    }
+    
+    public Map<Operador, Double> getOperadoresAsignados() {
+        return this.cargaPorOperador; // Devuelve el mapa de operadores y su carga
+    }
+    
+    public List<Operador> getOperadores() {
+        List<Operador> operadores = new ArrayList<>();
+        operadores.add(this.operadorPrincipal);
+        operadores.addAll(this.cargaPorOperador.keySet()); 
+        return operadores;
+    }
+
 
     public int getTiempoEspera() {
         LocalTime horaCambio;

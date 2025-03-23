@@ -3,7 +3,6 @@ package aeropuerto.src.carmen;
 import aeropuerto.src.carmen.vuelo.*;
 import aeropuerto.src.carmen.factura.*;
 import aeropuerto.src.carmen.avion.*;
-import aeropuerto.src.carmen.*;
 import aeropuerto.src.claudia.*;
 import aeropuerto.src.maria.*;
 import es.uam.eps.padsof.telecard.FailedInternetConnectionException;
@@ -34,7 +33,6 @@ public class Operador extends UsuarioConDni {
     private Aerolinea aerolinea;
     /** Estadísticas del operador sobre vuelos de su aerolinea */
     private EstadisticasOperador estadisticas;
-    private List<Vuelo> vuelos;
 
     /**
      * Constructor de la clase SolicitudVueloCompartido.
@@ -57,11 +55,15 @@ public class Operador extends UsuarioConDni {
      * Método que añade vuelos programados a los del Operador.
      * 
      * @param vueloProgramado Vuelo a añadir.
+     * @throws AvionNoDisponibleException 
+     * @throws AvionNoValidoException 
+     * @throws EscalaInvalidaException 
+     * @throws AntelacionInvalidaException 
      */
     public void proponerVuelo(String codigo, LocalDate fecha, LocalDate fechaInicio, LocalDate fechaFinal, 
             LocalTime hora, List<DayOfWeek> diasRecurrente, TipoCarga tipoCarga, TipoModoEmbarque tipoModoEmbarque, 
             Periodicidad periodicidad, TipoVuelo tipoVuelo, Avion avion, Aeropuerto aeropuertoDestino, 
-            Aeropuerto aeropuertoSalida, Escala escala) { 
+            Aeropuerto aeropuertoSalida, Escala escala) throws AvionNoDisponibleException, AvionNoValidoException, EscalaInvalidaException, AntelacionInvalidaException { 
         
     	List<VueloProgramado> vueloPropuestos=new ArrayList<>();
     	
@@ -75,11 +77,11 @@ public class Operador extends UsuarioConDni {
             }
         }
 
-        if (tipoVuelo == TipoVuelo.LLEGADA && !aeropuertoDestino.equals(getAeropuertoPropio())) {
+        if (tipoVuelo == TipoVuelo.LLEGADA && !aeropuertoDestino.equals(getAeropuerto())) {
             throw new IllegalArgumentException("El aeropuerto destino debe ser el actual si el vuelo es de llegada.");
         }
 
-        if (tipoVuelo == TipoVuelo.SALIDA && !aeropuertoSalida.equals(getAeropuertoPropio())) {
+        if (tipoVuelo == TipoVuelo.SALIDA && !aeropuertoSalida.equals(getAeropuerto())) {
             throw new IllegalArgumentException("El aeropuerto de salida debe ser el actual si el vuelo es de salida.");
         }
      
@@ -133,7 +135,7 @@ public class Operador extends UsuarioConDni {
                 fechaIterativa = fechaIterativa.plusDays(1); 
             }
         }
-        getGestor().recibirNotificacionProposicionVuelo(vuelosPropuestos);
+        getGestor().recibirNotificacionProposicionVuelo(vueloPropuestos);
         
         System.out.println("Vuelo propuesto exitosamente.");
     }
@@ -161,14 +163,16 @@ public class Operador extends UsuarioConDni {
      * 
      * @param vuelo     Vuelo al que se le cambia el estado.
      * @param estado    Nuevo estado del vuelo.
+     * @throws VueloNoDelUsuarioException 
+     * @throws EstadoNoDelUsuarioException 
      */
     @Override
-    public void cambiarEstadoVuelo(Vuelo vuelo, EstadoVuelo estado) {
+    public void cambiarEstadoVuelo(Vuelo vuelo, EstadoVuelo estado) throws VueloNoDelUsuarioException, EstadoNoDelUsuarioException {
         if (vuelo == null || estado == null) {
             throw new IllegalArgumentException("El vuelo y el nuevo estado no pueden ser null");
         }
 
-        if (vuelos.contains(vuelo) == false) {
+        if (getVuelos().contains(vuelo) == false) {
             throw new VueloNoDelUsuarioException("Este vuelo no está asignado a este usuario");
         }
 
@@ -281,38 +285,96 @@ public class Operador extends UsuarioConDni {
             System.err.println("Error desconocido: " + e.getMessage());
         }
     }
+    
+    public void solicitarCompartirVuelo(Vuelo vuelo, Operador operadorReceptor, double porcentajeCarga) throws SolicitudInvalidaExcepcion {
+    	 
+    	if (vuelo.getOperadoresAsignados().containsKey(this)) {
+    	        System.out.println("No puedes solicitar compartir un vuelo en el que ya participas.");
+    	        return;
+    	    }
 
-    public void solicitarCompartirVuelo(VueloProgramado vuelo, Operador operadorReceptor, double porcentajeCarga) {
-        SolicitudVueloCompartido solicitud = new SolicitudVueloCompartido(vuelo, this);
-        solicitud.agregarOperadorCompartido(operadorReceptor, porcentajeCarga);
-        
-        operadorReceptor.getSolicitudesRecibidas().add(solicitud);
-        
-        System.out.println("Solicitud de compartir vuelo enviada por " + this.getName() + " a " + operadorReceptor.getName());
+    	    SolicitudVueloCompartido solicitud = new SolicitudVueloCompartido(vuelo, this,operadorReceptor, porcentajeCarga);
+    	    
+    	    operadorReceptor.recibirSolicitud(solicitud);
+    	    solicitudesEnviadas.add(solicitud);
+    
+    	    enviarNotificacionCompartirVuelo(operadorReceptor, "Solicitud para compartir vuelo " + vuelo.getCodigo());
     }
 
-    private List<SolicitudVueloCompartido> getSolicitudesRecibidas() {
-		return this.solicitudesRecibidas;
-	}
+    /**
+     * Método para recibir solicitudes de otros operadores.
+     */
+    public void recibirSolicitud(SolicitudVueloCompartido solicitud) {
+        this.solicitudesRecibidas.add(solicitud);
+        System.out.println("Nueva solicitud recibida para compartir vuelo " + solicitud.getVueloOriginal().getCodigo());
+    }
 
+    /**
+     * Método para aceptar una solicitud de vuelo compartido.
+     */
     public void aceptarSolicitud(SolicitudVueloCompartido solicitud) {
-            solicitud.aceptar();
-            System.out.println("Solicitud aceptada por " + this.getName());
+        Vuelo vuelo = solicitud.getVueloOriginal();
+        
+        if (!vuelo.getOperadorPrincipal().equals(this)) {
+            throw new IllegalArgumentException("Solo el operador principal del vuelo puede aceptar solicitudes.");
+        }
+
+        try {
+            if (solicitud.esSolicitudValida()) {
+                solicitud.aceptar();
+                vuelo.agregarOperadorSecundario(solicitud.getOperadorSolicitante(), solicitud.getPorcentaje());
+                enviarNotificacion(solicitud.getOperadorSolicitante(), "Solicitud aceptada para vuelo " + vuelo.getCodigo());
+
+                System.out.println("Solicitud aceptada: " + solicitud.getOperadorSolicitante().getNombre() + " ahora comparte el vuelo " + vuelo.getCodigo());
+            }
+        } catch (SolicitudInvalidaExcepcion e) {
+            System.out.println("No se pudo aceptar la solicitud: " + e.getMessage());
+        }
     }
 
+    /**
+     * Método para rechazar una solicitud de vuelo compartido.
+     */
     public void rechazarSolicitud(SolicitudVueloCompartido solicitud) {
         solicitud.rechazar();
-        System.out.println("Solicitud rechazada por " + this.getName());
+        enviarNotificacion(solicitud.getOperadorSolicitante(), "Solicitud rechazada para vuelo " + solicitud.getVueloOriginal().getCodigo());
+        System.out.println("Solicitud rechazada por " + this.getNombre());
     }
 
+    /**
+     * Muestra las solicitudes de vuelo compartido recibidas.
+     */
     public void verSolicitudes() {
-        if (this.solicitudesRecibidas.isEmpty()) {
+        if (solicitudesRecibidas.isEmpty()) {
             System.out.println("No hay solicitudes de vuelo compartido.");
         } else {
+            System.out.println("Solicitudes de vuelo compartido recibidas:");
             for (SolicitudVueloCompartido solicitud : solicitudesRecibidas) {
-                System.out.println("Solicitud de vuelo compartido: " + solicitud.getVueloOriginal().getCodigo());
+                System.out.println("Vuelo: " + solicitud.getVueloOriginal().getCodigo() +
+                        " | Solicitante: " + solicitud.getOperadorSolicitante().getNombre() +
+                        " | Estado: " + solicitud.getEstadoSolicitud());
             }
         }
     }
 
+    /**
+     * Envía una notificación a otro operador.
+     */
+    private void enviarNotificacion(Operador operadorReceptor, String mensaje) {
+        System.out.println("Notificación enviada a " + operadorReceptor.getNombre() + ": " + mensaje);
+    }
+
+    /**
+     * Envía una notificación específica sobre una solicitud de vuelo compartido.
+     */
+    private void enviarNotificacionCompartirVuelo(Operador operadorReceptor, String mensaje) {
+        enviarNotificacion(operadorReceptor, mensaje);
+    }
+
+    /**
+     * Obtiene las solicitudes recibidas.
+     */
+    private List<SolicitudVueloCompartido> getSolicitudesRecibidas() {
+        return this.solicitudesRecibidas;
+    }
 }
