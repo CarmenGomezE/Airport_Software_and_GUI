@@ -52,7 +52,192 @@ public class Operador extends UsuarioConDni {
     }
 
     /**
-     * Método que añade vuelos programados a los del Operador.
+     * Método que devuelve la Aerolinea del Operador.
+     * 
+     * @return Aerolinea del Operador.
+     */
+    public Aerolinea getAerolinea() {
+        return this.aerolinea;
+    }
+
+    /**
+     * Método que devuelve las estadísticas del Operador.
+     * 
+     * @return Estadísticas el Operador.
+     */
+    public EstadisticasOperador getEstadisticasOperador() {
+        return this.estadisticas;
+    }
+
+    /**
+     * Método para cambiar el estado de un vuelo.
+     * 
+     * @param vuelo     Vuelo al que se le cambia el estado.
+     * @param estado    Nuevo estado del vuelo.
+     * @throws VueloNoDelUsuarioException 
+     * @throws EstadoNoDelUsuarioException 
+     */
+    @Override
+    public void cambiarEstadoVuelo(Vuelo vuelo, EstadoVuelo estado) throws VueloNoDelUsuarioException, EstadoNoDelUsuarioException {
+        if (vuelo == null || estado == null) {
+            throw new IllegalArgumentException("El vuelo y el nuevo estado no pueden ser null");
+        }
+
+        if (getVuelos().contains(vuelo) == false) {
+            throw new VueloNoDelUsuarioException("Este vuelo no está asignado a este usuario");
+        }
+
+        switch (estado) {
+            case EN_PREPARACION_PARA_DESPEGAR:
+                this.cambiarEstadoEnPreparacionDespegar(vuelo);
+                break;
+            case INICIO_DEL_EMBARQUE:
+                this.cambiarEstadoInicioEmbarque(vuelo);
+                break;
+            case FIN_DEL_EMBARQUE:
+                this.cambiarEstadoFinEmbarque(vuelo);
+                break;
+            case INICIO_DEL_DESEMBARQUE:
+                this.cambiarEstadoInicioDesembarque(vuelo);
+                break;
+            case FIN_DEL_DESEMBARQUE:
+                this.cambiarEstadoFinDesembarque(vuelo);
+                break;
+            default:
+                throw new EstadoNoDelUsuarioException("Este usuario no puede cambiar a ese estado");
+        }
+    }
+
+    /**
+     * Método para cambiar el estado de un vuelo a en preparación para despegar.
+     * 
+     * @param vuelo     Vuelo al que se le cambia el estado.
+     */
+    public void cambiarEstadoEnPreparacionDespegar(Vuelo vuelo) {
+        if (vuelo.getEstado() == EstadoVuelo.OPERATIVO) {
+            vuelo.cambiarEstado(EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR);
+        }
+    }
+
+    /**
+     * Método para cambiar el estado de un vuelo a inicio de embarque.
+     * 
+     * @param vuelo     Vuelo al que se le cambia el estado.
+     */
+    public void cambiarEstadoInicioEmbarque(Vuelo vuelo) {
+        LocalTime horaActual = LocalTime.now();
+        long minutosDeDiferencia = Duration.between(horaActual, vuelo.getHora()).toMinutes();
+
+        if (vuelo.getAvion() instanceof AvionMercancias) {
+            AvionMercancias avion = (AvionMercancias) vuelo.getAvion();
+            double capacidadCarga = avion.getCapacidadMaxCarga();
+            if (minutosDeDiferencia <= 30 && (capacidadCarga < 1000)
+                    || (minutosDeDiferencia <= 45 && capacidadCarga > 1000)) {
+                if (vuelo.getEstado() == EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR) {
+                    vuelo.cambiarEstado(EstadoVuelo.INICIO_DEL_EMBARQUE);
+                }
+            }
+        } else if (vuelo.getAvion() instanceof AvionPasajeros) {
+            AvionPasajeros avion = (AvionPasajeros) vuelo.getAvion();
+            int numeroPasajeros = avion.getCapacidadMaxPasajeros();
+            if ((minutosDeDiferencia <= 30 && numeroPasajeros < 100)
+                    || (minutosDeDiferencia <= 45 && numeroPasajeros > 100)) {
+                if (vuelo.getEstado() == EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR) {
+                    vuelo.cambiarEstado(EstadoVuelo.INICIO_DEL_EMBARQUE);
+                }
+            }
+        }
+    }
+
+    /**
+     * Método para cambiar el estado de un vuelo a fin de embarque.
+     * 
+     * @param vuelo     Vuelo al que se le cambia el estado.
+     */
+    public void cambiarEstadoFinEmbarque(Vuelo vuelo) {
+        if (vuelo.getEstado() == EstadoVuelo.INICIO_DEL_EMBARQUE) {
+            vuelo.cambiarEstado(EstadoVuelo.FIN_DEL_EMBARQUE);
+        }
+    }
+
+    /**
+     * Método para cambiar el estado de un vuelo a inicio de desembarque.
+     * 
+     * @param vuelo     Vuelo al que se le cambia el estado.
+     */
+    public void cambiarEstadoInicioDesembarque(Vuelo vuelo) {
+        if (vuelo.getEstado() == EstadoVuelo.ATERRIZAJE) {
+            vuelo.cambiarEstado(EstadoVuelo.INICIO_DEL_DESEMBARQUE);
+        }
+    }
+
+    /**
+     * Método para cambiar el estado de un vuelo a fin de desembarque.
+     * 
+     * @param vuelo     Vuelo al que se le cambia el estado.
+     */
+    public void cambiarEstadoFinDesembarque(Vuelo vuelo) {
+        if (vuelo.getEstado() == EstadoVuelo.INICIO_DEL_DESEMBARQUE) {
+            vuelo.cambiarEstado(EstadoVuelo.FIN_DEL_DESEMBARQUE);
+        }
+    }
+
+    /**
+     * Método para dar de alta aviones en la aerolinea.
+     * 
+     * @param marca                 Marca del avión.
+     * @param modelo                Modelo del avión.
+     * @param dimAlto               Dimensión de alto del avión.
+     * @param dimAncho              Dimensión de ancho del avión.
+     * @param dimLargo              Dimensión de largo del avión.
+     * @param autonomia             Autonomía del avión.
+     * @param anoCompra             Año de compra del avión.
+     * @param fechaUltimaRevision   Fecha de la última revisión del avión.
+     * @param matricula             Matrícula del avión.
+     * @param capacidadMaxPasajeros Capacidad máxima del avión.
+     */
+    public void darDeAltaAvionPasajeros(String marca, String modelo, double dimAlto, double dimAncho, double dimLargo,
+            double autonomia, int anoCompra, Date fechaUltimaRevision, String matricula,
+            int capacidadMaxPasajeros) {
+        
+    	Avion nuevoAvion= new AvionPasajeros(marca, modelo, dimAlto, dimAncho, dimLargo, autonomia, anoCompra, fechaUltimaRevision, 
+    										matricula, capacidadMaxPasajeros);
+    	
+    	this.getAerolinea().agregarAvion(nuevoAvion);
+    	nuevoAvion.setAerolinea(this.getAerolinea());
+    }
+
+    /**
+     * Método para dar de alta aviones en la aerolinea.
+     * 
+     * @param marca                 Marca del avión.
+     * @param modelo                Modelo del avión.
+     * @param dimAlto               Dimensión de alto del avión.
+     * @param dimAncho              Dimensión de ancho del avión.
+     * @param dimLargo              Dimensión de largo del avión.
+     * @param autonomia             Autonomía del avión.
+     * @param anoCompra             Año de compra del avión.
+     * @param fechaUltimaRevision   Fecha de la última revisión del avión.
+     * @param matricula             Matrícula del avión.
+     * @param capacidadMaxPasajeros Capacidad máxima del avión.
+     */
+    public void darDeAltaAvionMercancias(String marca, String modelo, double dimAlto, double dimAncho, double dimLargo,
+            double autonomia, int anoCompra, Date fechaUltimaRevision, String matricula,
+            double capacidadMaxCarga, boolean mercaPeligrosa, boolean controlTemperatura) {
+    	
+    	Avion nuevoAvion= new AvionMercancias(marca, modelo, dimAlto, dimAncho, dimLargo, autonomia, anoCompra, fechaUltimaRevision,matricula,
+    											capacidadMaxCarga, mercaPeligrosa, controlTemperatura);
+    	
+    	this.getAerolinea().agregarAvion(nuevoAvion);
+    	nuevoAvion.setAerolinea(this.getAerolinea());
+    }
+
+    public void recibirNotificacionOpcionesReprogramacion() {
+
+    }
+    
+    /**
+     * Método que añade vuelos propuestos del Operador.
      * 
      * @param vueloProgramado Vuelo a añadir.
      * @throws AvionNoDisponibleException 
@@ -140,135 +325,17 @@ public class Operador extends UsuarioConDni {
         System.out.println("Vuelo propuesto exitosamente.");
     }
 
-    /**
-     * Método que devuelve la Aerolinea del Operador.
-     * 
-     * @return Aerolinea del Operador.
-     */
-    public Aerolinea getAerolinea() {
-        return this.aerolinea;
-    }
-
-    /**
-     * Método que devuelve las estadísticas del Operador.
-     * 
-     * @return Estadísticas el Operador.
-     */
-    public EstadisticasOperador getEstadisticasOperador() {
-        return this.estadisticas;
-    }
-
-    /**
-     * Método para cambiar el estado de un vuelo.
-     * 
-     * @param vuelo     Vuelo al que se le cambia el estado.
-     * @param estado    Nuevo estado del vuelo.
-     * @throws VueloNoDelUsuarioException 
-     * @throws EstadoNoDelUsuarioException 
-     */
-    @Override
-    public void cambiarEstadoVuelo(Vuelo vuelo, EstadoVuelo estado) throws VueloNoDelUsuarioException, EstadoNoDelUsuarioException {
-        if (vuelo == null || estado == null) {
-            throw new IllegalArgumentException("El vuelo y el nuevo estado no pueden ser null");
-        }
-
-        if (getVuelos().contains(vuelo) == false) {
-            throw new VueloNoDelUsuarioException("Este vuelo no está asignado a este usuario");
-        }
-
-        switch (estado) {
-            case EN_PREPARACION_PARA_DESPEGAR:
-                cambiarEstadoEnPreparacionDespegar(vuelo);
-                break;
-            case INICIO_DEL_EMBARQUE:
-                cambiarEstadoInicioEmbarque(vuelo);
-                break;
-            case FIN_DEL_EMBARQUE:
-                cambiarEstadoFinEmbarque(vuelo);
-                break;
-            case INICIO_DEL_DESEMBARQUE:
-                cambiarEstadoInicioDesembarque(vuelo);
-                break;
-            case FIN_DEL_DESEMBARQUE:
-                cambiarEstadoFinDesembarque(vuelo);
-                break;
-            default:
-                throw new EstadoNoDelUsuarioException("Este usuario no puede cambiar a ese estado");
-        }
-    }
-
-    public void cambiarEstadoEnPreparacionDespegar(Vuelo vuelo) {
-        if (vuelo.getEstado() == EstadoVuelo.OPERATIVO) {
-            vuelo.cambiarEstado(EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR);
-        }
-    }
-
-    public void cambiarEstadoInicioEmbarque(Vuelo vuelo) {
-        LocalTime horaActual = LocalTime.now();
-        long minutosDeDiferencia = Duration.between(horaActual, vuelo.getHora()).toMinutes();
-
-        if (vuelo.getAvion() instanceof AvionMercancias) {
-            AvionMercancias avion = (AvionMercancias) vuelo.getAvion();
-            double capacidadCarga = avion.getCapacidadMaxCarga();
-            if (minutosDeDiferencia <= 30 && (capacidadCarga < 1000)
-                    || (minutosDeDiferencia <= 45 && capacidadCarga > 1000)) {
-                if (vuelo.getEstado() == EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR) {
-                    vuelo.cambiarEstado(EstadoVuelo.INICIO_DEL_EMBARQUE);
-                }
-            }
-        } else if (vuelo.getAvion() instanceof AvionPasajeros) {
-            AvionPasajeros avion = (AvionPasajeros) vuelo.getAvion();
-            int numeroPasajeros = avion.getCapacidadMaxPasajeros();
-            if ((minutosDeDiferencia <= 30 && numeroPasajeros < 100)
-                    || (minutosDeDiferencia <= 45 && numeroPasajeros > 100)) {
-                if (vuelo.getEstado() == EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR) {
-                    vuelo.cambiarEstado(EstadoVuelo.INICIO_DEL_EMBARQUE);
-                }
-            }
-        }
-    }
-
-    public void cambiarEstadoFinEmbarque(Vuelo vuelo) {
-        if (vuelo.getEstado() == EstadoVuelo.INICIO_DEL_EMBARQUE) {
-            vuelo.cambiarEstado(EstadoVuelo.FIN_DEL_EMBARQUE);
-        }
-    }
-
-    public void cambiarEstadoInicioDesembarque(Vuelo vuelo) {
-        if (vuelo.getEstado() == EstadoVuelo.ATERRIZAJE) {
-            vuelo.cambiarEstado(EstadoVuelo.INICIO_DEL_DESEMBARQUE);
-        }
-    }
-
-    public void cambiarEstadoFinDesembarque(Vuelo vuelo) {
-        if (vuelo.getEstado() == EstadoVuelo.INICIO_DEL_DESEMBARQUE) {
-            vuelo.cambiarEstado(EstadoVuelo.FIN_DEL_DESEMBARQUE);
-        }
-    }
-
-    public void darDeAltaAvionPasajeros(String marca, String modelo, double dimAlto, double dimAncho, double dimLargo,
-            double autonomia, int anoCompra, Date fechaUltimaRevision, String matricula,
-            int capacidadMaxPasajeros) {
-        getAerolinea().agregarAvion(new AvionPasajeros(marca, modelo, dimAlto, dimAncho, dimLargo, autonomia, anoCompra,
-                fechaUltimaRevision, matricula, capacidadMaxPasajeros));
-    }
-
-    public void darDeAltaAvionMercancias(String marca, String modelo, double dimAlto, double dimAncho, double dimLargo,
-            double autonomia, int anoCompra, Date fechaUltimaRevision, String matricula,
-            double capacidadMaxCarga, boolean mercaPeligrosa, boolean controlTemperatura) {
-    	getAerolinea().agregarAvion(new AvionMercancias(marca, modelo, dimAlto, dimAncho, dimLargo, autonomia, anoCompra,
-                fechaUltimaRevision,matricula, capacidadMaxCarga, mercaPeligrosa, controlTemperatura));
-    }
-
-    public void recibirNotificacionOpcionesReprogramacion() {
-
-    }
-
     public void recibirNotificacionFacturaEmitida(Factura factura) {
     	getAerolinea().addFactura(factura);
         new Notificacion("Factura emitida", TipoNotificacion.FACTURA_EMITIDA);
     }
-
+  
+    /**
+     * Método que añade vuelos propuestos del Operador.
+     * 
+     * @param factura	 		Factura que se va a pagar. 
+     * @param numeroDeTarjeta 	Tarjeta con la que se va a pagar. 
+     */
     public void pagarFactura(Factura factura, String numeroDeTarjeta) {
         try {
             TeleChargeAndPaySystem.isValidCardNumber(numeroDeTarjeta);
@@ -286,6 +353,13 @@ public class Operador extends UsuarioConDni {
         }
     }
     
+    /**
+     * Método que solicita compartir vuelos.
+     * 
+     * @param vuelo		           Vuelo que se solicita compartir.
+     * @param operadorReceptor	   Aerolinea que ha realizado la solicitud.
+     * @param porcentaje		   Aerolinea que ha recibido la solicitud.
+     */
     public void solicitarCompartirVuelo(Vuelo vuelo, Operador operadorReceptor, double porcentajeCarga) throws SolicitudInvalidaExcepcion {
     	 
     	if (vuelo.getOperadoresAsignados().containsKey(this)) {
@@ -302,7 +376,9 @@ public class Operador extends UsuarioConDni {
     }
 
     /**
-     * Método para recibir solicitudes de otros operadores.
+     * Método para recibir solicitudes de compartir vuelos.
+     * 
+     * @param solicitud		         Solicitud que se recibe.
      */
     public void recibirSolicitud(SolicitudVueloCompartido solicitud) {
         this.solicitudesRecibidas.add(solicitud);
@@ -310,7 +386,9 @@ public class Operador extends UsuarioConDni {
     }
 
     /**
-     * Método para aceptar una solicitud de vuelo compartido.
+     * Método para aceptar solicitudes de compartir vuelos.
+     * 
+     * @param solicitud		         Solicitud que se quiere aceptar.
      */
     public void aceptarSolicitud(SolicitudVueloCompartido solicitud) {
         Vuelo vuelo = solicitud.getVueloOriginal();
@@ -323,7 +401,6 @@ public class Operador extends UsuarioConDni {
             if (solicitud.esSolicitudValida()) {
                 solicitud.aceptar();
                 vuelo.agregarOperadorSecundario(solicitud.getOperadorSolicitante(), solicitud.getPorcentaje());
-                enviarNotificacion(solicitud.getOperadorSolicitante(), "Solicitud aceptada para vuelo " + vuelo.getCodigo());
 
                 System.out.println("Solicitud aceptada: " + solicitud.getOperadorSolicitante().getNombre() + " ahora comparte el vuelo " + vuelo.getCodigo());
             }
@@ -333,16 +410,18 @@ public class Operador extends UsuarioConDni {
     }
 
     /**
-     * Método para rechazar una solicitud de vuelo compartido.
+     * Método para rechazar solicitudes de compartir vuelos.
+     * 
+     * @param solicitud		         Solicitud que se quiere aceptar.
      */
     public void rechazarSolicitud(SolicitudVueloCompartido solicitud) {
         solicitud.rechazar();
-        enviarNotificacion(solicitud.getOperadorSolicitante(), "Solicitud rechazada para vuelo " + solicitud.getVueloOriginal().getCodigo());
         System.out.println("Solicitud rechazada por " + this.getNombre());
     }
 
     /**
-     * Muestra las solicitudes de vuelo compartido recibidas.
+     * Método que muestra las solicitudes recibidas.
+     * 
      */
     public void verSolicitudes() {
         if (solicitudesRecibidas.isEmpty()) {
@@ -357,24 +436,8 @@ public class Operador extends UsuarioConDni {
         }
     }
 
-    /**
-     * Envía una notificación a otro operador.
-     */
-    private void enviarNotificacion(Operador operadorReceptor, String mensaje) {
-        System.out.println("Notificación enviada a " + operadorReceptor.getNombre() + ": " + mensaje);
-    }
 
-    /**
-     * Envía una notificación específica sobre una solicitud de vuelo compartido.
-     */
     private void enviarNotificacionCompartirVuelo(Operador operadorReceptor, String mensaje) {
-        enviarNotificacion(operadorReceptor, mensaje);
-    }
 
-    /**
-     * Obtiene las solicitudes recibidas.
-     */
-    private List<SolicitudVueloCompartido> getSolicitudesRecibidas() {
-        return this.solicitudesRecibidas;
     }
 }

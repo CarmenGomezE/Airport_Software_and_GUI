@@ -20,7 +20,7 @@ public abstract class Usuario {
     /** Notificaciones del usuario*/
     protected List<Notificacion> notificaciones;
     /** Vuelos del usuario*/
-    protected List<Vuelo> vuelosQueContorla;
+    protected List<Vuelo> vuelosQueControla;
     /** Aeropuerto en el que trabaja el usuario*/
     private AeropuertoPropio aeropuerto;
 
@@ -36,7 +36,7 @@ public abstract class Usuario {
     public Usuario(String nombre, AeropuertoPropio aeropuerto) {
         this.nombre = nombre;
         this.notificaciones = new ArrayList<>();
-        this.vuelosQueContorla = new ArrayList<>();
+        this.vuelosQueControla = new ArrayList<>();
         this.aeropuerto = aeropuerto;
     }
 
@@ -51,7 +51,7 @@ public abstract class Usuario {
         this.nombre = nombre;
         this.contrasena = contrasena;
         this.notificaciones = new ArrayList<>();
-        this.vuelosQueContorla = new ArrayList<>();
+        this.vuelosQueControla = new ArrayList<>();
         this.aeropuerto = aeropuerto;
     }
     
@@ -92,7 +92,7 @@ public abstract class Usuario {
      * @return Los vuelos del usuario.
      */
     public List<Vuelo> getVuelos() {
-        return vuelosQueContorla;
+        return vuelosQueControla;
     }
 
     /**
@@ -120,7 +120,7 @@ public abstract class Usuario {
      */
     public Map<String, EstadoVuelo> verListaVuelos() {
         Map<String, EstadoVuelo> mapaVuelos = new HashMap<>();
-        for (Vuelo v : vuelosQueContorla) {
+        for (Vuelo v : vuelosQueControla) {
             mapaVuelos.put(v.getCodigo(), v.getEstado());
         }
         return mapaVuelos;
@@ -158,7 +158,7 @@ public abstract class Usuario {
     private Map<String, EstadoVuelo> buscarVueloPorCodigo(String codigo) {
         Map<String, EstadoVuelo> mapaVuelos = new HashMap<>();
 
-        for (Vuelo v: vuelosQueContorla) {
+        for (Vuelo v: vuelosQueControla) {
             if (v.getCodigo().equals(codigo)) {
                 mapaVuelos.put(codigo, v.getEstado());
             }
@@ -170,7 +170,7 @@ public abstract class Usuario {
     private Map<String, EstadoVuelo> buscarVueloPorOrigen(String origen) {
         Map<String, EstadoVuelo> mapaVuelos = new HashMap<>();
 
-        for (Vuelo v: vuelosQueContorla) {
+        for (Vuelo v: vuelosQueControla) {
             if (v.getTipoVuelo() == TipoVuelo.LLEGADA && v.getAeropuertoDestino().getPais().equals(origen)) {
                 mapaVuelos.put(v.getCodigo(), v.getEstado());
             }
@@ -182,7 +182,7 @@ public abstract class Usuario {
     private Map<String, EstadoVuelo> buscarVueloPorDestino(String destino) {
         Map<String, EstadoVuelo> mapaVuelos = new HashMap<>();
 
-        for (Vuelo v: vuelosQueContorla) {
+        for (Vuelo v: vuelosQueControla) {
             if (v.getTipoVuelo() == TipoVuelo.SALIDA && v.getAeropuertoDestino().getPais().equals(destino)) {
                 mapaVuelos.put(v.getCodigo(), v.getEstado());
             }
@@ -196,7 +196,7 @@ public abstract class Usuario {
 
         LocalDate fechaVuelo = LocalDate.parse(fecha, formatoFecha);
         
-        for (Vuelo v: vuelosQueContorla) {
+        for (Vuelo v: vuelosQueControla) {
             if (v.getFecha() == fechaVuelo) {
                 mapaVuelos.put(v.getCodigo(), v.getEstado());
             }
@@ -209,7 +209,7 @@ public abstract class Usuario {
 
         LocalTime horaVuelo = LocalTime.parse(horaSalida, formatoHora);
 
-        for (Vuelo v: vuelosQueContorla) {
+        for (Vuelo v: vuelosQueControla) {
             if (v.getTipoVuelo() == TipoVuelo.SALIDA && v.getHora().equals(horaVuelo)) {
                 mapaVuelos.put(v.getCodigo(), v.getEstado());
             }
@@ -223,7 +223,7 @@ public abstract class Usuario {
 
         LocalTime horaVuelo = LocalTime.parse(horaLlegada, formatoHora);
 
-        for (Vuelo v: vuelosQueContorla) {
+        for (Vuelo v: vuelosQueControla) {
             if (v.getTipoVuelo() == TipoVuelo.LLEGADA && v.getHora().equals(horaVuelo)) {
                 mapaVuelos.put(v.getCodigo(), v.getEstado());
             }
@@ -235,7 +235,7 @@ public abstract class Usuario {
     private Map<String, EstadoVuelo> buscarVueloPorTerminal(String codigoTerminal) {
         Map<String, EstadoVuelo> mapaVuelos = new HashMap<>();
 
-        for (Vuelo v: vuelosQueContorla) {
+        for (Vuelo v: vuelosQueControla) {
             if (v.getControlador().getTerminal().getCodigo().equals(codigoTerminal)) {
                 mapaVuelos.put(v.getCodigo(), v.getEstado());
             }
@@ -267,7 +267,7 @@ public abstract class Usuario {
             throw new IllegalArgumentException("El vuelo no puede ser null");
         }
 
-        vuelosQueContorla.add(vuelo);
+        vuelosQueControla.add(vuelo);
     }
 
 

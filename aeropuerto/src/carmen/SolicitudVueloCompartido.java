@@ -26,10 +26,10 @@ public class SolicitudVueloCompartido {
     /**
      * Constructor de la clase SolicitudVueloCompartido.
      * 
-     * @param porcentaje           Porcentaje de vuelo solicitado.
-     * @param estadoSolicitud      Estado de la solicitud.
-     * @param aerolineaQueSolicita Aerolinea que ha realizado la solicitud.
-     * @param aerolineaOriginal    Aerolinea que ha recibido la solicitud.
+     * @param vuelo		           Vuelo que se solicita compartir.
+     * @param operadorSolicitante  Estado de la solicitud.
+     * @param operadorReceptor	   Aerolinea que ha realizado la solicitud.
+     * @param porcentaje		   Aerolinea que ha recibido la solicitud.
      */
     public SolicitudVueloCompartido(Vuelo vuelo, Operador operadorSolicitante, Operador operadorReceptor, double porcentaje) {
         this.vueloOriginal = vuelo;
