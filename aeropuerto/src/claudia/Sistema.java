@@ -1,7 +1,11 @@
 package aeropuerto.src.claudia;
-import java.util.ArrayList;
-import java.util.List;
+import aeropuerto.src.maria.*;
+import aeropuerto.src.carmen.*;
+import aeropuerto.src.carmen.vuelo.*;
+import aeropuerto.src.carmen.avion.*;
 
+import java.util.*;
+import java.time.*;
 /**
  * La clase Sistema representa el sistema del aeropuerto
  * @author Claudia Municio, Carmen Gómez, María Pozo.
@@ -18,7 +22,7 @@ public class Sistema {
         this.credenciales = new HashMap<>();
     }
 
-    private Usuario buscarUsuarioPorDni (String dni) {
+    private Usuario buscarUsuarioPorDni (String dni) throws UsuarioNoEncontradoException {
 
          for (Usuario usuario: usuarios) {
             if (usuario instanceof UsuarioConDni && ((UsuarioConDni)usuario).getDni().equals(dni)) {
@@ -29,7 +33,7 @@ public class Sistema {
         throw new UsuarioNoEncontradoException("El usuario con DNI " + dni + "no existe");
     }
 
-    private String obtenerContrasena(String dni) {
+    private String obtenerContrasena(String dni) throws UsuarioNoEncontradoException {
 
         Usuario usuario;
 
@@ -38,7 +42,7 @@ public class Sistema {
         
     }
 
-    private boolean esOperador(String dni) {
+    private boolean esOperador(String dni) throws UsuarioNoEncontradoException {
 
         Usuario usuario;
 
@@ -50,7 +54,7 @@ public class Sistema {
         return false;
     }
 
-    private boolean esControlador(String dni) {
+    private boolean esControlador(String dni) throws UsuarioNoEncontradoException {
 
         Usuario usuario;
 
@@ -62,7 +66,7 @@ public class Sistema {
         return false;
     }
 
-    private boolean tieneContrasenaEstablecida (String dni) {
+    private boolean tieneContrasenaEstablecida (String dni) throws UsuarioNoEncontradoException {
 
         String contrasena;
         Usuario usuario;
@@ -82,7 +86,7 @@ public class Sistema {
 
     }
 
-    private void asignarContrasena(String dni, String contrasena) {
+    private void asignarContrasena(String dni, String contrasena) throws UsuarioNoEncontradoException, ContrasenaInvalidaException {
 
         Usuario usuario;
         
@@ -97,40 +101,33 @@ public class Sistema {
 
     }
 
-    public void actualizarEstadoVueloAutomatico (Vuelo v) {
-
-        LocalDateTime ahora = LocalDateTime.now()
+    public void actualizarEstadoVueloAutomatico(Vuelo v) {
+        LocalDateTime ahora = LocalDateTime.now();
 
         if (v.getTipoVuelo() == TipoVuelo.LLEGADA) {
-            if (ahora.isBefore(v.getHora())) {
+            if (ahora.toLocalTime().isBefore(v.getHora())) {
                 v.cambiarEstado(EstadoVuelo.A_TIEMPO);
-            }
-
-            else if (v.getEstado() != EstadoVuelo.ATERRIZAJE && ahora.isAfter(v.getHora())) {
+            } else if (v.getEstado() != EstadoVuelo.ATERRIZAJE && ahora.toLocalTime().isAfter(v.getHora())) {
                 v.cambiarEstado(EstadoVuelo.RETRASADO);
-
-            }
-
-        }
-
+            } 
+        } 
         else if (v.getTipoVuelo() == TipoVuelo.SALIDA) {
-            long minutosRestantes = Duration.between(ahora, v.getHora()).toMinutes;
+            long minutosRestantes = Duration.between(ahora, v.getHora()).toMinutes(); 
 
-            if (ahora.isAfter(v.getHora())) {
+            if (ahora.toLocalTime().isAfter(v.getHora())) {
                 v.cambiarEstado(EstadoVuelo.VUELO);
-            }
-
-            else if ((v.getEstado() == EstadoVuelo.ESPERANDO_PISTA_DE_DESPEGUE || v.getEstado() == EstadoVuelo.ESPERANDO_DESPEGUE) && minutosRestantes > 45) {
+            } else if ((v.getEstado() == EstadoVuelo.ESPERANDO_PISTA_DE_DESPEGUE 
+                        || v.getEstado() == EstadoVuelo.ESPERANDO_DESPEGUE) 
+                       && minutosRestantes < 45) { 
                 v.cambiarEstado(EstadoVuelo.RETRASADO);
             }
         }
 
         System.out.println("Estado de vuelo actualizado: " + v.getEstado());
-        
     }
 
 
-    private void validarUsuario(String dni, String contraseña) {
+    private void validarUsuario(String dni, String contrasena) throws UsuarioNoEncontradoException, ContrasenaInvalidaException {
 
         if (!credenciales.containsKey(dni)) {
             throw new UsuarioNoEncontradoException("El usuario con DNI" + dni + "no existe");
@@ -149,7 +146,7 @@ public class Sistema {
     
     }
 
-    private boolean validarContrasena(String dni, String contrasena) {
+    private boolean validarContrasena(String dni, String contrasena) throws UsuarioNoEncontradoException {
 
         if (!credenciales.containsKey(dni)) {
             throw new UsuarioNoEncontradoException("El usuario con DNI" + dni + "no existe");

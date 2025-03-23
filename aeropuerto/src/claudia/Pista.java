@@ -1,4 +1,5 @@
-package aeropuerto;
+package aeropuerto.src.claudia;
+import java.util.*;
 /**
  * La clase Pista representa una pista de aeropuerto que puede ser de aterrizaje o despegue.
  * @author Claudia Municio, María Pozo, Carmen Gómez.

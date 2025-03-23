@@ -1,5 +1,4 @@
-package aeropuerto;
-import java.util.*;
+package aeropuerto.src.claudia;
 /**
  * La enumeración TipoPista representa el tipo de pista de un aeropuerto (despegue o aterrizaje).
  * @author Claudia Municio, María Pozo, Carmen Gómez

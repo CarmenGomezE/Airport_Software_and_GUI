@@ -22,7 +22,7 @@ public abstract class Usuario {
     /** Vuelos del usuario*/
     protected List<Vuelo> vuelosQueControla;
     /** Aeropuerto en el que trabaja el usuario*/
-    private AeropuertoPropio aeropuerto;
+    protected AeropuertoPropio aeropuerto;
 
     private static final DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private static final DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm");
