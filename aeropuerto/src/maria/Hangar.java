@@ -1,5 +1,6 @@
 package aeropuerto.src.maria;
 
+import aeropuerto.src.carmen.avion.Avion;
 import aeropuerto.src.claudia.*;
 
 /**
@@ -143,4 +144,6 @@ public abstract class Hangar {
     }
 
 	protected abstract boolean hayEspacioEnHangar();
+
+	protected abstract void addAvion(Avion avion);
 }

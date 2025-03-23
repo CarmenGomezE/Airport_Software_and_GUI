@@ -102,9 +102,10 @@ public class ControladorAereo extends UsuarioConDni {
      * @throws EstadoEquivocadoException
      * @throws NoVueloEnMenosDe1HoraException
      * @throws NoModosPuertasEmbarqueDisponiblesException
+     * @throws NoFingerMercanciasException 
      */
 	private void cambiarEstadoOperativo(Vuelo vuelo) throws EstadoEquivocadoException, NoVueloEnMenosDe1HoraException,
-    NoModosPuertasEmbarqueDisponiblesException {
+    NoModosPuertasEmbarqueDisponiblesException, NoFingerMercanciasException {
 		if (vuelo.getEstado() != EstadoVuelo.FIN_DEL_DESEMBARQUE) {
             throw new EstadoEquivocadoException("El vuelo no está en el estado correcto para cambiar a este estado.");
         }
@@ -128,7 +129,7 @@ public class ControladorAereo extends UsuarioConDni {
         PuertaEmbarque puerta = vuelo.getPuertaEmbarque();
 
         if (vueloNuevo.getTipoModoEmbarque() == vuelo.getTipoModoEmbarque()) {
-            liberarPuertaEMbarque(vuelo);
+            liberarPuertaEmbarque(vuelo);
             asignarPuertaEmbarque(puerta, vueloNuevo);
             liberarModoEmbarque(vuelo);
             asignarModoEmbarque(modoActual, vueloNuevo);
@@ -163,7 +164,7 @@ public class ControladorAereo extends UsuarioConDni {
                         for(ZonaAparcamiento z: aeropuerto.getZonasAparcamiento()) {
                             if (z.comprobarTamano(vueloNuevo) == true && z.getVuelo() == null && vueloNuevo.getModoEmbarque() == null) {
                                 for (PuertaEmbarque p: getTerminal().getPuertasEmbarque()) {
-                                    if (p.contains(z) && p.getVuelo() == null) {
+                                    if (p.contieneZonaAparcamiento(z) && p.getVuelo() == null) {
                                         asignarModoEmbarque(z, vueloNuevo);
                                         asignarPuertaEmbarque(p, vueloNuevo);
                                         break;
@@ -195,7 +196,7 @@ public class ControladorAereo extends UsuarioConDni {
                         for(ZonaAparcamiento z: aeropuerto.getZonasAparcamiento()) {
                             if (z.comprobarTamano(vueloNuevo) == true && z.getVuelo() == null && vueloNuevo.getModoEmbarque() == null) {
                                 for (PuertaEmbarque p: getTerminal().getPuertasEmbarque()) {
-                                    if (p.contains(z) && p.getVuelo() == null) {
+                                    if (p.contieneZonaAparcamiento(z) && p.getVuelo() == null) {
                                         asignarModoEmbarque(z, vueloNuevo);
                                         asignarPuertaEmbarque(p, vueloNuevo);
                                         break;
@@ -361,7 +362,7 @@ public class ControladorAereo extends UsuarioConDni {
                 for(ZonaAparcamiento z: aeropuerto.getZonasAparcamiento()) {
                     if (z.comprobarTamano(vuelo) == true && z.getVuelo() == null && vuelo.getModoEmbarque() == null) {
                         for (PuertaEmbarque p: getTerminal().getPuertasEmbarque()) {
-                            if (p.contains(z) && p.getVuelo() == null) {
+                            if (p.contieneZonaAparcamiento(z) && p.getVuelo() == null) {
                                 asignarModoEmbarque(z, vuelo);
                                 asignarPuertaEmbarque(p, vuelo);
                                 break;
@@ -395,7 +396,7 @@ public class ControladorAereo extends UsuarioConDni {
                 for(ZonaAparcamiento z: aeropuerto.getZonasAparcamiento()) {
                     if (z.comprobarTamano(vuelo) == true && z.getVuelo() == null && vuelo.getModoEmbarque() == null) {
                         for (PuertaEmbarque p: getTerminal().getPuertasEmbarque()) {
-                            if (p.contains(z) && p.getVuelo() == null) {
+                            if (p.contieneZonaAparcamiento(z) && p.getVuelo() == null) {
                                 asignarModoEmbarque(z, vuelo);
                                 asignarPuertaEmbarque(p, vuelo);
                                 break;
@@ -534,7 +535,7 @@ public class ControladorAereo extends UsuarioConDni {
 
         Pista pista = vuelo.getPista();
         vuelo.setPista(null);
-        pista.setVuelo(null);
+        pista.removeVuelo(vuelo);
     }
 
     /**

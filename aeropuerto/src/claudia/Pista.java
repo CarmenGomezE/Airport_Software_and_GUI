@@ -75,6 +75,11 @@ public class Pista {
         vuelos.remove(vuelo);
     }
 
+	public void removeVuelo(Vuelo vuelo) {
+		this.vuelos.remove(vuelo);
+		
+	}
+
 
 }
 

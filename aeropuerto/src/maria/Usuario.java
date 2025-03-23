@@ -141,18 +141,25 @@ public abstract class Usuario {
         switch (criterio) {
             case CODIGO:
                 vuelosEncontrados = buscarVueloPorCodigo(valor);
+                break;
             case ORIGEN:
                 vuelosEncontrados = buscarVueloPorOrigen(valor);
+                break;
             case DESTINO:
                 vuelosEncontrados = buscarVueloPorDestino(valor);
+                break;
             case FECHA: 
                 vuelosEncontrados = buscarVueloPorFecha(valor);
+                break;
             case HORA_SALIDA: 
                 vuelosEncontrados = buscarVueloPorHoraSalida(valor);
+                break;
             case HORA_LLEGADA: 
                 vuelosEncontrados = buscarVueloPorHoraLlegada(valor);
+                break;
             case TERMINAL:
                 vuelosEncontrados = buscarVueloPorTerminal(valor);
+                break;
             default:
                 throw new IllegalArgumentException("El criterio de búsqueda debe ser válido.");
         }
@@ -175,95 +182,95 @@ public abstract class Usuario {
         System.out.println("+-----------------+----------------------+");    
     }
 
-    private Map<String, EstadoVuelo> buscarVueloPorCodigo(String codigo) {
-        Map<String, EstadoVuelo> mapaVuelos = new HashMap<>();
+    private List<Vuelo> buscarVueloPorCodigo(String codigo) {
+        List<Vuelo> vuelosEncontrados = new ArrayList<>();
 
-        for (Vuelo v: vuelosQueControla) {
+        for (Vuelo v : vuelosQueControla) {
             if (v.getCodigo().equals(codigo)) {
-                mapaVuelos.put(codigo, v.getEstado());
+                vuelosEncontrados.add(v);
             }
         }
 
-        return mapaVuelos;
+        return vuelosEncontrados;
     }
 
-    private Map<String, EstadoVuelo> buscarVueloPorOrigen(String origen) {
-        Map<String, EstadoVuelo> mapaVuelos = new HashMap<>();
+    private List<Vuelo> buscarVueloPorOrigen(String origen) {
+        List<Vuelo> vuelosEncontrados = new ArrayList<>();
 
-        for (Vuelo v: vuelosQueControla) {
+        for (Vuelo v : vuelosQueControla) {
             if (v.getTipoVuelo() == TipoVuelo.LLEGADA && v.getAeropuertoDestino().getPais().equals(origen)) {
-                mapaVuelos.put(v.getCodigo(), v.getEstado());
+                vuelosEncontrados.add(v);
             }
         }
 
-        return mapaVuelos;
+        return vuelosEncontrados;
     }
 
-    private Map<String, EstadoVuelo> buscarVueloPorDestino(String destino) {
-        Map<String, EstadoVuelo> mapaVuelos = new HashMap<>();
+    private List<Vuelo> buscarVueloPorDestino(String destino) {
+        List<Vuelo> vuelosEncontrados = new ArrayList<>();
 
-        for (Vuelo v: vuelosQueControla) {
+        for (Vuelo v : vuelosQueControla) {
             if (v.getTipoVuelo() == TipoVuelo.SALIDA && v.getAeropuertoDestino().getPais().equals(destino)) {
-                mapaVuelos.put(v.getCodigo(), v.getEstado());
+                vuelosEncontrados.add(v);
             }
         }
 
-        return mapaVuelos;
+        return vuelosEncontrados;
     }
 
-    private Map<String, EstadoVuelo> buscarVueloPorFecha(String fecha) {
-        Map<String, EstadoVuelo> mapaVuelos = new HashMap<>();
+    private List<Vuelo> buscarVueloPorFecha(String fecha) {
+        List<Vuelo> vuelosEncontrados = new ArrayList<>();
 
         LocalDate fechaVuelo = LocalDate.parse(fecha, formatoFecha);
-        
-        for (Vuelo v: vuelosQueControla) {
-            if (v.getFecha() == fechaVuelo) {
-                mapaVuelos.put(v.getCodigo(), v.getEstado());
+
+        for (Vuelo v : vuelosQueControla) {
+            if (v.getFecha().equals(fechaVuelo)) {
+                vuelosEncontrados.add(v);
             }
         }
-        return mapaVuelos;
+
+        return vuelosEncontrados;
     }
 
-    private Map<String, EstadoVuelo> buscarVueloPorHoraSalida(String horaSalida) {
-        Map<String, EstadoVuelo> mapaVuelos = new HashMap<>();
+    private List<Vuelo> buscarVueloPorHoraSalida(String horaSalida) {
+        List<Vuelo> vuelosEncontrados = new ArrayList<>();
 
         LocalTime horaVuelo = LocalTime.parse(horaSalida, formatoHora);
 
-        for (Vuelo v: vuelosQueControla) {
+        for (Vuelo v : vuelosQueControla) {
             if (v.getTipoVuelo() == TipoVuelo.SALIDA && v.getHora().equals(horaVuelo)) {
-                mapaVuelos.put(v.getCodigo(), v.getEstado());
+                vuelosEncontrados.add(v);
             }
         }
 
-        return mapaVuelos;
+        return vuelosEncontrados;
     }
 
-    private Map<String, EstadoVuelo> buscarVueloPorHoraLlegada(String horaLlegada) {
-        Map<String, EstadoVuelo> mapaVuelos = new HashMap<>();
+    private List<Vuelo> buscarVueloPorHoraLlegada(String horaLlegada) {
+        List<Vuelo> vuelosEncontrados = new ArrayList<>();
 
         LocalTime horaVuelo = LocalTime.parse(horaLlegada, formatoHora);
 
-        for (Vuelo v: vuelosQueControla) {
+        for (Vuelo v : vuelosQueControla) {
             if (v.getTipoVuelo() == TipoVuelo.LLEGADA && v.getHora().equals(horaVuelo)) {
-                mapaVuelos.put(v.getCodigo(), v.getEstado());
+                vuelosEncontrados.add(v);
             }
         }
 
-        return mapaVuelos;
+        return vuelosEncontrados;
     }
 
-    private Map<String, EstadoVuelo> buscarVueloPorTerminal(String codigoTerminal) {
-        Map<String, EstadoVuelo> mapaVuelos = new HashMap<>();
+    private List<Vuelo> buscarVueloPorTerminal(String codigoTerminal) {
+        List<Vuelo> vuelosTerminal = new ArrayList<>();
 
-        for (Vuelo v: vuelosQueControla) {
+        for (Vuelo v : vuelosQueControla) {
             if (v.getControlador().getTerminal().getCodigo().equals(codigoTerminal)) {
-                mapaVuelos.put(v.getCodigo(), v.getEstado());
+                vuelosTerminal.add(v);
             }
         }
 
-        return mapaVuelos;
+        return vuelosTerminal;
     }
-
     /**
      * Método para recibir una notificación.
      * 

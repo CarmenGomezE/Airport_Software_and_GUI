@@ -69,8 +69,14 @@ public abstract class UsuarioConDni extends Usuario {
      * @throws EstadoEquivocadoException 
      * @throws NoModosEmbarqueDisponiblesException 
      * @throws NoPistasDisponiblesException 
+     * @throws NoHangaresDisponiblesException 
+     * @throws NoModosPuertasEmbarqueDisponiblesException 
+     * @throws NoFingerMercanciasException 
+     * @throws VueloEnMenosDe1HoraException 
+     * @throws NoVueloEnMenosDe1HoraException 
+     * @throws IllegalArgumentException 
      */
-    public abstract void cambiarEstadoVuelo(Vuelo vuelo, EstadoVuelo estado) throws VueloNoDelUsuarioException, EstadoNoDelUsuarioException, EstadoEquivocadoException, NoModosEmbarqueDisponiblesException, NoPistasDisponiblesException;
+    public abstract void cambiarEstadoVuelo(Vuelo vuelo, EstadoVuelo estado) throws VueloNoDelUsuarioException, EstadoNoDelUsuarioException, EstadoEquivocadoException, NoModosEmbarqueDisponiblesException, NoPistasDisponiblesException, IllegalArgumentException, NoVueloEnMenosDe1HoraException, VueloEnMenosDe1HoraException, NoFingerMercanciasException, NoModosPuertasEmbarqueDisponiblesException, NoHangaresDisponiblesException;
 
     /**
      * Método para recibir una notificación de cambio de estado de un vuelo.

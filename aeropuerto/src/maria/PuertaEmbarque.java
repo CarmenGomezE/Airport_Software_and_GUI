@@ -130,4 +130,8 @@ public class PuertaEmbarque {
     public void setVuelo(Vuelo vuelo) {
         this.vuelo = vuelo;
     }
+
+	public boolean contieneZonaAparcamiento(ZonaAparcamiento zona) {
+        return zonasAparcamiento.contains(zona);
+    }
 }

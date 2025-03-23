@@ -222,6 +222,10 @@ public class VueloProgramado {
 		this.hora=nuevaHora;
 		
 	}
+	
+	public void setAvion(Avion avion) {
+		this.avion=avion;
+	}
 
 	/**
      * Método que establece una nueva fecha para el VueloProgramado.

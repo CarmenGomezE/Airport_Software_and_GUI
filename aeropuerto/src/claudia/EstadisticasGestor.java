@@ -41,20 +41,20 @@ public class EstadisticasGestor {
      * 
      */
     private void cargarDatosEstadisticas() {
-        for (Finger finger : gestor.getAeropuertoPropio().getFingers()) {
-            horasUsoFinger.put(finger, finger.getHorasUso()/gestor.getAeropuertoPropio().getHorasOperacion());
+        for (Finger finger : gestor.getAeropuerto().getFingers()) {
+            horasUsoFinger.put(finger, finger.getHorasUso()/gestor.getAeropuerto().getHorasOperacion());
         }
         
-        for (PuertaEmbarque puerta : gestor.getAeropuertoPropio().getPuertasEmbarque()) {
-            horasUsoPuertaEmbarque.put(puerta, puerta.getHorasUso()/gestor.getAeropuertoPropio().getHorasOperacion());
+        for (PuertaEmbarque puerta : gestor.getAeropuerto().getPuertasEmbarque()) {
+            horasUsoPuertaEmbarque.put(puerta, puerta.getHorasUso()/gestor.getAeropuerto().getHorasOperacion());
         }
         
-        for (ZonaAparcamiento zona : gestor.getAeropuertoPropio().getZonasAparcamiento()) {
-            horasUsoZonaAparcamiento.put(zona, zona.getHorasUso()/gestor.getAeropuertoPropio().getHorasOperacion());
+        for (ZonaAparcamiento zona : gestor.getAeropuerto().getZonasAparcamiento()) {
+            horasUsoZonaAparcamiento.put(zona, zona.getHorasUso()/gestor.getAeropuerto().getHorasOperacion());
         }
         
-        for (Hangar hangar : gestor.getAeropuertoPropio().getHangares()) {
-            horasUsoHangar.put(hangar, hangar.getHorasUso()/gestor.getAeropuertoPropio().getHorasOperacion());
+        for (Hangar hangar : gestor.getAeropuerto().getHangares()) {
+            horasUsoHangar.put(hangar, hangar.getHorasUso()/gestor.getAeropuerto().getHorasOperacion());
         }
     }
 
@@ -104,7 +104,7 @@ public class EstadisticasGestor {
      */
     public void imprimirUsoMedioFingers() {
         System.out.println("Estadísticas de uso de los fingers:");
-        for (Finger finger : gestor.getAeropuertoPropio().getFingers()) {
+        for (Finger finger : gestor.getAeropuerto().getFingers()) {
             System.out.println("Finger: " + finger.getId() + ", Tiempo de uso medio diario: " + getUsoMedioDiarioFinger(finger) + " horas.");
         }
     }
@@ -115,7 +115,7 @@ public class EstadisticasGestor {
      */
     public void imprimirUsoMedioPuertasEmbarque() {
         System.out.println("Estadísticas de uso de las puertas de embarque:");
-        for (PuertaEmbarque puerta : gestor.getAeropuertoPropio().getPuertasEmbarque()) {
+        for (PuertaEmbarque puerta : gestor.getAeropuerto().getPuertasEmbarque()) {
             System.out.println("Puerta de embarque: " + puerta.getId() + ", Tiempo de uso medio diario: " + getUsoMedioDiarioPuertaEmbarque(puerta) + " horas.");
         }
     }
@@ -126,7 +126,7 @@ public class EstadisticasGestor {
      */
     public void imprimirUsoMedioZonasAparcamiento() {
         System.out.println("Estadísticas de uso de las zonas de aparcamiento:");
-        for (ZonaAparcamiento zona : gestor.getAeropuertoPropio().getZonasAparcamiento()) {
+        for (ZonaAparcamiento zona : gestor.getAeropuerto().getZonasAparcamiento()) {
             System.out.println("Zona de aparcamiento: " + zona.getId() + ", Tiempo de uso medio diario: " + getUsoMedioDiarioZonaAparcamiento(zona) + " horas.");
         }
     }
@@ -137,7 +137,7 @@ public class EstadisticasGestor {
      */
     public void imprimirUsoMedioHangares() {
         System.out.println("Estadísticas de uso de los hangares:");
-        for (Hangar hangar : gestor.getAeropuertoPropio().getHangares()) {
+        for (Hangar hangar : gestor.getAeropuerto().getHangares()) {
             System.out.println("Hangar: " + hangar.getId() + ", Tiempo de uso medio diario: " + getUsoMedioDiarioHangar(hangar) + " horas.");
         }
     }

@@ -252,6 +252,7 @@ public class Operador extends UsuarioConDni {
         if (vuelosAlternativas.contains(vuelo)) {
             vuelosAlternativas.remove(vuelo);
             System.out.println("Vuelo " + vuelo.getCodigo() + " aceptado.");
+            timer.cancel();
             proponerVuelo(vuelo.getCodigo(),vuelo.getFecha(),vuelo.getFechaInicio(),vuelo.getFechaFinal(), vuelo.getHora(),  
                     		vuelo.getDiasRecurrente(),vuelo.getTipoCarga(),vuelo.getTipoModoEmbarque(),vuelo.getPeriodicidad(), vuelo.getTipoVuelo(), vuelo.getAvion(),  
                     		vuelo.getAeropuertoDestino(),vuelo.getAeropuertoSalida(),vuelo.getEscala());
@@ -395,20 +396,18 @@ public class Operador extends UsuarioConDni {
      * @param vuelo		           Vuelo que se solicita compartir.
      * @param operadorReceptor	   Aerolinea que ha realizado la solicitud.
      * @param porcentaje		   Aerolinea que ha recibido la solicitud.
+     * @throws OperacionInvalidaException 
      */
-    public void solicitarCompartirVuelo(Vuelo vuelo, Operador operadorReceptor, double porcentajeCarga) throws SolicitudInvalidaExcepcion {
+    public void solicitarCompartirVuelo(Vuelo vuelo, Operador operadorReceptor, double porcentajeCarga) throws SolicitudInvalidaExcepcion, OperacionInvalidaException {
     	 
     	if (vuelo.getOperadoresAsignados().containsKey(this)) {
-    	        System.out.println("No puedes solicitar compartir un vuelo en el que ya participas.");
-    	        return;
-    	    }
+            throw new OperacionInvalidaException("No puedes solicitar compartir un vuelo en el que ya participas.");
+        }
 
     	    SolicitudVueloCompartido solicitud = new SolicitudVueloCompartido(vuelo, this,operadorReceptor, porcentajeCarga);
-    	    
     	    operadorReceptor.recibirSolicitud(solicitud);
     	    solicitudesEnviadas.add(solicitud);
-    
-    	    enviarNotificacionCompartirVuelo(operadorReceptor, "Solicitud para compartir vuelo " + vuelo.getCodigo());
+    	    enviarNotificacionCompartirVuelo(operadorReceptor);
     }
 
     /**
@@ -472,8 +471,20 @@ public class Operador extends UsuarioConDni {
         }
     }
 
-
-    private void enviarNotificacionCompartirVuelo(Operador operadorReceptor, String mensaje) {
-
+    /**
+     * Método para enviar solicitudes de compartir vuelos.
+     * 
+     * @param operadorReceptor		         Operador al que se envia la solicitud.
+     */
+    private void enviarNotificacionCompartirVuelo(Operador operadorReceptor) {
+    	operadorReceptor.recibirNotificacionSolicitudVueloCompartido();
     }
+
+    /**
+     * Método para recibir solicitudes de compartir vuelos.
+     * 
+     */
+	private void recibirNotificacionSolicitudVueloCompartido() {
+		recibirNotificacion(new Notificacion("Factura emitida", TipoNotificacion.SOLICITUD_COMPARTIR_VUELO));
+	}
 }
