@@ -76,80 +76,11 @@ public class Sistema {
         return false; 
     }
 
-    /**Devuelve un numero positivo si el segundo vuelo tiene mas prioridad para luego cambiarle la posicion */
-    private int compararVuelos(Vuelo v1, Vuelo v2) {
-
-        Boolean esPasajero1, esPasajero2;
-        int pasajeros1 = 0, pasajeros2 = 0;
-
-        if (v1.getRetraso() != v2.getRetraso()) {
-            return v2.getRetraso() - v1.getRetraso();
-        }
-
-        if (v1.getTiempoEspera() != v2.getTiempoEspera()) {
-            return v2.getTiempoEspera() - v1.getTiempoEspera();
-        }
-
-        esPasajero1 = v1.getAvion() instanceof AvionPasajeros;
-        esPasajero2 = v2.getAvion() instanceof AvionPasajeros;
-
-        if (esPasajero1 != esPasajero2) {
-            if (esPasajero1 == true) {
-                return -1;
-            }
-
-            else {
-                return 1;
-            } 
-        }
-
-        if (esPasajero1 == true) {
-            pasajeros1 = ((AvionPasajeros)v1.getAvion()).getCapacidadMaxPasajeros();
-        }
-
-        if (esPasajero2 == true) {
-            pasajeros2 = ((AvionPasajeros)v2.getAvion()).getCapacidadMaxPasajeros();
-        }
-
-        return pasajeros2 - pasajeros1;
-
-    }
-
-    private List<Vuelo> ordenarColaVuelos() {
-
-        List<Vuelo> vuelosEnEspera = new ArrayList<>();
-        int n, i, j;
-        Vuelo v1, v2;
-
-        for (Vuelo vuelo: vuelos) {
-            if (vuelo.getEstado() == EstadoVuelo.ESPERANDO_DESPEGUE) {
-                vuelosEnEspera.add(vuelo);
-            }
-        }
-
-        n = vuelosEnEspera.size();
-        for (i=0; i<n; i++) {
-            for (j=0; j<n-i-1; j++) {
-                v1 = vuelosEnEspera.get(j);
-                v2 = vuelosEnEspera.get(j+1);
-
-                if (compararVuelos(v1, v2) > 0) {
-                    vuelosEnEspera.set(j, v2);
-                    vuelosEnEspera.set(j+1, v1);
-                }
-            }
-        }
-
-        return vuelosEnEspera;
-
-    }
-
     /**No entiendo cual es la diferencia con asignar contraseña*/
     private void establecerContrasena(String dni, String contrasena) {
 
 
     }
-
 
     private void asignarContrasena(String dni, String contrasena) {
 
@@ -165,24 +96,6 @@ public class Sistema {
         System.out.println("Contraseña asignada correctamente");
 
     }
-
-    private boolean verificarVueloMenosHora(Avion avion) {
-
-        LocalDateTime ahora = LocalDateTime.now();
-
-        for (Vuelo vuelo: vuelos) {
-            if (vuelo.getAvion().equals(avion)) {
-                LocalDateTime salida = vuelo.getHoraSalida();
-
-                if (Duration.between(ahora, salida).toMinutes() <= 60) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
 
     public void actualizarEstadoVueloAutomatico (Vuelo v) {
 
@@ -243,6 +156,73 @@ public class Sistema {
         }
 
         return credenciales.get(dni).equals(contrasena);
+    }
+
+    /**Devuelve un numero positivo si el segundo vuelo tiene mas prioridad para luego cambiarle la posicion */
+    private int compararVuelos(Vuelo v1, Vuelo v2) {
+
+        Boolean esPasajero1, esPasajero2;
+        int pasajeros1 = 0, pasajeros2 = 0;
+
+        if (v1.getRetraso() != v2.getRetraso()) {
+            return v2.getRetraso() - v1.getRetraso();
+        }
+
+        if (v1.getTiempoEspera() != v2.getTiempoEspera()) {
+            return v2.getTiempoEspera() - v1.getTiempoEspera();
+        }
+
+        esPasajero1 = v1.getAvion() instanceof AvionPasajeros;
+        esPasajero2 = v2.getAvion() instanceof AvionPasajeros;
+
+        if (esPasajero1 != esPasajero2) {
+            if (esPasajero1 == true) {
+                return -1;
+            }
+
+            else {
+                return 1;
+            } 
+        }
+
+        if (esPasajero1 == true) {
+            pasajeros1 = ((AvionPasajeros)v1.getAvion()).getCapacidadMaxPasajeros();
+        }
+
+        if (esPasajero2 == true) {
+            pasajeros2 = ((AvionPasajeros)v2.getAvion()).getCapacidadMaxPasajeros();
+        }
+
+        return pasajeros2 - pasajeros1;
+    }
+
+    private List<Vuelo> ordenarColaVuelos() {
+
+        List<Vuelo> vuelosEnEspera = new ArrayList<>();
+        int n, i, j;
+        Vuelo v1, v2;
+
+        for (Vuelo vuelo: vuelos) {
+            if (vuelo.getEstado() == EstadoVuelo.ESPERANDO_DESPEGUE) {
+                vuelosEnEspera.add(vuelo);
+            }
+        }
+
+        n = vuelosEnEspera.size();
+        for (i=0; i<n; i++) {
+            for (j=0; j<n-i-1; j++) {
+                v1 = vuelosEnEspera.get(j);
+                v2 = vuelosEnEspera.get(j+1);
+
+                if (compararVuelos(v1, v2) > 0) {
+                    vuelosEnEspera.set(j, v2);
+                    vuelosEnEspera.set(j+1, v1);
+                }
+            }
+        }
+
+        return vuelosEnEspera;
+
     }
 
 }

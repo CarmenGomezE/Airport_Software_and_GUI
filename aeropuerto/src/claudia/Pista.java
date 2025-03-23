@@ -23,7 +23,7 @@ public class Pista {
         this.codigo = codigo;
         this.longitud = longitud;
         this.tipoPista = tipoPista;
-        this.vuelo = new ArrayList<>();
+        this.vuelos = new ArrayList<>();
     }
 
     /**
