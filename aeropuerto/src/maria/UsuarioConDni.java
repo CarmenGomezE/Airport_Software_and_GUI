@@ -11,7 +11,7 @@ public abstract class UsuarioConDni extends Usuario {
     /** Dni del usuario con dni*/
     private String dni;
     /** Getor del usuario con dni*/
-    private Gestor gestor;
+    protected Gestor gestor;
 
     /**
      * Constructor sin contraseña de la clase UsuarioConDni.
@@ -35,9 +35,10 @@ public abstract class UsuarioConDni extends Usuario {
      * @param dni                Dni del usuario con dni.
      * @param aeropuerto         Aeropuerto en el que trabaja el usuario con dni.
      */
-    public UsuarioConDni(String nombre, String contraseña, String dni, AeropuertoPropio aeropuerto) {
-        super(nombre, contraseña, aeropuerto);
+    public UsuarioConDni(String nombre, String dni, AeropuertoPropio aeropuerto, Gestor gestor) {
+        super(nombre, aeropuerto);
         this.dni = dni;
+        this.gestor=gestor;
     }
 
     /**

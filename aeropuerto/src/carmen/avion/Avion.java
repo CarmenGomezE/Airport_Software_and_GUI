@@ -6,14 +6,13 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
 
-
 /**
  * La clase Avión representa un avión de una aerolinea que realizará una
  * serie de vuelos diarios.
  * 
  * @author Carmen Gómez, María Pozo, Claudia Municio.
  */
-public class Avion {
+public class Avion{
     /** Marca del avión */
     private String marca;
     /** Modelo del avión */

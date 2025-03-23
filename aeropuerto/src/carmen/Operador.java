@@ -33,6 +33,9 @@ public class Operador extends UsuarioConDni {
     private Aerolinea aerolinea;
     /** Estadísticas del operador sobre vuelos de su aerolinea */
     private EstadisticasOperador estadisticas;
+    /** Alternativas que le propone el gestor a sus propuestas de vuelo*/
+	private List<VueloProgramado> vuelosAlternativas;
+	private Timer timer;
 
     /**
      * Constructor de la clase SolicitudVueloCompartido.
@@ -232,8 +235,41 @@ public class Operador extends UsuarioConDni {
     	nuevoAvion.setAerolinea(this.getAerolinea());
     }
 
-    public void recibirNotificacionOpcionesReprogramacion() {
+    public void recibirNotificacionOpcionesReprogramacion(List<VueloProgramado> alternativas) {
+        vuelosAlternativas = alternativas;
+        System.out.println("Recibidas " + alternativas.size() + " alternativas de vuelos para su aceptación.");
+        
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                eliminarAlternativas();
+            }
+        }, gestor.getTiempoAceptarPropuesta() * 60 * 1000); 
+    }
 
+    // Método para aceptar una alternativa
+    public void aceptarAlternativa(VueloProgramado vuelo) throws AvionNoDisponibleException, AvionNoValidoException, EscalaInvalidaException, AntelacionInvalidaException {
+        if (vuelosAlternativas.contains(vuelo)) {
+            vuelosAlternativas.remove(vuelo);
+            System.out.println("Vuelo " + vuelo.getCodigo() + " aceptado.");
+            proponerVuelo(vuelo.getCodigo(),vuelo.getFecha(),vuelo.getFechaInicio(),vuelo.getFechaFinal(), vuelo.getHora(),  
+                    		vuelo.getDiasRecurrente(),vuelo.getTipoCarga(),vuelo.getTipoModoEmbarque(),vuelo.getPeriodicidad(), vuelo.getTipoVuelo(), vuelo.getAvion(),  
+                    		vuelo.getAeropuertoDestino(),vuelo.getAeropuertoSalida(),vuelo.getEscala());
+        }
+    }
+
+    // Método para rechazar una alternativa
+    public void rechazarAlternativa(VueloProgramado vuelo) {
+        if (vuelosAlternativas.contains(vuelo)) {
+            vuelosAlternativas.remove(vuelo);
+        }
+    }
+
+    private void eliminarAlternativas() {
+        if (!vuelosAlternativas.isEmpty()) {
+            System.out.println("El tiempo para aceptar las alternativas ha pasado. Se eliminan las propuestas.");
+            vuelosAlternativas.clear();
+        }
     }
     
     /**

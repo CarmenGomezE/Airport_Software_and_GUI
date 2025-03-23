@@ -127,6 +127,16 @@ public class Aerolinea {
 		this.aviones.add(avion);
 	}
 
+	/**
+     * Método que establece un nuevo operador de la aerolinea.
+     * 
+     * @param operador		Nuevo operador.
+     */
+	public void setOperador(Operador operador) {
+		this.operador=operador;
+		
+	}
+
 
 
 }

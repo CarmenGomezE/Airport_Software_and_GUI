@@ -1,5 +1,6 @@
 package aeropuerto.src.claudia;
 import aeropuerto.src.maria.*;
+import java.io.*;
 import aeropuerto.src.carmen.*;
 import aeropuerto.src.carmen.vuelo.*;
 import aeropuerto.src.carmen.avion.*;
@@ -20,6 +21,24 @@ public class AirportManager {
         this.usuarios = new ArrayList<>();
         this.vuelos = new ArrayList<>();
         this.credenciales = new HashMap<>();
+    }
+    
+    /**Esto es para guardar y cargar de momento ni caso*/
+    public void guardarEstado(String archivo) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(archivo))) {
+            oos.writeObject(this); 
+            System.out.println("Estado del sistema guardado correctamente.");
+        } catch (IOException e) {
+            System.err.println("Error al guardar el estado: " + e.getMessage());
+        }
+    }
+    public static AirportManager cargarEstado(String archivo) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(archivo))) {
+            return (AirportManager) ois.readObject(); 
+        } catch (IOException | ClassNotFoundException e) {
+            System.err.println("Error al cargar el estado: " + e.getMessage());
+            return null;
+        }
     }
 
     private Usuario buscarUsuarioPorDni (String dni) throws UsuarioNoEncontradoException {

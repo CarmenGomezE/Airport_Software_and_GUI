@@ -28,6 +28,7 @@ public class Gestor extends Usuario{
     private static double recargoAvionMercancias= 105.9;
     private static double costeBaseVueloSalida= 105.9;
     private static double costeBaseVueloLlegada= 105.9;
+    private static int tiempoAceptarPropuesta=60;
 
     /**
      * Constructor de la clase Gestor.
@@ -36,11 +37,12 @@ public class Gestor extends Usuario{
      * @param dni                   Dni del controlador aéreo.
      * @param contraseña            Contraseña del controlador aéreo.
      */
-    public Gestor(String nombre, String contrasena, AeropuertoPropio aeropuerto){
+    public Gestor(String nombre, String contrasena, AeropuertoPropio aeropuerto) {
         super(nombre, contrasena, aeropuerto);
-        this.tiposPermitidosNotificaciones = new ArrayList<>();
+        /** Se inicializa a que reciba todas*/
+        this.tiposPermitidosNotificaciones = new ArrayList<>(Arrays.asList(TipoNotificacion.values()));
         this.estadisticas = new EstadisticasGestor(this);
-        this.sistemaFacturacion= establecerSistemaFacturacion();
+        this.sistemaFacturacion = establecerSistemaFacturacion();
     }
 
     /**
@@ -157,6 +159,18 @@ public class Gestor extends Usuario{
         ControladorAereo controlador = new ControladorAereo(nombre, dni, contrasena, aeropuerto, this, terminal);
         aeropuerto.addUsuario(controlador);
         terminal.agregarControlador(controlador);
+    }
+    
+    /**
+     * Método para dar de alta un operador.
+     * 
+     * @param nombre		Nombre del nuevo controlador.
+     * @param dni    		Dni del nuevo controlador.
+     */
+    public void darDeAltaOperador(String nombre, String dni, String contrasena, Aerolinea aerolinea) {
+        Operador operador = new Operador(nombre, dni, aerolinea, aeropuerto, this);
+        aerolinea.setOperador(operador);
+        aeropuerto.addUsuario(operador);
     }
 
     /**
@@ -382,7 +396,7 @@ public class Gestor extends Usuario{
     			vuelosPropuestos.add(vuelo);
     		}
     	}
-    	notificaciones.add(new Notificacion("Nuevo vuelo propuesto", TipoNotificacion.SOLICITUD_VUELO_PROGRAMADO));
+    	recibirNotificacion(new Notificacion("Nuevo vuelo propuesto", TipoNotificacion.SOLICITUD_VUELO_PROGRAMADO));
     }
 
     /**
@@ -395,9 +409,6 @@ public class Gestor extends Usuario{
     	for(VueloProgramado vuelo: vuelosPropuestos) {
     		if(puedeProgramarse(vuelo)) {
     			aeropuerto.addVueloAceptado((Vuelo)vuelo);
-    		}
-    		else{
-    			vuelo.getAvion().getAerolinea().getOperador().recibirNotificacionOpcionesReprogramacion();
     		}
     	}
 
@@ -519,7 +530,7 @@ public class Gestor extends Usuario{
             }
         }
         if (!alternativas.isEmpty()) {
-        	/*ENVIAR NOTIFICACION*/
+        	vuelo.getAvion().getAerolinea().getOperador().recibirNotificacionOpcionesReprogramacion(alternativas);
             
         } else {
             throw new VueloSolapadoException("No se pudo programar el vuelo. No hay disponibilidad dentro de las siguientes " + horasMaximasReprogramacion + " horas.");
@@ -668,6 +679,22 @@ public class Gestor extends Usuario{
     public void setRecargoAvionMercancias(double nuevorecargoAvionMercancias) {
         recargoAvionMercancias = nuevorecargoAvionMercancias;
     }
+
+	public List<TipoNotificacion> getTiposPermitidosNotificaciones() {
+		return tiposPermitidosNotificaciones;
+	}
+
+	public void addTiposPermitidosNotificaciones(TipoNotificacion tiposPermitidosNotificaciones) {
+		this.tiposPermitidosNotificaciones.add(tiposPermitidosNotificaciones);
+	}
+
+	public int getTiempoAceptarPropuesta() {
+		return tiempoAceptarPropuesta;
+	}
+	
+	public void setTiempoAceptarPropuesta(int nuevoTiempo) {
+		tiempoAceptarPropuesta=nuevoTiempo;
+	}
 
 }
 
