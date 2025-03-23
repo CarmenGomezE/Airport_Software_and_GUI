@@ -16,7 +16,7 @@ public abstract class Usuario {
     /** Nombre del usuario*/
     private String nombre;
     /** Contraseña del usuario*/
-    private String contrasena;
+    protected String contrasena;
     /** Notificaciones del usuario*/
     protected List<Notificacion> notificaciones;
     /** Vuelos del usuario*/
