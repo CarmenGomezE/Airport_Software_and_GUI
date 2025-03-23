@@ -64,4 +64,17 @@ public class HangarPasajeros extends Hangar {
     public boolean comprobarAvionEnHangar(AvionPasajeros avion) {
         return aviones.contains(avion);
     }
+
+    /**
+     * Método para ver si hay espacio en el hangar.
+     * 
+     * @return true si hay espacio, false si no.
+     */
+    public boolean hayEspacioEnHangar() {
+        if (aviones.size() < numeroMaxAviones) {
+            return true;
+        }
+
+        return false;
+    }
 }

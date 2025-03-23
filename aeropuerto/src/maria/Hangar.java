@@ -123,4 +123,19 @@ public abstract class Hangar {
     public void resetHorasUso() {
         horasUso = 0;
     }
+
+    /**
+     * Método para comprobar si un avion entra en las plazas del hangar.
+     * 
+     * @param vuelo   El vuelo que tiene el avion que va a entrar en hangar.
+     * 
+     * @return true si entra, false si no.
+     */
+    public boolean comprobarTamano(Vuelo vuelo) {
+        if (vuelo.getAvion().getDimAlto() <= dimPlazaAlto && vuelo.getAvion().getDimAncho() <= dimPlazaAncho && vuelo.getAvion().getDimLargo() <= dimPlazaLargo) {
+            return true;
+        }
+
+        return false;
+    }
 }

@@ -70,4 +70,19 @@ public class Finger extends ModoEmbarque {
         return this.id;
     }
 
+    /**
+     * Método para comprobar si un avion entra en el finger.
+     * 
+     * @param vuelo   El vuelo que tiene el avion que va a conectarse al finger.
+     * 
+     * @return true si entra, false si no.
+     */
+    public boolean comprobarTamano(Vuelo vuelo) {
+        if (vuelo.getAvion().getDimAlto() <= dimAlto) {
+            return true;
+        }
+
+        return false;
+    }
+
 }

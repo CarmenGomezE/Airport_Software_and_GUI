@@ -54,7 +54,4 @@ public abstract class ModoEmbarque {
     public void setVuelo(Vuelo vuelo) {
         this.vuelo = vuelo;
     }
-
-
-
 }

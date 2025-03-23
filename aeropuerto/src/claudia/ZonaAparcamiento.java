@@ -59,4 +59,19 @@ public class ZonaAparcamiento extends ModoEmbarque {
     public int getId(){
         return this.id;
     }
+
+    /**
+     * Método para comprobar si un avion entra en la zona de aparcamiento.
+     * 
+     * @param vuelo   El vuelo que tiene el avion que va a entrar en la zona de aparcamiento.
+     * 
+     * @return true si entra, false si no.
+     */
+    public boolean comprobarTamano(Vuelo vuelo) {
+        if (vuelo.getAvion().getDimAncho() <= dimPlazaAncho && vuelo.getAvion().getDimLargo() <= dimPlazaLargo) {
+            return true;
+        }
+
+        return false;
+    }
 }
