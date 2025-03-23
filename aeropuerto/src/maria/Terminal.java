@@ -10,6 +10,7 @@ public abstract class Terminal {
     private String codigo;
     /** Puertas de embarque de la terminal*/
     private List<PuertaEmbarque> puertasEmbarque;
+    /** Controladores de la terminal*/
     private List<ControladorAereo> controladores;
 
     /**
@@ -52,10 +53,20 @@ public abstract class Terminal {
         puertasEmbarque.add(puertaEmbarque);
     }
 
+    /**
+     * Método para obtener los controladores de la terminal.
+     * 
+     * @return Lista de los controladores de la terminal.
+     */
 	public List<ControladorAereo> getControladores() {
 		return this.controladores;
 	}
 
+	/**
+     * Método para añadir un controlador a la terminal.
+     * 
+     * @param puertaEmbarque Nueva controlador.
+     */
 	public void agregarControlador(ControladorAereo controlador) {
 		this.controladores.add(controlador);	
 	}

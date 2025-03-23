@@ -9,6 +9,7 @@ import aeropuerto.src.claudia.*;
  * @author María Pozo, Carmen Gómez, Claudia Municio.
  */
 public abstract class Hangar {
+	/** Contador para el identificador del hangar*/
     private static int contadorId = 1; 
 
     /** Código único del hangar*/
@@ -143,7 +144,16 @@ public abstract class Hangar {
         return false;
     }
 
+    /**
+     * Método que comprueba si hay espacio en el hangar.
+     * 
+     */
 	protected abstract boolean hayEspacioEnHangar();
 
+	 /**
+     * Método para añadir un avion al hangar.
+     * 
+     * @param avion		  Avion que se añade al hangar.
+     */
 	protected abstract void addAvion(Avion avion);
 }

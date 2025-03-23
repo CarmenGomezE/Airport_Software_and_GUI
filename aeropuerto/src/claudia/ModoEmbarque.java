@@ -5,6 +5,7 @@ package aeropuerto.src.claudia;
  * @author Claudia Municio, Carmen Gómez, María Pozo.
  */
 public abstract class ModoEmbarque {
+	
     /**Código del modo de embarque */
     protected String codigo;
     /**Coste por hora del modo de embarque */

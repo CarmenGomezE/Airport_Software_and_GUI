@@ -118,6 +118,11 @@ public class AeropuertoPropio extends Aeropuerto {
         return aerolineas;
     }
 
+    /**
+     * Método para obtener los vuelos aceptados.
+     * 
+     * @return Vuelos aceptados.
+     */
     public List<Vuelo> getVuelosAceptados() {
 		return vuelosAceptados;
 	}

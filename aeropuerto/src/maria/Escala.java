@@ -31,15 +31,38 @@ public class Escala {
         this.horaLlegada = horaLlegada;
     }
     
+    /**
+     * Método que devuelve el aeropuerto de destino.
+     * 
+     * @return Aeropuerto de destino.
+     */
     public Aeropuerto getAeropuertoDestino() {
     	return this.aeropuertoDestino;
     }
+    
+    /**
+     * Método que devuelve el aeropuerto de origen.
+     * 
+     * @return Aeropuerto de origen.
+     */
     public Aeropuerto getAeropuertoOrigen() {
     	return this.aeropuertoOrigen;
     }
+    
+    /**
+     * Método que devuelve el la hora de llegada.
+     * 
+     * @return Hora de llegada.
+     */
     public LocalTime getHoraLlegada() {
     	return this.horaSalida;
     }
+    
+    /**
+     * Método que devuelve el la hora de salida.
+     * 
+     * @return Hora de salida.
+     */
     public LocalTime getHoraSalida() {
     	return this.horaLlegada;
     }

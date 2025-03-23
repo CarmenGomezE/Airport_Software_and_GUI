@@ -16,14 +16,23 @@ import java.util.*;
 public class Vuelo extends VueloProgramado{
     /**El estado del vuelo*/
     private EstadoVuelo estado;
+    /**El historial de estados del vuelo*/
     private HistorialEstadoVuelo historialEstadoVuelo;
+    /**El tiempo de retraso del vuelo*/
     private int tiempoRetraso;
+    /**El modo de embarque del vuelo*/
     private ModoEmbarque modoEmbarque;
+    /**La puerta de embarque del vuelo*/
     private PuertaEmbarque puertaEmbarque;
+    /**La terminal del vuelo*/
     private Terminal terminal;
+    /**El controlador del vuelo*/
     private ControladorAereo controladorAereo;
+    /**El operador principal del vuelo*/
     private Operador operadorPrincipal;
+    /**La pista del vuelo*/
     private Pista pista;
+    /**Los operadores secundarios del vuelo si los hay y su porcentaje*/
     private Map<Operador, Double> cargaPorOperador;
 
     /**
@@ -101,66 +110,148 @@ public class Vuelo extends VueloProgramado{
         return this.historialEstadoVuelo;
     }
 
+    /**
+     * Método que devuelve el modo de embarque del vuelo.
+     * 
+     * @return Modo de embarque.
+     */
     public ModoEmbarque getModoEmbarque() {
         return this.modoEmbarque;
     }
 
+    /**
+     * Método que asigna un modo de embarque al vuelo.
+     * 
+     * @param modo		Modo de embarque.
+     */
     public void setModoEmbarque(ModoEmbarque modo) {
         this.modoEmbarque = modo;
     }
 
+    /**
+     * Método que devuelve la puerta de embarque de un vuelo.
+     * 
+     * @return La puerta de embarque de un vuelo.
+     */
     public PuertaEmbarque getPuertaEmbarque() {
         return this.puertaEmbarque;
     }
 
+    /**
+     * Método que asigna una puerta de embarque a un vuelo.
+     * 
+     * @param puerta		Puerta de embarque.
+     */
     public void setPuertaEmbarque(PuertaEmbarque puerta) {
         this.puertaEmbarque = puerta;
     }
     
+    /**
+     * Método que asigna una terminal a un vuelo.
+     * 
+     * @param terminal		Terminal que se asigna a un vuelo.
+     */
 	public void setTerminal(Terminal terminal) {
 		this.terminal=terminal;
 	}
 
+	/**
+     * Método que asigna un controlador a un vuelo.
+     * 
+     * @param controladorAereo		Controlador.
+     */
 	public void setControlador(ControladorAereo controladorAereo) {
 		this.controladorAereo=controladorAereo;
 	}
 
+	/**
+     * Método que devuelve la terminal asignada del vuelo.
+     * 
+     * @return La terminal del vuelo.
+     */
 	public Terminal getTerminal() {
 		return this.terminal;
 	}
 
+	/**
+     * Método que devuelve el controlador del vuelo.
+     * 
+     * @return Controlador del vuelo.
+     */
 	public ControladorAereo getControlador() {
 		return this.controladorAereo;
 	}
 
+	/**
+     * Método que devuelve la pista del vuelo.
+     * 
+     * @return La pista asignada.
+     */
     public Pista getPista() {
         return this.pista;
     }
 
+    /**
+     * Método que asigna una pista al vuelo.
+     * 
+     * @rparam pista	Pista.
+     */
     public void setPista(Pista pista) {
         this.pista = pista;
     }
     
+    /**
+     * Método que añade un operador y su carga al vuelo.
+     * 
+     * @param operador			Operador que va a añadirse.
+     * @param porcentajeCarga	Porcentaje asume,
+     */
     public void agregarOperadorSecundario(Operador operador, double porcentajeCarga) {
         this.cargaPorOperador.put(operador, porcentajeCarga);
     }
 
+    /**
+     * Método que devuelve la carga de un operador dado.
+     * 
+     * @param operador		Operador del que se devuelve la carga.
+     * @return La carga asignada a un operador.
+     */
     public double getCargaAsignada(Operador operador) {
         return this.cargaPorOperador.getOrDefault(operador, 0.0);
     }
 
+    /**
+     * Método que devuelve la carga total del vuelo.
+     * 
+     * @return Carga total del vuelo.
+     */
     public double getCargaTotalAsignada() {
         return cargaPorOperador.values().stream().mapToDouble(Double::doubleValue).sum();
     }
 
+    /**
+     * Método que devuelve el operador principal del vuelo.
+     * 
+     * @return Operador principal del vuelo.
+     */
     public Operador getOperadorPrincipal() {
         return this.operadorPrincipal;
     }
     
+    /**
+     * Método que el mapa de operadores y sus respectivas cargas.
+     * 
+     * @return Mapa de operadores y carga.
+     */
     public Map<Operador, Double> getOperadoresAsignados() {
-        return this.cargaPorOperador; // Devuelve el mapa de operadores y su carga
+        return this.cargaPorOperador;
     }
     
+    /**
+     * Método que devuelve todos los operadores del vuelo.
+     * 
+     * @return Operadores del vuelo.
+     */
     public List<Operador> getOperadores() {
         List<Operador> operadores = new ArrayList<>();
         operadores.add(this.operadorPrincipal);
@@ -168,7 +259,11 @@ public class Vuelo extends VueloProgramado{
         return operadores;
     }
 
-
+    /**
+     * Método que devuelve el tiempo de espera del vuelo.
+     * 
+     * @return Tiempo de espera de despegue.
+     */
     public int getTiempoEspera() {
         LocalTime horaCambio;
 

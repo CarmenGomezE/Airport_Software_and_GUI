@@ -35,6 +35,7 @@ public class Operador extends UsuarioConDni {
     private EstadisticasOperador estadisticas;
     /** Alternativas que le propone el gestor a sus propuestas de vuelo*/
 	private List<VueloProgramado> vuelosAlternativas;
+	/*Temporizador para responder a las opciones de vuelo*/
 	private Timer timer;
 
     /**
@@ -235,6 +236,11 @@ public class Operador extends UsuarioConDni {
     	nuevoAvion.setAerolinea(this.getAerolinea());
     }
 
+    /**
+     * Método para recibir opciones de reprograamacion.
+     * 
+     * @param alternativas     Vuelo al que se le cambia el estado.
+     */
     public void recibirNotificacionOpcionesReprogramacion(List<VueloProgramado> alternativas) {
         vuelosAlternativas = alternativas;
         System.out.println("Recibidas " + alternativas.size() + " alternativas de vuelos para su aceptación.");
@@ -247,7 +253,11 @@ public class Operador extends UsuarioConDni {
         }, gestor.getTiempoAceptarPropuesta() * 60 * 1000); 
     }
 
-    // Método para aceptar una alternativa
+    /**
+     * Método para aceptar una opción reprogramada.
+     * 
+     * @param vuelo     Vuelo que se acepta.
+     */
     public void aceptarAlternativa(VueloProgramado vuelo) throws AvionNoDisponibleException, AvionNoValidoException, EscalaInvalidaException, AntelacionInvalidaException {
         if (vuelosAlternativas.contains(vuelo)) {
             vuelosAlternativas.remove(vuelo);
@@ -259,13 +269,21 @@ public class Operador extends UsuarioConDni {
         }
     }
 
-    // Método para rechazar una alternativa
+    /**
+     * Método para rechazar una opción reprogramada.
+     * 
+     * @param vuelo     Vuelo que se rechaza.
+     */
     public void rechazarAlternativa(VueloProgramado vuelo) {
         if (vuelosAlternativas.contains(vuelo)) {
             vuelosAlternativas.remove(vuelo);
         }
     }
 
+    /**
+     * Método para eliminar las opciones reprogramadas.
+     * 
+     */
     private void eliminarAlternativas() {
         if (!vuelosAlternativas.isEmpty()) {
             System.out.println("El tiempo para aceptar las alternativas ha pasado. Se eliminan las propuestas.");
@@ -362,6 +380,11 @@ public class Operador extends UsuarioConDni {
         System.out.println("Vuelo propuesto exitosamente.");
     }
 
+    /**
+     * Método para recibir una factura emitida.
+     * 
+     * @param factura     Factura que se recibe.
+     */
     public void recibirNotificacionFacturaEmitida(Factura factura) {
     	getAerolinea().addFactura(factura);
         new Notificacion("Factura emitida", TipoNotificacion.FACTURA_EMITIDA);

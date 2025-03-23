@@ -8,8 +8,11 @@ import es.uam.eps.padsof.invoices.IResourceUsageInfo;
  * @author Carmen Gómez, María Pozo, Claudia Municio.
  */
 class UsoRecursos implements IResourceUsageInfo {
+	/** Descripcion del recurso*/
     private String descripcion;
+    /** Precio por hora del recurso*/
     private double precioPorHora;
+    /** Tiempo de uso del recurso*/
     private int tiempoDeUso;
 
     /**

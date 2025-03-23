@@ -8,6 +8,7 @@ import java.util.*;
  * @author María Pozo, Carmen Gómez, Claudia Municio.
  */
 public class PuertaEmbarque {
+	/**Contador para el identificador*/
     private static int contadorId = 1; 
 
     /** Código único de la puerta de embarque*/
@@ -131,6 +132,12 @@ public class PuertaEmbarque {
         this.vuelo = vuelo;
     }
 
+    /**
+     * Método para ver si contiene una zona de aparcamiento.
+     * 
+     * @param zona  Zona de aparcamiento.
+     * @return True si la contiene, false si no.
+     */
 	public boolean contieneZonaAparcamiento(ZonaAparcamiento zona) {
         return zonasAparcamiento.contains(zona);
     }

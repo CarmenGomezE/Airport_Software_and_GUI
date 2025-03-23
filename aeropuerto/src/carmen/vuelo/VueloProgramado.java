@@ -220,9 +220,13 @@ public class VueloProgramado {
      */
 	public void setHora(LocalTime nuevaHora) {
 		this.hora=nuevaHora;
-		
 	}
 	
+	/**
+     * Método que establece una nuevo avion para el VueloProgramado.
+     * 
+     * @param avion		Nuevo avion del vuelo.
+     */
 	public void setAvion(Avion avion) {
 		this.avion=avion;
 	}
@@ -237,6 +241,11 @@ public class VueloProgramado {
 		
 	}
 
+	/**
+     * Método que devuelve la escala de un VueloProgramado.
+     * 
+     * @return Devuelve la escala de un Vuelo Programado.
+     */
 	public Escala getEscala() {
 		return this.escala;
 	}

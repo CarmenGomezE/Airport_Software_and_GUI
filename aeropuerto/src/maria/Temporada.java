@@ -88,6 +88,13 @@ public class Temporada {
         return true;
     }
 
+    /**
+     * Método para comprobar que una fecha esta en esta temporada.
+     * 
+     * @param fecha		 La fecha que se comprueba.
+     * 
+     * @return true si está, false si no
+     */
     public boolean estaEnTemporada(LocalDate fecha) {
         if ((fecha.isEqual(fechaInicio) || fecha.isAfter(fechaInicio)) && (fecha.isEqual(fechaFin) || fecha.isBefore(fechaFin)) == true) {
             return true;

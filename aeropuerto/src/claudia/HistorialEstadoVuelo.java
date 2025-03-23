@@ -10,6 +10,9 @@ import java.util.Map;
 public class HistorialEstadoVuelo {
     private Map<LocalTime, EstadoVuelo> historial;
 
+    /**
+     * Constructor de la clase HistorialEstadoVuelo.
+     */
     public HistorialEstadoVuelo() {
         this.historial = new LinkedHashMap<>();
     }

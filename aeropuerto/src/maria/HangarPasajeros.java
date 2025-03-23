@@ -75,6 +75,11 @@ public class HangarPasajeros extends Hangar {
         return false;
     }
 
+    /**
+     * Método para añadir un avion al hangar.
+     * 
+     * @param avion		  Avion que se añade al hangar.
+     */
 	@Override
 	protected void addAvion(Avion avion) {
 		this.aviones.add((AvionPasajeros) avion);

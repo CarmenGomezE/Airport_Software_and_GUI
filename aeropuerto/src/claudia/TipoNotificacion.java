@@ -15,5 +15,6 @@ public enum TipoNotificacion{
     FACTURA_EMITIDA,
     /**La notificación es acerca de opciones de reprogramar el vuelo */
     OPCIONES_REPROGRAMAR_VUELO, 
+    /**La notificación es acerca de un nuevo vuelo programado */
     SOLICITUD_VUELO_PROGRAMADO;
 }

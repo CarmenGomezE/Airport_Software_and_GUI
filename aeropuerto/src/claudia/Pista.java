@@ -71,10 +71,6 @@ public class Pista {
      * Método que quita un vuelo de la pista.
      * @param vuelo Vuelo de la pista.
      */
-    public void quitarVuelo(Vuelo vuelo) {
-        vuelos.remove(vuelo);
-    }
-
 	public void removeVuelo(Vuelo vuelo) {
 		this.vuelos.remove(vuelo);
 		

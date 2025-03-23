@@ -11,9 +11,11 @@ public class Finger extends ModoEmbarque {
     private double dimAlto;
     /**Las puertas de embarque a las que está conectado (solo puede ser 1 o 2) */
     private Set <PuertaEmbarque> puertasEmbarque;
-
+    /**Horas de uso del finger*/
     private double horasUso;
+    /**Id del finger*/
     private int id;
+    /**Contador para el id del finger*/
     private static int contador = 1;
 
     /**
@@ -37,6 +39,7 @@ public class Finger extends ModoEmbarque {
     
      /**
      * Método que devuelve la dimensión de alto del finger.
+     * 
      * @return Dimensión de alto del finger.
      */
     public double getDimAlto() {
@@ -45,16 +48,27 @@ public class Finger extends ModoEmbarque {
 
     /**
      * Método que devuelve las puertas de embarque a las que está conectado el finger.
+     * 
      * @return Puertas de embarque a las que está conectado el finger.
      */
     public Set<PuertaEmbarque> getPuertasEmbarque(){
         return this.puertasEmbarque;
     }
 
+    /**
+     * Método que devuelve las horas de uso del finger.
+     * 
+     * @return Horas de uso del finger.
+     */
     public double getHorasUso() {
         return this.horasUso;
     }
 
+    /**
+     * Método que suma horas de uso a las horas de uso del finger.
+     * 
+     * @param horas 		Horas de uso.
+     */
     public void addHorasUso(double horas) {
     	if (horas < 0) {
             throw new IllegalArgumentException("Las horas deben ser positivas");
@@ -62,10 +76,19 @@ public class Finger extends ModoEmbarque {
         this.horasUso += horas;
     }
 
+    /**
+     * Método para resetear las horas de uso del finger.
+     * 
+     */
     public void horasUsoReset() {
         this.horasUso = 0;
     }
 
+    /**
+     * Método que devuelve el id del finger.
+     * 
+     * @return Id del finger.
+     */
     public int getId(){
         return this.id;
     }
