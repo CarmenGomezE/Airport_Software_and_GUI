@@ -74,4 +74,10 @@ public class HangarPasajeros extends Hangar {
 
         return false;
     }
+
+	@Override
+	protected void addAvion(Avion avion) {
+		this.aviones.add((AvionPasajeros) avion);
+		
+	}
 }

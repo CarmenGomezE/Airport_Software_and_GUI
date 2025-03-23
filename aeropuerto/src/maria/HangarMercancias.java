@@ -104,4 +104,10 @@ public class HangarMercancias extends Hangar {
         
         return true;
     }
+
+	@Override
+	protected void addAvion(Avion avion) {
+		this.aviones.add((AvionMercancias) avion);
+		
+	}
 }
