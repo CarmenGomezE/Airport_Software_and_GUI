@@ -33,12 +33,14 @@ public class Gestor extends Usuario{
     /**
      * Constructor de la clase Gestor.
      * 
-     * @param nombre                Nombre del controlador aéreo.
-     * @param dni                   Dni del controlador aéreo.
-     * @param contraseña            Contraseña del controlador aéreo.
+     * @param nombre                Nombre del gestor.
+     * @param dni                   Dni del gestor.
+     * @param contraseña            Contraseña del gestor.
+     * @param aeropuerto			Aeropuerto del gestor.
+     * @param sistema				Sistema.
      */
-    public Gestor(String nombre, String contrasena, AeropuertoPropio aeropuerto) {
-        super(nombre, contrasena, aeropuerto);
+    public Gestor(String nombre, String contrasena, AeropuertoPropio aeropuerto, AirportManager sistema) {
+        super(nombre, contrasena, aeropuerto, sistema);
         /** Se inicializa a que reciba todas*/
         this.tiposPermitidosNotificaciones = new ArrayList<>(Arrays.asList(TipoNotificacion.values()));
         this.estadisticas = new EstadisticasGestor(this);
@@ -159,6 +161,7 @@ public class Gestor extends Usuario{
         ControladorAereo controlador = new ControladorAereo(nombre, dni, contrasena, aeropuerto, this, terminal);
         aeropuerto.addUsuario(controlador);
         terminal.agregarControlador(controlador);
+        sistema.addCredencial(dni, contrasena);
     }
     
     /**
@@ -171,6 +174,7 @@ public class Gestor extends Usuario{
         Operador operador = new Operador(nombre, dni, aerolinea, aeropuerto, this);
         aerolinea.setOperador(operador);
         aeropuerto.addUsuario(operador);
+        sistema.addCredencial(dni, contrasena);
     }
 
     /**

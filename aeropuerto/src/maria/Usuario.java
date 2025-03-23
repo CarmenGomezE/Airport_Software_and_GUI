@@ -23,6 +23,8 @@ public abstract class Usuario {
     protected List<Vuelo> vuelosQueControla;
     /** Aeropuerto en el que trabaja el usuario*/
     protected AeropuertoPropio aeropuerto;
+    /** Sistema*/
+    protected AirportManager sistema;
 
     private static final DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private static final DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm");
@@ -32,12 +34,14 @@ public abstract class Usuario {
      * 
      * @param nombre                Nombre del usuario.
      * @param aeropuerto            Aeropuerto en el que trabaja el usuario.
+     * @param sistema				Sistema.
      */
-    public Usuario(String nombre, AeropuertoPropio aeropuerto) {
+    public Usuario(String nombre, AeropuertoPropio aeropuerto, AirportManager sistema) {
         this.nombre = nombre;
         this.notificaciones = new ArrayList<>();
         this.vuelosQueControla = new ArrayList<>();
         this.aeropuerto = aeropuerto;
+        this.sistema = sistema;
     }
 
     /**
@@ -46,17 +50,33 @@ public abstract class Usuario {
      * @param nombre                Nombre del usuario.
      * @param contraseña            Contraseña del usuario.
      * @param aeropuerto            Aeropuerto en el que trabaja el usuario.
+     * @param sistema				Sistema.
      */
-    public Usuario(String nombre, String contrasena, AeropuertoPropio aeropuerto) {
+    public Usuario(String nombre, String contrasena, AeropuertoPropio aeropuerto, AirportManager sistema) {
         this.nombre = nombre;
         this.contrasena = contrasena;
         this.notificaciones = new ArrayList<>();
         this.vuelosQueControla = new ArrayList<>();
         this.aeropuerto = aeropuerto;
+        this.sistema = sistema;
     }
     
+    /**
+     * Método para obtener el aeropuerto propio.
+     * 
+     * @return El aeropuerto propio.
+     */
     public AeropuertoPropio getAeropuerto() {
     	return this.aeropuerto;
+    }
+    
+    /**
+     * Método para obtener el sistema.
+     * 
+     * @return El sistema.
+     */
+    public AirportManager getSistema() {
+        return sistema;
     }
     
     /**
