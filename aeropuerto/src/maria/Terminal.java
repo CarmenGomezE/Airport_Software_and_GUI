@@ -20,7 +20,9 @@ public abstract class Terminal {
      */
     public Terminal(String codigo, PuertaEmbarque puertaEmbarque) {
         this.codigo = codigo;
+        this.puertasEmbarque= new ArrayList<>();
         this.puertasEmbarque.add(puertaEmbarque);
+        this.controladores= new ArrayList<>();
     }
 
     /**
@@ -52,5 +54,9 @@ public abstract class Terminal {
 
 	public List<ControladorAereo> getControladores() {
 		return this.controladores;
+	}
+
+	public void agregarControlador(ControladorAereo controlador) {
+		this.controladores.add(controlador);	
 	}
 }

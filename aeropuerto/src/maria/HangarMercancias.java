@@ -1,6 +1,7 @@
 package aeropuerto.src.maria;
 
 import aeropuerto.src.carmen.avion.*;
+import aeropuerto.src.claudia.*;
 import java.util.*;
 /**
  * La clase HangarMercancias representa los hangares de mercancias del aeropuerto.
@@ -94,10 +95,13 @@ public class HangarMercancias extends Hangar {
      * @param vuelo Vuelo que tiene el avión que entra a hangar.
      */
     public boolean comprobarMercaPeligrosa(Vuelo vuelo) {
-        if (vuelo.getAvion().getMercaPeligrosa() == true && mercaPeligrosa == false) {
-            return false;
+    	if (vuelo.getAvion() instanceof AvionMercancias) {
+            AvionMercancias avionMercancias = (AvionMercancias) vuelo.getAvion();
+            if (avionMercancias.getMercaPeligrosa() && !mercaPeligrosa) {
+                return false;
+            }
         }
-
+        
         return true;
     }
 }

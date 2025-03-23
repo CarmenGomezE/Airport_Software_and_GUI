@@ -255,7 +255,7 @@ public class AeropuertoPropio extends Aeropuerto {
      * 
      * @param aeropuerto El aeropuerto de destino que se añade.
      */
-	public void addAeropuertoDestino(AeropuertoDestino aeropuerto) {
+	public void addAeropuertoDestino(Aeropuerto aeropuerto) {
         if (aeropuerto == null) {
             throw new IllegalArgumentException("El aeropuerto de destino no puede ser null");
         }
@@ -295,4 +295,5 @@ public class AeropuertoPropio extends Aeropuerto {
     public double calcularHorasEntre(LocalTime hora1, LocalTime hora2) {
         return (double) (hora2.toSecondOfDay() - hora1.toSecondOfDay()) / 3600;
     }
+
 }

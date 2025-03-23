@@ -1,7 +1,11 @@
 package aeropuerto.src.maria;
 
+import aeropuerto.src.carmen.*;
+import aeropuerto.src.carmen.vuelo.*;
+import aeropuerto.src.carmen.avion.*;
 import aeropuerto.src.claudia.*;
-import java.util.Random;
+import java.util.*;
+import java.time.*;
 
 /**
  * La clase ControladorAereo representa al usuario controlador de la aplicación
@@ -18,8 +22,9 @@ public class ControladorAereo extends UsuarioConDni {
      * @param contraseña            Contraseña del controlador aéreo.
      * @param gestor                Gestor del controlador aéreo.
      */
-    public ControladorAereo(String nombre, String dni, String contrasena, AeropuertoPropio aeropuerto, Gestor gestor) {
-        super(nombre, dni, contrasena, aeropuerto, gestor);
+    public ControladorAereo(String nombre, String dni, String contrasena, AeropuertoPropio aeropuerto, Gestor gestor, Terminal terminal) {
+        super(nombre, contrasena, dni, aeropuerto, gestor);
+        this.terminal=terminal;
     }
 
     /**
@@ -32,29 +37,23 @@ public class ControladorAereo extends UsuarioConDni {
     }
 
     /**
-     * Método para cambiar la terminal de un controlador aéreo.
-     * 
-     * @param Terminal Nueva terminal del controlador aéreo.
-     */
-    public void setTerminal(Terminal terminal) {
-        this.terminal = terminal;
-    }
-
-    /**
      * Método para cambiar el estado de un vuelo.
      * 
      * @param vuelo     Vuelo al que se le cambia el estado.
      * @param estado    Nuevo estado del vuelo.
      * @throws VueloNoDelUsuarioException 
      * @throws EstadoNoDelUsuarioException 
+     * @throws EstadoEquivocadoException 
+     * @throws NoModosEmbarqueDisponiblesException 
+     * @throws NoPistasDisponiblesException 
      */
     @Override
-    public void cambiarEstadoVuelo(Vuelo vuelo, EstadoVuelo estado) throws VueloNoDelUsuarioException, EstadoNoDelUsuarioException {
+    public void cambiarEstadoVuelo(Vuelo vuelo, EstadoVuelo estado) throws VueloNoDelUsuarioException, EstadoNoDelUsuarioException, EstadoEquivocadoException, NoModosEmbarqueDisponiblesException, NoPistasDisponiblesException {
         if (vuelo == null || estado == null) {
             throw new IllegalArgumentException("El vuelo y el nuevo estado no pueden ser null");
         }
 
-        if (vuelos.contains(vuelo) == false) {
+        if (vuelosQueControla.contains(vuelo) == false) {
             throw new VueloNoDelUsuarioException("Este vuelo no está asignado a este usuario");
         }
 
@@ -85,7 +84,7 @@ public class ControladorAereo extends UsuarioConDni {
         }
     }
 
-	private void cambiarEstadoOperativo(Vuelo vuelo) {
+	private void cambiarEstadoOperativo(Vuelo vuelo) throws EstadoEquivocadoException, NoModosEmbarqueDisponiblesException {
 		if (vuelo.getEstado() != EstadoVuelo.FIN_DEL_DESEMBARQUE) {
             throw new EstadoEquivocadoException("El vuelo no está en el estado correcto para cambiar a este estado");
         }
@@ -94,8 +93,8 @@ public class ControladorAereo extends UsuarioConDni {
         ModoEmbarque modoActual = vuelo.getModoEmbarque(); 
         ModoEmbarque modoNuevo = null;
 
-        for (Vuelo v: aeropuerto.getVuelosAceptados) {
-            if (v.getAvion().equals(vuelo.getAvion()) && v.getTipoVuelo == TipoVuelo.SALIDA) {
+        for (Vuelo v: aeropuerto.getVuelosAceptados()) {
+            if (v.getAvion().equals(vuelo.getAvion()) && v.getTipoVuelo() == TipoVuelo.SALIDA) {
                 if (verificarVueloMenosHora(vuelo.getAvion()) == true) {
                     modoNuevo = v.getModoEmbarque();
                     break;
@@ -108,9 +107,9 @@ public class ControladorAereo extends UsuarioConDni {
         }
 
         if (modoNuevo instanceof Finger) {
-            asignarModoEmbarque((Finger) modoNuevo);
+            asignarModoEmbarque((Finger) modoNuevo, vueloNuevo);
         } else if (modoNuevo instanceof ZonaAparcamiento) {
-            asignarModoEmbarque((ZonaAparcamiento) modoNuevo, vuelo);
+            asignarModoEmbarque((ZonaAparcamiento) modoNuevo, vueloNuevo);
         } else {
             throw new NoModosEmbarqueDisponiblesException("No hay modos de embarque disponibles.");
         }
@@ -127,8 +126,8 @@ public class ControladorAereo extends UsuarioConDni {
             throw new EstadoEquivocadoException("El vuelo no está en el estado correcto para cambiar a este estado");
         }
 
-        for (Vuelo v: aeropuerto.getVuelosAceptados) {
-            if (v.getAvion().equals(vuelo.getAvion()) && v.getTipoVuelo == TipoVuelo.SALIDA) {
+        for (Vuelo v: aeropuerto.getVuelosAceptados()) {
+            if (v.getAvion().equals(vuelo.getAvion()) && v.getTipoVuelo() == TipoVuelo.SALIDA) {
                 if (verificarVueloMenosHora(vuelo.getAvion()) == true) {
                     throw new VueloEnMenosDe1HoraException("El avión del vuelo tiene programado un vuelo en menos de 1 hora");
                 }
@@ -137,7 +136,7 @@ public class ControladorAereo extends UsuarioConDni {
 
         for (Hangar h: aeropuerto.getHangares()) {
             if (vuelo.getTipoCarga() == TipoCarga.MERCANCIAS) {
-                if (h instanceof HangarMercancias == true && h.hayEspacioEnHangar() == true && h.comprobarTamano(vuelo) == true && h.comprobarMercaPeligrosa(vuelo) == true) {
+                if ((h instanceof HangarMercancias == true) && (h.hayEspacioEnHangar() == true) && (h.comprobarTamano(vuelo) == true) && ((HangarMercancias) h).comprobarMercaPeligrosa(vuelo) == true) {
                     liberarAvion(vuelo);
                     break;
                 }
@@ -163,7 +162,7 @@ public class ControladorAereo extends UsuarioConDni {
         }
 	}
 
-	private void cambiarEstadoAterrizaje(Vuelo vuelo) {
+	private void cambiarEstadoAterrizaje(Vuelo vuelo) throws EstadoEquivocadoException {
 		if (vuelo.getEstado() != EstadoVuelo.ESPERANDO_ATERRIZAJE) {
             throw new EstadoEquivocadoException("El vuelo no está en el estado correcto para cambiar a este estado");
         }
@@ -209,11 +208,11 @@ public class ControladorAereo extends UsuarioConDni {
         List<Pista> pistaDespegue = new ArrayList<>();
         for (Pista p: aeropuerto.getPistas()) {
             if (p.getTipoPista() == TipoPista.ATERRIZAJE) {
-                pistas.add(p);
+            	pistaDespegue.add(p);
             }
         }
         Random rand = new Random();
-        Pista pista = pistas.get(rand.nextInt(pistas.size()));
+        Pista pista = pistaDespegue.get(rand.nextInt(pistaDespegue.size()));
         asignarPista(pista, vuelo);
         if (vuelo.getPista() == null) {
             throw new NoPistasDisponiblesException("No hay pistas disponibles");
@@ -283,7 +282,7 @@ public class ControladorAereo extends UsuarioConDni {
         }
     }
 
-	private void cambiarEstadoEsperandoPistaDespegue(Vuelo vuelo) {
+	private void cambiarEstadoEsperandoPistaDespegue(Vuelo vuelo) throws EstadoEquivocadoException {
 		if (vuelo.getEstado() != EstadoVuelo.FIN_DEL_EMBARQUE) {
             throw new EstadoEquivocadoException("El vuelo no está en el estado correcto para cambiar a este estado");
         }
@@ -295,7 +294,7 @@ public class ControladorAereo extends UsuarioConDni {
         }
 	}
 
-	private void cambiarEstadoEsperandoDespegue(Vuelo vuelo) {
+	private void cambiarEstadoEsperandoDespegue(Vuelo vuelo) throws EstadoEquivocadoException, NoPistasDisponiblesException {
 		if (vuelo.getEstado() != EstadoVuelo.ESPERANDO_PISTA_DE_DESPEGUE) {
             throw new EstadoEquivocadoException("El vuelo no está en el estado correcto para cambiar a este estado");
         }
@@ -365,7 +364,7 @@ public class ControladorAereo extends UsuarioConDni {
 
         Avion avion = vuelo.getAvion();
         vuelo.setAvion(null);
-        avions.setAerolinea(null);
+        avion.setAerolinea(null);
     }
 
     private void asignarPuertaEmbarque(PuertaEmbarque puerta, Vuelo vuelo) {
@@ -374,7 +373,7 @@ public class ControladorAereo extends UsuarioConDni {
         }
      
         puerta.setVuelo(vuelo);
-        vuelo.setPuerta(puerta);
+        vuelo.setPuertaEmbarque(puerta);
     }
 
     private void liberarPuertaEmbarque(Vuelo vuelo) {
@@ -383,19 +382,19 @@ public class ControladorAereo extends UsuarioConDni {
         }
 
         PuertaEmbarque puerta = vuelo.getPuertaEmbarque();
-        vuelo.setPuerta(null);
+        vuelo.setPuertaEmbarque(null);
         puerta.setVuelo(null);
     }
 
-    private void asignarHangar(Hangar hangar, Vuelo vuelo) {
+    private void asignarHangar(Hangar hangar, Vuelo vuelo) throws AvionHangarDistintosException {
         if (hangar == null || vuelo == null) {
             throw new IllegalArgumentException("El vuelo y el hangar no pueden ser null");
         }
 
         if (vuelo.getTipoCarga() == TipoCarga.PASAJEROS && hangar instanceof HangarPasajeros == true) {
-            hangar.addAvion(vuelo.getAvion());
+            ((HangarPasajeros) hangar).addAvion((AvionPasajeros) vuelo.getAvion());
         } else if (vuelo.getTipoCarga() == TipoCarga.MERCANCIAS && hangar instanceof HangarMercancias == true) {
-            hangar.addAvion(vuelo.getAvion());
+            ((HangarMercancias) hangar).addAvion((AvionMercancias) vuelo.getAvion());
         } else {
             throw new AvionHangarDistintosException("El vuelo y el hangar tienen que tener el mismo tipo de carga");
         }
@@ -405,9 +404,9 @@ public class ControladorAereo extends UsuarioConDni {
 
         LocalDateTime ahora = LocalDateTime.now();
 
-        for (Vuelo vuelo: vuelos) {
-            if (vuelo.getAvion().equals(avion) && vuelo.getTipoVuelo == TipoVuelo.SALIDA) {
-                LocalDateTime salida = vuelo.getHora();
+        for (Vuelo vuelo: vuelosQueControla) {
+            if (vuelo.getAvion().equals(avion) && vuelo.getTipoVuelo() == TipoVuelo.SALIDA) {
+                LocalTime salida = vuelo.getHora();
 
                 if (Duration.between(ahora, salida).toMinutes() <= 60) {
                     return true;

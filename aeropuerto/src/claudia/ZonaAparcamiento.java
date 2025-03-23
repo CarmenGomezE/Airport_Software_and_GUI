@@ -1,4 +1,4 @@
-package aeropuerto.claudia;
+package aeropuerto.src.claudia;
 /**
  * La clase ZonaAparcamiento representa una zona de aparcamiento en un aeropuerto.
  * @author Claudia Municio, Carmen Gómez, María Pozo.
@@ -11,7 +11,7 @@ public class ZonaAparcamiento extends ModoEmbarque {
 
     private double horasUso;
     private int id;
-    private static int contador = 1
+    private static int contador = 1;
 
     /**
      * Constructor de la clase ZonaAparcamiento
