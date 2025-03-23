@@ -14,7 +14,9 @@ import aeropuerto.src.claudia.*;
 public class SolicitudVueloCompartido {
     /** Porcentaje de vuelo que se solicita compartir */
     private Vuelo vueloOriginal;  
-    private Operador operadorReceptor; 
+    /** Operador que recibe la solicitud*/
+    private Operador operadorReceptor;
+    /** Porcentaje de carga a compartir de la solicitud*/
     private double porcentajeCarga;  
     /** Estado de la solicitud */
     private EstadoSolicitud estadoSolicitud;
@@ -46,17 +48,36 @@ public class SolicitudVueloCompartido {
         return this.estadoSolicitud;
     }
     
+    /**
+     * Método que devuelve el porcentaje de la solicitud.
+     * 
+     * @return Porcentaje de carga a compartir de la solicitud.
+     */
     public double getPorcentaje() {
     	return this.porcentajeCarga;
     }
 
+    /**
+     * Método que devuelve el operador que hace la solicitud.
+     * 
+     * @return Operador solicitante.
+     */
     public Operador getOperadorSolicitante() {
         return this.operadorSolicita;
     }
 
+    /**
+     * Método que devuelve el operador que recibe la solicitud.
+     * 
+     * @return Operador receptor.
+     */
     public Operador getOperadorReceptor() {
         return this.operadorReceptor;
     }
+    
+    /**
+     * Método que acepta una solicitud.
+     */
     public void aceptar() {
         try {
             if (esSolicitudValida()) {
@@ -71,7 +92,7 @@ public class SolicitudVueloCompartido {
     }
 
     /**
-     * Rechaza la solicitud.
+     * Método que rechaza la solicitud.
      */
     public void rechazar() {
         this.estadoSolicitud = EstadoSolicitud.RECHAZADA;
@@ -79,7 +100,8 @@ public class SolicitudVueloCompartido {
     }
     
     /**
-     * Verifica si la solicitud cumple las condiciones para ser aceptada.
+     * Método que verifica si la solicitud cumple las condiciones para ser aceptada.
+     * 
      * @return true si la solicitud es válida.
      * @throws SolicitudInvalidaExcepcion si la solicitud no cumple los requisitos.
      */
@@ -94,12 +116,12 @@ public class SolicitudVueloCompartido {
         if (cargaPrincipal - porcentajeCarga < 50.0) {
             throw new SolicitudInvalidaExcepcion("El operador principal debe conservar al menos el 50% de la carga.");
         }
-
         return true;
     }
 
     /**
-     * Obtiene el vuelo original de la solicitud.
+     * Método que devuelve el vuelo original de la solicitud.
+     * 
      * @return Vuelo original.
      */
     public Vuelo getVueloOriginal() {

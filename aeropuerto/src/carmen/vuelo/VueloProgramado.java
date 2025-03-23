@@ -19,7 +19,9 @@ public class VueloProgramado {
     protected String codigo;
     /** Fecha del vuelo */
     protected LocalDate fecha;
+    /** Fecha de incio de vuelos que se repiten */
     protected LocalDate fechaInicio;
+    /** Fecha de fin de vuelos que se repiten */
     protected LocalDate fechaFinal;
     /** Hora del vuelo */
     protected LocalTime hora;
@@ -33,11 +35,32 @@ public class VueloProgramado {
     protected Periodicidad periodicidad;
     /** Tipo de vuelo */
     protected TipoVuelo tipoVuelo;
+    /** Aeropuerto de destino */
     protected Aeropuerto aeropuertoDestino;
+    /** Aeropuerto de destino */
     protected Aeropuerto aeropuertoSalida;
+    /** Escala del vuelo */
     protected Escala escala;
+    /** Avión que realiza el vuelo */
     protected Avion avion;
 
+    /**
+     * Constructor de la clase VueloProgramado.
+     * 
+     * @param codigo				Código del vueloProgramado.
+     * @param fecha         		Fecha del vueloProgramado.
+     * @param fechaInicio      		Fecha incio del vueloProgramado.
+     * @param fechaFinal       	 	Fecha final del vueloProgramado.
+     * @param hora	            	Hora del vueloProgramado.
+     * @param diasRecurrente		Días recurrente del vueloProgramado.
+     * @param tipoCarga         	Tipo de carga del vueloProgramado.
+     * @param tipoModoEmbarque  	Tipo de modo de embarque del vueloProgramado.
+     * @param tipoVuelo	            tipo de vuelo del vueloProgramado.
+     * @param avion					Avión del vueloProgramado.
+     * @param aeropuertoDestino     Aeropuerto de destino del vueloProgramado.
+     * @param aeropuertoSalida    	Aeropuerto de salida del vueloProgramado.
+     * @param escala		        Escala del vueloProgramado.
+     */
     public VueloProgramado(String codigo, LocalDate fecha, LocalDate fechaInicio, LocalDate fechaFinal, 
             LocalTime hora, List<DayOfWeek> diasRecurrente, TipoCarga tipoCarga, TipoModoEmbarque tipoModoEmbarque, 
             Periodicidad periodicidad, TipoVuelo tipoVuelo, Avion avion, Aeropuerto aeropuertoDestino, 
@@ -72,11 +95,17 @@ public class VueloProgramado {
 		this.periodicidad = periodicidad;
 	}
 
+    /**
+     * Método que devuelve el aeropuerto de destino.
+     * 
+     * @return Aeropuerto de destino.
+     */
     public Aeropuerto getAeropuertoDestino() {
     	return this.aeropuertoDestino;
     }
+    
     /**
-     * Método que devuelve la fecha de inicio de una Periodicidad
+     * Método que devuelve la fecha de inicio de una Periodicidad del VueloProgramado.
      * 
      * @return Fecha de inicio.
      */
@@ -85,7 +114,7 @@ public class VueloProgramado {
     }
 
     /**
-     * Método que devuelve la fecha de fin de una Periodicidad
+     * Método que devuelve la fecha de fin de una Periodicidad del VueloProgramado.
      * 
      * @return Fecha de fin.
      */
@@ -166,15 +195,30 @@ public class VueloProgramado {
         return this.tipoVuelo;
     }
 
+    /**
+     * Método que devuelve el avión del VueloProgramado.
+     * 
+     * @return Avión.
+     */
     public Avion getAvion() {
         return this.avion;
     }
 
+    /**
+     * Método que establece una nueva hora para el VueloProgramado.
+     * 
+     * @param nuevaHora		Nueva hora del vuelo.
+     */
 	public void setHora(LocalTime nuevaHora) {
 		this.hora=nuevaHora;
 		
 	}
 
+	/**
+     * Método que establece una nueva fecha para el VueloProgramado.
+     * 
+     * @param nuevaFecha	Nueva fecha del vuelo.
+     */
 	public void setFecha(LocalDate nuevaFecha) {
 		this.fecha=nuevaFecha;
 		
