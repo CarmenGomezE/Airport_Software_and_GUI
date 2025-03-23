@@ -1,4 +1,7 @@
 package aeropuerto.src.maria;
+
+import aeropuerto.src.claudia.*;
+
 /**
  * La clase Hangar representa los hangares del aeropuerto.
  * 
@@ -10,7 +13,7 @@ public abstract class Hangar {
     /** Código único del hangar*/
     private int id;
     /** Número máximo de aviones del hangar*/
-    private int numeroMaxAviones;
+    protected int numeroMaxAviones;
     /** Ancho de cada plaza del hangar*/
     private double dimPlazaAncho;
     /** Alto de cada plaza del hangar*/
@@ -138,4 +141,6 @@ public abstract class Hangar {
 
         return false;
     }
+
+	protected abstract boolean hayEspacioEnHangar();
 }

@@ -105,6 +105,15 @@ public class VueloProgramado {
     }
     
     /**
+     * Método que devuelve el aeropuerto de destino.
+     * 
+     * @return Aeropuerto de destino.
+     */
+    public Aeropuerto getAeropuertoSalida() {
+    	return this.aeropuertoSalida;
+    }
+    
+    /**
      * Método que devuelve la fecha de inicio de una Periodicidad del VueloProgramado.
      * 
      * @return Fecha de inicio.
@@ -222,6 +231,10 @@ public class VueloProgramado {
 	public void setFecha(LocalDate nuevaFecha) {
 		this.fecha=nuevaFecha;
 		
+	}
+
+	public Escala getEscala() {
+		return this.escala;
 	}
 
 }
