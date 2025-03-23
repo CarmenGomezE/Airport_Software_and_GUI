@@ -55,7 +55,7 @@ public abstract class Usuario {
         this.aeropuerto = aeropuerto;
     }
     
-    public Aeropuerto getAeropuerto() {
+    public AeropuertoPropio getAeropuerto() {
     	return this.aeropuerto;
     }
     
@@ -114,16 +114,18 @@ public abstract class Usuario {
     }
 
     /** 
-     * Método para obtener la lista de vuelos del usuario con sus estados.
-     * 
-     * @return Un mapa con el código del vuelo y su estado.
+     * Método para imprimir la lista de vuelos del usuario con sus estados.
      */
-    public Map<String, EstadoVuelo> verListaVuelos() {
-        Map<String, EstadoVuelo> mapaVuelos = new HashMap<>();
-        for (Vuelo v : vuelosQueControla) {
-            mapaVuelos.put(v.getCodigo(), v.getEstado());
+    public void verListaVuelos() {       
+        System.out.println("+-----------------+----------------------+");
+        System.out.println("| Código de Vuelo | Estado del Vuelo     |");
+        System.out.println("+-----------------+----------------------+");
+
+        for (Vuelo v: getAeropuerto().getVuelosAceptados()) {
+            System.out.printf("| %-15s | %-20s |\n", v.getCodigo(), v.getEstado());
         }
-        return mapaVuelos;
+
+        System.out.println("+-----------------+----------------------+");
     }
 
     /**
@@ -131,28 +133,43 @@ public abstract class Usuario {
      * 
      * @param criterio      Criterio de búsqueda.
      * @param valor         Valor del criterio.
-     * 
-     * @return El mapa con los vuelos encontrados.
      */
-    public Map<String, EstadoVuelo> buscarVuelo(CriterioBusqueda criterio, String valor) {
+    public void buscarVuelo(CriterioBusqueda criterio, String valor) {
+        List<Vuelo> vuelosEncontrados = new ArrayList<>();
+
         switch (criterio) {
             case CODIGO:
-                return buscarVueloPorCodigo(valor);
+                vuelosEncontrados = buscarVueloPorCodigo(valor);
             case ORIGEN:
-                return buscarVueloPorOrigen(valor);
+                vuelosEncontrados = buscarVueloPorOrigen(valor);
             case DESTINO:
-                return buscarVueloPorDestino(valor);
+                vuelosEncontrados = buscarVueloPorDestino(valor);
             case FECHA: 
-                return buscarVueloPorFecha(valor);
+                vuelosEncontrados = buscarVueloPorFecha(valor);
             case HORA_SALIDA: 
-                return buscarVueloPorHoraSalida(valor);
+                vuelosEncontrados = buscarVueloPorHoraSalida(valor);
             case HORA_LLEGADA: 
-                return buscarVueloPorHoraLlegada(valor);
+                vuelosEncontrados = buscarVueloPorHoraLlegada(valor);
             case TERMINAL:
-                return buscarVueloPorTerminal(valor);
+                vuelosEncontrados = buscarVueloPorTerminal(valor);
             default:
-                return new HashMap<>();
+                throw new IllegalArgumentException("El criterio de búsqueda debe ser válido.");
         }
+
+        if (vuelosEncontrados.isEmpty()) {
+            System.out.println("No se encontraron vuelos con el criterio de búsqueda especificado.");
+            return;
+        }
+
+        System.out.println("+-----------------+----------------------+");
+        System.out.println("| Código de Vuelo | Estado del Vuelo     |");
+        System.out.println("+-----------------+----------------------+");
+
+        for (Vuelo v : vuelosEncontrados) {
+            System.out.printf("| %-15s | %-20s |\n", v.getCodigo(), v.getEstado());
+        }
+
+        System.out.println("+-----------------+----------------------+");    
     }
 
     private Map<String, EstadoVuelo> buscarVueloPorCodigo(String codigo) {
@@ -251,7 +268,7 @@ public abstract class Usuario {
      */
     public void recibirNotificacion(Notificacion notificacion) {
         if (notificacion == null) {
-            throw new IllegalArgumentException("La notificación reicbida no puede ser null");
+            throw new IllegalArgumentException("La notificación reicbida no puede ser null.");
         }
 
         notificaciones.add(notificacion);
@@ -264,7 +281,7 @@ public abstract class Usuario {
      */
     public void addVuelo(Vuelo vuelo) {
         if (vuelo == null) {
-            throw new IllegalArgumentException("El vuelo no puede ser null");
+            throw new IllegalArgumentException("El vuelo no puede ser null.");
         }
 
         vuelosQueControla.add(vuelo);
