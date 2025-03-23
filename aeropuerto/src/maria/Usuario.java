@@ -116,7 +116,8 @@ public abstract class Usuario {
     /** 
      * Método para imprimir la lista de vuelos del usuario con sus estados.
      */
-    public void verListaVuelos() {       
+    public void verListaVuelos() {      
+        System.out.println("LISTA DE VUELOS DEL AEROPUERTO"); 
         System.out.println("+-----------------+----------------------+");
         System.out.println("| Código de Vuelo | Estado del Vuelo     |");
         System.out.println("+-----------------+----------------------+");
@@ -155,6 +156,8 @@ public abstract class Usuario {
             default:
                 throw new IllegalArgumentException("El criterio de búsqueda debe ser válido.");
         }
+
+        System.out.printf("BÚSQUEDA DE VUELOS SEGÚN EL CRITERIO %s\n", criterio);
 
         if (vuelosEncontrados.isEmpty()) {
             System.out.println("No se encontraron vuelos con el criterio de búsqueda especificado.");
@@ -285,6 +288,17 @@ public abstract class Usuario {
         }
 
         vuelosQueControla.add(vuelo);
+    }
+
+    /**
+     * Método para imprimir las notificaciones del usuario.
+     */
+    public void verNotificaciones() {
+        System.out.println("NOTIFICACIONES");
+
+        for (Notificacion n: notificaciones) {
+            System.out.println(n);
+        }
     }
 
 
