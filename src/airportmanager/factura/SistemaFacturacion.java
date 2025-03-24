@@ -1,14 +1,17 @@
 package src.airportmanager.factura;
 
 import java.util.*;
-
+import java.io.Serializable;
 import java.time.*;
 import es.uam.eps.padsof.invoices.IResourceUsageInfo;
 import src.airportmanager.avion.Aerolinea;
 import src.airportmanager.usuario.Operador;
 import src.airportmanager.vuelo.*;
 
-public class SistemaFacturacion {
+public class SistemaFacturacion implements Serializable {
+
+	/** Número de versión de la clase */
+	private static final long serialVersionUID = 1L;
     /** Coste base de los vuelos de salida */
     private double costeBaseVueloSalida;
     /** Coste base de los vuelos de llegada */

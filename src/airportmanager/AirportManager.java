@@ -19,9 +19,11 @@ import java.time.*;
  * 
  * @author Claudia Municio, Carmen Gómez, María Pozo.
  */
-public class AirportManager {
+public class AirportManager implements Serializable {
 
-    private List<Usuario> usuarios;
+	/** Número de versión de la clase */
+	private static final long serialVersionUID = 1L;
+	private List<Usuario> usuarios;
     private Gestor gestor;
     private Map<String, String> credenciales;
     private AeropuertoPropio aeropuerto;
@@ -29,11 +31,10 @@ public class AirportManager {
     private static SecureRandom random = new SecureRandom();
 
     public AirportManager() {
-        this.usuarios = new ArrayList<>();
+    	this.usuarios = new ArrayList<>();
         this.aeropuerto = null;
         this.gestor=null;
         this.credenciales = new HashMap<>();
-        this.credenciales.put("Gestor", gestor.getContrasena());
     }
     
     public void iniciarAplicacion() {
@@ -42,8 +43,8 @@ public class AirportManager {
 
             try {
                 aeropuerto = new AeropuertoPropio("Aeropuerto Adolfo Suarez Madrid-Barajas", "MAD", "Madrid", "España", 10.5, ZoneOffset.ofHours(0), 2, DireccionRelativaCiudad.ESTE);
-                aeropuerto.agregarTemporada(new Temporada("2025-06-01", "10:00", "20:00", "2025-09-30"));
-                aeropuerto.agregarTemporada(new Temporada("2025-10-01", "08:00", "24:00", "2025-05-30"));
+                aeropuerto.agregarTemporada(new Temporada("01/06", "10:00", "20:00", "30/09"));
+                aeropuerto.agregarTemporada(new Temporada("01/10", "08:00", "24:00", "30/05"));
             } catch (TemporadasSolapadasException e) {
                 System.out.println("Error al configurar el aeropuerto: " + e.getMessage());
             }
@@ -60,14 +61,21 @@ public class AirportManager {
             }
         }
     }
-
-    /** Esto es para guardar y cargar de momento ni caso */
+    
     public void guardarEstado(String archivo) {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(archivo))) {
-            oos.writeObject(this);
-            System.out.println("Estado del sistema guardado correctamente.");
+        try {
+            File file = new File(archivo);
+            System.out.println("Intentando guardar en: " + file.getAbsolutePath());
+
+            file.getParentFile().mkdirs();
+
+            try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
+                oos.writeObject(this);
+                System.out.println("Estado del sistema guardado correctamente.");
+            }
         } catch (IOException e) {
             System.err.println("Error al guardar el estado: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -76,7 +84,12 @@ public class AirportManager {
             return (AirportManager) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("Error al cargar el estado: " + e.getMessage());
-            return null;
+            
+            System.out.println("Creando un nuevo archivo...");
+            AirportManager nuevoEstado = new AirportManager(); 
+            nuevoEstado.guardarEstado(archivo); 
+            
+            return nuevoEstado;
         }
     }
 

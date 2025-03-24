@@ -7,7 +7,9 @@ package src.airportmanager.terminal;
  * @author María Pozo, Carmen Gómez, Cludia Municio.
  */
 public class TerminalPasajeros extends Terminal {
-    /** Número máximo de pasajeros de la terminal de pasajeros */
+	/**Número de versión de clase*/
+    private static final long serialVersionUID = 1L;
+	/** Número máximo de pasajeros de la terminal de pasajeros */
     private int numeroMaxPasajeros;
 
     /**

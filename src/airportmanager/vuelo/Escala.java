@@ -1,5 +1,6 @@
 package src.airportmanager.vuelo;
 
+import java.io.Serializable;
 import java.time.LocalTime;
 
 import src.airportmanager.aeropuerto.Aeropuerto;
@@ -9,7 +10,10 @@ import src.airportmanager.aeropuerto.Aeropuerto;
  * 
  * @author María Pozo, Carmen Gómez, Claudia Municio.
  */
-public class Escala {
+public class Escala implements Serializable {
+
+	/** Número de versión de la clase */
+	private static final long serialVersionUID = 1L;
     /** Origen de la escala */
     private Aeropuerto aeropuertoOrigen;
     /** Destino de la escala */

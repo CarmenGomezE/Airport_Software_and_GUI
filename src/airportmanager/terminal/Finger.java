@@ -12,7 +12,9 @@ import src.airportmanager.vuelo.Vuelo;
  */
 public class Finger extends ModoEmbarque {
 
-    /** La dimensión de alto del finger. */
+    /** Número de versión de clase*/
+	private static final long serialVersionUID = 1L;
+	/** La dimensión de alto del finger. */
     private double dimAlto;
     /** Las puertas de embarque a las que está conectado (solo puede ser 1 o 2) */
     private Set<PuertaEmbarque> puertasEmbarque;

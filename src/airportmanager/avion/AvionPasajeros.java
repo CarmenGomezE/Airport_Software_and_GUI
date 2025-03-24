@@ -9,6 +9,9 @@ import java.util.*;
  * @author Carmen Gómez, María Pozo, Claudia Municio.
  */
 public class AvionPasajeros extends Avion {
+
+	/** Número de versión de la clase */
+	private static final long serialVersionUID = 1L;
     /** Capacidad máxima de pasajeros del avión de mercancías */
     private int capacidadMaxPasajeros;
 

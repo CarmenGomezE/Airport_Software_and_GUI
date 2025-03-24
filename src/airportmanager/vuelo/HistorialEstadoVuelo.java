@@ -1,5 +1,6 @@
 package src.airportmanager.vuelo;
 
+import java.io.Serializable;
 import java.time.LocalTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -7,7 +8,10 @@ import java.util.Map;
 /**
  * Clase que almacena el historial de cambios de estado de un vuelo.
  */
-public class HistorialEstadoVuelo {
+public class HistorialEstadoVuelo implements Serializable {
+
+	/** Número de versión de la clase */
+	private static final long serialVersionUID = 1L;
     private Map<LocalTime, EstadoVuelo> historial;
 
     /**
@@ -44,7 +48,7 @@ public class HistorialEstadoVuelo {
     public EstadoVuelo getUltimoEstado() {
         if (historial.isEmpty())
             return null;
-        return historial.values().stream().reduce((first, second) -> second).orElse(null);
+        return historial.values().stream().reduce((_, second) -> second).orElse(null);
     }
 
     /**

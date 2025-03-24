@@ -25,6 +25,8 @@ import src.airportmanager.vuelo.Vuelo;
  * @author María Pozo, Carmen Gómez, Claudia Municio.
  */
 public abstract class UsuarioConDni extends Usuario {
+	/** Número de versión de la clase */
+	private static final long serialVersionUID = 1L;
     /** Dni del usuario con dni */
     private String dni;
     /** Gestor del usuario con dni */

@@ -9,7 +9,9 @@ import src.airportmanager.vuelo.Vuelo;
  * @author Claudia Municio, Carmen Gómez, María Pozo.
  */
 public class ZonaAparcamiento extends ModoEmbarque {
-    /** La dimensión de ancho de la plaza de aparcamiento */
+    /** Número de versión de clase*/
+	private static final long serialVersionUID = 1L;
+	/** La dimensión de ancho de la plaza de aparcamiento */
     private double dimPlazaAncho;
     /** La dimensión de largo de la plaza de aparcamiento */
     private double dimPlazaLargo;

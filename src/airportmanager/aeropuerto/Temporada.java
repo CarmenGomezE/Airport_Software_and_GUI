@@ -1,7 +1,9 @@
 package src.airportmanager.aeropuerto;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.MonthDay;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -10,7 +12,10 @@ import java.time.format.DateTimeFormatter;
  * 
  * @author María Pozo, Carmen Gómez, Claudia Municio.
  */
-public class Temporada {
+public class Temporada implements Serializable {
+
+	/** Número de versión de la clase */
+	private static final long serialVersionUID = 1L;
     /** Fecha de inicio de la temporada */
     private LocalDate fechaInicio;
     /** Horario de apertura de la temporada */
@@ -32,10 +37,12 @@ public class Temporada {
      * @param fechaFin        Fecha de fin de la temporada
      */
     public Temporada(String fechaInicio, String horarioApertura, String horarioCierre, String fechaFin) {
-        this.fechaInicio = LocalDate.parse(fechaInicio, formatoFecha).withYear(LocalDate.now().getYear());
-        this.fechaFin = LocalDate.parse(fechaFin, formatoFecha).withYear(LocalDate.now().getYear());
+    	int thisYear = LocalDate.now().getYear(); 
+        this.fechaInicio = MonthDay.parse(fechaInicio, formatoFecha).atYear(thisYear);
+        this.fechaFin = MonthDay.parse(fechaFin, formatoFecha).atYear(thisYear);
+        
+        this.horarioApertura = LocalTime.parse(horarioApertura, formatoHora);
         this.horarioCierre = LocalTime.parse(horarioCierre, formatoHora);
-        this.fechaFin = LocalDate.parse(fechaFin);
     }
 
     /**

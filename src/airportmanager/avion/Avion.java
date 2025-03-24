@@ -1,5 +1,6 @@
 package src.airportmanager.avion;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import java.time.LocalTime;
@@ -13,7 +14,10 @@ import src.airportmanager.vuelo.Vuelo;
  * 
  * @author Carmen Gómez, María Pozo, Claudia Municio.
  */
-public class Avion {
+public class Avion implements Serializable {
+
+	/** Número de versión de la clase */
+	private static final long serialVersionUID = 1L;
     /** Marca del avión */
     private String marca;
     /** Modelo del avión */

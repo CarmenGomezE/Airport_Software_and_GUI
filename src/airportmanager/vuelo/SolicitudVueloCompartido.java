@@ -1,5 +1,7 @@
 package src.airportmanager.vuelo;
 
+import java.io.Serializable;
+
 import src.airportmanager.exceptions.SolicitudInvalidaExcepcion;
 import src.airportmanager.usuario.Operador;
 
@@ -12,7 +14,10 @@ import src.airportmanager.usuario.Operador;
  * 
  * @author Carmen Gómez, María Pozo, Claudia Municio.
  */
-public class SolicitudVueloCompartido {
+public class SolicitudVueloCompartido implements Serializable {
+
+	/** Número de versión de la clase */
+	private static final long serialVersionUID = 1L;
     /** Porcentaje de vuelo que se solicita compartir */
     private Vuelo vueloOriginal;
     /** Operador que recibe la solicitud */

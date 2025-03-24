@@ -28,8 +28,8 @@ import java.time.*;
 public class AirportManagerMain {
 	
 	/**Nombre del fichero desde el que se carga y donde se guarda el estado de la aplicación*/
-    private static final String ARCHIVO_ESTADO = "estado_airport_manager.dat";
-    private static final String ARCHIVO_AEDESTINO = "aeropuerto_destino.txt";
+    private static final String ARCHIVO_ESTADO = "resources/estado_airport_manager.dat";
+    private static final String ARCHIVO_AEDESTINO = "resources/aeropuerto_destino.txt";
     private AirportManager airportManager;
     /**
      * Método principal

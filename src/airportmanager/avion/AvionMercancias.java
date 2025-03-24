@@ -9,6 +9,9 @@ import java.util.*;
  * @author Carmen Gómez, María Pozo, Claudia Municio.
  */
 public class AvionMercancias extends Avion {
+
+	/** Número de versión de la clase */
+	private static final long serialVersionUID = 1L;
     /**
      * Bandera que indica si un avion de mercancias transporta mercancias peligrosas
      */

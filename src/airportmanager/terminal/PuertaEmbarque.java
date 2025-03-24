@@ -1,5 +1,6 @@
 package src.airportmanager.terminal;
 
+import java.io.Serializable;
 import java.util.*;
 import src.airportmanager.vuelo.Vuelo;
 /**
@@ -7,7 +8,10 @@ import src.airportmanager.vuelo.Vuelo;
  * 
  * @author María Pozo, Carmen Gómez, Claudia Municio.
  */
-public class PuertaEmbarque {
+public class PuertaEmbarque implements Serializable {
+
+	/** Número de versión de la clase */
+	private static final long serialVersionUID = 1L;
     /** Contador para el identificador */
     private static int contadorId = 1;
 

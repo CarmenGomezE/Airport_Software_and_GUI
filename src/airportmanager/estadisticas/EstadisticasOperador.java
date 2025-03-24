@@ -6,6 +6,7 @@ import java.util.*;
 import src.airportmanager.usuario.Operador;
 import src.airportmanager.vuelo.Vuelo;
 
+import java.io.Serializable;
 import java.time.*;
 
 /**
@@ -14,7 +15,10 @@ import java.time.*;
  * 
  * @author Carmen Gómez, María Pozo, Claudia Municio.
  */
-public class EstadisticasOperador {
+public class EstadisticasOperador implements Serializable {
+
+	/** Número de versión de la clase */
+	private static final long serialVersionUID = 1L;
     /** Operador que ve las estadísticas */
     private Operador operador;
     /** Estadísticas del tiempo medio de retraso por mes */

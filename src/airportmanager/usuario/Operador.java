@@ -38,6 +38,8 @@ import java.time.*;
  * @author Carmen Gómez, María Pozo, Claudia Municio.
  */
 public class Operador extends UsuarioConDni {
+	/** Número de versión de la clase */
+	private static final long serialVersionUID = 1L;
     /** Lista de solicitudes recibidas de vuelos compartidos de la aerolínea */
     private List<SolicitudVueloCompartido> solicitudesRecibidas;
     /** Lista de solicitudes enviadas de vuelos compartidos de la aerolínea */

@@ -1,5 +1,7 @@
 package src.airportmanager.factura;
 
+import java.io.Serializable;
+
 import es.uam.eps.padsof.invoices.IResourceUsageInfo;
 
 /**
@@ -8,7 +10,10 @@ import es.uam.eps.padsof.invoices.IResourceUsageInfo;
  * 
  * @author Carmen Gómez, María Pozo, Claudia Municio.
  */
-class UsoRecursos implements IResourceUsageInfo {
+class UsoRecursos implements IResourceUsageInfo, Serializable {
+
+	/** Número de versión de la clase */
+	private static final long serialVersionUID = 1L;
     /** Descripcion del recurso */
     private String descripcion;
     /** Precio por hora del recurso */

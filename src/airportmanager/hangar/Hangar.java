@@ -1,5 +1,7 @@
 package src.airportmanager.hangar;
 
+import java.io.Serializable;
+
 import src.airportmanager.avion.Avion;
 import src.airportmanager.vuelo.Vuelo;
 
@@ -8,7 +10,10 @@ import src.airportmanager.vuelo.Vuelo;
  * 
  * @author María Pozo, Carmen Gómez, Claudia Municio.
  */
-public abstract class Hangar {
+public abstract class Hangar implements Serializable {
+
+	/** Número de versión de la clase */
+	private static final long serialVersionUID = 1L;
     /** Contador para el identificador del hangar */
     private static int contadorId = 1;
 

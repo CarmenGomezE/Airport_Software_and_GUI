@@ -18,6 +18,8 @@ import src.airportmanager.usuario.Operador;
  * @author Claudia Municio, María Pozo, Carmen Gómez
  */
 public class Vuelo extends VueloProgramado {
+	/** Número de versión de la clase */
+	private static final long serialVersionUID = 1L;
     /** El estado del vuelo */
     private EstadoVuelo estado;
     /** El historial de estados del vuelo */

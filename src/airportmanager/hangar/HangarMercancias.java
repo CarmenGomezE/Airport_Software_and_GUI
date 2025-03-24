@@ -12,7 +12,10 @@ import src.airportmanager.vuelo.Vuelo;
  * @author María Pozo, Carmen Gómez, Claudia Municio.
  */
 public class HangarMercancias extends Hangar {
-    /** Permiso para mercancías peligrosas */
+
+	/** Número de versión de la clase */
+    private static final long serialVersionUID = 1L;
+	/** Permiso para mercancías peligrosas */
     private boolean mercaPeligrosa;
     /** Aviones de mercancías en el hangar */
     private List<AvionMercancias> aviones;

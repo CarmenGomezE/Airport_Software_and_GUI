@@ -35,6 +35,8 @@ import java.time.*;
  * @author María Pozo, Carmen Gómez, Claudia Municio.
  */
 public class ControladorAereo extends UsuarioConDni {
+	/** Número de versión de la clase */
+	private static final long serialVersionUID = 1L;
     /** Temrinal del controlador aéreo */
     private Terminal terminal;
 

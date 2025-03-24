@@ -1,6 +1,7 @@
 package src.airportmanager.factura;
 
 import java.util.*;
+import java.io.Serializable;
 import java.time.*;
 import java.time.format.*;
 
@@ -15,7 +16,10 @@ import src.airportmanager.avion.Aerolinea;
  * 
  * @author Carmen Gómez, María Pozo, Claudia Municio.
  */
-public class Factura implements IInvoiceInfo {
+public class Factura implements IInvoiceInfo , Serializable {
+
+	/** Número de versión de la clase */
+	private static final long serialVersionUID = 1L;
     /** Aerolinea de la factura */
     private Aerolinea aerolinea;
     /** Fecha de la factura */

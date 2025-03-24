@@ -5,6 +5,7 @@ import java.util.*;
 import src.airportmanager.aeropuerto.Aeropuerto;
 import src.airportmanager.avion.*;
 
+import java.io.Serializable;
 import java.time.*;
 
 /**
@@ -14,7 +15,10 @@ import java.time.*;
  * 
  * @author Carmen Gómez, María Pozo, Claudia Municio.
  */
-public class VueloProgramado {
+public class VueloProgramado implements Serializable {
+
+	/** Número de versión de la clase */
+	private static final long serialVersionUID = 1L;
 
     /** Codigo del vuelo */
     protected String codigo;

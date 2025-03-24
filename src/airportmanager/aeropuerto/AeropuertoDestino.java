@@ -9,7 +9,10 @@ import java.time.*;
  * @author María Pozo, Carmen Gómez, Claudia Municio.
  */
 public class AeropuertoDestino extends Aeropuerto {
-    /**
+	/** Número de versión de la clase */
+    private static final long serialVersionUID = 1L;
+
+	/**
      * Constructor de la clase AeropuertoDestino.
      * 
      * @param nombre            Nombre del aeropuerto destino.

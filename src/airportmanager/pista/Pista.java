@@ -1,5 +1,6 @@
 package src.airportmanager.pista;
 
+import java.io.Serializable;
 import java.util.*;
 
 
@@ -11,7 +12,10 @@ import src.airportmanager.vuelo.Vuelo;
  * 
  * @author Claudia Municio, María Pozo, Carmen Gómez.
  */
-public class Pista {
+public class Pista implements Serializable {
+
+	/** Número de versión de la clase */
+	private static final long serialVersionUID = 1L;
     /** Código de la pista */
     private String codigo;
     /** Longitud de la pista */

@@ -19,7 +19,9 @@ import src.airportmanager.vuelo.Vuelo;
  * @author María Pozo, Carmen Gómez, Claudia Municio.
  */
 public class AeropuertoPropio extends Aeropuerto {
-    /** Fingers del aeropuerto propio */
+	/** Número de versión de la clase */
+    private static final long serialVersionUID = 1L;
+	/** Fingers del aeropuerto propio */
     private List<Finger> fingers;
     /** Hangares del aeropuerto propio */
     private List<Hangar> hangares;

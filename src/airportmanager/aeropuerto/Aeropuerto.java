@@ -1,5 +1,6 @@
 package src.airportmanager.aeropuerto;
 
+import java.io.Serializable;
 import java.time.ZoneOffset;
 import java.util.*;
 
@@ -11,7 +12,10 @@ import src.airportmanager.exceptions.TemporadasSolapadasException;
  * 
  * @author María Pozo, Carmen Gómez, Claudia Municio.
  */
-public abstract class Aeropuerto {
+public abstract class Aeropuerto implements Serializable {
+
+	/** Número de versión de la clase */
+	private static final long serialVersionUID = 1L;
     /** Nombre del aeropuerto */
     private String nombre;
     /** Código del aeropuerto */
@@ -146,23 +150,32 @@ public abstract class Aeropuerto {
      * @throws TemporadasSolapadasException
      */
     public void agregarTemporada(Temporada nuevaTemporada) throws TemporadasSolapadasException {
-        if (nuevaTemporada == null) {
-            throw new IllegalArgumentException("La nueva temporada no puede ser nula");
-        }
+    	if (nuevaTemporada == null) {
+    	    throw new IllegalArgumentException("La nueva temporada no puede ser nula");
+    	}
 
-        ArrayList<Temporada> listaTemporadas = new ArrayList<>(Arrays.asList(temporadas));
+    	if (temporadas == null) {
+    	    temporadas = new Temporada[0];
+    	}
 
-        for (Temporada t : listaTemporadas) {
-            if (t != null && t.comprobarTemporada(nuevaTemporada) == true) {
-                throw new TemporadasSolapadasException("La nueva temporada se solapa con otra existente");
-            }
-        }
+    	ArrayList<Temporada> listaTemporadas = new ArrayList<>(Arrays.asList(temporadas));
 
-        listaTemporadas.add(nuevaTemporada);
-        listaTemporadas.sort(Comparator.comparing(Temporada::getFechaInicio));
+    	listaTemporadas.removeIf(Objects::isNull);
 
-        temporadas = listaTemporadas.toArray(new Temporada[0]);
-        numTemporadas++;
+    	for (Temporada t : listaTemporadas) {
+    	    if (t.comprobarTemporada(nuevaTemporada)) {
+    	        throw new TemporadasSolapadasException("La nueva temporada se solapa con otra existente");
+    	    }
+    	}
+
+    	listaTemporadas.add(nuevaTemporada);
+
+    	listaTemporadas.sort(Comparator.comparing(
+    	    Temporada::getFechaInicio, Comparator.nullsLast(Comparator.naturalOrder()))
+    	);
+
+    	temporadas = listaTemporadas.toArray(new Temporada[0]);
+    	numTemporadas++;
     }
 
 }

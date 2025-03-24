@@ -10,7 +10,9 @@ import src.airportmanager.avion.*;
  * @author María Pozo, Carmen Gómez, Claudia Municio.
  */
 public class HangarPasajeros extends Hangar {
-    /** Aviones de pasajeros en el hanagar */
+	/**Número de versión de clase*/
+    private static final long serialVersionUID = 1L;
+	/** Aviones de pasajeros en el hanagar */
     private List<AvionPasajeros> aviones;
 
     /**

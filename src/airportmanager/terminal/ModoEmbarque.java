@@ -1,5 +1,7 @@
 package src.airportmanager.terminal;
 
+import java.io.Serializable;
+
 import src.airportmanager.vuelo.Vuelo;
 
 /**
@@ -8,7 +10,10 @@ import src.airportmanager.vuelo.Vuelo;
  * 
  * @author Claudia Municio, Carmen Gómez, María Pozo.
  */
-public abstract class ModoEmbarque {
+public abstract class ModoEmbarque implements Serializable {
+
+	/** Número de versión de la clase */
+	private static final long serialVersionUID = 1L;
 
     /** Horas de uso de una zona de aparcamiento */
     private double horasUso;

@@ -7,7 +7,10 @@ package src.airportmanager.terminal;
  * @author María Pozo, Carmen Gómez, Claudia Municio.
  */
 public class TerminalMercancias extends Terminal {
-    /**
+	/**Número de versión de clase*/
+    private static final long serialVersionUID = 1L;
+
+	/**
      * Constructor de la clase TerminalMercancias.
      * 
      * @param codigo         Código de la terminal de mercancías.

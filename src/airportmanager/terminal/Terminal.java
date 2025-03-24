@@ -1,5 +1,6 @@
 package src.airportmanager.terminal;
 
+import java.io.Serializable;
 import java.util.*;
 
 import src.airportmanager.usuario.ControladorAereo;
@@ -9,7 +10,10 @@ import src.airportmanager.usuario.ControladorAereo;
  * 
  * @author María Pozo, Carmen Gómez, Claudia Municio.
  */
-public abstract class Terminal {
+public abstract class Terminal implements Serializable {
+
+	/** Número de versión de la clase */
+	private static final long serialVersionUID = 1L;
     /** Código de la terminal */
     private String codigo;
     /** Puertas de embarque de la terminal */

@@ -41,7 +41,8 @@ import java.time.*;
  * @author María Pozo, Carmen Gómez, Claudia Municio.
  */
 public class Gestor extends Usuario {
-
+	/** Número de versión de la clase */
+	private static final long serialVersionUID = 1L;
     /** Tipos permitidos de notificaciones. */
     private List<TipoNotificacion> tiposPermitidosNotificaciones;
     /** Estadisticas del gestor sobre la infraestructura. */

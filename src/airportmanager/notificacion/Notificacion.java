@@ -1,5 +1,6 @@
 package src.airportmanager.notificacion;
 
+import java.io.Serializable;
 import java.time.*;
 
 /**
@@ -8,7 +9,10 @@ import java.time.*;
  * 
  * @author Claudia Municio, Carmen Gómez, María Pozo
  */
-public class Notificacion {
+public class Notificacion implements Serializable {
+
+	/** Número de versión de la clase */
+	private static final long serialVersionUID = 1L;
 
     /** Mensaje de la notificación */
     private String mensaje;

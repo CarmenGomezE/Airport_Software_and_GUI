@@ -1,5 +1,6 @@
 package src.airportmanager.estadisticas;
 
+import java.io.Serializable;
 import java.util.*;
 
 import src.airportmanager.hangar.Hangar;
@@ -14,7 +15,10 @@ import src.airportmanager.usuario.Gestor;
  * 
  * @author Carmen Gómez, María Pozo, Claudia Municio.
  */
-public class EstadisticasGestor {
+public class EstadisticasGestor implements Serializable {
+
+	/** Número de versión de la clase */
+	private static final long serialVersionUID = 1L;
     /** Gestor que ve las estadísticas */
     private Gestor gestor;
     /** Estadísticas de los fingers del aeropuerto */

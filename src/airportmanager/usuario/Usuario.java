@@ -1,5 +1,6 @@
 package src.airportmanager.usuario;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import java.time.LocalTime;
@@ -16,7 +17,10 @@ import src.airportmanager.vuelo.*;
  * 
  * @author María Pozo, Carmen Gómez, Claudia Municio.
  */
-public abstract class Usuario {
+public abstract class Usuario implements Serializable {
+
+	/** Número de versión de la clase */
+	private static final long serialVersionUID = 1L;
     /** Nombre del usuario */
     private String nombre;
     /** Contraseña del usuario */

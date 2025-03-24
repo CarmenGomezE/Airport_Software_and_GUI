@@ -7,6 +7,7 @@ import src.airportmanager.factura.*;
 import src.airportmanager.usuario.Operador;
 import src.airportmanager.vuelo.Vuelo;
 
+import java.io.Serializable;
 import java.time.*;
 
 /**
@@ -14,7 +15,10 @@ import java.time.*;
  * 
  * @author Carmen Gómez, María Pozo, Claudia Municio.
  */
-public class Aerolinea {
+public class Aerolinea implements Serializable {
+
+	/** Número de versión de la clase */
+	private static final long serialVersionUID = 1L;
     /** Nombre de la aerolínea */
     private String nombre;
     /** Código de la aerolínea */
