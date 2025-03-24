@@ -58,6 +58,12 @@ public class AirportManager implements Serializable {
                 this.usuarios.add(gestor);
                 aeropuerto.addUsuario(gestor);
                 credenciales.put("Gestor", gestor.getContrasena());
+                
+                if (gestor.getAeropuerto() == aeropuerto) {
+                    System.out.println("El gestor está correctamente asignado al aeropuerto.");
+                } else {
+                    System.out.println("Error: El gestor no está correctamente asignado al aeropuerto.");
+                }
             }
         }
     }
@@ -65,7 +71,7 @@ public class AirportManager implements Serializable {
     public void guardarEstado(String archivo) {
         try {
             File file = new File(archivo);
-            System.out.println("Intentando guardar en: " + file.getAbsolutePath());
+            System.out.println("\nIntentando guardar en: "+file.getAbsolutePath());
 
             file.getParentFile().mkdirs();
 
@@ -80,15 +86,19 @@ public class AirportManager implements Serializable {
     }
 
     public static AirportManager cargarEstado(String archivo) {
+    	if (archivo == null || !new File(archivo).exists()) {
+            System.out.println("El archivo no existe o es null. Creando un nuevo archivo...");
+            AirportManager nuevoEstado = new AirportManager(); 
+            nuevoEstado.guardarEstado(archivo); 
+            return nuevoEstado;
+        }
+
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(archivo))) {
             return (AirportManager) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            System.err.println("Error al cargar el estado: " + e.getMessage());
-            
-            System.out.println("Creando un nuevo archivo...");
+            System.out.println("Error al cargar el estado. Creando un nuevo archivo...");
             AirportManager nuevoEstado = new AirportManager(); 
             nuevoEstado.guardarEstado(archivo); 
-            
             return nuevoEstado;
         }
     }
