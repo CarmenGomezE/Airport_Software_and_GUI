@@ -71,12 +71,30 @@ public abstract class Aeropuerto implements Serializable {
     }
 
     /**
+     * Método para modificar el nombre de un aeropuerto.
+     * 
+     * @param nombre El nombre del aeropuerto.
+     */
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    /**
      * Método para obtener el código de un aeropuerto.
      * 
      * @return El código del aeropuerto.
      */
     public String getCodigo() {
         return codigo;
+    }
+
+    /**
+     * Método para modificar el código de un aeropuerto.
+     * 
+     * @param codigo El código del aeropuerto.
+     */
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
     /**
@@ -89,12 +107,30 @@ public abstract class Aeropuerto implements Serializable {
     }
 
     /**
+     * Método para modificar la ciudad de un aeropuerto.
+     * 
+     * @param ciudad La ciudad del aeropuerto.
+     */
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
+    }
+
+    /**
      * Método para obtener el país de un aeropuerto.
      * 
      * @return El país del aeropuerto.
      */
     public String getPais() {
         return pais;
+    }
+
+    /**
+     * Método para modificar el país de un aeropuerto.
+     * 
+     * @param pais El país del aeropuerto.
+     */
+    public void setPais(String pais) {
+        this.pais = pais;
     }
 
     /**
@@ -107,6 +143,15 @@ public abstract class Aeropuerto implements Serializable {
     }
 
     /**
+     * Método para modificar la distancia a la ciudad más cercana de un aeropuerto.
+     * 
+     * @param distancia La distancia a la ciudad más cercana del aeropuerto.
+     */
+    public void setDistanciaCiudad(double distanciaCiudad) {
+        this.distanciaCiudad = distanciaCiudad;
+    }
+
+    /**
      * Método para obtener la diferencia del horario de un aeropuerto.
      * 
      * @return La diferencia horaria del aeropuerto.
@@ -116,12 +161,30 @@ public abstract class Aeropuerto implements Serializable {
     }
 
     /**
+     * Método para modificar la diferencia horaria del país de un aeropuerto.
+     * 
+     * @param diferenciaHoraria La diferencia horaria del país del aeropuerto.
+     */
+    public void setDiferenciaHoraria(ZonaOffset diferenciaHoraria) {
+        this.diferenciaHoraria = diferenciaHoraria;
+    }
+
+    /**
      * Método para obtener el número de temporadas de un aeropuerto.
      * 
      * @return El número de temporadas del aeropuerto.
      */
     public int getNumTemporadas() {
         return numTemporadas;
+    }
+
+    /**
+     * Método para modificar el número de temporadas de un aeropuerto.
+     * 
+     * @param numTemporadas El número de temporadas del aeropuerto.
+     */
+    public void setNumTemporadas(int numTemporadas) {
+        this.numTemporadas = numTemporadas;
     }
 
     /**
@@ -135,12 +198,30 @@ public abstract class Aeropuerto implements Serializable {
     }
 
     /**
+     * Método para modificar la dirección relativa a la ciudad más cercana de un aeropuerto.
+     * 
+     * @param pais La dirección relativa a la ciudad más cercana del aeropuerto.
+     */
+    public void setDireccionCiudad(DireccionRelativaCiudad direccionCiudad) {
+        this.direccionCiudad = direccionCiudad;
+    }
+
+    /**
      * Método para obtener las temporadas de un aeropuerto.
      * 
      * @return Las temporadas del aeropuerto.
      */
     public List<Temporada> getTemporadas() {
         return temporadas;
+    }
+
+    /**
+     * Método para modificar las temporadas de un aeropuerto.
+     * 
+     * @param temporadas Las temporadas del aeropuerto.
+     */
+    public void setTemporadas(List<Temporada> temporadas) {
+        this.temporadas = temporadas;
     }
 
     /**
