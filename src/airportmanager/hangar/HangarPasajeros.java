@@ -43,6 +43,7 @@ public class HangarPasajeros extends Hangar {
      * 
      * @param avion Avión que entra al hangar.
      */
+    @Override
     public void addAvion(AvionPasajeros avion) {
         aviones.add(avion);
     }
@@ -52,6 +53,7 @@ public class HangarPasajeros extends Hangar {
      * 
      * @param avion Avión que sale del hangar.
      */
+    @Override
     public void sacarAvion(AvionPasajeros avion) {
         aviones.remove(avion);
     }
@@ -63,6 +65,7 @@ public class HangarPasajeros extends Hangar {
      * 
      * @return true si está, false si no.
      */
+    @Override
     public boolean comprobarAvionEnHangar(AvionPasajeros avion) {
         return aviones.contains(avion);
     }
@@ -72,6 +75,7 @@ public class HangarPasajeros extends Hangar {
      * 
      * @return true si hay espacio, false si no.
      */
+    @Override
     public boolean hayEspacioEnHangar() {
         if (aviones.size() < numeroMaxAviones) {
             return true;

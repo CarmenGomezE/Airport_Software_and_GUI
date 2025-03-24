@@ -54,19 +54,11 @@ public class HangarMercancias extends Hangar {
     }
 
     /**
-     * Método para añadir un avión al hangar.
-     * 
-     * @param avion Avión que entra al hangar.
-     */
-    public void addAvion(AvionMercancias avion) {
-        aviones.add(avion);
-    }
-
-    /**
      * Método para sacar un avión del hangar.
      * 
      * @param avion Avión que sale del hangar.
      */
+    @Override
     public void sacarAvion(AvionMercancias avion) {
         aviones.remove(avion);
     }
@@ -78,6 +70,7 @@ public class HangarMercancias extends Hangar {
      * 
      * @return true si está, false si no.
      */
+    @Override
     public boolean comprobarAvionEnHangar(AvionMercancias avion) {
         return aviones.contains(avion);
     }
@@ -87,6 +80,7 @@ public class HangarMercancias extends Hangar {
      * 
      * @return true si hay espacio, false si no.
      */
+    @Override
     public boolean hayEspacioEnHangar() {
         if (aviones.size() < numeroMaxAviones) {
             return true;
