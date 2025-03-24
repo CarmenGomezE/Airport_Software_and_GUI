@@ -34,6 +34,7 @@ import src.airportmanager.vuelo.*;
 import java.util.*;
 import java.io.*;
 import java.time.*;
+import java.util.List;
 
 /**
  * La clase Gestor representa al gestor del AeropuertoPropio.
@@ -177,7 +178,7 @@ public class Gestor extends Usuario {
         usuario = buscarUsuarioPorDni(dni);
 
         if (usuario != null) {
-            notificacion = new Notificacion("Problema con la contraseña. Contacta con el gestor",
+            notificacion = new Notificacion("Problema con la contraseña. Contacta con el gestor", LocalDate.now(),
                     TipoNotificacion.OLVIDO_CONTRASENA);
             notificaciones.add(notificacion);
         }
@@ -295,33 +296,104 @@ public class Gestor extends Usuario {
             System.err.println("Error al leer el archivo: " + e.getMessage());
         }
     }
-
+ 
     /**
-     * Método para configurar el aeropuerto.
-     * 
-     * @param nombre            Nombre del aeropuerto propio.
-     * @param codigo            Código del aeropuerto propio.
-     * @param ciudad            Ciudad más cercana al aeropuerto propio.
-     * @param pais              País del aeropuerto propio.
-     * @param distanciaCiudad   Distancia hasta la ciudad más cercana al aeropuerto
-     *                          propio.
-     * @param diferenciaHoraria Diferencia horaria UTC del aeropuerto propio.
-     * @param numTemporadas     Número de temporadas del aeropuerto propio.
-     * @param direccionCiudad   Dirección relativa a la ciudad más cercana del
-     *                          aeropuerto propio.
-     * @param temporadas        Temporadas del aeropuerto.
-     * @throws TemporadasSolapadasException
+     * Método para configurar el nombre del aeropuerto.
+     * @param nombre	Nuevo nombre.
      */
-    public void configurarAeropuertoPropio(String nombre, String codigo, String ciudadMasCercana, String pais,
-            double distancia, ZoneOffset diferenciaHoraria, int numTemporadas,
-            DireccionRelativaCiudad direccion, List<Temporada> temporadas) throws TemporadasSolapadasException {
-        AeropuertoPropio aeropuertoPropio;
-        aeropuertoPropio = new AeropuertoPropio(nombre, codigo, ciudadMasCercana, pais, distancia, diferenciaHoraria,
-                numTemporadas, direccion);
-        for (Temporada temporada : temporadas) {
-            aeropuertoPropio.agregarTemporada(temporada);
-        }
-        this.aeropuerto = aeropuertoPropio;
+    public void configurarAeropuertoPropioNombre(String nombre) {
+    	if (nombre == null) {
+    		throw new IllegalArgumentException("El nombre no puede ser nulo");
+    	}
+    	aeropuerto.setNombre(nombre);
+    }
+    
+    /**
+     * Método para configurar el código del aeropuerto.
+     * @param codigo	Nuevo código.
+     */
+    public void configurarAeropuertoPropioCodigo(String codigo) {
+    	if (codigo == null) {
+    		throw new IllegalArgumentException("El código no puede ser nulo");
+    	}
+    	aeropuerto.setCodigo(codigo);
+    }
+    
+    /**
+     * Método para configurar la ciudad más cercana del aeropuerto.
+     * @param ciudad	Nueva ciudad.
+     */
+    public void configurarAeropuertoPropioCiudad(String ciudad) {
+    	if (ciudad == null) {
+    		throw new IllegalArgumentException("La ciudad no puede ser nula");
+    	}
+    	aeropuerto.setCiudad(ciudad);
+    }
+        
+    /**
+     * Método para configurar el país del aeropuerto.
+     * @param pais	Nuevo país.
+     */
+    public void configurarAeropuertoPropioPais(String pais) {
+    	if (pais == null) {
+    		throw new IllegalArgumentException("El país no puede ser nulo");
+    	}
+    	aeropuerto.setPais(pais);
+    }
+    
+    /**
+     * Método para configurar la distancia a la ciudad más cercana del aeropuerto.
+     * @param distancia	Nueva distancia.
+     */
+    public void configurarAeropuertoPropioDistanciaCiudad(double distancia) {
+    	if (distancia == null) {
+    		throw new IllegalArgumentException("La distancia a la ciudad más cercana no puede ser nula");
+    	}
+    	aeropuerto.setDistanciaCiudad(distancia);
+    }
+    
+    /**
+     * Método para configurar la diferencia horaria del aeropuerto.
+     * @param diferencia	Nueva diferencia horaria.
+     */
+    public void configurarAeropuertoPropioDiferenciaHoraria(ZoneOffset diferencia) {
+    	if (diferencia == null) {
+    		throw new IllegalArgumentException("La diferencia horaria no puede ser nula");
+    	}
+    	aeropuerto.setDiferenciaHoraria(diferencia);
+    }
+    
+    /**
+     * Método para configurar el número de temporadas del aeropuerto.
+     * @param num	Nuevo número de temporadas.
+     */
+    public void configurarAeropuertoPropioNumTemporadas(int num) {
+    	if (num <= 0) {
+    		throw new IllegalArgumentException("El número de temporadas tiene que ser positivo");
+    	}
+    	aeropuerto.setNumTemporadas(num);
+    }
+    
+    /**
+     * Método para configurar la dirección relativa a la ciudad más cercana del aeropuerto.
+     * @param direccion	Nueva dirección relativa a la ciudad.
+     */
+    public void configurarAeropuertoPropioDireccionCiudad(DireccionRelativaCiudad direccion) {
+    	if (direccion == null) {
+    		throw new IllegalArgumentException("La dirección relativa a la ciudad no puede ser nula");
+    	}
+    	aeropuerto.setDireccionCiudad(direccion);
+    }
+    
+    /**
+     * Método para configurar las temporadas del aeropuerto.
+     * @param temporadas	Nuevas temporadas.
+     */
+    public void configurarAeropuertoPropioTemporadas(List<Temporada> temporadas) {
+    	if (temporadas == null) {
+    		throw new IllegalArgumentException("Las temporadas no pueden ser nulas");
+    	}
+    	aeropuerto.setTemporadas(temporadas);
     }
 
     /**
