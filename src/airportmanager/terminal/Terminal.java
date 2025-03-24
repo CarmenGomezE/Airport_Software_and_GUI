@@ -53,7 +53,7 @@ public abstract class Terminal {
      * 
      * @param puertaEmbarque Nueva puerta de embarque.
      */
-    public void añadirPuertaEmbarque(PuertaEmbarque puertaEmbarque) {
+    public void addPuertaEmbarque(PuertaEmbarque puertaEmbarque) {
         puertasEmbarque.add(puertaEmbarque);
     }
 

@@ -365,7 +365,7 @@ public class Gestor extends Usuario {
         }
 
         for (i = 1; i < puertasEmbarque.size(); i++) {
-            terminal.añadirPuertaEmbarque(puertasEmbarque.get(i));
+            terminal.addPuertaEmbarque(puertasEmbarque.get(i));
         }
 
         aeropuerto.addTerminal(terminal);
