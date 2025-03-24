@@ -33,7 +33,7 @@ public abstract class Aeropuerto implements Serializable {
     /** Número de temporadas del aeropuerto */
     private int numTemporadas;
     /** Temporadas del aeropuerto */
-    protected Temporada[] temporadas;
+    protected List<Temporada> temporadas;
 
     /**
      * Constructor de la clase Aeropuerto.
@@ -57,7 +57,7 @@ public abstract class Aeropuerto implements Serializable {
         this.distanciaCiudad = distanciaCiudad;
         this.diferenciaHoraria = diferenciaHoraria;
         this.numTemporadas = numTemporadas;
-        this.temporadas = new Temporada[numTemporadas];
+        this.temporadas = new ArrayList<>();
         this.direccionCiudad = direccionCiudad;
     }
 
@@ -154,28 +154,18 @@ public abstract class Aeropuerto implements Serializable {
     	    throw new IllegalArgumentException("La nueva temporada no puede ser nula");
     	}
 
-    	if (temporadas == null) {
-    	    temporadas = new Temporada[0];
-    	}
-
-    	ArrayList<Temporada> listaTemporadas = new ArrayList<>(Arrays.asList(temporadas));
-
-    	listaTemporadas.removeIf(Objects::isNull);
-
     	for (Temporada t : listaTemporadas) {
     	    if (t.comprobarTemporada(nuevaTemporada)) {
     	        throw new TemporadasSolapadasException("La nueva temporada se solapa con otra existente");
     	    }
     	}
 
-    	listaTemporadas.add(nuevaTemporada);
+    	temporadas.add(nuevaTemporada);
 
-    	listaTemporadas.sort(Comparator.comparing(
-    	    Temporada::getFechaInicio, Comparator.nullsLast(Comparator.naturalOrder()))
-    	);
+    	temporadas.sort(Comparator.comparing(
+    	    Temporada::getFechaInicio));
 
-    	temporadas = listaTemporadas.toArray(new Temporada[0]);
-    	numTemporadas++;
+    	numTemporadas temporadas.size();
     }
 
 }
