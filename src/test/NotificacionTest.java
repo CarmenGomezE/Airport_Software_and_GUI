@@ -1,15 +1,13 @@
-package aeropuerto.src.claudia;
+package src.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import aeropuerto.src.carmen.*;
-import aeropuerto.src.claudia.*;
-import aeropuerto.src.maria.*;
-import aeropuerto.src.carmen.vuelo.*;
+
+import src.airportmanager.notificacion.*;
 import java.time.*;
-import java.util.*;
+
 
 class NotificacionTest{
 
