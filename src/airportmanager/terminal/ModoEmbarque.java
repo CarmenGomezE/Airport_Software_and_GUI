@@ -10,12 +10,17 @@ import src.airportmanager.vuelo.Vuelo;
  */
 public abstract class ModoEmbarque {
 
-    /** Código del modo de embarque */
-    protected String codigo;
+    /** Horas de uso de una zona de aparcamiento */
+    private double horasUso;
+    /** Identificador de una zona de aparcamiento */
+    private int id;
     /** Coste por hora del modo de embarque */
     protected double costePorHora;
     /** Vuelo que ocupa el modo de embarque */
     private Vuelo vuelo;
+
+    /** Contador para el identificador de la zona de aparcamiento */
+    private static int contador = 1;
 
     /**
      * Constructor de la clase ModoEmbarque
@@ -27,15 +32,42 @@ public abstract class ModoEmbarque {
         this.codigo = codigo;
         this.costePorHora = costePorHora;
         this.vuelo = null;
+        this.horasUso = 0;
+        this.id = contador++;
+    }
+
+     /**
+     * Método que devuelve las horas de uso de la zona de aparcamiento.
+     * 
+     * @return Horas de uso de la zona de aparcamiento.
+     */
+    public double getHorasUso() {
+        return this.horasUso;
     }
 
     /**
-     * Método que devuelve el código de un modo de embarque.
+     * Método que suma horas de uso de la zona de aparcamiento.
      * 
-     * @return Código del modo de embarque.
+     * @param horas Horas de uso.
      */
-    public String getCodigo() {
-        return codigo;
+    public void addHorasUso(double horas) {
+        this.horasUso += horas;
+    }
+
+    /**
+     * Método que devuelve resetea las horas de uso.
+     */
+    public void horasUsoReset() {
+        this.horasUso = 0;
+    }
+
+    /**
+     * Método que devuelve el identificador de la zona de aparcamiento.
+     * 
+     * @return Identificador de la zona de aparcamiento.
+     */
+    public int getId() {
+        return this.id;
     }
 
     /**
@@ -64,4 +96,14 @@ public abstract class ModoEmbarque {
     public void setVuelo(Vuelo vuelo) {
         this.vuelo = vuelo;
     }
+
+    /**
+     * Método para comprobar si un avion entra en la zona de aparcamiento.
+     * 
+     * @param vuelo El vuelo que tiene el avion que va a entrar en la zona de
+     *              aparcamiento.
+     * 
+     * @return true si entra, false si no.
+     */
+    public abstract boolean comprobarTamano(Vuelo vuelo);
 }
