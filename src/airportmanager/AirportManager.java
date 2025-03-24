@@ -241,7 +241,7 @@ public void actualizarEstadoVueloAutomatico(Vuelo v) {
         int n, i, j;
         Vuelo v1, v2;
 
-        for (Vuelo vuelo : vuelos) {
+        for (Vuelo vuelo : aeropuerto.getVuelosAceptados()) {
             if (vuelo.getEstado() == EstadoVuelo.ESPERANDO_DESPEGUE) {
                 vuelosEnEspera.add(vuelo);
             }
