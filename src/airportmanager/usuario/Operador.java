@@ -86,6 +86,7 @@ public class Operador extends UsuarioConDni {
      * @return Estadísticas el Operador.
      */
     public EstadisticasOperador getEstadisticasOperador() {
+    	this.estadisticas.cargarDatosEstadisticasTiempoMedio();
         return this.estadisticas;
     }
 

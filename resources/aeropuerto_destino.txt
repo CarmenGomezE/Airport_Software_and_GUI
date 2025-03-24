@@ -1,9 +1,9 @@
-Malaga Costa del Sol;AGP;Málaga;España;10;OESTE;0;2;31/10;10:00-22:00;30/3;31/3;09:00-24:00;30/10
-Josep Tarradellas Barcelona El-Prat;BCN;Barcelona;España;14;SUR;0;2;31/10;09:00-23:00;30/3;31/3;09:00-24:00;30/10
-Son Sant Joan Palma de Mallorca;PML;Palma de Mallorca;España;10;ESTE;0;2;31/10;10:00-22:00;30/3;31/3;09:00-23:00;30/10
-John F. Kennedy;JFK;Nueva York;Estados Unidos de América;41;ESTE;-6;2;31/10;04:00-23:00;30/3;31/3;03:00-24:00;30/10
-Aeropuerto de Londres-Heathrow;LHR;Londres;Reino Unido de Gran Bretaña e Irlanda del Norte;25;OESTE;-1;2;31/10;06:00-22:00;30/3;31/3;03:00-24:00;30/10
-Aeropuerto Internacional de Los Ángeles;LAX;Los Ángeles;Estados Unidos de América;31;SUR;-9;2;31/10;07:00-23:00;30/3;31/3;04:00-24:00;30/10
+Malaga Costa del Sol;AGP;Málaga;España;10;OESTE;0;2;31/10;10:00-22:00;30/03;31/03;09:00-24:00;30/10
+Josep Tarradellas Barcelona El-Prat;BCN;Barcelona;España;14;SUR;0;2;31/10;09:00-23:00;30/03;31/03;09:00-24:00;30/10
+Son Sant Joan Palma de Mallorca;PML;Palma de Mallorca;España;10;ESTE;0;2;31/10;10:00-22:00;30/03;31/03;09:00-23:00;30/10
+John F. Kennedy;JFK;Nueva York;Estados Unidos de América;41;ESTE;-6;2;31/10;04:00-23:00;30/03;31/03;03:00-24:00;30/10
+Aeropuerto de Londres-Heathrow;LHR;Londres;Reino Unido de Gran Bretaña e Irlanda del Norte;25;OESTE;-1;2;31/10;06:00-22:00;30/03;31/03;03:00-24:00;30/10
+Aeropuerto Internacional de Los Ángeles;LAX;Los Ángeles;Estados Unidos de América;31;SUR;-9;2;31/10;07:00-23:00;30/03;31/3;04:00-24:00;30/10
 Aeropuerto Internacional de Tokio;HND;Tokio;Japón;20;SUR;+8;3;31/10;07:00-22:00;15/2;16/2;06:00-24:00;30/07;31/07;06:00-23:00;30/10
-Aeropuerto Internacional Kingsford Smith;SYD;Sydney;Australia;15;SUR;+10;2;31/10;06:00-23:00;30/3;31/3;04:00-24:00;30/10
-Aeropuerto Internacional de El Cairo;CAI;El Cairo;Egipto;14;NORTE;+2;2;31/10;08:00-22:00;30/3;31/3;06:00-23:00;30/10
+Aeropuerto Internacional Kingsford Smith;SYD;Sydney;Australia;15;SUR;+10;2;31/10;06:00-23:00;30/03;31/03;04:00-24:00;30/10
+Aeropuerto Internacional de El Cairo;CAI;El Cairo;Egipto;14;NORTE;+2;2;31/10;08:00-22:00;30/03;31/03;06:00-23:00;30/10

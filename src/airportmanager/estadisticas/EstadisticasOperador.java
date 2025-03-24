@@ -38,14 +38,13 @@ public class EstadisticasOperador implements Serializable {
         this.tiempoMedioRetrasoPorMes = new HashMap<>();
         this.tiempoMedioRetrasoPorFranjaHoraria = new HashMap<>();
         this.tiempoMedioRetrasoPorVuelo = new HashMap<>();
-        cargarDatosEstadisticasTiempoMedio();
     }
 
     /**
      * Método que genera los datos de tiempos medios.
      * 
      */
-    private void cargarDatosEstadisticasTiempoMedio() {
+    public void cargarDatosEstadisticasTiempoMedio() {
         Map<Month, List<Integer>> retrasosPorMes = new HashMap<>();
         Map<ZoneId, List<Integer>> retrasosPorFranjaHoraria = new HashMap<>();
         Map<Vuelo, List<Integer>> retrasosPorVuelo = new HashMap<>();

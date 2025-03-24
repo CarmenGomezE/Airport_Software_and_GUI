@@ -253,26 +253,36 @@ public class Gestor extends Usuario {
                     ZoneOffset diferenciaHoraria = ZoneOffset.ofHours(Integer.parseInt(campos[6]));
                     int numeroTemporadas = Integer.parseInt(campos[7]);
 
+                    // List to store the Temporadas
                     List<Temporada> temporadas = new ArrayList<>();
                     int i = 8;
+
+                    // Read each temporada and process it
                     while (i < campos.length) {
                         String fechaInicio = campos[i];
-                        String horarioApertura = campos[i + 1].split("-")[0];
-                        String horarioCierre = campos[i + 1].split("-")[1];
+                        // Split the horario in opening and closing times
+                        String[] horarios = campos[i + 1].split("-"); // We split the horario by '-'
+                        String horarioApertura = horarios[0];
+                        String horarioCierre = horarios[1];
                         String fechaFin = campos[i + 2];
 
-                        Temporada temporada = new Temporada(fechaInicio, horarioApertura, horarioCierre,
-                                fechaFin);
+                        // Create Temporada object
+                        Temporada temporada = new Temporada(fechaInicio, horarioApertura, horarioCierre, fechaFin);
                         temporadas.add(temporada);
 
-                        i += 3;
+                        i += 3; // Move to the next season set
                     }
 
+                    // Create and populate the AeropuertoDestino object
                     AeropuertoDestino aeropuertoDestino = new AeropuertoDestino(nombre, codigo, ciudadMasCercana, pais,
                             distanciaCiudad, diferenciaHoraria, numeroTemporadas, direccionRespectoCiudad);
+
+                    // Add all the seasons to the AeropuertoDestino object
                     for (Temporada temporada : temporadas) {
                         aeropuertoDestino.agregarTemporada(temporada);
                     }
+
+                    // Add AeropuertoDestino to the airport
                     this.aeropuerto.addAeropuertoDestino(aeropuertoDestino);
                 }
             }
@@ -352,7 +362,9 @@ public class Gestor extends Usuario {
     public void darDeAltaTerminal(String codigo, String tipo, int aforo, List<PuertaEmbarque> puertasEmbarque) {
 
         Terminal terminal;
-        int i = 0;
+        if(puertasEmbarque.size()<1) {
+        	 throw new IllegalArgumentException("La terminal debe tener mínimo una puerta.");
+        }
 
         if (tipo.equals("Pasajeros")) {
             terminal = new TerminalPasajeros(codigo, puertasEmbarque.get(0), aforo);
@@ -366,8 +378,8 @@ public class Gestor extends Usuario {
             throw new IllegalArgumentException("Tipo de terminal no válido" + tipo);
         }
 
-        for (i = 1; i < puertasEmbarque.size(); i++) {
-            terminal.addPuertaEmbarque(puertasEmbarque.get(i));
+        for (PuertaEmbarque puerta: puertasEmbarque) {
+            terminal.addPuertaEmbarque(puerta);
         }
 
         aeropuerto.addTerminal(terminal);
@@ -423,7 +435,7 @@ public class Gestor extends Usuario {
      * @param terminal Terminal en la que se da de alta la puerta de embarque.
      * 
      */
-    public void darDeAltaPuertaEmbarque(Terminal terminal) {
+    public void darDeAltaPuertaEmbarque(PuertaEmbarque puerta, Terminal terminal) {
         if (terminal == null) {
             throw new IllegalArgumentException("La terminal no puede ser nula.");
         }
@@ -434,8 +446,8 @@ public class Gestor extends Usuario {
                 terminalExiste = true;
             }
         }
-        if (terminalExiste) {
-            terminal.addPuertaEmbarque(new PuertaEmbarque());
+        if (terminalExiste && puerta!=null) {
+            terminal.addPuertaEmbarque(puerta);
         } else {
             throw new IllegalArgumentException("La terminal especificada no existe en el aeropuerto.");
         }
