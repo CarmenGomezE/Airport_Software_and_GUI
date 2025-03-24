@@ -145,16 +145,27 @@ public abstract class Usuario implements Serializable {
      * Método para imprimir la lista de vuelos del usuario con sus estados.
      */
     public void verListaVuelos() {
-        System.out.println("LISTA DE VUELOS DEL AEROPUERTO");
+    	LocalDate fecha = LocalDate.now();
+    	System.out.printf("LISTA DE VUELOS DEL DÍA %d%n", fecha.format(formatoFecha));
         System.out.println("+-----------------+----------------------+");
         System.out.println("| Código de Vuelo | Estado del Vuelo     |");
         System.out.println("+-----------------+----------------------+");
 
         for (Vuelo v : getAeropuerto().getVuelosAceptados()) {
-            System.out.printf("| %-15s | %-20s |\n", v.getCodigo(), v.getEstado());
+        	if (v.getFecha() == fecha) {
+                System.out.printf("| %-15s | %-20s |\n", v.getCodigo(), v.getEstado());
+        	}
         }
 
         System.out.println("+-----------------+----------------------+");
+    }
+    
+    /**
+     * Método para recargar la lista de vuelos del usuario con sus estados.
+     */
+    public void recargarListaVuelos() {
+    	System.out.println("Refrescando lista de vuelos...");
+    	verListaVuelos();
     }
 
     /**
