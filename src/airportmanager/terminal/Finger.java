@@ -26,8 +26,8 @@ public class Finger extends ModoEmbarque {
      * @param puertasEmbarque Puertas de embarque a las que está conectado el
      *                        finger.
      */
-    public Finger(String id, double costePorHora, double dimAlto, Set<PuertaEmbarque> puertasEmbarque) {
-        super(id, costePorHora);
+    public Finger( double costePorHora, double dimAlto, Set<PuertaEmbarque> puertasEmbarque) {
+        super( costePorHora);
         if (puertasEmbarque.size() < 1 || puertasEmbarque.size() > 2) {
             throw new IllegalArgumentException("Un finger debe estar conectado a una o dos puertas de embarque");
         }

@@ -91,13 +91,13 @@ public class AirportManagerMain {
         airportManager.getGestor().darDeAltaHangar("Pasajeros", 6, 25.0, 15.0, 40.0, 1000.0, false);
         airportManager.getGestor().darDeAltaHangar("Mercancías", 3, 28.0, 17.0, 43.0, 1000.0, true);
 
-        airportManager.getGestor().darDeAltaFinger("F1", 5.0, 200.0, List.of(puertasT1.get(0)));
-        airportManager.getGestor().darDeAltaFinger("F2", 5.0, 200.0, List.of(puertasT1.get(2))); 
-        airportManager.getGestor().darDeAltaFinger("F3", 5.0, 200.0, List.of(puertasT1.get(0), puertasT1.get(1)));
+        airportManager.getGestor().darDeAltaFinger(5.0, 200.0, List.of(puertasT1.get(0)));
+        airportManager.getGestor().darDeAltaFinger(5.0, 200.0, List.of(puertasT1.get(2))); 
+        airportManager.getGestor().darDeAltaFinger(5.0, 200.0, List.of(puertasT1.get(0), puertasT1.get(1)));
 
 
-        airportManager.getGestor().darDeAltaZonaAparcamiento("ZAP1", 2.5, 5.0, 5.0);
-        airportManager.getGestor().darDeAltaZonaAparcamiento("ZAP2", 3.0, 6.0, 6.0);
+        airportManager.getGestor().darDeAltaZonaAparcamiento(2.5, 5.0, 5.0);
+        airportManager.getGestor().darDeAltaZonaAparcamiento(3.0, 6.0, 6.0);
    
         airportManager.getGestor().darDeAltaPista("P1", 3000, TipoPista.ATERRIZAJE);
         airportManager.getGestor().darDeAltaPista("P2", 3000, TipoPista.DESPEGUE);

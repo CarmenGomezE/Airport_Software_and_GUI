@@ -31,7 +31,7 @@ class FingerTest{
         puertas.add(puerta1);
         puertas.add(puerta2);
 
-        finger = new Finger("F123", 50.0, 70.0, puertas);
+        finger = new Finger(50.0, 70.0, puertas);
 
     }
 
@@ -97,7 +97,7 @@ class FingerTest{
         p.add(p1);
         p.add(p2);
 
-        otroFinger = new Finger("F124", 40.0, 4.0, p);
+        otroFinger = new Finger(40.0, 4.0, p);
         assertNotEquals(finger.getId(), otroFinger.getId(), "Error, los id de los fingers deberían ser diferentes");
     }
 

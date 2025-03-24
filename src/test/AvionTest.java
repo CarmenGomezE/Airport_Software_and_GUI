@@ -36,7 +36,7 @@ class AvionTest {
                 ZoneOffset.of("+1"), 2, DireccionRelativaCiudad.SUR);
 
         aerolinea = new Aerolinea("AeroTest", "AT123"); // Operador aún no asignado
-        operador = new Operador("Juan Pérez", "12345678A", aerolinea, null, null);
+        operador = new Operador("Juan Pérez", "12345678A", aerolinea, null, null, null);
 
         escala = new Escala(aeropuertoSalida, aeropuertoDestino, LocalTime.of(12, 0), LocalTime.of(13, 0));
 

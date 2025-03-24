@@ -383,7 +383,7 @@ public class Gestor extends Usuario {
      * @param terminal        Terminal de la que es el finger.
      * 
      */
-    public void darDeAltaFinger(String codigo, double dimAlto, double costePorHora,
+    public void darDeAltaFinger( double dimAlto, double costePorHora,
             List<PuertaEmbarque> puertasEmbarque) {
         Finger finger;
         HashSet<PuertaEmbarque> puertasSet;
@@ -394,7 +394,7 @@ public class Gestor extends Usuario {
 
         puertasSet = new HashSet<>();
         puertasSet.addAll(puertasEmbarque);
-        finger = new Finger(codigo, costePorHora, dimAlto, puertasSet);
+        finger = new Finger( costePorHora, dimAlto, puertasSet);
         
         for (PuertaEmbarque puerta : puertasEmbarque) {
             puerta.setFinger(finger);
@@ -411,9 +411,9 @@ public class Gestor extends Usuario {
      * @param dimPlazaLargo dimensión de largo de la zona de aparcamiento..
      * 
      */
-    public void darDeAltaZonaAparcamiento(String codigo, double dimPlazaAncho, double costePorHora,
+    public void darDeAltaZonaAparcamiento(double dimPlazaAncho, double costePorHora,
             double dimPlazaLargo) {
-        aeropuerto.addZonaAparcamiento(new ZonaAparcamiento(codigo, dimPlazaAncho, costePorHora, dimPlazaLargo));
+        aeropuerto.addZonaAparcamiento(new ZonaAparcamiento(dimPlazaAncho, costePorHora, dimPlazaLargo));
     }
 
     /**

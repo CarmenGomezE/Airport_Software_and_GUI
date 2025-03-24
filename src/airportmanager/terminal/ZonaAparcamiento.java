@@ -22,8 +22,8 @@ public class ZonaAparcamiento extends ModoEmbarque {
      * @param dimPlazaAncho Dimensión de ancho de la zona de aparcamiento.
      * @param dimPlazaLargo dimensión de largo de la zona de aparcamiento.
      */
-    public ZonaAparcamiento(String id, double costePorHora, double dimPlazaAncho, double dimPlazaLargo) {
-        super(id, costePorHora);
+    public ZonaAparcamiento( double costePorHora, double dimPlazaAncho, double dimPlazaLargo) {
+        super( costePorHora);
         this.dimPlazaAncho = dimPlazaAncho;
         this.dimPlazaLargo = dimPlazaLargo;
     }

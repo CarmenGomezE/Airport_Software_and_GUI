@@ -44,8 +44,8 @@ public class HangarPasajeros extends Hangar {
      * @param avion Avión que entra al hangar.
      */
     @Override
-    public void addAvion(AvionPasajeros avion) {
-        aviones.add(avion);
+    public void addAvion(Avion avion) {
+        aviones.add((AvionPasajeros)avion);
     }
 
     /**
@@ -54,8 +54,8 @@ public class HangarPasajeros extends Hangar {
      * @param avion Avión que sale del hangar.
      */
     @Override
-    public void sacarAvion(AvionPasajeros avion) {
-        aviones.remove(avion);
+    public void sacarAvion(Avion avion) {
+        aviones.remove((AvionPasajeros)avion);
     }
 
     /**
@@ -66,8 +66,8 @@ public class HangarPasajeros extends Hangar {
      * @return true si está, false si no.
      */
     @Override
-    public boolean comprobarAvionEnHangar(AvionPasajeros avion) {
-        return aviones.contains(avion);
+    public boolean comprobarAvionEnHangar(Avion avion) {
+        return aviones.contains((AvionPasajeros)avion);
     }
 
     /**
@@ -84,14 +84,4 @@ public class HangarPasajeros extends Hangar {
         return false;
     }
 
-    /**
-     * Método para añadir un avion al hangar.
-     * 
-     * @param avion Avion que se añade al hangar.
-     */
-    @Override
-	public void addAvion(Avion avion) {
-        this.aviones.add((AvionPasajeros) avion);
-
-    }
 }

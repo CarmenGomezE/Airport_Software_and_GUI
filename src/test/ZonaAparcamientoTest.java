@@ -36,7 +36,7 @@ class ZonaAparcamientoTest{
 
     @BeforeEach
     void setUp() {
-        zona = new ZonaAparcamiento("Z123", 50.0, 3, 5);
+        zona = new ZonaAparcamiento(50.0, 3, 5);
     }
 
     @Test
@@ -75,7 +75,7 @@ class ZonaAparcamientoTest{
 
     @Test
     void testGetId() {
-        otraZona = new ZonaAparcamiento("Z124", 30.0, 5, 6);
+        otraZona = new ZonaAparcamiento(30.0, 5, 6);
         assertNotEquals(zona.getId(), otraZona.getId(), "Error, los IDs de las zonas de aparcamiento deberían ser diferentes.");
     }
 

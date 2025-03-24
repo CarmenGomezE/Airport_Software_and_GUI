@@ -59,8 +59,8 @@ public class HangarMercancias extends Hangar {
      * @param avion Avión que sale del hangar.
      */
     @Override
-    public void sacarAvion(AvionMercancias avion) {
-        aviones.remove(avion);
+    public void sacarAvion(Avion avion) {
+        aviones.remove((AvionMercancias)avion);
     }
 
     /**
@@ -71,8 +71,8 @@ public class HangarMercancias extends Hangar {
      * @return true si está, false si no.
      */
     @Override
-    public boolean comprobarAvionEnHangar(AvionMercancias avion) {
-        return aviones.contains(avion);
+    public boolean comprobarAvionEnHangar(Avion avion) {
+        return aviones.contains((AvionMercancias)avion);
     }
 
     /**
@@ -116,4 +116,5 @@ public class HangarMercancias extends Hangar {
         this.aviones.add((AvionMercancias) avion);
 
     }
+
 }

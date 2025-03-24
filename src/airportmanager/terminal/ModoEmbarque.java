@@ -28,8 +28,7 @@ public abstract class ModoEmbarque {
      * @param id       Código del modo de embarque.
      * @param costePorHora Coste por hora del modo de embarque.
      */
-    public ModoEmbarque(String id, double costePorHora) {
-        this.id = id;
+    public ModoEmbarque(double costePorHora) {
         this.costePorHora = costePorHora;
         this.vuelo = null;
         this.horasUso = 0;
