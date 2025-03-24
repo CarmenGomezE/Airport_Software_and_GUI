@@ -56,4 +56,12 @@ public class Notificacion {
     public TipoNotificacion getTipoNotificacion() {
         return this.tipoNotificacion;
     }
+    
+    /**
+     * Método para imprimir una notificación.
+     */
+    public String toString() {
+    	return "Notificación de " + tipoNotificacion + " a las " + fecha + ":\n" + mensaje;
+    }
+    
 }

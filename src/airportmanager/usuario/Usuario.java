@@ -333,6 +333,10 @@ public abstract class Usuario {
         }
     }
     
-    
-
+    /**
+     * Método para cerrar sesión.
+     */
+    public void cerrarSesion() {
+    	System.out.println("El usuario ha cerrado sesión.%n");
+    }
 }
