@@ -28,8 +28,6 @@ import src.airportmanager.terminal.TerminalMercancias;
 import src.airportmanager.terminal.TerminalPasajeros;
 import src.airportmanager.terminal.ZonaAparcamiento;
 import src.airportmanager.vuelo.*;
-import src.carmen.*;
-import src.maria.*;
 
 import java.util.*;
 import java.io.*;

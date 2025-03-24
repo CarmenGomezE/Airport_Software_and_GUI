@@ -2,7 +2,6 @@ package src.airportmanager.hangar;
 
 import src.airportmanager.avion.Avion;
 import src.airportmanager.vuelo.Vuelo;
-import src.claudia.*;
 
 /**
  * La clase Hangar representa los hangares del aeropuerto.
@@ -151,12 +150,12 @@ public abstract class Hangar {
      * Método que comprueba si hay espacio en el hangar.
      * 
      */
-    protected abstract boolean hayEspacioEnHangar();
+    public abstract boolean hayEspacioEnHangar();
 
     /**
      * Método para añadir un avion al hangar.
      * 
      * @param avion Avion que se añade al hangar.
      */
-    protected abstract void addAvion(Avion avion);
+    public abstract void addAvion(Avion avion);
 }

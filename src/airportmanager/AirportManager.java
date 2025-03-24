@@ -11,8 +11,6 @@ import src.airportmanager.usuario.Operador;
 import src.airportmanager.usuario.Usuario;
 import src.airportmanager.usuario.UsuarioConDni;
 import src.airportmanager.vuelo.*;
-import src.carmen.*;
-import src.maria.*;
 
 import java.time.*;
 

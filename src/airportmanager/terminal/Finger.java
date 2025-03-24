@@ -2,8 +2,8 @@ package src.airportmanager.terminal;
 
 import java.util.*;
 
+
 import src.airportmanager.vuelo.Vuelo;
-import src.maria.*;
 
 /**
  * La clase Finger representa un finger de un aeropuerto.

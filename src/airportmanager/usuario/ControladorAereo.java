@@ -2,6 +2,7 @@ package src.airportmanager.usuario;
 
 import java.util.*;
 
+
 import src.airportmanager.aeropuerto.AeropuertoPropio;
 import src.airportmanager.avion.*;
 import src.airportmanager.exceptions.EstadoEquivocadoException;
@@ -24,9 +25,6 @@ import src.airportmanager.terminal.PuertaEmbarque;
 import src.airportmanager.terminal.Terminal;
 import src.airportmanager.terminal.ZonaAparcamiento;
 import src.airportmanager.vuelo.*;
-import src.carmen.*;
-import src.claudia.*;
-
 import java.time.*;
 
 /**

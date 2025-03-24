@@ -7,7 +7,6 @@ import java.time.format.*;
 import es.uam.eps.padsof.invoices.IInvoiceInfo;
 import es.uam.eps.padsof.invoices.IResourceUsageInfo;
 import src.airportmanager.avion.Aerolinea;
-import src.carmen.*;
 
 /**
  * La clase Factura implementa la interfaz de las facturas y representa una

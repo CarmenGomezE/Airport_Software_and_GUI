@@ -1,5 +1,6 @@
 package src.test;
 
+import src.airportmanager.avion.*;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,9 +12,6 @@ import src.airportmanager.aeropuerto.DireccionRelativaCiudad;
 import src.airportmanager.avion.Aerolinea;
 import src.airportmanager.usuario.Operador;
 import src.airportmanager.vuelo.*;
-import src.carmen.*;
-import src.claudia.*;
-import src.maria.*;
 
 import java.time.*;
 import java.util.*;

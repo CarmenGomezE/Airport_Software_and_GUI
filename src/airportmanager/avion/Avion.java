@@ -1,12 +1,11 @@
 package src.airportmanager.avion;
 
 import java.time.LocalDate;
+
 import java.time.LocalTime;
 import java.util.*;
 
 import src.airportmanager.vuelo.Vuelo;
-import src.carmen.*;
-import src.claudia.*;
 
 /**
  * La clase Avión representa un avión de una aerolinea que realizará una

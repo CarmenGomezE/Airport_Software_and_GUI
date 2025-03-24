@@ -7,7 +7,6 @@ import src.airportmanager.terminal.Finger;
 import src.airportmanager.terminal.PuertaEmbarque;
 import src.airportmanager.terminal.ZonaAparcamiento;
 import src.airportmanager.usuario.Gestor;
-import src.maria.*;
 
 /**
  * La clase EstadisticasGestor representa las estadísticas que el

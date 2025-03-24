@@ -1,6 +1,7 @@
 package src.airportmanager.usuario;
 
 import java.time.LocalDate;
+
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -9,7 +10,6 @@ import src.airportmanager.AirportManager;
 import src.airportmanager.aeropuerto.AeropuertoPropio;
 import src.airportmanager.notificacion.Notificacion;
 import src.airportmanager.vuelo.*;
-import src.claudia.*;
 
 /**
  * La clase Usuario representa a los usuarios de la aplicación.

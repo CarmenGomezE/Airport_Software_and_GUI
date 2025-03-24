@@ -1,10 +1,7 @@
 package src.airportmanager.terminal;
 
 import java.util.*;
-
 import src.airportmanager.vuelo.Vuelo;
-import src.claudia.*;
-
 /**
  * La clase PuertaEmbarque representa las puertas de embarque del aeropuerto.
  * 

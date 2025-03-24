@@ -1,13 +1,12 @@
 package src.airportmanager.factura;
 
 import java.util.*;
+
 import java.time.*;
 import es.uam.eps.padsof.invoices.IResourceUsageInfo;
 import src.airportmanager.avion.Aerolinea;
 import src.airportmanager.usuario.Operador;
 import src.airportmanager.vuelo.*;
-import src.carmen.*;
-import src.claudia.*;
 
 public class SistemaFacturacion {
     /** Coste base de los vuelos de salida */

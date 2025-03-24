@@ -18,7 +18,6 @@ import src.airportmanager.notificacion.Notificacion;
 import src.airportmanager.notificacion.TipoNotificacion;
 import src.airportmanager.vuelo.EstadoVuelo;
 import src.airportmanager.vuelo.Vuelo;
-import src.claudia.*;
 
 /**
  * La clase UsuarioConDni representa a los usuarios con Dni de la aplicación.

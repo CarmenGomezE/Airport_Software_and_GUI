@@ -12,8 +12,6 @@ import src.airportmanager.terminal.Terminal;
 import src.airportmanager.terminal.ZonaAparcamiento;
 import src.airportmanager.usuario.Usuario;
 import src.airportmanager.vuelo.Vuelo;
-import src.carmen.*;
-import src.claudia.*;
 
 /**
  * La clase AeropuertoPropio representa el aeropuerto que se gestiona.

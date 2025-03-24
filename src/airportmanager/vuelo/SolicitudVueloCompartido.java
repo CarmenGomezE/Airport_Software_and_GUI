@@ -2,7 +2,6 @@ package src.airportmanager.vuelo;
 
 import src.airportmanager.exceptions.SolicitudInvalidaExcepcion;
 import src.airportmanager.usuario.Operador;
-import src.claudia.*;
 
 /**
  * La clase Operador representa un tipo de usuario con dni, este usuario es el

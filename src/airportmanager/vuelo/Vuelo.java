@@ -11,8 +11,6 @@ import src.airportmanager.terminal.PuertaEmbarque;
 import src.airportmanager.terminal.Terminal;
 import src.airportmanager.usuario.ControladorAereo;
 import src.airportmanager.usuario.Operador;
-import src.carmen.*;
-import src.maria.*;
 
 /**
  * La clase Vuelo representa los vuelos

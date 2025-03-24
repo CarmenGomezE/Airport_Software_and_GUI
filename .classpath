@@ -8,7 +8,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry excluding="aeropuerto/src/carmen/test/" kind="src" path=""/>
 	<classpathentry kind="src" path="aeropuerto/src/carmen/test"/>
-	<classpathentry kind="lib" path="/Users/carmen/padsoft/padsoft/aeropuerto/libs/invoiceSystem.jar"/>
-	<classpathentry kind="lib" path="/Users/carmen/padsoft/padsoft/aeropuerto/libs/TeleChargeAndPaySystem8.jar"/>
+	<classpathentry kind="lib" path="resources/invoiceSystem.jar"/>
+	<classpathentry kind="lib" path="resources/TeleChargeAndPaySystem8.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
