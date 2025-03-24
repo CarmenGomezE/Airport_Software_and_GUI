@@ -152,7 +152,7 @@ public class Gestor extends Usuario {
      * @param dni Dni del usuario que se busca.
      * @return UsuarioConDni, operador o controlador.
      */
-    private UsuarioConDni buscarUsuarioPorDni(String dni) {
+    public UsuarioConDni buscarUsuarioPorDni(String dni) {
         UsuarioConDni usuarioDni;
         for (Usuario usuario : aeropuerto.getUsuarios()) {
             if (usuario instanceof UsuarioConDni) {
@@ -178,8 +178,7 @@ public class Gestor extends Usuario {
         usuario = buscarUsuarioPorDni(dni);
 
         if (usuario != null) {
-            notificacion = new Notificacion("Problema con la contraseña. Contacta con el gestor", LocalDate.now(),
-                    TipoNotificacion.OLVIDO_CONTRASENA);
+            notificacion = new Notificacion("Problema con la contraseña. Contacta con el gestor", TipoNotificacion.OLVIDO_CONTRASENA);
             notificaciones.add(notificacion);
         }
 
@@ -346,7 +345,7 @@ public class Gestor extends Usuario {
      * @param distancia	Nueva distancia.
      */
     public void configurarAeropuertoPropioDistanciaCiudad(double distancia) {
-    	if (distancia == null) {
+    	if (distancia< 0) {
     		throw new IllegalArgumentException("La distancia a la ciudad más cercana no puede ser nula");
     	}
     	aeropuerto.setDistanciaCiudad(distancia);

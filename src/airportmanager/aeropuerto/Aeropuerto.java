@@ -112,7 +112,7 @@ public abstract class Aeropuerto implements Serializable {
      * @param ciudad La ciudad del aeropuerto.
      */
     public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
+        this.ciudadMasCercana = ciudad;
     }
 
     /**
@@ -165,7 +165,7 @@ public abstract class Aeropuerto implements Serializable {
      * 
      * @param diferenciaHoraria La diferencia horaria del país del aeropuerto.
      */
-    public void setDiferenciaHoraria(ZonaOffset diferenciaHoraria) {
+    public void setDiferenciaHoraria(ZoneOffset diferenciaHoraria) {
         this.diferenciaHoraria = diferenciaHoraria;
     }
 
