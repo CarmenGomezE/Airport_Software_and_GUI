@@ -1,13 +1,13 @@
-package aeropuerto.src.claudia;
+package src.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import aeropuerto.src.carmen.*;
-import aeropuerto.src.claudia.*;
-import aeropuerto.src.maria.*;
-import aeropuerto.src.carmen.vuelo.*;
+import src.airportmanager.*;
+import src.airportmanager.terminal.*;
+import src.airportmanager.avion.*;
+import src.airportmanager.vuelo.*;
 import java.time.*;
 import java.util.*;
 

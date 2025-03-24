@@ -193,9 +193,9 @@ public class Gestor extends Usuario {
      * @param codigo   Codigo de la nueva aerolinea.
      * @param operador Operador de la nueva aerolinea.
      */
-    public void darDeAltaAerolinea(String nombre, String codigo, Operador operador) {
+    public void darDeAltaAerolinea(String nombre, String codigo) {
         Aerolinea aerolinea;
-        aerolinea = new Aerolinea(nombre, codigo, operador);
+        aerolinea = new Aerolinea(nombre, codigo);
         aeropuerto.addAerolinea(aerolinea);
     }
 
@@ -429,7 +429,7 @@ public class Gestor extends Usuario {
             }
         }
         if (terminalExiste) {
-            terminal.añadirPuertaEmbarque(new PuertaEmbarque());
+            terminal.addPuertaEmbarque(new PuertaEmbarque());
         } else {
             throw new IllegalArgumentException("La terminal especificada no existe en el aeropuerto.");
         }
