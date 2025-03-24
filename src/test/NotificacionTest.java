@@ -12,6 +12,8 @@ import java.time.*;
 class NotificacionTest{
 
     Notificacion noti1, noti2;
+    Exception excepcionVacio, excepcionNull;
+    LocalDateTime ahora;
 
     @BeforeEach
     void setUp() {
@@ -29,13 +31,13 @@ class NotificacionTest{
     @Test
     void testGetMensajeExcepcion() {
 
-        Exception excepcionVacio = assertThrows(IllegalArgumentException.class, () -> {
+        excepcionVacio = assertThrows(IllegalArgumentException.class, () -> {
             new Notificacion("", TipoNotificacion.OLVIDO_CONTRASENA);
         });
 
         assertEquals("Error: La notificación debe tener un mensaje válido", excepcionVacio.getMessage(), "Error, no se lanzó la excepción esperada con mensaje vacío.");
 
-        Exception excepcionNull = assertThrows(IllegalArgumentException.class, () -> {
+       excepcionNull = assertThrows(IllegalArgumentException.class, () -> {
             new Notificacion(null, TipoNotificacion.OLVIDO_CONTRASENA);
         });
 
@@ -44,7 +46,7 @@ class NotificacionTest{
 
    @Test
     void testGetFecha() {
-        LocalDateTime ahora = LocalDateTime.now();
+        ahora = LocalDateTime.now();
         assertTrue(Duration.between(noti1.getFecha(), ahora).getSeconds() < 2, "Error, la fecha de la notificación no es la esperada.");
         assertTrue(Duration.between(noti2.getFecha(), ahora).getSeconds() < 2, "Error, la fecha de la notificación no es la esperada.");
     }

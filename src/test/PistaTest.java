@@ -18,29 +18,53 @@ class PistaTest {
 
     Pista pista1, pista2;
     Vuelo vuelo1, vuelo2;
+    LocalDate fecha, fecha2;
+    LocalTime hora, h;
+    Date revision;
+    Calendar calendar;
+    Avion avion;
+    AeropuertoDestino aeropuertoDestino;
+    AeropuertoPropio aeropuertoPropio;
+    ZoneOffset zone, zone2;
+    Escala escala;
+    Operador operador;
+    Aerolinea aerolinea;
+    Gestor gestor;
+    AirportManager sistema;
 
     @BeforeEach
     void setUp() {
+
         pista1 = new Pista("P123", 3500.0, TipoPista.DESPEGUE);
         pista2 = new Pista("P132", 3400.0, TipoPista.ATERRIZAJE);
+    
 
+        fecha = LocalDate.of(2024, 03, 22);
+        fecha2 = LocalDate.of(2024, 04, 25);
+        hora = LocalTime.of(9,30, 0);
+        h = LocalTime.of(11,30, 0);
+        calendar = Calendar.getInstance();
+        calendar.set(2024, Calendar.JANUARY, 22);
+        revision = calendar.getTime();
+        zone = ZoneOffset.of("+1");
+        zone2 = ZoneOffset.of("+2");
 
-        LocalDate fechaVuelo = LocalDate.of(2024, 3, 22);
-        LocalTime horaVuelo = LocalTime.of(10, 15);
-        Avion avion = new AvionPasajeros("Boeing", "737", 4.0, 35.0, 38.0, 6000.0, 2019, new Date(), "EC-XYZ", 160);
-        AeropuertoPropio aeropuertoSalida = new AeropuertoPropio("Aeropuerto Madrid", "MAD", "Madrid", "España", 12.5, ZoneOffset.of("+1"), 2, DireccionRelativaCiudad.SUR);
-        AeropuertoDestino aeropuertoDestino = new AeropuertoDestino("Aeropuerto París", "CDG", "París", "Francia", 18.0, ZoneOffset.of("+1"), 2, DireccionRelativaCiudad.NORTE);
-        Aerolinea aerolinea = new Aerolinea("Iberia", "IB123");
-        Gestor gestor = new Gestor("Carlos López", "admin123", aeropuertoSalida);
-        Operador operador = new Operador("Juan Pérez", "12345678A", aerolinea, aeropuertoSalida, gestor);
+        aeropuertoPropio = new AeropuertoPropio("barajas", "MAD", "Madrid", "España", 25.0, zone2, 3, DireccionRelativaCiudad.ESTE);
+        sistema = new AirportManager();
+        gestor = new Gestor("Miguel", "P8NOKYW", aeropuertoPropio, sistema);
+        aerolinea = new Aerolinea("Ryanair", "RT2");
+        operador = new Operador("Jesus", "5648274K", aerolinea, aeropuertoPropio, gestor, sistema);
+        aeropuertoDestino = new AeropuertoDestino("Fuimicino", "FCO", "Roma", "Italia", 30.0, zone, 2, DireccionRelativaCiudad.NORTE);
+        escala = new Escala(aeropuertoPropio, aeropuertoDestino, hora, h);
+        avion = new Avion("AIRBUS", "C42", 50.00, 50.0, 50.0, 60.000, 2020, revision, "JLN2000");
 
-        vuelo1 = new Vuelo("V123", fechaVuelo, null, null, horaVuelo, null, 
+        vuelo1 = new Vuelo("V123", fecha, null, null, hora, null, 
             TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER, Periodicidad.PUNTUAL, TipoVuelo.SALIDA, 
-            avion, aeropuertoDestino, aeropuertoSalida, null, operador);
+            avion, aeropuertoDestino, aeropuertoPropio, null, operador);
 
-        vuelo2 = new Vuelo("V456", fechaVuelo, null, null, horaVuelo, null, 
+        vuelo2 = new Vuelo("V456", fecha2, null, null, h, null, 
             TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER, Periodicidad.PUNTUAL, TipoVuelo.SALIDA, 
-            avion, aeropuertoDestino, aeropuertoSalida, null, operador);
+            avion, aeropuertoDestino, aeropuertoPropio, escala, operador);
     }
 
     @Test
@@ -74,7 +98,7 @@ class PistaTest {
         pista1.addVuelo(vuelo2);
         assertEquals(2, pista1.getVuelos().size(), "Error. Debería haber 2 vuelos en la pista.");
 
-        pista1.quitarVuelo(vuelo1);
+        pista1.removeVuelo(vuelo1);
         assertEquals(1, pista1.getVuelos().size(), "Error. Debería haber 1 vuelo después de eliminar uno.");
         assertFalse(pista1.getVuelos().contains(vuelo1), "Error. El vuelo eliminado sigue en la pista.");
     }
@@ -86,4 +110,3 @@ class PistaTest {
 
 
 
-}

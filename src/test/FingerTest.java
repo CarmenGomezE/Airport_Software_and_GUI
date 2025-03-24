@@ -31,7 +31,7 @@ class FingerTest{
         puertas.add(puerta1);
         puertas.add(puerta2);
 
-        finger = new Finger("F123", 50.0, 5.0, puertas);
+        finger = new Finger("F123", 50.0, 70.0, puertas);
 
     }
 
@@ -101,35 +101,46 @@ class FingerTest{
         assertNotEquals(finger.getId(), otroFinger.getId(), "Error, los id de los fingers deberían ser diferentes");
     }
 
-    /**AQUI TENGO QUE CAMBIAR COSAS */
+ 
    @Test
     void testComprobarTamano() {
 
         Vuelo vueloPequeno;
         LocalDate fecha;
-        LocalTime hora;
+        LocalTime hora, h;
         Date revision;
         Calendar calendar;
         Avion avion;
         AeropuertoDestino aeropuertoDestino;
         AeropuertoPropio aeropuertoPropio;
-        ZoneOffset zone;
+        ZoneOffset zone, zone2;
+        Escala escala;
+        Operador operador;
+        Aerolinea aerolinea;
+        Gestor gestor;
+        AirportManager sistema;
 
         fecha = LocalDate.of(2024, 03, 22);
         hora = LocalTime.of(9,30, 0);
+        h = LocalTime.of(11,30, 0);
         calendar = Calendar.getInstance();
         calendar.set(2024, Calendar.JANUARY, 22);
         revision = calendar.getTime();
         zone = ZoneOffset.of("+1");
+        zone2 = ZoneOffset.of("+2");
 
-        aeropuertoPropio = new AeropuertoPropio("barajas", , null, null, 0, zone, 0, null)
+        aeropuertoPropio = new AeropuertoPropio("barajas", "MAD", "Madrid", "España", 25.0, zone2, 3, DireccionRelativaCiudad.ESTE);
+        sistema = new AirportManager();
+        gestor = new Gestor("Miguel", "P8NOKYW", aeropuertoPropio, sistema);
+        aerolinea = new Aerolinea("Ryanair", "RT2");
+        operador = new Operador("Jesus", "5648274K", aerolinea, aeropuertoPropio, gestor, sistema);
         aeropuertoDestino = new AeropuertoDestino("Fuimicino", "FCO", "Roma", "Italia", 30.0, zone, 2, DireccionRelativaCiudad.NORTE);
+        escala = new Escala(aeropuertoPropio, aeropuertoDestino, hora, h);
         avion = new Avion("AIRBUS", "C42", 50.00, 50.0, 50.0, 60.000, 2020, revision, "JLN2000");
-        vueloPequeno = new Vuelo("V123", fecha, null, null, hora, null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER, Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avion, aeropuertoDestino, null, null, null);
+        vueloPequeno = new Vuelo("V123", fecha, null, null, hora, null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER, Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avion, aeropuertoDestino, aeropuertoPropio, escala, operador);
 
+        assertTrue(finger.comprobarTamano(vueloPequeno), "Error. El avion debería caber");
     
-
-        
 }
 
 
