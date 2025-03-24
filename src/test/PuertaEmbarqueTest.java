@@ -53,13 +53,13 @@ public class PuertaEmbarqueTest {
         puerta1 = new PuertaEmbarque();
         puerta2 = new PuertaEmbarque();
 
-        zona1 = new ZonaAparcamiento("Z1", 15.0, 25, 25);
-        zona2 = new ZonaAparcamiento("Z2", 20.0, 30, 30);
+        zona1 = new ZonaAparcamiento(15.0, 25, 25);
+        zona2 = new ZonaAparcamiento(20.0, 30, 30);
 
         puertas = new HashSet<>();
         puertas.add(puerta1);
 
-        finger = new Finger("F1", 10, 5, puertas);
+        finger = new Finger(10, 5, puertas);
 
     }
 

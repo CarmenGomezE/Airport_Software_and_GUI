@@ -32,7 +32,7 @@ public class Finger extends ModoEmbarque {
             throw new IllegalArgumentException("Un finger debe estar conectado a una o dos puertas de embarque");
         }
         this.dimAlto = dimAlto;
-        this.puertasEmbarque = new HashSet<>(puertasEmbarque);
+        this.puertasEmbarque = puertasEmbarque;
     }
 
     /**
