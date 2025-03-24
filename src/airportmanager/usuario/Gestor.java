@@ -193,9 +193,10 @@ public class Gestor extends Usuario {
      * @param codigo   Codigo de la nueva aerolinea.
      * @param operador Operador de la nueva aerolinea.
      */
-    public void darDeAltaAerolinea(String nombre, String codigo) {
+    public void darDeAltaAerolinea(String nombre, String codigo, Operador operador) {
         Aerolinea aerolinea;
         aerolinea = new Aerolinea(nombre, codigo);
+        aerolinea.setOperador(operador);
         aeropuerto.addAerolinea(aerolinea);
     }
 
@@ -394,6 +395,10 @@ public class Gestor extends Usuario {
         puertasSet = new HashSet<>();
         puertasSet.addAll(puertasEmbarque);
         finger = new Finger(codigo, costePorHora, dimAlto, puertasSet);
+        
+        for (PuertaEmbarque puerta : puertasEmbarque) {
+            puerta.setFinger(finger);
+        }
         aeropuerto.addFinger(finger);
     }
 

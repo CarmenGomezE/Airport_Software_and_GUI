@@ -41,7 +41,7 @@ public class AirportManager {
             System.out.println("Configurando nuevo sistema.");
 
             try {
-                aeropuerto = new AeropuertoPropio("Aeropuerto Adolfo Suarez Madrid-Barajas", "MAD", "Madrid", "España", 10.5, ZoneOffset.ofHours(2), 2, DireccionRelativaCiudad.ESTE);
+                aeropuerto = new AeropuertoPropio("Aeropuerto Adolfo Suarez Madrid-Barajas", "MAD", "Madrid", "España", 10.5, ZoneOffset.ofHours(0), 2, DireccionRelativaCiudad.ESTE);
                 aeropuerto.agregarTemporada(new Temporada("2025-06-01", "10:00", "20:00", "2025-09-30"));
                 aeropuerto.agregarTemporada(new Temporada("2025-10-01", "08:00", "24:00", "2025-05-30"));
             } catch (TemporadasSolapadasException e) {

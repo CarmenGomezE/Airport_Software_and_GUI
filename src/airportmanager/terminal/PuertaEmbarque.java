@@ -30,6 +30,7 @@ public class PuertaEmbarque {
         this.zonasAparcamiento = new ArrayList<>();
         this.horasUso = 0;
         this.vuelo = null;
+        this.finger=null;
     }
 
     /**
