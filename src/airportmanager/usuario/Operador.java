@@ -1,6 +1,7 @@
 package src.airportmanager.usuario;
 
 import es.uam.eps.padsof.telecard.FailedInternetConnectionException;
+
 import es.uam.eps.padsof.telecard.InvalidCardNumberException;
 import es.uam.eps.padsof.telecard.OrderRejectedException;
 import es.uam.eps.padsof.telecard.TeleChargeAndPaySystem;
@@ -20,8 +21,7 @@ import src.airportmanager.factura.*;
 import src.airportmanager.notificacion.Notificacion;
 import src.airportmanager.notificacion.TipoNotificacion;
 import src.airportmanager.vuelo.*;
-import src.claudia.*;
-import src.maria.*;
+import src.airportmanager.*;
 
 import java.util.*;
 import java.time.*;
@@ -60,8 +60,9 @@ public class Operador extends UsuarioConDni {
      * @param aeropuerto        Aeropuerto propio del operador.
      * @param gestor            Gestor del operador.
      */
-    public Operador(String nombre, String dni, Aerolinea aerolinea, AeropuertoPropio aeropuerto, Gestor gestor) {
-        super(nombre, dni, aeropuerto, gestor);
+    public Operador(String nombre, String dni, Aerolinea aerolinea, AeropuertoPropio aeropuerto, Gestor gestor, AirportManager sistema) {
+        super(nombre, dni, aeropuerto, gestor, sistema);
+        this.contrasena=establecerContrasena();
         this.aerolinea = aerolinea;
         this.solicitudesRecibidas = new ArrayList<>();
         this.solicitudesEnviadas = new ArrayList<>();
@@ -542,5 +543,9 @@ public class Operador extends UsuarioConDni {
      */
     private void recibirNotificacionSolicitudVueloCompartido() {
         recibirNotificacion(new Notificacion("Factura emitida", TipoNotificacion.SOLICITUD_COMPARTIR_VUELO));
+    }
+    
+    private String establecerContrasena() {
+    	return sistema.generarContrasena();
     }
 }

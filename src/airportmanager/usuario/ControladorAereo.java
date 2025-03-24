@@ -3,6 +3,7 @@ package src.airportmanager.usuario;
 import java.util.*;
 
 
+
 import src.airportmanager.aeropuerto.AeropuertoPropio;
 import src.airportmanager.avion.*;
 import src.airportmanager.exceptions.EstadoEquivocadoException;
@@ -25,6 +26,7 @@ import src.airportmanager.terminal.PuertaEmbarque;
 import src.airportmanager.terminal.Terminal;
 import src.airportmanager.terminal.ZonaAparcamiento;
 import src.airportmanager.vuelo.*;
+import src.airportmanager.*;
 import java.time.*;
 
 /**
@@ -46,8 +48,8 @@ public class ControladorAereo extends UsuarioConDni {
      * @param terminal   Terminal del controlador aéreo.
      */
     public ControladorAereo(String nombre, String dni, String contrasena, AeropuertoPropio aeropuerto, Gestor gestor,
-            Terminal terminal) {
-        super(nombre, contrasena, dni, aeropuerto, gestor);
+            Terminal terminal, AirportManager sistema) {
+        super(nombre, contrasena, dni, aeropuerto, gestor, sistema);
         this.terminal = terminal;
     }
 

@@ -7,8 +7,10 @@ import src.airportmanager.AirportManager;
 import src.airportmanager.avion.*;
 import src.airportmanager.factura.*;
 import src.airportmanager.vuelo.*;
+import src.airportmanager.aeropuerto.*;
 
 import java.util.*;
+import java.time.*;
 
 /**
  * Clase que implementa un demostrador básico de la aplicación.
@@ -31,9 +33,38 @@ public class AirportManagerMain {
         /**Se inicia cargando la aplicación o inicializandola*/
         AirportManager airportManager = AirportManager.cargarEstado(ARCHIVO_ESTADO);
 
+        String nombre = "Aeropuerto Internacional Ejemplo";
+        String codigo = "AIE";
+        String ciudad = "Ciudad Ejemplo";
+        String pais = "País Ejemplo";
+        double distanciaCiudad = 10.5; // Distancia en km
+        ZoneOffset diferenciaHoraria = ZoneOffset.ofHours(2); // Diferencia horaria de +2 horas
+        int numTemporadas = 4; // Ejemplo: 4 temporadas de vuelos
+
+        AeropuertoPropio aeropuerto = new AeropuertoPropio(nombre, codigo, ciudad, pais, distanciaCiudad, ZoneOffset.ofHours(2), 2, DireccionRelativaCiudad.ESTE);
+
+        aeropuerto.agregarTemporada(new Temporada("2025-06-01", "10:00", "20:00", "2025-09-30"));
+        aeropuerto.agregarTemporada(new Temporada("2025-10-01", "08:00", "24:00", "2025-05-30"));
+
+        // 4. Configurar el aeropuerto propio con las temporadas
+        try {
+            aeropuerto.configurarAeropuertoPropio(
+                nombre, 
+                codigo, 
+                ciudad, 
+                pais, 
+                distanciaCiudad, 
+                diferenciaHoraria, 
+                numTemporadas, 
+                direccionCiudad,
+                temporadas
+            );
+        } catch (TemporadasSolapadasException e) {
+            System.out.println("Error al configurar el aeropuerto: " + e.getMessage());
+        }
         if (airportManager == null) {
             System.out.println("No se encontró un estado previo. Creando nuevo sistema.");
-            airportManager = new AirportManager();
+            airportManager = new AirportManager(null, null);
         } else {
             System.out.println("Estado cargado correctamente.");
         }

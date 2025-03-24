@@ -109,7 +109,7 @@ public class SolicitudVueloCompartido {
      * @return true si la solicitud es válida.
      * @throws SolicitudInvalidaExcepcion si la solicitud no cumple los requisitos.
      */
-    boolean esSolicitudValida() throws SolicitudInvalidaExcepcion {
+    public boolean esSolicitudValida() throws SolicitudInvalidaExcepcion {
         double cargaActual = vueloOriginal.getCargaTotalAsignada();
         double cargaPrincipal = vueloOriginal.getCargaAsignada(vueloOriginal.getOperadorPrincipal());
 

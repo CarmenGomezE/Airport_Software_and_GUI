@@ -3,15 +3,14 @@ package src.airportmanager;
 import java.io.*;
 import java.util.*;
 
-import src.airportmanager.avion.*;
 import src.airportmanager.exceptions.ContrasenaInvalidaException;
 import src.airportmanager.exceptions.UsuarioNoEncontradoException;
-import src.airportmanager.usuario.ControladorAereo;
-import src.airportmanager.usuario.Operador;
-import src.airportmanager.usuario.Usuario;
-import src.airportmanager.usuario.UsuarioConDni;
+import src.airportmanager.usuario.*;
 import src.airportmanager.vuelo.*;
+import src.airportmanager.aeropuerto.*;
+import src.airportmanager.avion.AvionPasajeros;
 
+import java.security.*;
 import java.time.*;
 
 /**
@@ -22,13 +21,18 @@ import java.time.*;
 public class AirportManager {
 
     private List<Usuario> usuarios;
-    private List<Vuelo> vuelos;
     private Map<String, String> credenciales;
+    private AeropuertoPropio aeropuerto;
+    private static final String CARACTERES = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{}|;:,.<>?/";
+    private static SecureRandom random = new SecureRandom();
 
-    public AirportManager() {
+    public AirportManager(AeropuertoPropio aeropuerto, Gestor gestor) {
         this.usuarios = new ArrayList<>();
-        this.vuelos = new ArrayList<>();
+        this.usuarios.add(gestor);
+        this.aeropuerto = aeropuerto;
+        aeropuerto.addUsuario(gestor);
         this.credenciales = new HashMap<>();
+        this.credenciales.put("Gestor", gestor.getContrasena());
     }
 
     /** Esto es para guardar y cargar de momento ni caso */
@@ -50,85 +54,24 @@ public class AirportManager {
         }
     }
 
-    private Usuario buscarUsuarioPorDni(String dni) throws UsuarioNoEncontradoException {
-
-        for (Usuario usuario : usuarios) {
-            if (usuario instanceof UsuarioConDni && ((UsuarioConDni) usuario).getDni().equals(dni)) {
-                return usuario;
-            }
+    public String generarContrasena( ) {
+        StringBuilder contrasena = new StringBuilder(12);
+        
+        for (int i = 0; i < 12; i++) {
+            int indice = random.nextInt(CARACTERES.length());
+            contrasena.append(CARACTERES.charAt(indice));
         }
-
-        throw new UsuarioNoEncontradoException("El usuario con DNI " + dni + "no existe");
+        
+        return contrasena.toString();
     }
-
-    private String obtenerContrasena(String dni) throws UsuarioNoEncontradoException {
-
-        Usuario usuario;
-
-        usuario = buscarUsuarioPorDni(dni);
-        return usuario.getContrasena();
-
+    
+    public void actualizarEstadosVuelosAutomaticamente() {
+    	for(Vuelo vuelo: aeropuerto.getVuelosAceptados()) {
+    		actualizarEstadoVueloAutomatico(vuelo);
+    	}
     }
-
-    private boolean esOperador(String dni) throws UsuarioNoEncontradoException {
-
-        Usuario usuario;
-
-        usuario = buscarUsuarioPorDni(dni);
-        if (usuario instanceof Operador && ((UsuarioConDni) usuario).getDni().equals(dni)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    private boolean esControlador(String dni) throws UsuarioNoEncontradoException {
-
-        Usuario usuario;
-
-        usuario = buscarUsuarioPorDni(dni);
-        if (usuario instanceof ControladorAereo && ((UsuarioConDni) usuario).getDni().equals(dni)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    private boolean tieneContrasenaEstablecida(String dni) throws UsuarioNoEncontradoException {
-
-        String contrasena;
-        Usuario usuario;
-
-        usuario = buscarUsuarioPorDni(dni);
-        contrasena = usuario.getContrasena();
-        if (contrasena == null || contrasena.isEmpty()) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /** No entiendo cual es la diferencia con asignar contraseña */
-    private void establecerContrasena(String dni, String contrasena) {
-
-    }
-
-    private void asignarContrasena(String dni, String contrasena)
-            throws UsuarioNoEncontradoException, ContrasenaInvalidaException {
-
-        Usuario usuario;
-
-        usuario = buscarUsuarioPorDni(dni);
-
-        if (contrasena == null || contrasena.isEmpty()) {
-            throw new ContrasenaInvalidaException("La contraseña no es válida.");
-        }
-
-        ((UsuarioConDni) usuario).setContrasena(contrasena);
-        System.out.println("Contraseña asignada correctamente");
-
-    }
-
+    
+    /** Llama sobre los vuelos del aeropuerto propio */
     public void actualizarEstadoVueloAutomatico(Vuelo v) {
         LocalDateTime ahora = LocalDateTime.now();
 
@@ -153,6 +96,33 @@ public class AirportManager {
         System.out.println("Estado de vuelo actualizado: " + v.getEstado());
     }
 
+    private Usuario buscarUsuarioPorDni(String dni) throws UsuarioNoEncontradoException {
+
+        for (Usuario usuario : usuarios) {
+            if (usuario instanceof UsuarioConDni && ((UsuarioConDni) usuario).getDni().equals(dni)) {
+                return usuario;
+            }
+        }
+
+        throw new UsuarioNoEncontradoException("El usuario con DNI " + dni + "no existe");
+    }
+
+    public void asignarContrasena(String dni, String contrasena)
+            throws UsuarioNoEncontradoException, ContrasenaInvalidaException {
+
+        Usuario usuario;
+
+        usuario = buscarUsuarioPorDni(dni);
+
+        if (contrasena == null || contrasena.isEmpty()) {
+            throw new ContrasenaInvalidaException("La contraseña no es válida.");
+        }
+
+        ((UsuarioConDni) usuario).setContrasena(contrasena);
+        System.out.println("Contraseña asignada correctamente");
+
+    }
+
     private boolean validarDni(String dni) {
 
         return credenciales.containsKey(dni);
@@ -163,6 +133,73 @@ public class AirportManager {
         return credenciales.get(dni).equals(contrasena);
     }
 
+
+    /**
+     * Método auxiliar para validar un usuario con dni.
+     * 
+     * @param dni        Dni del usuario con dni.
+     * @param contrasena Contraseña del usuario con dni.
+     * @throws UsuarioNoEncontradoException Si el usuario no existe.
+     * @throws ContrasenaInvalidaException  Si el usuario existe pero la contraseña
+     *                                      es incorrecta.
+     */
+    public void validarUsuario(String dni, String contrasena)
+            throws UsuarioNoEncontradoException, ContrasenaInvalidaException {
+
+        if (!validarDni(dni)) {
+            throw new UsuarioNoEncontradoException("El usuario con DNI" + dni + "no existe");
+        }
+
+        if (!validarContrasena(dni, contrasena)) {
+            throw new ContrasenaInvalidaException("Contraseña incorrecta");
+        }
+        System.out.println("Usuario validado correctamente");
+    }
+
+    /**
+     * Método para añadir un credencial.
+     * 
+     * @param dni        Dni que se añade.
+     * @param contrasena Contraseña que se añade.
+     */
+    public void addCredencial(String dni, String contrasena) {
+        if (dni == null || contrasena == null) {
+            throw new IllegalArgumentException("El dni y la contraseña no pueden ser null.");
+        }
+
+        credenciales.put(dni, contrasena);
+    }
+    
+
+    private List<Vuelo> ordenarColaVuelos() {
+
+        List<Vuelo> vuelosEnEspera = new ArrayList<>();
+        int n, i, j;
+        Vuelo v1, v2;
+
+        for (Vuelo vuelo : vuelos) {
+            if (vuelo.getEstado() == EstadoVuelo.ESPERANDO_DESPEGUE) {
+                vuelosEnEspera.add(vuelo);
+            }
+        }
+
+        n = vuelosEnEspera.size();
+        for (i = 0; i < n; i++) {
+            for (j = 0; j < n - i - 1; j++) {
+                v1 = vuelosEnEspera.get(j);
+                v2 = vuelosEnEspera.get(j + 1);
+
+                if (compararVuelos(v1, v2) > 0) {
+                    vuelosEnEspera.set(j, v2);
+                    vuelosEnEspera.set(j + 1, v1);
+                }
+            }
+        }
+
+        return vuelosEnEspera;
+
+    }
+    
     /**
      * Devuelve un numero positivo si el segundo vuelo tiene mas prioridad para
      * luego cambiarle la posicion
@@ -204,70 +241,6 @@ public class AirportManager {
         return pasajeros2 - pasajeros1;
     }
 
-    private List<Vuelo> ordenarColaVuelos() {
 
-        List<Vuelo> vuelosEnEspera = new ArrayList<>();
-        int n, i, j;
-        Vuelo v1, v2;
-
-        for (Vuelo vuelo : vuelos) {
-            if (vuelo.getEstado() == EstadoVuelo.ESPERANDO_DESPEGUE) {
-                vuelosEnEspera.add(vuelo);
-            }
-        }
-
-        n = vuelosEnEspera.size();
-        for (i = 0; i < n; i++) {
-            for (j = 0; j < n - i - 1; j++) {
-                v1 = vuelosEnEspera.get(j);
-                v2 = vuelosEnEspera.get(j + 1);
-
-                if (compararVuelos(v1, v2) > 0) {
-                    vuelosEnEspera.set(j, v2);
-                    vuelosEnEspera.set(j + 1, v1);
-                }
-            }
-        }
-
-        return vuelosEnEspera;
-
-    }
-
-    /**
-     * Método auxiliar para validar un usuario con dni.
-     * 
-     * @param dni        Dni del usuario con dni.
-     * @param contrasena Contraseña del usuario con dni.
-     * @throws UsuarioNoEncontradoException Si el usuario no existe.
-     * @throws ContrasenaInvalidaException  Si el usuario existe pero la contraseña
-     *                                      es incorrecta.
-     */
-    public void validarUsuario(String dni, String contrasena)
-            throws UsuarioNoEncontradoException, ContrasenaInvalidaException {
-
-        if (!validarDni(dni)) {
-            throw new UsuarioNoEncontradoException("El usuario con DNI" + dni + "no existe");
-        }
-
-        if (!validarContrasena(dni, contrasena)) {
-            throw new ContrasenaInvalidaException("Contraseña incorrecta");
-        }
-
-        System.out.println("Usuario validado correctamente");
-    }
-
-    /**
-     * Método para añadir un credencial.
-     * 
-     * @param dni        Dni que se añade.
-     * @param contrasena Contraseña que se añade.
-     */
-    public void addCredencial(String dni, String contrasena) {
-        if (dni == null || contrasena == null) {
-            throw new IllegalArgumentException("El dni y la contraseña no pueden ser null.");
-        }
-
-        credenciales.put(dni, contrasena);
-    }
 
 }

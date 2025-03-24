@@ -54,8 +54,8 @@ public abstract class UsuarioConDni extends Usuario {
      * @param dni        Dni del usuario con dni.
      * @param aeropuerto Aeropuerto en el que trabaja el usuario con dni.
      */
-    public UsuarioConDni(String nombre, String contrasena, String dni, AeropuertoPropio aeropuerto, Gestor gestor) {
-        super(nombre, contrasena, aeropuerto);
+    public UsuarioConDni(String nombre, String contrasena, String dni, AeropuertoPropio aeropuerto, Gestor gestor, AirportManager sistema) {
+        super(nombre, contrasena, aeropuerto, sistema);
         this.dni = dni;
         this.gestor = gestor;
     }
@@ -122,9 +122,21 @@ public abstract class UsuarioConDni extends Usuario {
      *                                      es incorrecta.
      * @throws UsuarioNoEncontradoException Si el usuario no existe.
      */
-    public void iniciarSesion(String dni, String contrasena)
-            throws UsuarioNoEncontradoException, ContrasenaInvalidaException {
+    public void iniciarSesion(String dni, String contrasena) throws UsuarioNoEncontradoException, ContrasenaInvalidaException {
         sistema.validarUsuario(dni, contrasena);
         System.out.printf("El usuario con dni %s ha iniciado sesión.%n", dni);
+    }
+    
+    /**
+     * Método para iniciar sesión.
+     * 
+     * @param dni         Dni del usuario con dni.
+     * @param constrasena Contraseña del usuario con dni.
+     * @throws ContrasenaInvalidaException  Si el usuario existe, pero la contraseña
+     *                                      es incorrecta.
+     * @throws UsuarioNoEncontradoException Si el usuario no existe.
+     */
+    public void heOlvidadoContrasena() throws UsuarioNoEncontradoException, ContrasenaInvalidaException {
+        gestor.modificarUsuario(this.getNombre(), this);
     }
 }

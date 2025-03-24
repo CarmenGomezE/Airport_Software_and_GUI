@@ -11,7 +11,9 @@ import src.airportmanager.aeropuerto.Temporada;
 import src.airportmanager.avion.Aerolinea;
 import src.airportmanager.estadisticas.EstadisticasGestor;
 import src.airportmanager.exceptions.AntelacionInvalidaException;
+import src.airportmanager.exceptions.ContrasenaInvalidaException;
 import src.airportmanager.exceptions.TemporadasSolapadasException;
+import src.airportmanager.exceptions.UsuarioNoEncontradoException;
 import src.airportmanager.exceptions.VueloSolapadoException;
 import src.airportmanager.factura.*;
 import src.airportmanager.hangar.Hangar;
@@ -205,8 +207,8 @@ public class Gestor extends Usuario {
      * @param contrasena Contraseña del nuevo controlador.
      * @param terminal   Terminal del nuevo controlador.
      */
-    public void darDeAltaControlador(String nombre, String dni, String contrasena, Terminal terminal) {
-        ControladorAereo controlador = new ControladorAereo(nombre, dni, contrasena, aeropuerto, this, terminal);
+    public void darDeAltaControlador(String nombre, String dni, Terminal terminal) {
+        ControladorAereo controlador = new ControladorAereo(nombre, dni, sistema.generarContrasena(), aeropuerto, this, terminal, sistema);
         aeropuerto.addUsuario(controlador);
         terminal.agregarControlador(controlador);
         sistema.addCredencial(dni, contrasena);
@@ -218,8 +220,8 @@ public class Gestor extends Usuario {
      * @param nombre Nombre del nuevo controlador.
      * @param dni    Dni del nuevo controlador.
      */
-    public void darDeAltaOperador(String nombre, String dni, String contrasena, Aerolinea aerolinea) {
-        Operador operador = new Operador(nombre, dni, aerolinea, aeropuerto, this);
+    public void darDeAltaOperador(String nombre, String dni, Aerolinea aerolinea) {
+        Operador operador = new Operador(nombre, dni, aerolinea, aeropuerto, this, sistema);
         aerolinea.setOperador(operador);
         aeropuerto.addUsuario(operador);
         sistema.addCredencial(dni, contrasena);
@@ -718,13 +720,17 @@ public class Gestor extends Usuario {
      * @param nombre     Nombre.
      * @param contrasena Contraseña nueva.
      * @param usuario    UsuarioConDni que ha olvidado la contraseña.
+     * @throws ContrasenaInvalidaException 
+     * @throws UsuarioNoEncontradoException 
      * 
      */
-    public void modificarUsuario(String nombre, String contrasena, UsuarioConDni usuario) {
+    public void modificarUsuario(String nombre, UsuarioConDni usuario) throws UsuarioNoEncontradoException, ContrasenaInvalidaException {
 
         if (usuario != null) {
             usuario.setNombre(nombre);
-            usuario.setContrasena(contrasena);
+            String nuevaContrasena=sistema.generarContrasena();
+            usuario.setContrasena(nuevaContrasena);
+            sistema.asignarContrasena(usuario.getDni(), nuevaContrasena);
             System.out.println("Usuario modificado correctamente");
         }
 
