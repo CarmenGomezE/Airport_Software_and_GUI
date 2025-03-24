@@ -65,37 +65,55 @@ public class AirportManager {
         return contrasena.toString();
     }
     
+  /** Llama sobre los vuelos del aeropuerto propio */
     public void actualizarEstadosVuelosAutomaticamente() {
-    	for(Vuelo vuelo: aeropuerto.getVuelosAceptados()) {
-    		actualizarEstadoVueloAutomatico(vuelo);
-    	}
-    }
+        List<Vuelo> vuelosOrdenados = ordenarColaVuelos(); 
     
-    /** Llama sobre los vuelos del aeropuerto propio */
-    public void actualizarEstadoVueloAutomatico(Vuelo v) {
-        LocalDateTime ahora = LocalDateTime.now();
+        LocalTime horaSalidaBase = LocalTime.now(); 
+        for (int i = 0; i < vuelosOrdenados.size(); i++) {
+            Vuelo vuelo = vuelosOrdenados.get(i);
+            
+            LocalTime nuevaHoraSalida = horaSalidaBase.plusMinutes(i * 5);
+            vuelo.setHora(nuevaHoraSalida);
 
-        if (v.getTipoVuelo() == TipoVuelo.LLEGADA) {
-            if (ahora.toLocalTime().isBefore(v.getHora())) {
-                v.cambiarEstado(EstadoVuelo.A_TIEMPO);
-            } else if (v.getEstado() != EstadoVuelo.ATERRIZAJE && ahora.toLocalTime().isAfter(v.getHora())) {
-                v.cambiarEstado(EstadoVuelo.RETRASADO);
-            }
-        } else if (v.getTipoVuelo() == TipoVuelo.SALIDA) {
-            long minutosRestantes = Duration.between(ahora, v.getHora()).toMinutes();
-
-            if (ahora.toLocalTime().isAfter(v.getHora())) {
-                v.cambiarEstado(EstadoVuelo.VUELO);
-            } else if ((v.getEstado() == EstadoVuelo.ESPERANDO_PISTA_DE_DESPEGUE
-                    || v.getEstado() == EstadoVuelo.ESPERANDO_DESPEGUE)
-                    && minutosRestantes < 45) {
-                v.cambiarEstado(EstadoVuelo.RETRASADO);
-            }
+            actualizarEstadoVueloAutomatico(vuelo);
         }
+    }    
 
-        System.out.println("Estado de vuelo actualizado: " + v.getEstado());
+ /**
+     * Método que actualiza los estados automáticos de los vuelos (A_TIEMPO, RETRASADO, VUELO) teniendo en cuenta la cola de los vuelos en esperando despegue.
+     * @param v                             Vuelo al que actualizar sus estados.
+     */
+public void actualizarEstadoVueloAutomatico(Vuelo v) {
+    LocalDateTime ahora = LocalDateTime.now();
+
+    if (v.getTipoVuelo() == TipoVuelo.LLEGADA) {
+        if (ahora.toLocalTime().isBefore(v.getHora())) {
+            v.cambiarEstado(EstadoVuelo.A_TIEMPO);
+        } else if (v.getEstado() != EstadoVuelo.ATERRIZAJE && ahora.toLocalTime().isAfter(v.getHora())) {
+            v.cambiarEstado(EstadoVuelo.RETRASADO);
+        }
+    } else if (v.getTipoVuelo() == TipoVuelo.SALIDA) {
+        long minutosRestantes = Duration.between(ahora, v.getHora()).toMinutes();
+
+        if (ahora.toLocalTime().isAfter(v.getHora())) {
+            v.cambiarEstado(EstadoVuelo.VUELO);
+        } else if ((v.getEstado() == EstadoVuelo.ESPERANDO_PISTA_DE_DESPEGUE
+                || v.getEstado() == EstadoVuelo.ESPERANDO_DESPEGUE)
+                && minutosRestantes < 45) {
+            v.cambiarEstado(EstadoVuelo.RETRASADO);
+        }
     }
 
+    System.out.println("Estado de vuelo actualizado: " + v.getEstado());
+}
+
+
+    /**
+     * Método que busca un usuario a partir de su dni.
+     * @param dni                       Dni del usuario a buscar.
+     * @return el usuario encontrado.
+     */
     private Usuario buscarUsuarioPorDni(String dni) throws UsuarioNoEncontradoException {
 
         for (Usuario usuario : usuarios) {
@@ -107,6 +125,12 @@ public class AirportManager {
         throw new UsuarioNoEncontradoException("El usuario con DNI " + dni + "no existe");
     }
 
+     /**
+     * Método que asigna una contraseña a un usuario a partir de su dni.
+     * @param dni                           Dni del usuario.
+     * @param contrasena                    Contraseña del usuario.
+     * 
+     */
     public void asignarContrasena(String dni, String contrasena)
             throws UsuarioNoEncontradoException, ContrasenaInvalidaException {
 
@@ -123,12 +147,23 @@ public class AirportManager {
 
     }
 
+    /**
+     * Método que valida el dni de un usuario.
+     * @param dni                           Dni del usuario.
+     * @return true si el dni está registrado en el sistema o false si no.
+     */
     private boolean validarDni(String dni) {
 
         return credenciales.containsKey(dni);
 
     }
 
+    /**
+     * Método que valida la contraseña de un usuario.
+     * @param dni                           Dni del usuario.
+     * @param contraseña                    Contraseña del usuario.
+     * @return true si la contraseña está registrada en el sistema o false si no.
+     */
     private boolean validarContrasena(String dni, String contrasena) throws UsuarioNoEncontradoException {
         return credenciales.get(dni).equals(contrasena);
     }
@@ -170,7 +205,10 @@ public class AirportManager {
         credenciales.put(dni, contrasena);
     }
     
-
+     /**
+     * Método que ordena la cola de vuelos que están esperando despegue.
+     * @return la cola de vuelos ordenada.
+     */
     private List<Vuelo> ordenarColaVuelos() {
 
         List<Vuelo> vuelosEnEspera = new ArrayList<>();
@@ -200,9 +238,11 @@ public class AirportManager {
 
     }
     
-    /**
-     * Devuelve un numero positivo si el segundo vuelo tiene mas prioridad para
-     * luego cambiarle la posicion
+      /**
+     * Método que compara dos vuelos según su prioridad.
+     * @param v1                            Primer vuelo
+     * @param v2                            Segundo vuelo
+     * @return un número positivo si el segundo vuelo tiene más prioridad o un número negativo si el primer vuelo tiene más prioridad.
      */
     private int compararVuelos(Vuelo v1, Vuelo v2) {
 
