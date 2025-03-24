@@ -148,11 +148,16 @@ public abstract class Aeropuerto implements Serializable {
      * 
      * @param nuevaTemporada Nueva temporada del aeropuerto.
      * @throws TemporadasSolapadasException
+     * @throws NumeroMaxDeTemporadasException
      */
-    public void agregarTemporada(Temporada nuevaTemporada) throws TemporadasSolapadasException {
+    public void agregarTemporada(Temporada nuevaTemporada) throws TemporadasSolapadasException, NumeroMaxDeTemporadasException {
     	if (nuevaTemporada == null) {
     	    throw new IllegalArgumentException("La nueva temporada no puede ser nula");
     	}
+
+        if (temporadas.size() == numTemporadas) {
+            throw new NumeroMaxDeTemporadasException("Ya se ha llegado al número máximo de temporadas");
+        }
 
     	for (Temporada t : listaTemporadas) {
     	    if (t.comprobarTemporada(nuevaTemporada)) {
@@ -164,8 +169,5 @@ public abstract class Aeropuerto implements Serializable {
 
     	temporadas.sort(Comparator.comparing(
     	    Temporada::getFechaInicio));
-
-    	numTemporadas temporadas.size();
     }
-
 }
