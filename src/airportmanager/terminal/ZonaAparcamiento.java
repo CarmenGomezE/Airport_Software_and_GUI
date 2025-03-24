@@ -17,13 +17,13 @@ public class ZonaAparcamiento extends ModoEmbarque {
     /**
      * Constructor de la clase ZonaAparcamiento
      * 
-     * @param codigo        Código de la zona de aparcamiento.
+     * @param id            Código de la zona de aparcamiento.
      * @param costePorHora  Coste por hora de la zona de aparcamiento.
      * @param dimPlazaAncho Dimensión de ancho de la zona de aparcamiento.
      * @param dimPlazaLargo dimensión de largo de la zona de aparcamiento.
      */
-    public ZonaAparcamiento(String codigo, double costePorHora, double dimPlazaAncho, double dimPlazaLargo) {
-        super(codigo, costePorHora);
+    public ZonaAparcamiento(String id, double costePorHora, double dimPlazaAncho, double dimPlazaLargo) {
+        super(id, costePorHora);
         this.dimPlazaAncho = dimPlazaAncho;
         this.dimPlazaLargo = dimPlazaLargo;
     }

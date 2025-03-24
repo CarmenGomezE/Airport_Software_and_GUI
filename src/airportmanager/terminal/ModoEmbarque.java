@@ -25,11 +25,11 @@ public abstract class ModoEmbarque {
     /**
      * Constructor de la clase ModoEmbarque
      * 
-     * @param codigo       Código del modo de embarque.
+     * @param id       Código del modo de embarque.
      * @param costePorHora Coste por hora del modo de embarque.
      */
-    public ModoEmbarque(String codigo, double costePorHora) {
-        this.codigo = codigo;
+    public ModoEmbarque(String id, double costePorHora) {
+        this.id = id;
         this.costePorHora = costePorHora;
         this.vuelo = null;
         this.horasUso = 0;
