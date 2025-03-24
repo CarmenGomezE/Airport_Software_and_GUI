@@ -158,4 +158,20 @@ public abstract class Hangar {
      * @param avion Avion que se añade al hangar.
      */
     public abstract void addAvion(Avion avion);
+
+    /**
+     * Método para comprobar si un avión está en el hangar.
+     * 
+     * @param avion Avión a comprobar.
+     * 
+     * @return true si está, false si no.
+     */
+    public abstract boolean comprobarAvionEnHangar(Avion avion);
+
+    /**
+     * Método para sacar un avión del hangar.
+     * 
+     * @param avion Avión que sale del hangar.
+     */
+    public abstract void sacarAvion(Avion avion);
 }

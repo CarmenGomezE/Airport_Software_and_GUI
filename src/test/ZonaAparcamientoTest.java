@@ -5,7 +5,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import src.airportmanager.*;
+import src.airportmanager.aeropuerto.AeropuertoDestino;
+import src.airportmanager.aeropuerto.AeropuertoPropio;
+import src.airportmanager.aeropuerto.DireccionRelativaCiudad;
 import src.airportmanager.terminal.*;
+import src.airportmanager.usuario.Gestor;
+import src.airportmanager.usuario.Operador;
 import src.airportmanager.avion.*;
 import src.airportmanager.vuelo.*;
 import java.time.*;
@@ -13,7 +18,21 @@ import java.util.*;
 
 class ZonaAparcamientoTest{
 
-    ZonaAparcamiento zona;
+    ZonaAparcamiento zona, otraZona;
+    Vuelo vueloPequeno;
+    LocalDate fecha;
+    LocalTime hora, h;
+    Date revision;
+    Calendar calendar;
+    Avion avion;
+    AeropuertoDestino aeropuertoDestino;
+    AeropuertoPropio aeropuertoPropio;
+    ZoneOffset zone, zone2;
+    Escala escala;
+    Operador operador;
+    Aerolinea aerolinea;
+    Gestor gestor;
+    AirportManager sistema;
 
     @BeforeEach
     void setUp() {
@@ -56,40 +75,35 @@ class ZonaAparcamientoTest{
 
     @Test
     void testGetId() {
-        ZonaAparcamiento otraZona = new ZonaAparcamiento("Z124", 30.0, 5, 6);
+        otraZona = new ZonaAparcamiento("Z124", 30.0, 5, 6);
         assertNotEquals(zona.getId(), otraZona.getId(), "Error, los IDs de las zonas de aparcamiento deberían ser diferentes.");
     }
 
-    /**AQUI TENGO QUE CAMBIAR COSAS */
     @Test
     void testComprobarTamano() {
-        Avion avionPequeno;
-        Vuelo vueloPequeno;
-        LocalDate fechaVuelo = LocalDate.of(2024, 3, 22);
-        LocalTime horaVuelo = LocalTime.of(10, 15);
 
-        /** Crear fecha de última revisión del avión */
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(2024, Calendar.MARCH, 1); 
-        Date fechaRevision = calendar.getTime();
+        fecha = LocalDate.of(2024, 03, 22);
+        hora = LocalTime.of(9,30, 0);
+        h = LocalTime.of(11,30, 0);
+        calendar = Calendar.getInstance();
+        calendar.set(2024, Calendar.JANUARY, 22);
+        revision = calendar.getTime();
+        zone = ZoneOffset.of("+1");
+        zone2 = ZoneOffset.of("+2");
 
-        /** Crear el avión pequeño */
-        avionPequeno = new AvionPasajeros("Airbus", "A320", 4.5, 35.8, 37.6, 6100.0, 2018, fechaRevision, "EC-XYZ", 180);
+        aeropuertoPropio = new AeropuertoPropio("barajas", "MAD", "Madrid", "España", 25.0, zone2, 3, DireccionRelativaCiudad.ESTE);
+        sistema = new AirportManager();
+        gestor = new Gestor("Miguel", "P8NOKYW", aeropuertoPropio, sistema);
+        aerolinea = new Aerolinea("Ryanair", "RT2");
+        operador = new Operador("Jesus", "5648274K", aerolinea, aeropuertoPropio, gestor, sistema);
+        aeropuertoDestino = new AeropuertoDestino("Fuimicino", "FCO", "Roma", "Italia", 30.0, zone, 2, DireccionRelativaCiudad.NORTE);
+        escala = new Escala(aeropuertoPropio, aeropuertoDestino, hora, h);
+        avion = new Avion("AIRBUS", "C42", 50.00, 50.0, 50.0, 60.000, 2020, revision, "JLN2000");
+        vueloPequeno = new Vuelo("V123", fecha, null, null, hora, null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER, Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avion, aeropuertoDestino, aeropuertoPropio, escala, operador);
 
-        /** Crear aeropuertos */
-        AeropuertoPropio aeropuertoSalida = new AeropuertoPropio("Aeropuerto Madrid", "MAD", "Madrid", "España", 12.5, ZoneOffset.of("+1"), 2, DireccionRelativaCiudad.SUR);
-        AeropuertoDestino aeropuertoDestino = new AeropuertoDestino("Aeropuerto París", "CDG", "París", "Francia", 18.0, ZoneOffset.of("+1"), 2, DireccionRelativaCiudad.NORTE);
-
-        /** Crear operador, necesita aerolínea y gestor */
-        Aerolinea aerolinea = new Aerolinea("Iberia", "IB123");
-        Gestor gestor = new Gestor("Carlos López", "admin123", aeropuertoSalida);
-        Operador operador = new Operador("Juan Pérez", "12345678A", aerolinea, aeropuertoSalida, gestor);
-
-        /** Crear el vuelo con todos los parámetros */
-        vueloPequeno = new Vuelo("V123", fechaVuelo, null, null, horaVuelo, null, 
-            TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER, Periodicidad.PUNTUAL, TipoVuelo.SALIDA, 
-            avionPequeno, aeropuertoDestino, aeropuertoSalida, null, operador);
-
-        assertTrue(zona.comprobarTamano(vueloPequeno), "ERROR: El avión pequeño debería caber en la zona de aparcamiento.");
+        assertTrue(zona.comprobarTamano(vueloPequeno), "Error. El avion debería caber");
+    
     }
+
 }
+

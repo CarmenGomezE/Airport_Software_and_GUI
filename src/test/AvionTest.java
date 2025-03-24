@@ -35,9 +35,8 @@ class AvionTest {
         aeropuertoDestino = new AeropuertoDestino("Barcelona-El Prat", "BCN", "Barcelona", "España", 10.0,
                 ZoneOffset.of("+1"), 2, DireccionRelativaCiudad.SUR);
 
-        aerolinea = new Aerolinea("AeroTest", "AT123", null); // Operador aún no asignado
+        aerolinea = new Aerolinea("AeroTest", "AT123"); // Operador aún no asignado
         operador = new Operador("Juan Pérez", "12345678A", aerolinea, null, null);
-        aerolinea = new Aerolinea("AeroTest", "AT123", operador); // Ahora asignamos operador a la aerolínea
 
         escala = new Escala(aeropuertoSalida, aeropuertoDestino, LocalTime.of(12, 0), LocalTime.of(13, 0));
 
