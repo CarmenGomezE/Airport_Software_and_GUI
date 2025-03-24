@@ -33,10 +33,10 @@ public class Aerolinea {
      * @param codigo   Código de la aerolinea.
      * @param operador Operador de la aerolinea.
      */
-    public Aerolinea(String nombre, String codigo, Operador operador) {
+    public Aerolinea(String nombre, String codigo) {
         this.nombre = nombre;
         this.codigo = codigo;
-        this.operador = operador;
+        this.operador = null;
         this.facturas = new ArrayList<>();
         this.aviones = new ArrayList<>();
     }

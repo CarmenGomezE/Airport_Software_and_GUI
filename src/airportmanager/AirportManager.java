@@ -27,7 +27,6 @@ public class AirportManager {
     private AeropuertoPropio aeropuerto;
     private static final String CARACTERES = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{}|;:,.<>?/";
     private static SecureRandom random = new SecureRandom();
-    private static final String ARCHIVO_ESTADO = "estado_airport_manager.dat";
 
     public AirportManager() {
         this.usuarios = new ArrayList<>();
@@ -307,6 +306,14 @@ public void actualizarEstadoVueloAutomatico(Vuelo v) {
 
         return pasajeros2 - pasajeros1;
     }
+
+	public AeropuertoPropio getAeropuerto() {
+		return this.aeropuerto;
+	}
+	
+	public Gestor getGestor() {
+		return this.gestor;
+	}
 
 
 
