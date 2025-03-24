@@ -175,6 +175,8 @@ public class AirportManagerMain {
     	System.out.println("Pistas de aterrizaje y despegue dadas de alta.");
     	System.out.println("Proceso de alta de infraestructura del aeropuerto completado con éxito.");
         
+    	/**Aeropuertos de destino */
+    	System.out.println("Vamos a cargar 9 aeropuertos de un fichero.");
     	try {
     	    airportManager.getGestor().darDeAltaAeropuertoDestino(ARCHIVO_AEDESTINO);
     	    System.out.println("Aeropuerto destino dado de alta correctamente. Nombre del nuevo aeropuerto: "+airportManager.getAeropuerto().getAeropuertosDestino().getLast().getNombre());
@@ -184,15 +186,17 @@ public class AirportManagerMain {
 
     	List<Temporada> temporadas = new ArrayList<>();
     	temporadas.add(new Temporada("01/06", "10:00", "20:00", "30/09"));
-
+    	
+    	/**Modificar aeropuerto propio */
     	try {
     	    airportManager.getGestor().configurarAeropuertoPropio("Aeropuerto Adolfo Suárez Madrid-Barajas", "MAD", "Madrid", "España", 
     	                                                          10.5, ZoneOffset.ofHours(0), 2, DireccionRelativaCiudad.ESTE, temporadas);
-    	    System.out.println("Aeropuerto propio configurado correctamente, se ha añadido una temporada. Nuevo número de temporadas:"+airportManager.getAeropuerto().getTemporadas().length);
+    	    System.out.println("Aeropuerto propio configurado correctamente, se ha añadido una temporada. Nuevo número de temporadas:"+airportManager.getAeropuerto().getTemporadas().size());
     	} catch (TemporadasSolapadasException e) {
     	    System.err.println("Error al configurar el aeropuerto: " + e.getMessage());
     	}
-
+    	
+    	
         
         
     }

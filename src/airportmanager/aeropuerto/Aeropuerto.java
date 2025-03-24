@@ -139,7 +139,7 @@ public abstract class Aeropuerto implements Serializable {
      * 
      * @return Las temporadas del aeropuerto.
      */
-    public Temporada[] getTemporadas() {
+    public List<Temporada> getTemporadas() {
         return temporadas;
     }
 
@@ -154,7 +154,7 @@ public abstract class Aeropuerto implements Serializable {
     	    throw new IllegalArgumentException("La nueva temporada no puede ser nula");
     	}
 
-    	for (Temporada t : listaTemporadas) {
+    	for (Temporada t : getTemporadas()) {
     	    if (t.comprobarTemporada(nuevaTemporada)) {
     	        throw new TemporadasSolapadasException("La nueva temporada se solapa con otra existente");
     	    }
@@ -165,7 +165,7 @@ public abstract class Aeropuerto implements Serializable {
     	temporadas.sort(Comparator.comparing(
     	    Temporada::getFechaInicio));
 
-    	numTemporadas temporadas.size();
+    	numTemporadas=temporadas.size();
     }
 
 }

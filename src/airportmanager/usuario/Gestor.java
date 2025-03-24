@@ -238,11 +238,13 @@ public class Gestor extends Usuario {
      */
     public void darDeAltaAeropuertoDestino(String nombreFichero) throws IOException, TemporadasSolapadasException {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(nombreFichero)))) {
-            String linea = reader.readLine();
+            String linea;
 
-            if (linea != null) {
+            // Leer cada línea del archivo
+            while ((linea = reader.readLine()) != null) {
                 String[] campos = linea.split(";");
 
+                // Asegurarse de que la línea tiene suficientes campos
                 if (campos.length >= 9) {
                     String nombre = campos[0];
                     String codigo = campos[1];
@@ -253,37 +255,40 @@ public class Gestor extends Usuario {
                     ZoneOffset diferenciaHoraria = ZoneOffset.ofHours(Integer.parseInt(campos[6]));
                     int numeroTemporadas = Integer.parseInt(campos[7]);
 
-                    // List to store the Temporadas
+                    // Lista para almacenar las temporadas
                     List<Temporada> temporadas = new ArrayList<>();
                     int i = 8;
 
-                    // Read each temporada and process it
+                    // Leer cada temporada y procesarla
                     while (i < campos.length) {
                         String fechaInicio = campos[i];
-                        // Split the horario in opening and closing times
-                        String[] horarios = campos[i + 1].split("-"); // We split the horario by '-'
+                        // Dividir el horario en apertura y cierre
+                        String[] horarios = campos[i + 1].split("-"); // Se divide el horario por '-'
                         String horarioApertura = horarios[0];
                         String horarioCierre = horarios[1];
                         String fechaFin = campos[i + 2];
 
-                        // Create Temporada object
+                        // Crear objeto Temporada
                         Temporada temporada = new Temporada(fechaInicio, horarioApertura, horarioCierre, fechaFin);
                         temporadas.add(temporada);
 
-                        i += 3; // Move to the next season set
+                        i += 3; // Avanzar al siguiente conjunto de temporada
                     }
 
-                    // Create and populate the AeropuertoDestino object
+                    // Crear y poblar el objeto AeropuertoDestino
                     AeropuertoDestino aeropuertoDestino = new AeropuertoDestino(nombre, codigo, ciudadMasCercana, pais,
                             distanciaCiudad, diferenciaHoraria, numeroTemporadas, direccionRespectoCiudad);
 
-                    // Add all the seasons to the AeropuertoDestino object
+                    // Añadir todas las temporadas al objeto AeropuertoDestino
                     for (Temporada temporada : temporadas) {
                         aeropuertoDestino.agregarTemporada(temporada);
                     }
 
-                    // Add AeropuertoDestino to the airport
+                    // Añadir el AeropuertoDestino al aeropuerto
                     this.aeropuerto.addAeropuertoDestino(aeropuertoDestino);
+                    System.out.println("Aeropuerto " + nombre + " dado de alta correctamente.");
+                } else {
+                    System.err.println("Error: la línea no contiene suficientes datos para procesar.");
                 }
             }
         } catch (FileNotFoundException e) {
