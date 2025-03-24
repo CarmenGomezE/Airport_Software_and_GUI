@@ -1,0 +1,59 @@
+package aeropuerto.src.claudia;
+
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import aeropuerto.src.carmen.*;
+import aeropuerto.src.claudia.*;
+import aeropuerto.src.maria.*;
+import aeropuerto.src.carmen.vuelo.*;
+import java.time.*;
+import java.util.*;
+
+class NotificacionTest{
+
+    Notificacion noti1, noti2;
+
+    @BeforeEach
+    void setUp() {
+        noti1 = new Notificacion("Contraseña incorrecta", TipoNotificacion.OLVIDO_CONTRASENA);
+        noti2 = new Notificacion("El vuelo se ha cambiado de estado", TipoNotificacion.CAMBIO_ESTADO_VUELO);
+
+    }
+
+    @Test
+    void testGetMensaje() {
+        assertEquals("Contraseña incorrecta", noti1.getMensaje(), "Error, el mensaje que se muestra no es el esperado.");
+        assertEquals("El vuelo se ha cambiado de estado", noti2.getMensaje(), "Error, el mensaje que se muestra no es el esperado.");
+    }
+
+    @Test
+    void testGetMensajeExcepcion() {
+
+        Exception excepcionVacio = assertThrows(IllegalArgumentException.class, () -> {
+            new Notificacion("", TipoNotificacion.OLVIDO_CONTRASENA);
+        });
+
+        assertEquals("Error: La notificación debe tener un mensaje válido", excepcionVacio.getMessage(), "Error, no se lanzó la excepción esperada con mensaje vacío.");
+
+        Exception excepcionNull = assertThrows(IllegalArgumentException.class, () -> {
+            new Notificacion(null, TipoNotificacion.OLVIDO_CONTRASENA);
+        });
+
+        assertEquals("Error: La notificación debe tener un mensaje válido", excepcionNull.getMessage(), "Error, no se lanzó la excepción esperada con mensaje null.");
+    }
+
+   @Test
+    void testGetFecha() {
+        LocalDateTime ahora = LocalDateTime.now();
+        assertTrue(Duration.between(noti1.getFecha(), ahora).getSeconds() < 2, "Error, la fecha de la notificación no es la esperada.");
+        assertTrue(Duration.between(noti2.getFecha(), ahora).getSeconds() < 2, "Error, la fecha de la notificación no es la esperada.");
+    }
+
+    @Test 
+    void testGetTipoNotificacion() {
+        assertEquals(TipoNotificacion.OLVIDO_CONTRASENA, noti1.getTipoNotificacion(), "Error el tipo de notificación no es correcto");
+        assertEquals(TipoNotificacion.CAMBIO_ESTADO_VUELO, noti2.getTipoNotificacion(), "Error el tipo de notificación no es correcto");
+    }
+}
