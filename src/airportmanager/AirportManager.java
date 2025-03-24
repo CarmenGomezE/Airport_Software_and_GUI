@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.*;
 
 import src.airportmanager.exceptions.ContrasenaInvalidaException;
+import src.airportmanager.exceptions.TemporadasSolapadasException;
 import src.airportmanager.exceptions.UsuarioNoEncontradoException;
 import src.airportmanager.usuario.*;
 import src.airportmanager.vuelo.*;
@@ -21,18 +22,44 @@ import java.time.*;
 public class AirportManager {
 
     private List<Usuario> usuarios;
+    private Gestor gestor;
     private Map<String, String> credenciales;
     private AeropuertoPropio aeropuerto;
     private static final String CARACTERES = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{}|;:,.<>?/";
     private static SecureRandom random = new SecureRandom();
+    private static final String ARCHIVO_ESTADO = "estado_airport_manager.dat";
 
-    public AirportManager(AeropuertoPropio aeropuerto, Gestor gestor) {
+    public AirportManager() {
         this.usuarios = new ArrayList<>();
-        this.usuarios.add(gestor);
-        this.aeropuerto = aeropuerto;
-        aeropuerto.addUsuario(gestor);
+        this.aeropuerto = null;
+        this.gestor=null;
         this.credenciales = new HashMap<>();
         this.credenciales.put("Gestor", gestor.getContrasena());
+    }
+    
+    public void iniciarAplicacion() {
+    	if (aeropuerto == null) {
+            System.out.println("Configurando nuevo sistema.");
+
+            try {
+                aeropuerto = new AeropuertoPropio("Aeropuerto Adolfo Suarez Madrid-Barajas", "MAD", "Madrid", "España", 10.5, ZoneOffset.ofHours(2), 2, DireccionRelativaCiudad.ESTE);
+                aeropuerto.agregarTemporada(new Temporada("2025-06-01", "10:00", "20:00", "2025-09-30"));
+                aeropuerto.agregarTemporada(new Temporada("2025-10-01", "08:00", "24:00", "2025-05-30"));
+            } catch (TemporadasSolapadasException e) {
+                System.out.println("Error al configurar el aeropuerto: " + e.getMessage());
+            }
+
+            try {
+                gestor = new Gestor("Pepito Pérez", this.generarContrasena(), aeropuerto, this);
+            } catch (Exception e) {
+                System.out.println("Error al crear el gestor: " + e.getMessage());
+            }
+            if (gestor != null) {
+                this.usuarios.add(gestor);
+                aeropuerto.addUsuario(gestor);
+                credenciales.put("Gestor", gestor.getContrasena());
+            }
+        }
     }
 
     /** Esto es para guardar y cargar de momento ni caso */
