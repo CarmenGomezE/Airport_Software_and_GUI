@@ -1,15 +1,19 @@
-package aeropuerto.src.claudia;
+package src.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import aeropuerto.src.carmen.*;
-import aeropuerto.src.claudia.*;
-import aeropuerto.src.maria.*;
-import aeropuerto.src.carmen.vuelo.*;
+import src.airportmanager.*;
+import src.airportmanager.avion.*;
+import src.airportmanager.terminal.*;
+import src.airportmanager.vuelo.*;
+import src.airportmanager.aeropuerto.*;
+import src.airportmanager.usuario.*;
 import java.time.*;
 import java.util.*;
+
+
 
 class FingerTest{
 
@@ -69,7 +73,7 @@ class FingerTest{
     void testAddHorasUsoNegativo() {
         Exception excepcion = assertThrows(IllegalArgumentException.class, ()->{
             finger.addHorasUso(-2.0);
-        })
+        });
 
         assertEquals("Las horas deben ser positivas", excepcion.getMessage(), "Error, no se lanzó la excepción esperada");
     }
@@ -84,41 +88,48 @@ class FingerTest{
     @Test
     void testGetId() {
         Finger otroFinger;
-        otroFinger = new HashSet<>("F456", 60.0, 4.0, new HashSet<>(Arrays.asList(new PuertaEmbarque())));
+        PuertaEmbarque p1, p2;
+        Set p;
+        p1 = new PuertaEmbarque();
+        p2 = new PuertaEmbarque();
+
+        p = new HashSet<>();
+        p.add(p1);
+        p.add(p2);
+
+        otroFinger = new Finger("F124", 40.0, 4.0, p);
         assertNotEquals(finger.getId(), otroFinger.getId(), "Error, los id de los fingers deberían ser diferentes");
     }
 
     /**AQUI TENGO QUE CAMBIAR COSAS */
    @Test
     void testComprobarTamano() {
-        Avion avionPequeno;
+
         Vuelo vueloPequeno;
-        LocalDate fechaVuelo = LocalDate.of(2024, 3, 22);
-        LocalTime horaVuelo = LocalTime.of(10, 15);
+        LocalDate fecha;
+        LocalTime hora;
+        Date revision;
+        Calendar calendar;
+        Avion avion;
+        AeropuertoDestino aeropuertoDestino;
+        AeropuertoPropio aeropuertoPropio;
+        ZoneOffset zone;
 
-        /**Crear fecha de última revisión del avión*/
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(2024, Calendar.MARCH, 1); 
-        Date fechaRevision = calendar.getTime();
+        fecha = LocalDate.of(2024, 03, 22);
+        hora = LocalTime.of(9,30, 0);
+        calendar = Calendar.getInstance();
+        calendar.set(2024, Calendar.JANUARY, 22);
+        revision = calendar.getTime();
+        zone = ZoneOffset.of("+1");
 
-        /**Crear el avión pequeño */
-        avionPequeno = new AvionPasajeros("Airbus", "A320", 4.5, 35.8, 37.6, 6100.0, 2018, fechaRevision, "EC-XYZ", 180);
+        aeropuertoPropio = new AeropuertoPropio("barajas", , null, null, 0, zone, 0, null)
+        aeropuertoDestino = new AeropuertoDestino("Fuimicino", "FCO", "Roma", "Italia", 30.0, zone, 2, DireccionRelativaCiudad.NORTE);
+        avion = new Avion("AIRBUS", "C42", 50.00, 50.0, 50.0, 60.000, 2020, revision, "JLN2000");
+        vueloPequeno = new Vuelo("V123", fecha, null, null, hora, null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER, Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avion, aeropuertoDestino, null, null, null);
 
-        /**Crear aeropuertos */
-        AeropuertoPropio aeropuertoSalida = new AeropuertoPropio("Aeropuerto Madrid", "MAD", "Madrid", "España", 12.5, ZoneOffset.of("+1"), 2, DireccionRelativaCiudad.SUR);
-        AeropuertoDestino aeropuertoDestino = new AeropuertoDestino("Aeropuerto París", "CDG", "París", "Francia", 18.0, ZoneOffset.of("+1"), 2, DireccionRelativaCiudad.NORTE);
+    
 
-        /**Crear operador, necesita aerolinea y gestor */
-        Aerolinea aerolinea = new Aerolinea("Iberia", "IB123");
-        Gestor gestor = new Gestor("Carlos López", "admin123", aeropuertoSalida);
-        Operador operador = new Operador("Juan Pérez", "12345678A", aerolinea, aeropuertoSalida, gestor);
-
-       
-        vueloPequeno = new Vuelo("V123", fechaVuelo, null, null, horaVuelo, null, 
-            TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER, Periodicidad.PUNTUAL, TipoVuelo.SALIDA, 
-            avionPequeno, aeropuertoDestino, aeropuertoSalida, null, operador);
-
-        assertTrue(finger.comprobarTamano(vueloPequeno), "ERROR: El avión pequeño debería caber en el Finger.");
+        
 }
 
 
