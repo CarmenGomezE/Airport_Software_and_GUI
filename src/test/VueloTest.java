@@ -59,24 +59,32 @@ class VueloTest {
 	private Map<Operador, Double> operadoresEsperados;
 	private List<Operador> operadores;
 	private Escala escala;
+	private List<DayOfWeek> dias;
 	
 	@BeforeEach
 	void setUp() {
 		
 		calendar = Calendar.getInstance();
-		calendar.set(23, 2021);
+		calendar.set(Calendar.YEAR, 2021);
+		calendar.set(Calendar.MONTH, Calendar.MAY);  
+		calendar.set(Calendar.DAY_OF_MONTH, 12);
 		puertas = new HashSet<>();
+		p1 = new PuertaEmbarque();
+		p2 = new PuertaEmbarque();
+				
 		puertas.add(p1);
 		puertas.add(p2);
 		
 		terminal = new TerminalPasajeros("T1", p1, 200);
 		
 		pista = new Pista("P2", 50, TipoPista.DESPEGUE);
-		
+		dias = new ArrayList<DayOfWeek>();
+		dias.add(DayOfWeek.MONDAY);
+		dias.add(DayOfWeek.WEDNESDAY);
 		finger = new Finger(11.2,45.8, puertas);
-		avion = new Avion("AIRBUS", "AIR7", 87.0, 67.9, 54.2, 900000, 2021, calendar.getTime(), "PSJWU78");
-		avion2 = new Avion("BOEING", "BTE3", 65.003, 56.3, 87.4, 800000, 2022, calendar.getTime(), "9387438JK");
-		aeropuertoPropio = new AeropuertoPropio("Barajas", "MAD", "Madrid", "España", 64.9, ZoneOffset.of("0"), 2, DireccionRelativaCiudad.ESTE);
+		avion = new Avion("AIRBUS", "AIR7", 87.0, 67.9, 54.2, 900000, 2021, new Date(), "PSJWU78");
+		avion2 = new Avion("BOEING", "BTE3", 65.003, 56.3, 87.4, 800000, 2022, new Date(), "9387438JK");
+		aeropuertoPropio = new AeropuertoPropio("Barajas", "MAD", "Madrid", "España", 64.9, ZoneOffset.UTC, 2, DireccionRelativaCiudad.ESTE);
 		aeropuertoDestino = new AeropuertoDestino("Hearthrow", "LHR", "Londres", "Reino Unido", 56.9, ZoneOffset.of("+1"), 3, DireccionRelativaCiudad.SUR);
 		aerolinea = new Aerolinea("IBERIA", "IB2");
 		aerolinea2 = new Aerolinea ("RYANAIR", "RY1");
@@ -87,7 +95,7 @@ class VueloTest {
 		operadorSecundario = new Operador("Pablo", "673292Ñ", aerolinea2, aeropuertoPropio, gestor, sistema);
 		escala = new Escala(aeropuertoDestino, aeropuertoDestino, LocalTime.of(12, 30), LocalTime.of(13, 30));
 		vuelo = new Vuelo("V123", LocalDate.of(2023, 5, 12), null, null, LocalTime.of(7, 30), null, TipoCarga.PASAJEROS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO, Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avion, aeropuertoDestino, aeropuertoPropio, null, operador);
-		vuelo2 = new Vuelo("V231", LocalDate.of(2024, 4, 17), LocalDate.of(2024, 4, 17), LocalDate.of(2024, 9, 17), LocalTime.of(11, 30), Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY), TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER, Periodicidad.RECURRENTE, TipoVuelo.LLEGADA, avion, aeropuertoDestino, aeropuertoPropio, escala, operador);
+		vuelo2 = new Vuelo("V231", LocalDate.of(2024, 4, 17), LocalDate.of(2024, 4, 17), LocalDate.of(2024, 9, 17), LocalTime.of(11, 30),dias, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER, Periodicidad.RECURRENTE, TipoVuelo.LLEGADA, avion, aeropuertoDestino, aeropuertoPropio, escala, operador);
 		
 	}
 
@@ -140,7 +148,7 @@ class VueloTest {
 	 */
 	@Test
 	void testGetModoEmbarque() {
-		assertEquals(null, vuelo.getTipoModoEmbarque(), "Error al principio no hay modo embarque");
+		assertEquals(null, vuelo.getModoEmbarque(), "Error al principio no hay modo embarque");
 	}
 
 	/**
@@ -226,7 +234,7 @@ class VueloTest {
 	@Test
 	void testAgregarOperadorSecundario() {
 		vuelo.agregarOperadorSecundario(operador, 34);
-		assertTrue(vuelo.getOperadores().contains(operadorSecundario), "Error, el operador secundario no se asignó correctamente");
+		assertTrue(vuelo.getOperadores().contains(operador), "Error, el operador secundario no se asignó correctamente");
 	}
 
 	/**
@@ -271,8 +279,8 @@ class VueloTest {
 		vuelo.agregarOperadorSecundario(operadorSecundario, 23.2);
 		
 		operadoresEsperados = new HashMap<>();
-		operadoresEsperados.put(operador, 23.8);
-		operadoresEsperados.put(operadorSecundario, 45.3);
+		operadoresEsperados.put(operador, 12.2);
+		operadoresEsperados.put(operadorSecundario, 23.2);
 		assertEquals(operadoresEsperados, vuelo.getOperadoresAsignados(), "Error: El mapa de operadores asignados no coincide con el esperado.");
 		
 	}
@@ -374,7 +382,8 @@ class VueloTest {
 	 */
 	@Test
 	void testGetDiasRecurrente() {
-		assertEquals(Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY), vuelo2.getDiasRecurrente(), "Error la lista de días recurrente no es correcta");
+		assertNotNull(vuelo2.getDiasRecurrente(), "Error: La lista de días recurrentes es null");
+		assertEquals(dias, vuelo2.getDiasRecurrente(), "Error la lista de días recurrente no es correcta");
 	}
 
 	/**
