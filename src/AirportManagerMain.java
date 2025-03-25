@@ -342,8 +342,26 @@ public class AirportManagerMain {
 	}
 
 	private static void recibirNotificaciones() {
-		// TODO Auto-generated method stub
-		
+		Operador operadorAirFrance=(Operador)airportManager.getGestor().buscarUsuarioPorDni("87654321B");
+    	ControladorAereo controladorT2=(ControladorAereo)airportManager.getGestor().buscarUsuarioPorDni("123126789K");
+    	Gestor gestorBarajas= airportManager.getGestor();
+    	
+    	Notificacion notificacionCambioEstado = new Notificacion("El vuelo AF123 ha cambiado su estado a 'Embarcando'.", TipoNotificacion.CAMBIO_ESTADO_VUELO);
+    	Notificacion notificacionOlvidoContrasena = new Notificacion("Se ha solicitado un restablecimiento de contraseña para su cuenta.", TipoNotificacion.OLVIDO_CONTRASENA);
+    	Notificacion notificacionSolicitudCompartirVuelo = new Notificacion("El operador de Iberia ha solicitado compartir el vuelo IB456 con su aerolínea.", TipoNotificacion.SOLICITUD_COMPARTIR_VUELO);
+    	Notificacion notificacionFacturaEmitida = new Notificacion("Se ha emitido una factura por el vuelo AF789. Consulte su perfil para más detalles.", TipoNotificacion.FACTURA_EMITIDA);
+    	Notificacion notificacionOpcionesReprogramarVuelo = new Notificacion("Su vuelo IB321 ha sido afectado. Tiene nuevas opciones para reprogramarlo.", TipoNotificacion.OPCIONES_REPROGRAMAR_VUELO);
+    	Notificacion notificacionSolicitudVueloProgramado = new Notificacion("Se ha programado un nuevo vuelo desde Madrid a París para el 10 de abril a las 15:00.", TipoNotificacion.SOLICITUD_VUELO_PROGRAMADO);
+
+
+    	System.out.println("\nIniciando recepción de notificaciones.");
+    	operadorAirFrance.recibirNotificacion(notificacionCambioEstado);
+    	operadorAirFrance.recibirNotificacion(notificacionOlvidoContrasena);
+    	operadorAirFrance.recibirNotificacion(notificacionSolicitudCompartirVuelo);
+    	operadorAirFrance.recibirNotificacion(notificacionFacturaEmitida);
+    	operadorAirFrance.recibirNotificacion(notificacionOpcionesReprogramarVuelo);
+    	operadorAirFrance.recibirNotificacion(notificacionSolicitudVueloProgramado);
+    	operadorAirFrance.recibirSolicitud(null);
 	}
 
 	private static void verListaVuelosDia() {
@@ -352,8 +370,58 @@ public class AirportManagerMain {
 	}
 
 	private static void buscarVuelos() {
-		// TODO Auto-generated method stub
-		
+		Operador operadorAirFrance=(Operador)airportManager.getGestor().buscarUsuarioPorDni("87654321B");
+    	ControladorAereo controladorT2=(ControladorAereo)airportManager.getGestor().buscarUsuarioPorDni("123126789K");
+    	Gestor gestorBarajas= airportManager.getGestor();
+    	
+    	Vuelo vueloIBE12371= new Vuelo("IBE1231", LocalDate.of(2025, 9, 19), LocalDate.of(2025, 9, 19),LocalDate.of(2025, 10, 19), LocalTime.of(11,30), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO, 
+    									Periodicidad.PUNTUAL,TipoVuelo.SALIDA, operadorAirFrance.getAerolinea().getAviones().get(0), airportManager.getAeropuerto().getAeropuertosDestino().get(2), 
+    									(Aeropuerto)airportManager.getAeropuerto(),null, operadorAirFrance);
+    	
+    	/** Con parámetros válidos */
+    	System.out.println("\nIniciando búsqueda de vuelos por criterios de búsqueda con valores válidos.");
+    	System.out.println("Operador Air France busca vuelo por código...");
+    	operadorAirFrance.buscarVuelo(CriterioBusqueda.CODIGO, null);
+
+        System.out.println("Operador Air France busca vuelo por destino...");
+        operadorAirFrance.buscarVuelo(CriterioBusqueda.DESTINO, null);
+
+        System.out.println("Controlador T2 busca vuelo por fecha...");
+        controladorT2.buscarVuelo(CriterioBusqueda.FECHA, null);
+
+        System.out.println("Controlador T2 busca vuelo por hora de llegada...");
+        controladorT2.buscarVuelo(CriterioBusqueda.HORA_LLEGADA, null);
+
+        System.out.println("Controlador T2 busca vuelo por hora de salida...");
+        controladorT2.buscarVuelo(CriterioBusqueda.HORA_SALIDA, null);
+
+        System.out.println("Gestor Barajas busca vuelo por origen...");
+        gestorBarajas.buscarVuelo(CriterioBusqueda.ORIGEN, null);
+
+        System.out.println("Gestor Barajas busca vuelo por terminal...");
+        gestorBarajas.buscarVuelo(CriterioBusqueda.TERMINAL, null);
+        
+        System.out.println("\nIniciando búsqueda de vuelos por criterios de búsqueda con valores inválidos.");
+    	System.out.println("Operador Air France busca vuelo por código inválido...");
+    	operadorAirFrance.buscarVuelo(CriterioBusqueda.CODIGO, null);
+
+        System.out.println("Operador Air France busca vuelo por destino inválido...");
+        operadorAirFrance.buscarVuelo(CriterioBusqueda.DESTINO, null);
+
+        System.out.println("Controlador T2 busca vuelo por fecha inválido...");
+        controladorT2.buscarVuelo(CriterioBusqueda.FECHA, null);
+
+        System.out.println("Controlador T2 busca vuelo por hora de llegada inválido...");
+        controladorT2.buscarVuelo(CriterioBusqueda.HORA_LLEGADA, null);
+
+        System.out.println("Controlador T2 busca vuelo por hora de salida inválido...");
+        controladorT2.buscarVuelo(CriterioBusqueda.HORA_SALIDA, null);
+
+        System.out.println("Gestor Barajas busca vuelo por origen inválido...");
+        gestorBarajas.buscarVuelo(CriterioBusqueda.ORIGEN, null);
+
+        System.out.println("Gestor Barajas busca vuelo por terminal inválido...");
+        gestorBarajas.buscarVuelo(CriterioBusqueda.TERMINAL, null);
 	}
 
 	private static void verEstadisticas() {
@@ -362,7 +430,18 @@ public class AirportManagerMain {
 	}
 
 	private static void cierreSesion() {
-		// TODO Auto-generated method stub
+		Operador operadorIberia=(Operador)airportManager.getGestor().buscarUsuarioPorDni("12345678A");
+    	ControladorAereo controladorT1=(ControladorAereo)airportManager.getGestor().buscarUsuarioPorDni("123356789C");
+    	Gestor gestorBarajas= airportManager.getGestor();
+    	
+		System.out.println("\nSesión cerrada para el operador Iberia.");
+        operadorIberia.cerrarSesion();
+
+        System.out.println("Sesión cerrada para el controlador T1.");
+        controladorT1.cerrarSesion();
+        
+        System.out.println("Sesión cerrada para el gestor Barajas.");
+        gestorBarajas.cerrarSesion();
 		
 	}
 
@@ -371,19 +450,100 @@ public class AirportManagerMain {
     	ControladorAereo controladorT1=(ControladorAereo)airportManager.getGestor().buscarUsuarioPorDni("123356789C");
     	Gestor gestorBarajas= airportManager.getGestor();
     	
-    	/**Con contraseña y dni válidos*/
-    	operadorIberia.iniciarSesion(operadorIberia.getDni(), operadorIberia.getContrasena());
-    	controladorT1.iniciarSesion(controladorT1.getDni(), controladorT1.getContrasena());
-    	gestorBarajas.iniciarSesion(gestorBarajas.getContrasena());
-    	
-    	/**Con dni inválido*/
-    	operadorIberia.iniciarSesion("33333333F", operadorIberia.getContrasena());
-    	controladorT1.iniciarSesion("33333333F", controladorT1.getContrasena());
-		
-    	/**Con contraseñas inválidas*/
-    	operadorIberia.iniciarSesion(operadorIberia.getDni(), airportManager.generarContrasena());
-    	controladorT1.iniciarSesion(controladorT1.getDni(), airportManager.generarContrasena());
-    	gestorBarajas.iniciarSesion(airportManager.generarContrasena());
+    	try {
+            System.out.println("\nIniciando sesión con DNI y contraseña válidos para el operador Iberia.");
+            operadorIberia.iniciarSesion(operadorIberia.getDni(), operadorIberia.getContrasena());
+            System.out.println("Sesión iniciada correctamente para el operador Iberia.");
+            
+            System.out.println("\nIniciando sesión con DNI y contraseña válidos para el controlador T1.");
+            controladorT1.iniciarSesion(controladorT1.getDni(), controladorT1.getContrasena());
+            System.out.println("Sesión iniciada correctamente para el controlador T1.");
+            
+            System.out.println("\nIniciando sesión con contraseña válida para el gestor Barajas.");
+            gestorBarajas.iniciarSesion(gestorBarajas.getContrasena());
+            System.out.println("Sesión iniciada correctamente para el gestor Barajas.");
+        } catch (Exception e) {
+            System.err.println("Error al iniciar sesión con DNI y contraseña válidos: " + e.getMessage());
+        }
+
+        // **Con dni inválido**
+        try {
+            System.out.println("\nIntentando iniciar sesión con DNI inválido para el operador Iberia.");
+            operadorIberia.iniciarSesion("33333333F", operadorIberia.getContrasena());
+        } catch (Exception e) {
+            System.out.println("Error al iniciar sesión con DNI inválido para el operador Iberia: " + e.getMessage());
+        }
+        
+        try {
+            System.out.println("\nIntentando iniciar sesión con DNI inválido para el controlador T1.");
+            controladorT1.iniciarSesion("33333333F", controladorT1.getContrasena());
+        } catch (Exception e) {
+            System.out.println("Error al iniciar sesión con DNI inválido para el controlador T1: " + e.getMessage());
+        }
+
+        // **Con contraseñas inválidas**
+        try {
+            System.out.println("\nIntentando iniciar sesión con contraseña inválida para el operador Iberia.");
+            operadorIberia.iniciarSesion(operadorIberia.getDni(), airportManager.generarContrasena());
+        } catch (Exception e) {
+            System.out.println("Error al iniciar sesión con contraseña inválida para el operador Iberia: " + e.getMessage());
+        }
+        
+        try {
+            System.out.println("\nIntentando iniciar sesión con contraseña inválida para el controlador T1.");
+            controladorT1.iniciarSesion(controladorT1.getDni(), airportManager.generarContrasena());
+        } catch (Exception e) {
+            System.out.println("Error al iniciar sesión con contraseña inválida para el controlador T1: " + e.getMessage());
+        }
+
+        try {
+            System.out.println("\nIntentando iniciar sesión con contraseña inválida para el gestor Barajas.");
+            gestorBarajas.iniciarSesion(airportManager.generarContrasena());
+        } catch (Exception e) {
+            System.out.println("Error al iniciar sesión con contraseña inválida para el gestor Barajas: " + e.getMessage());
+        }
+
+        // **Solicitan reestablecer la contraseña**
+        try {
+            System.out.println("\nSolicitando restablecimiento de contraseña para el operador Iberia.");
+            operadorIberia.heOlvidadoContrasena();
+            System.out.println("Contraseña restablecida para el operador Iberia.");
+        } catch (Exception e) {
+            System.out.println("Error al restablecer contraseña para el operador Iberia: " + e.getMessage());
+        }
+
+        try {
+            System.out.println("\nSolicitando restablecimiento de contraseña para el controlador T1.");
+            controladorT1.heOlvidadoContrasena();
+            System.out.println("Contraseña restablecida para el controlador T1.");
+        } catch (Exception e) {
+            System.out.println("Error al restablecer contraseña para el controlador T1: " + e.getMessage());
+        }
+
+        try {
+            System.out.println("\nSolicitando restablecimiento de contraseña para el gestor Barajas.");
+            gestorBarajas.heOlvidadoContrasena();
+            System.out.println("Contraseña restablecida para el gestor Barajas.");
+        } catch (Exception e) {
+            System.out.println("Error al restablecer contraseña para el gestor Barajas: " + e.getMessage());
+        }
+
+        // **Con contraseña y dni nuevos válidos**
+        try {
+            System.out.println("\nIniciando sesión con DNI y nueva contraseña válidos para el operador Iberia.");
+            operadorIberia.iniciarSesion(operadorIberia.getDni(), operadorIberia.getContrasena());
+            System.out.println("Sesión iniciada correctamente para el operador Iberia.");
+            
+            System.out.println("\nIniciando sesión con DNI y nueva contraseña válidos para el controlador T1.");
+            controladorT1.iniciarSesion(controladorT1.getDni(), controladorT1.getContrasena());
+            System.out.println("Sesión iniciada correctamente para el controlador T1.");
+            
+            System.out.println("\nIniciando sesión con nueva contraseña válida para el gestor Barajas.");
+            gestorBarajas.iniciarSesion(gestorBarajas.getContrasena());
+            System.out.println("Sesión iniciada correctamente para el gestor Barajas.");
+        } catch (Exception e) {
+            System.err.println("Error al iniciar sesión con DNI y nueva contraseña válidos: " + e.getMessage());
+        }
 	}
 
 }
