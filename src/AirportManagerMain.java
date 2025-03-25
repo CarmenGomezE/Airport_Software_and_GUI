@@ -313,6 +313,10 @@ public class AirportManagerMain {
     	System.out.println("\nMostrando notificaciones del gestor de Barajas...");
     	gestorBarajas.verNotificaciones();
     	
+    	System.out.println("\nLista de vuelos propuestos:");
+    	for (VueloProgramado v : airportManager.getGestor().getVuelosPropuestos()) {
+    	    System.out.println("Vuelo: " + v.getCodigo() + " - Fecha: " + v.getFecha() + " - Hora: " + v.getHora());
+    	}
 
 	    System.out.println("Iniciando gestión de vuelo del Gestor.");
 	    gestorBarajas.gestionarVuelos(gestorBarajas.getVuelosPropuestos());
@@ -326,6 +330,11 @@ public class AirportManagerMain {
 	    
 	    System.out.println("\nMostrando notificaciones del operador de Iberia...");
     	operadorIberia.verNotificaciones();
+    	
+    	System.out.println("\nLista de vuelos aceptados:");
+    	for (Vuelo v : airportManager.getAeropuerto().getVuelosAceptados()) {
+    	    System.out.println("Vuelo: " + v.getCodigo() + " - Fecha: " + v.getFecha() + " - Hora: " + v.getHora());
+    	}
 	    
 	    System.out.println("Gestión de vuelos completada con éxito.");
 
@@ -373,7 +382,11 @@ public class AirportManagerMain {
     	
     	System.out.println("\nMostrando notificaciones del gestor de Barajas...");
     	gestorBarajas.verNotificaciones();
-    	
+
+    	System.out.println("\nLista de vuelos propuestos:");
+    	for (VueloProgramado v : airportManager.getGestor().getVuelosPropuestos()) {
+    	    System.out.println("Vuelo: " + v.getCodigo() + " - Fecha: " + v.getFecha() + " - Hora: " + v.getHora());
+    	}
 
 	    System.out.println("Iniciando gestión de vuelo del Gestor.");
 	    gestorBarajas.gestionarVuelos(gestorBarajas.getVuelosPropuestos());
@@ -388,6 +401,10 @@ public class AirportManagerMain {
     	System.out.println("\nMostrando notificaciones del operador de AirFrance...");
     	operadorAirFrance.verNotificaciones();
     	
+    	System.out.println("\nLista de vuelos aceptados:");
+    	for (Vuelo v : airportManager.getAeropuerto().getVuelosAceptados()) {
+    	    System.out.println("Vuelo: " + v.getCodigo() + " - Fecha: " + v.getFecha() + " - Hora: " + v.getHora());
+    	}
     	
     	System.out.println("\nIniciando propuestas de vuelos que generan errores.");
     	try {
@@ -474,9 +491,9 @@ public class AirportManagerMain {
     	System.out.println("\nMostrando notificaciones del operador de Iberia...");
     	operadorIberia.verNotificaciones();*/
     	
-    	System.out.println("[\nLista de vuelos aceptados:");
-    	for (VueloProgramado v : airportManager.getAeropuerto().getVuelosAceptados()) {
-    	    System.out.println("[DEBUG] Vuelo: " + v.getCodigo() + " - Fecha: " + v.getFecha() + " - Hora: " + v.getHora());
+    	System.out.println("\nLista de vuelos aceptados:");
+    	for (Vuelo v : airportManager.getAeropuerto().getVuelosAceptados()) {
+    	    System.out.println("Vuelo: " + v.getCodigo() + " - Fecha: " + v.getFecha() + " - Hora: " + v.getHora());
     	}
     	
     	System.out.println("Proceso de propuesta de vuelos finalizado.");
