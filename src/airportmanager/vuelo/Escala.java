@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalTime;
 
 import src.airportmanager.aeropuerto.Aeropuerto;
+import src.airportmanager.aeropuerto.DireccionRelativaCiudad;
 
 /**
  * La clase Escala representa las escalas de un vuelo.
@@ -74,4 +75,65 @@ public class Escala implements Serializable {
     public LocalTime getHoraSalida() {
         return this.horaLlegada;
     }
+
+
+    public void configurarNombreAeropuerto() {
+
+        System.out.println("Nombre del aeropuerto antes de la configuración:" + airportManager.getAeropuerto().getNombre());
+        airportManager.getGestor().configurarAeropuertoPropioNombre("Heathrow");
+        System.out.println("Nombre del aeropuerto después de la configuración: "+ airportManager.getAeropuerto().getNombre());
+
+    }
+
+    public void configurarCodigoAeropuerto() {
+
+        System.out.println("Código del aeropuerto antes de la configuración:" + airportManager.getAeropuerto().getCodigo());
+        airportManager.getGestor().configurarAeropuertoPropioCodigo("LHR");
+        System.out.println("Código del aeropuerto después de la configuración: "+ airportManager.getAeropuerto().getCodigo());
+
+    }
+
+    public void configurarCiudadAeropuerto() {
+
+        System.out.println("Ciudad del aeropuerto antes de la configuración:" + airportManager.getAeropuerto().getCiudad());
+        airportManager.getGestor().configurarAeropuertoPropioCiudad("Londres");
+        System.out.println("Ciudad del aeropuerto después de la configuración: "+ airportManager.getAeropuerto().getCiudad());
+
+    }
+
+    public void configurarPaisAeropuerto() {
+        System.out.println("País del aeropuerto antes de la configuración:" + airportManager.getAeropuerto().getPais());
+        airportManager.getGestor().configurarAeropuertoPropioPais("Reino Unido");
+        System.out.println("País del aeropuerto después de la configuración: "+ airportManager.getAeropuerto().getPais());
+
+    }
+
+    public void configurarDistanciaCiudadAeropueto() {
+
+        System.out.println("Distancia ciudad del aeropuerto antes de la configuración:" + airportManager.getAeropuerto().getDistanciaCiudad());
+        airportManager.getGestor().configurarAeropuertoPropioDistanciaCiudad(24);
+        System.out.println("Distancia ciudad del aeropuerto después de la configuración: "+ airportManager.getAeropuerto().getDistanciaCiudad());
+
+    }
+
+    public void configurarDiferenciaHorariaAeropuerto() {
+        System.out.println("Diferencia horaria del aeropuerto antes de la configuración:" + airportManager.getAeropuerto().getDiferenciaHoraria());
+        airportManager.getGestor().configurarAeropuertoPropioDiferenciaHoraria(ZoneOffset.ofHours(+1));
+        System.out.println("Diferencia horaria del aeropuerto después de la configuración: "+ airportManager.getAeropuerto().getDiferenciaHoraria());
+
+    }
+
+    public void configurarNumTemporadasAeropuerto() {
+        System.out.println("Número de temporadas del aeropuerto antes de la configuración:" + airportManager.getAeropuerto().getTemporadas().size());
+        airportManager.getGestor().configurarAeropuertoPropioNumTemporadas(2);
+        System.out.println("Número de temporadas del aeropuerto después de la configuración: "+ airportManager.getAeropuerto().getTemporadas().size);
+    }
+
+    public void configurarDireccionCiudadAeropuerto() {
+        System.out.println("Dirección ciudad del aeropuerto antes de la configuración:" + airportManager.getAeropuerto().getDireccionCiudad());
+        airportManager.getGestor().configurarAeropuertoPropioDireccionCiudad(DireccionRelativaCiudad.SUR);
+        System.out.println("Dirección ciudad  del aeropuerto después de la configuración: "+ airportManager.getAeropuerto().getDireccionCiudad());
+    }
+
+
 }
