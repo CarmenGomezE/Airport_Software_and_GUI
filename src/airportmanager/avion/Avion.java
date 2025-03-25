@@ -188,10 +188,10 @@ public class Avion implements Serializable {
      */
     public boolean estaDisponible(LocalDate fecha, LocalTime hora) {
         for (Vuelo vuelo : this.vuelos) {
-            if (!vuelo.getHora().equals(hora) && !vuelo.getFecha().equals(fecha)) {
-                return true;
+            if (vuelo.getHora().equals(hora) || vuelo.getFecha().equals(fecha)) {
+                return false;
             }
         }
-        return false;
+        return true;
     }
 }

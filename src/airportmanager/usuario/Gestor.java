@@ -52,16 +52,12 @@ public class Gestor extends Usuario {
     private SistemaFacturacion sistemaFacturacion;
     /** Vuelos propuestos que debe gestionar. */
     private List<VueloProgramado> vuelosPropuestos;
-
+    
     /** Dias de anticipación mínima para una propuesta de Vuelo. */
     private static int diasAnticipacionMinima = 30;
-    /**
-     * Rango de minutos que como máximo se puede modificar una propuesta de Vuelo.
-     */
+    /** Rango de minutos que como máximo se puede modificar una propuesta de Vuelo.*/
     private static int rangoMinutosMaximoCambioVuelo = 30;
-    /**
-     * Horas máximas que se puede mover la reprogramación de una propuesta de Vuelo.
-     */
+    /** Horas máximas que se puede mover la reprogramación de una propuesta de Vuelo.*/
     private static int horasMaximasReprogramacion = 48;
     /** Recargo de un avión de mercancías. */
     private static double recargoAvionMercancias = 105.9;
@@ -89,6 +85,8 @@ public class Gestor extends Usuario {
         /** Se inicializa a que reciba todas */
         this.tiposPermitidosNotificaciones = new ArrayList<>(Arrays.asList(TipoNotificacion.values()));
         this.estadisticas = new EstadisticasGestor(this);
+        this.vuelosPropuestos=new ArrayList<>();
+        establecerSistemaFacturacion();
     }
 
     /**
@@ -194,10 +192,9 @@ public class Gestor extends Usuario {
      * @param codigo   Codigo de la nueva aerolinea.
      * @param operador Operador de la nueva aerolinea.
      */
-    public void darDeAltaAerolinea(String nombre, String codigo, Operador operador) {
+    public void darDeAltaAerolinea(String nombre, String codigo) {
         Aerolinea aerolinea;
         aerolinea = new Aerolinea(nombre, codigo);
-        aerolinea.setOperador(operador);
         aeropuerto.addAerolinea(aerolinea);
     }
 
@@ -552,12 +549,15 @@ public class Gestor extends Usuario {
     public void recibirNotificacionProposicionVuelo(List<VueloProgramado> vuelosPropuestosOperador)
             throws AntelacionInvalidaException {
         for (VueloProgramado vuelo : vuelosPropuestosOperador) {
-            if (!vuelo.getFecha().isBefore(LocalDate.now().plusDays(diasAnticipacionMinima))) {
+        	if(vuelo!=null) {
+        		 if (!vuelo.getFecha().isBefore(LocalDate.now().plusDays(diasAnticipacionMinima))) {
                 throw new AntelacionInvalidaException(
                         "La propuesta del vuelo " + vuelo.getCodigo() + " no cumple con la antelación mínima de días.");
-            } else {
-                vuelosPropuestos.add(vuelo);
-            }
+	            } else {
+	                vuelosPropuestos.add(vuelo);
+	            }
+        	}
+           
         }
         recibirNotificacion(new Notificacion("Nuevo vuelo propuesto", TipoNotificacion.SOLICITUD_VUELO_PROGRAMADO));
     }
