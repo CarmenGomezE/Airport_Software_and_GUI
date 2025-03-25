@@ -558,6 +558,31 @@ public class Gestor extends Usuario {
     }
     
     public void gestionarVuelos(List<VueloProgramado> vuelosGestionar) {
+    	/** Por si no hay ningun vuelo aceptado*/
+    	Iterator<VueloProgramado> iterator = vuelosGestionar.iterator();
+
+        while (iterator.hasNext()) {
+            VueloProgramado vuelo = iterator.next();
+            Terminal terminalAux = null;
+            boolean vueloAceptado = false;
+
+            for (Terminal t : aeropuerto.getTerminales()) {
+                terminalAux = t;
+
+                if ((vuelo.getTipoCarga() == TipoCarga.MERCANCIAS && !(t instanceof TerminalMercancias)) ||
+                    (vuelo.getTipoCarga() == TipoCarga.PASAJEROS && !(t instanceof TerminalPasajeros))) {
+                    continue;
+                }
+
+                vueloAceptado = true;
+                break;
+            }
+
+            if (vueloAceptado) {
+                aceptarVuelo(vuelo, terminalAux, terminalAux.getControladores().get(0));  
+                iterator.remove();  
+            }
+        }
     	for(VueloProgramado vuelo: vuelosGestionar) {
     		for(Vuelo vueloAceptado: getAeropuerto().getVuelosAceptados()) {
     			 for (Terminal terminal : aeropuerto.getTerminales()) {
