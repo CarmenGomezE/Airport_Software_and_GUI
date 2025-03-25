@@ -57,10 +57,13 @@ public class AerolineaTest {
         sistema = new AirportManager();
         gestor = new Gestor("Raúl", "Rauul90", aeropuerto, sistema);
         operador = new Operador("Pedro", "57487643T", aerolinea, aeropuerto, gestor, sistema);
+        aerolinea.setOperador(operador);
+        sistemaFacturacion = gestor.establecerSistemaFacturacion();
         factura = sistemaFacturacion.generarFactura(aerolinea);
         avion = new Avion("AIRBUS", "A3", 5.0, 5.5, 5.5, 600.000, 2020, null, null);
         vuelo = new Vuelo("V123", LocalDate.of(2025, 2, 10), null, null, LocalTime.of(9,30,0), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER, Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avion, aeropuertoDestino, aeropuerto, null, operador);
-       
+        operador.addVuelo(vuelo);
+        
     }
 
     @Test
@@ -70,7 +73,7 @@ public class AerolineaTest {
 
     @Test
     void testGetOperador() {
-        assertEquals(null, aerolinea.getOperador(), "Error, al principio la aerolinea no debería tener operador");
+        assertEquals(operador, aerolinea.getOperador(), "Error, el operador de la aerolínea no es correcto");
     }
 
     @Test
@@ -120,12 +123,4 @@ public class AerolineaTest {
         aerolinea.agregarAvion(avion);
         assertTrue(aerolinea.getAviones().contains(avion), "Error, la aerolínea debería tener un avión");
     }
-
-
-
-    
-
-
-    
-    
 }
