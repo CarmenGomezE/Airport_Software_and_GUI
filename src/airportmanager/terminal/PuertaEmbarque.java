@@ -14,13 +14,10 @@ public class PuertaEmbarque implements Serializable {
 	private static final long serialVersionUID = 1L;
     /** Contador para el identificador */
     private static int contadorId = 1;
-
     /** Código único de la puerta de embarque */
     private int id;
     /** Zonas de aparcamiento de la puerta de embarque */
     private List<ZonaAparcamiento> zonasAparcamiento;
-    /** Finger conectados a la puerta de embarque */
-    private Finger finger;
     /** Número de horas de uso de la puerta de embarque */
     private double horasUso;
     /** Vuelo que ocupa la puerta de embarque */

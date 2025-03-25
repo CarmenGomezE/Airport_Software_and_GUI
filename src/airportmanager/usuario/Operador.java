@@ -135,7 +135,7 @@ public class Operador extends UsuarioConDni {
      * 
      * @param vuelo Vuelo al que se le cambia el estado.
      */
-    public void cambiarEstadoEnPreparacionDespegar(Vuelo vuelo) {
+    private void cambiarEstadoEnPreparacionDespegar(Vuelo vuelo) {
         if (vuelo.getEstado() == EstadoVuelo.OPERATIVO) {
             vuelo.cambiarEstado(EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR);
         }
@@ -146,7 +146,7 @@ public class Operador extends UsuarioConDni {
      * 
      * @param vuelo Vuelo al que se le cambia el estado.
      */
-    public void cambiarEstadoInicioEmbarque(Vuelo vuelo) {
+    private void cambiarEstadoInicioEmbarque(Vuelo vuelo) {
         LocalTime horaActual = LocalTime.now();
         long minutosDeDiferencia = Duration.between(horaActual, vuelo.getHora()).toMinutes();
 
@@ -176,7 +176,7 @@ public class Operador extends UsuarioConDni {
      * 
      * @param vuelo Vuelo al que se le cambia el estado.
      */
-    public void cambiarEstadoFinEmbarque(Vuelo vuelo) {
+    private void cambiarEstadoFinEmbarque(Vuelo vuelo) {
         if (vuelo.getEstado() == EstadoVuelo.INICIO_DEL_EMBARQUE) {
             vuelo.cambiarEstado(EstadoVuelo.FIN_DEL_EMBARQUE);
         }
@@ -187,7 +187,7 @@ public class Operador extends UsuarioConDni {
      * 
      * @param vuelo Vuelo al que se le cambia el estado.
      */
-    public void cambiarEstadoInicioDesembarque(Vuelo vuelo) {
+    private void cambiarEstadoInicioDesembarque(Vuelo vuelo) {
         if (vuelo.getEstado() == EstadoVuelo.ATERRIZAJE) {
             vuelo.cambiarEstado(EstadoVuelo.INICIO_DEL_DESEMBARQUE);
         }
@@ -198,7 +198,7 @@ public class Operador extends UsuarioConDni {
      * 
      * @param vuelo Vuelo al que se le cambia el estado.
      */
-    public void cambiarEstadoFinDesembarque(Vuelo vuelo) {
+    private void cambiarEstadoFinDesembarque(Vuelo vuelo) {
         if (vuelo.getEstado() == EstadoVuelo.INICIO_DEL_DESEMBARQUE) {
             vuelo.cambiarEstado(EstadoVuelo.FIN_DEL_DESEMBARQUE);
         }
