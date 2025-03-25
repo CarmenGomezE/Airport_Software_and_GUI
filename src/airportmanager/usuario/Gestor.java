@@ -560,6 +560,10 @@ public class Gestor extends Usuario {
     public void gestionarVuelos(List<VueloProgramado> vuelosGestionar) {
     	/** Por si no hay ningun vuelo aceptado*/
     	Iterator<VueloProgramado> iterator = vuelosGestionar.iterator();
+    	int flag=0;
+    	VueloProgramado vueloAux=null;
+    	Terminal terminalAux2=null;
+    	ControladorAereo controladorAux=null;
 
         while (getAeropuerto().getVuelosAceptados().isEmpty()) {
             VueloProgramado vuelo = iterator.next();
@@ -601,21 +605,43 @@ public class Gestor extends Usuario {
 	                			System.out.println("El vuelo coincide con alguno ya programado, se ha movido.");
 	                        }
 	                		else {
-	                			List<Vuelo> alternativas= generarAlternativas(vuelo, terminal, controlador);
-	                			vuelo.getAvion().getAerolinea().getOperador().recibirAlternativas(alternativas);
+	                			flag=1;
 	                			System.out.println("El vuelo coincide con alguno ya programado, se han buscado alternativas.");
+	                		}
+	                		if(flag==1) {
+	                			vueloAux=vuelo;
+	                			terminalAux2=terminal;
+	                			controladorAux=controlador;
+	                			break;
 	                		}
 	                    }
 	                	else {
+	                		flag=2;
 	                		System.out.println("El vuelo no coincide con alguno ya programado. Añadir.");
-                			aceptarVuelo(vuelo, terminal, controlador);
+	                	}
+	                	if(flag==2) {
+	                		vueloAux=vuelo;
+	                		terminalAux2=terminal;
+                			controladorAux=controlador;
 	                	}
 	                }
+	                if(flag==1 || flag==2) {
+                		break;
+                	}
     			 }
+    			 if(flag==1|| flag==2) {
+             		break;
+             	}
+    		if(flag==1) {
+	    		List<Vuelo> alternativas= generarAlternativas(vueloAux, terminalAux2, controladorAux);
+	    		vueloAux.getAvion().getAerolinea().getOperador().recibirAlternativas(alternativas);
+	    	}
+	    	else if(flag==2) {
+	    		aceptarVuelo(vueloAux, terminalAux2, controladorAux);
+	    	}
     		}
-    	}
-    	this.vuelosPropuestos=null;
-    	
+        }
+    	this.vuelosPropuestos=null;	
     }
    
     private boolean sePuedeMover(VueloProgramado vuelo, Terminal terminal, ControladorAereo controlador) {
