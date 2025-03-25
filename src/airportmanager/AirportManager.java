@@ -155,24 +155,8 @@ public void actualizarEstadoVueloAutomatico(Vuelo v) {
     }
 
     System.out.println("Estado de vuelo actualizado: " + v.getEstado());
-}
+	}
 
-
-    /**
-     * Método que busca un usuario a partir de su dni.
-     * @param dni                       Dni del usuario a buscar.
-     * @return el usuario encontrado.
-     */
-    private Usuario buscarUsuarioPorDni(String dni) throws UsuarioNoEncontradoException {
-
-        for (Usuario usuario : usuarios) {
-            if (usuario instanceof UsuarioConDni && ((UsuarioConDni) usuario).getDni().equals(dni)) {
-                return usuario;
-            }
-        }
-
-        throw new UsuarioNoEncontradoException("El usuario con DNI " + dni + "no existe");
-    }
 
      /**
      * Método que asigna una contraseña a un usuario a partir de su dni.
@@ -183,17 +167,8 @@ public void actualizarEstadoVueloAutomatico(Vuelo v) {
     public void asignarContrasena(String dni, String contrasena)
             throws UsuarioNoEncontradoException, ContrasenaInvalidaException {
 
-        Usuario usuario;
-
-        usuario = buscarUsuarioPorDni(dni);
-
-        if (contrasena == null || contrasena.isEmpty()) {
-            throw new ContrasenaInvalidaException("La contraseña no es válida.");
-        }
-
-        ((UsuarioConDni) usuario).setContrasena(contrasena);
-        System.out.println("Contraseña asignada correctamente");
-
+        credenciales.put(dni, contrasena);
+        System.out.println("Contraseña asignada correctamente.");
     }
 
     /**
@@ -231,13 +206,13 @@ public void actualizarEstadoVueloAutomatico(Vuelo v) {
             throws UsuarioNoEncontradoException, ContrasenaInvalidaException {
 
         if (!validarDni(dni)) {
-            throw new UsuarioNoEncontradoException("El usuario con DNI" + dni + "no existe");
+            throw new UsuarioNoEncontradoException("El usuario con DNI" + dni + " no existe");
         }
 
         if (!validarContrasena(dni, contrasena)) {
-            throw new ContrasenaInvalidaException("Contraseña incorrecta");
+            throw new ContrasenaInvalidaException("Contraseña incorrecta.");
         }
-        System.out.println("Usuario validado correctamente");
+        System.out.println("Usuario validado correctamente.");
     }
 
     /**

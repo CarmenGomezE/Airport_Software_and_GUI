@@ -213,7 +213,7 @@ public class Gestor extends Usuario {
         ControladorAereo controlador = new ControladorAereo(nombre, dni, sistema.generarContrasena(), aeropuerto, this, terminal, sistema);
         aeropuerto.addUsuario(controlador);
         terminal.agregarControlador(controlador);
-        sistema.addCredencial(dni, contrasena);
+        sistema.addCredencial(dni, controlador.getContrasena());
     }
 
     /**
@@ -226,7 +226,7 @@ public class Gestor extends Usuario {
         Operador operador = new Operador(nombre, dni, aerolinea, aeropuerto, this, sistema);
         aerolinea.setOperador(operador);
         aeropuerto.addUsuario(operador);
-        sistema.addCredencial(dni, contrasena);
+        sistema.addCredencial(dni, operador.getContrasena());
     }
 
     /**
@@ -920,5 +920,11 @@ public class Gestor extends Usuario {
     public void setTiempoAceptarPropuesta(int nuevoTiempo) {
         tiempoAceptarPropuesta = nuevoTiempo;
     }
+
+	public void heOlvidadoContrasena() throws UsuarioNoEncontradoException, ContrasenaInvalidaException {
+		String nuevaContrasena=sistema.generarContrasena();
+		sistema.asignarContrasena(this.getNombre(), nuevaContrasena);
+		
+	}
 
 }
