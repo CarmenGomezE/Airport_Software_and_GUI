@@ -267,7 +267,7 @@ public class Operador extends UsuarioConDni {
         for(VueloProgramado alternativa: alternativas) {
         	this.vuelosAlternativas.add(alternativa);
         }
-        System.out.println("Recibidas " + alternativas.size() + " alternativas de vuelos para su aceptación.");
+        recibirNotificacion(new Notificacion("Recibidas " + alternativas.size() + " alternativas de vuelos para su aceptación.", TipoNotificacion.OPCIONES_REPROGRAMAR_VUELO);
 
         timer.schedule(new TimerTask() {
             @Override
@@ -427,7 +427,7 @@ public class Operador extends UsuarioConDni {
      */
     public void recibirNotificacionFacturaEmitida(Factura factura) {
         getAerolinea().addFactura(factura);
-        new Notificacion("Factura emitida", TipoNotificacion.FACTURA_EMITIDA);
+        recibirNotificacion(new Notificacion("Factura " + factura.getCodigo() + " emitida.", TipoNotificacion.FACTURA_EMITIDA));
     }
 
     /**
@@ -472,7 +472,7 @@ public class Operador extends UsuarioConDni {
                 porcentajeCarga);
         operadorReceptor.recibirSolicitud(solicitud);
         solicitudesEnviadas.add(solicitud);
-        enviarNotificacionCompartirVuelo(operadorReceptor);
+        enviarNotificacionCompartirVuelo(operadorReceptor, vuelo);
     }
 
     /**
@@ -541,17 +541,19 @@ public class Operador extends UsuarioConDni {
      * Método para enviar solicitudes de compartir vuelos.
      * 
      * @param operadorReceptor Operador al que se envia la solicitud.
+     * @param vuelo            Vuelo que se solicita compartir.
      */
-    private void enviarNotificacionCompartirVuelo(Operador operadorReceptor) {
-        operadorReceptor.recibirNotificacionSolicitudVueloCompartido();
+    private void enviarNotificacionCompartirVuelo(Operador operadorReceptor, Vuelo vuelo) {
+        operadorReceptor.recibirNotificacionSolicitudVueloCompartido(vuelo);
     }
 
     /**
      * Método para recibir solicitudes de compartir vuelos.
      * 
+     * @param vuelo Vuelo que se solicita compartir.
      */
-    private void recibirNotificacionSolicitudVueloCompartido() {
-        recibirNotificacion(new Notificacion("Factura emitida", TipoNotificacion.SOLICITUD_COMPARTIR_VUELO));
+    private void recibirNotificacionSolicitudVueloCompartido(Vuelo vuelo) {
+        recibirNotificacion(new Notificacion("Solicitud para compartir el vuelo con código " + vuelo.getCodigo() + ".", TipoNotificacion.SOLICITUD_COMPARTIR_VUELO));
     }
     
     private String establecerContrasena() {
