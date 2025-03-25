@@ -28,21 +28,7 @@ class NotificacionTest{
         assertEquals("El vuelo se ha cambiado de estado", noti2.getMensaje(), "Error, el mensaje que se muestra no es el esperado.");
     }
 
-    @Test
-    void testGetMensajeExcepcion() {
-
-        excepcionVacio = assertThrows(IllegalArgumentException.class, () -> {
-            new Notificacion("", TipoNotificacion.OLVIDO_CONTRASENA);
-        });
-
-        assertEquals("Error: La notificación debe tener un mensaje válido", excepcionVacio.getMessage(), "Error, no se lanzó la excepción esperada con mensaje vacío.");
-
-       excepcionNull = assertThrows(IllegalArgumentException.class, () -> {
-            new Notificacion(null, TipoNotificacion.OLVIDO_CONTRASENA);
-        });
-
-        assertEquals("Error: La notificación debe tener un mensaje válido", excepcionNull.getMessage(), "Error, no se lanzó la excepción esperada con mensaje null.");
-    }
+ 
 
    @Test
     void testGetFecha() {

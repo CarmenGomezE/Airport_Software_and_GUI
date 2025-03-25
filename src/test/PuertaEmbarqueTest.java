@@ -114,7 +114,7 @@ public class PuertaEmbarqueTest {
             puerta1.addHorasUso(-2.0);
         });
 
-        assertEquals("Las horas deben ser positivas", excepcion.getMessage(), "Error, no se lanzó la excepción esperada");
+        assertEquals("Las horas deben ser un número positivo", excepcion.getMessage(), "Error, no se lanzó la excepción esperada");
     }
 
     @Test

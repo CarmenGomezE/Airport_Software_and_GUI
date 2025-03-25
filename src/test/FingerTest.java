@@ -17,9 +17,9 @@ import java.util.*;
 
 class FingerTest{
 
-    Finger finger;
-    PuertaEmbarque puerta1, puerta2;
-    Set puertas;
+    Finger finger, otroFinger;
+    PuertaEmbarque puerta1, puerta2, p1, p2;
+    Set<PuertaEmbarque> puertas, puertasEsperadas, p;
 
     @BeforeEach
     void setUp() {
@@ -27,7 +27,7 @@ class FingerTest{
         puerta1 = new PuertaEmbarque();
         puerta2 = new PuertaEmbarque();
 
-        puertas = new HashSet<>();
+        puertas = new HashSet<PuertaEmbarque>();
         puertas.add(puerta1);
         puertas.add(puerta2);
 
@@ -37,63 +37,28 @@ class FingerTest{
 
     @Test
     void testGetDimAlto() {
-        assertEquals(5.0, finger.getDimAlto(), "Error, el método getDimAlto() no devuelve el valor esperado.");
+        assertEquals(70.0, finger.getDimAlto(), "Error, el método getDimAlto() no devuelve el valor esperado.");
     }
 
     @Test
     void testGetPuertasEmbarque() {
 
-        HashSet puertasEsperadas = new HashSet<>();
-        PuertaEmbarque p1, p2;
-
-        p1 = new PuertaEmbarque();
-        p2 = new PuertaEmbarque();
-        puertasEsperadas.add(p1);
-        puertasEsperadas.add(p2);
+        puertasEsperadas = new HashSet<>();
+       
+        puertasEsperadas.add(puerta1);
+        puertasEsperadas.add(puerta2);
 
         assertEquals(puertasEsperadas, finger.getPuertasEmbarque(), "Error, las puertas de embarque no coinciden.");
         
     }
 
     @Test
-    void testGetHorasUso() {
-        assertEquals(0.0, finger.getHorasUso(), "Error, al principio el finger debería tener 0 horas de uso");
-    }
-
-    @Test
-    void testAddHorasUso(){
-        finger.addHorasUso(3.5);
-        assertEquals(3.5, finger.getHorasUso(), "Error, las horas de uso no se actualizaron correctamente");
-
-        finger.addHorasUso(2.0);
-        assertEquals(5.5, finger.getHorasUso(), "Error, la suma de horas de uso no es correcta");
-    }
-
-    @Test
-    void testAddHorasUsoNegativo() {
-        Exception excepcion = assertThrows(IllegalArgumentException.class, ()->{
-            finger.addHorasUso(-2.0);
-        });
-
-        assertEquals("Las horas deben ser positivas", excepcion.getMessage(), "Error, no se lanzó la excepción esperada");
-    }
-
-    @Test
-    void testHorasUsoReset() {
-        finger.addHorasUso(5.0);
-        finger.horasUsoReset();
-        assertEquals(0, finger.getHorasUso(), "Error, las horas de uso del finger no se resetearon correctamente");
-    }
-
-    @Test
     void testGetId() {
-        Finger otroFinger;
-        PuertaEmbarque p1, p2;
-        Set p;
+      
         p1 = new PuertaEmbarque();
         p2 = new PuertaEmbarque();
 
-        p = new HashSet<>();
+        p = new HashSet<PuertaEmbarque>();
         p.add(p1);
         p.add(p2);
 

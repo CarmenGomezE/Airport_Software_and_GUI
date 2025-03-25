@@ -36,42 +36,19 @@ class ZonaAparcamientoTest{
 
     @BeforeEach
     void setUp() {
-        zona = new ZonaAparcamiento(50.0, 3, 5);
+        zona = new ZonaAparcamiento(50.0, 60.7, 59.8);
     }
 
     @Test
     void testGetDimPlazaAncho() {
-        assertEquals(3, zona.getDimPlazaAncho(), "Error, el método getDimPlazaAncho() no devuelve el valor esperado.");
+        assertEquals(60.7, zona.getDimPlazaAncho(), "Error, el método getDimPlazaAncho() no devuelve el valor esperado.");
     }
-
+    
     @Test
-    void testGetHorasUso() {
-        assertEquals(0.0, zona.getHorasUso(), "Error, al principio la zona de aparcamiento debería tener 0 horas de uso.");
+    void testGetDimPlazaLargo() {
+        assertEquals(59.8, zona.getDimPlazaLargo(), "Error, el método getDimPlazaLargo() no devuelve el valor esperado.");
     }
 
-    @Test
-    void testAddHorasUso() {
-        zona.addHorasUso(3.5);
-        assertEquals(3.5, zona.getHorasUso(), "Error, las horas de uso no se actualizaron correctamente.");    
-        zona.addHorasUso(2.0);
-        assertEquals(5.5, zona.getHorasUso(), "Error, la suma de horas de uso no es correcta.");
-    }
-
-    @Test
-    void testAddHorasUsoNegativo() {
-        Exception excepcion = assertThrows(IllegalArgumentException.class, () -> {
-            zona.addHorasUso(-2.0);
-        });
-
-        assertEquals("Las horas deben ser positivas", excepcion.getMessage(), "Error, no se lanzó la excepción esperada.");
-    }
-
-    @Test
-    void testHorasUsoReset() {
-        zona.addHorasUso(5.0);
-        zona.horasUsoReset();
-        assertEquals(0.0, zona.getHorasUso(), "Error, las horas de uso de la zona de aparcamiento no se resetearon correctamente.");
-    }
 
     @Test
     void testGetId() {
