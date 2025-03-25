@@ -561,7 +561,7 @@ public class Gestor extends Usuario {
     	/** Por si no hay ningun vuelo aceptado*/
     	Iterator<VueloProgramado> iterator = vuelosGestionar.iterator();
 
-        while (iterator.hasNext()) {
+        while (getAeropuerto().getVuelosAceptados().isEmpty()) {
             VueloProgramado vuelo = iterator.next();
             Terminal terminalAux = null;
             boolean vueloAceptado = false;
@@ -584,7 +584,9 @@ public class Gestor extends Usuario {
             }
         }
     	for(VueloProgramado vuelo: vuelosGestionar) {
+    		System.out.println("aaaaa");
     		for(Vuelo vueloAceptado: getAeropuerto().getVuelosAceptados()) {
+    			System.out.println("bbbbb");
     			 for (Terminal terminal : aeropuerto.getTerminales()) {
 	                if ((vuelo.getTipoCarga() == TipoCarga.MERCANCIAS && !(terminal instanceof TerminalMercancias)) ||
 	                        (vuelo.getTipoCarga() == TipoCarga.PASAJEROS && !(terminal instanceof TerminalPasajeros))) {
