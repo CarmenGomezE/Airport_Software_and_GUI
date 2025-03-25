@@ -3,6 +3,7 @@ package src.airportmanager.hangar;
 import java.util.*;
 
 import src.airportmanager.avion.*;
+import src.airportmanager.exceptions.CargaAvionEquivocadaException;
 
 /**
  * La clase HangarPasajeros representa los hangares de pasajeros del aeropuerto.
@@ -46,8 +47,11 @@ public class HangarPasajeros extends Hangar {
      * @param avion Avión que entra al hangar.
      */
     @Override
-    public void addAvion(Avion avion) {
-        aviones.add((AvionPasajeros)avion);
+    public void addAvion(Avion avion) throws CargaAvionEquivocadaException {
+    	if (avion instanceof AvionPasajeros == false) {
+    		throw new CargaAvionEquivocadaException("El avión debe ser de pasajeros para añadirlo.");
+    	}
+        aviones.add((AvionPasajeros) avion);
     }
 
     /**
@@ -56,8 +60,11 @@ public class HangarPasajeros extends Hangar {
      * @param avion Avión que sale del hangar.
      */
     @Override
-    public void sacarAvion(Avion avion) {
-        aviones.remove((AvionPasajeros)avion);
+    public void sacarAvion(Avion avion) throws CargaAvionEquivocadaException {
+    	if (avion instanceof AvionPasajeros == false) {
+    		throw new CargaAvionEquivocadaException("El avión debe ser de pasajeros para sacarlo.");
+    	}
+        aviones.remove(avion);
     }
 
     /**
@@ -66,9 +73,16 @@ public class HangarPasajeros extends Hangar {
      * @param avion Avión a comprobar.
      * 
      * @return true si está, false si no.
+     * @throws CargaAvionEquivocadaException
      */
     @Override
-    public boolean comprobarAvionEnHangar(Avion avion) {
+    public boolean comprobarAvionEnHangar(Avion avion) throws CargaAvionEquivocadaException {
+    	if (avion == null) {
+    		throw new IllegalArgumentException("El avión no puede ser nulo.");
+    	}
+    	if (avion instanceof AvionPasajeros == false) {
+    		throw new CargaAvionEquivocadaException("El avión debe ser de pasajeros para comprobar si está en el hangar.");
+    	}
         return aviones.contains((AvionPasajeros)avion);
     }
 
