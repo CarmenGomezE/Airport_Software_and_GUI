@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
  */
 public class Notificacion implements Serializable {
     /** Formato de la fecha y hora de la notificación */
-    DateTimeFormatter formatoFechaHora = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+    private static final DateTimeFormatter formatoFechaHora = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
 	/** Número de versión de la clase */
 	private static final long serialVersionUID = 1L;
