@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 
 import src.airportmanager.*;
 import src.airportmanager.avion.*;
-import src.airportmanager.terminal.*;
 import src.airportmanager.vuelo.*;
 import src.airportmanager.aeropuerto.*;
 import src.airportmanager.usuario.*;
@@ -19,14 +18,11 @@ class HangarPasajerosTest{
     private HangarPasajeros hangar, hangar2;
     private Avion avion, avion2;
     private Calendar calendar;
-    private Date fecha;
+    private LocalDate fecha;
     private List<Avion> aviones;
     private Vuelo vueloPequeno;
-  
-    private LocalTime hora, h, fecha;
+    private LocalTime hora, h;
     private Date revision;
-    private Calendar calendar;
-    private Avion avion;
     private AeropuertoDestino aeropuertoDestino;
     private AeropuertoPropio aeropuertoPropio;
     private ZoneOffset zone, zone2;
@@ -61,7 +57,9 @@ class HangarPasajerosTest{
         aviones = new ArrayList<>();
         aviones.add(avion);
         aviones.add(avion2);
-        assertTrue(hangar.containsAll(aviones), "Error la lista de aviones del hangar debería contener dos aviones");
+        for(Avion a:aviones) {
+        	assertTrue(hangar.comprobarAvionEnHangar(a), "Error la lista de aviones del hangar debería contener dos aviones");
+        }
     }
 
     @Test

@@ -38,7 +38,7 @@ public class AeropuertoPropio extends Aeropuerto {
     /** Vuelos aceptados del aeropuerto propio */
     private List<Vuelo> vuelosAceptados;
     /** Aeropuertos de destino del aeropuerto propio */
-    private List<Aeropuerto> aeropuertosDestino;
+    private List<AeropuertoDestino> aeropuertosDestino;
 
     /**
      * Constructor de la clase AeropuertoPropio.
@@ -146,7 +146,7 @@ public class AeropuertoPropio extends Aeropuerto {
      * 
      * @return Aeropuertos de destino del aeropuerto propio.
      */
-    public List<Aeropuerto> getAeropuertosDestino() {
+    public List<AeropuertoDestino> getAeropuertosDestino() {
         return aeropuertosDestino;
     }
 
@@ -274,7 +274,7 @@ public class AeropuertoPropio extends Aeropuerto {
      * 
      * @param aeropuerto El aeropuerto de destino que se añade.
      */
-    public void addAeropuertoDestino(Aeropuerto aeropuerto) {
+    public void addAeropuertoDestino(AeropuertoDestino aeropuerto) {
         if (aeropuerto == null) {
             throw new IllegalArgumentException("El aeropuerto de destino no puede ser null");
         }
