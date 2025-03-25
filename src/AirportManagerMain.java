@@ -262,7 +262,7 @@ public class AirportManagerMain {
     	System.out.println("\nIniciando la propuesta del vuelos del Operador de Iberia.");
     	try {
     	    System.out.println("Proponiendo vuelo IBE1721...");
-    	    operadorIberia.proponerVuelo("IBE1721", LocalDate.now(), LocalDate.now(), LocalDate.now().plusDays(2),
+    	    operadorIberia.proponerVuelo("IBE1721", LocalDate.now().plusDays(31), LocalDate.now().plusDays(31), LocalDate.now().plusDays(2),
     	            LocalTime.of(10, 0), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
     	            Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionEC_HGR, aeTokio, aePropio, null);
     	    System.out.println("Vuelo IBE1721 propuesto correctamente.");
@@ -272,7 +272,7 @@ public class AirportManagerMain {
 
     	try {
     	    System.out.println("Proponiendo vuelo IBE8246...");
-    	    operadorAirFrance.proponerVuelo("IBE8246", LocalDate.now(), LocalDate.now(), LocalDate.now().plusDays(2),
+    	    operadorAirFrance.proponerVuelo("IBE8246", LocalDate.now().plusDays(31), LocalDate.now(), LocalDate.now().plusDays(2),
     	            LocalTime.of(10, 0), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
     	            Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionEC_HGS, aeCairo, aePropio, null);
     	    System.out.println("Vuelo IBE8246 propuesto correctamente.");
@@ -282,7 +282,7 @@ public class AirportManagerMain {
 
     	try {
     	    System.out.println("Proponiendo vuelo IBE2325...");
-    	    operadorIberia.proponerVuelo("IBE2325", LocalDate.now(), LocalDate.now(), LocalDate.now().plusDays(2),
+    	    operadorIberia.proponerVuelo("IBE2325", LocalDate.now().plusDays(31), LocalDate.now(), LocalDate.now().plusDays(2),
     	            LocalTime.of(10, 0), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
     	            Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionEC_KBX, aePropio, aeFKennedy, null);
     	    System.out.println("Vuelo IBE2325 propuesto correctamente.");
@@ -292,7 +292,7 @@ public class AirportManagerMain {
 
     	try {
     	    System.out.println("Proponiendo vuelo IBE5017...");
-    	    operadorAirFrance.proponerVuelo("IBE5017", LocalDate.now(), LocalDate.now(), LocalDate.now().plusDays(2),
+    	    operadorAirFrance.proponerVuelo("IBE5017", LocalDate.now().plusDays(31), LocalDate.now().plusDays(31), LocalDate.now().plusDays(33),
     	            LocalTime.of(10, 0), Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.SATURDAY), TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
     	            Periodicidad.RECURRENTE, TipoVuelo.LLEGADA, avionEC_KBX, aePropio, aeMallorca, null);
     	    System.out.println("Vuelo IBE5017 propuesto correctamente.");
@@ -302,7 +302,7 @@ public class AirportManagerMain {
 
     	try {
     	    System.out.println("Proponiendo vuelo IBE3371...");
-    	    operadorIberia.proponerVuelo("IBE3371", LocalDate.now(), LocalDate.now(), LocalDate.now().plusDays(2),
+    	    operadorIberia.proponerVuelo("IBE3371", LocalDate.now().plusDays(31), LocalDate.now(), LocalDate.now().plusDays(2),
     	            LocalTime.of(10, 0), null, TipoCarga.PASAJEROS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
     	            Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionEC_HGT, aeFKennedy, aePropio, null);
     	    System.out.println("Vuelo IBE3371 propuesto correctamente.");
@@ -317,11 +317,6 @@ public class AirportManagerMain {
 	    System.out.println("Iniciando gestión de vuelo del Gestor.");
 	    gestorBarajas.gestionarVuelos(gestorBarajas.getVuelosPropuestos());
 	    System.out.println("Gestión de vuelos completada con éxito.");
- 
-	   
-    	System.out.println("\nMostrando notificaciones del operador de Iberia...");
-    	operadorIberia.verNotificaciones();
-    	
 
 	    System.out.println("Iniciando gestión de alternativas del Operador.");
 	    if(!operadorIberia.getAlternativas().isEmpty()) {
@@ -337,7 +332,7 @@ public class AirportManagerMain {
     	System.out.println("\nIniciando la propuesta del vuelos del Operador de AirFrance.");
     	try {
     	    System.out.println("Proponiendo vuelo AFR2270...");
-    	    operadorAirFrance.proponerVuelo("AFR2270", LocalDate.now(), LocalDate.now(), LocalDate.now().plusDays(2),
+    	    operadorAirFrance.proponerVuelo("AFR2270", LocalDate.now().plusDays(31), LocalDate.now(), LocalDate.now().plusDays(2),
     	            LocalTime.of(10, 0), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
     	            Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionF_GKXL, aeMalaga, aePropio, null);
     	    System.out.println("Vuelo AFR2270 propuesto correctamente.");
@@ -347,7 +342,7 @@ public class AirportManagerMain {
 
     	try {
     	    System.out.println("Proponiendo vuelo AFR3101...");
-    	    operadorIberia.proponerVuelo("AFR3101", LocalDate.now(), LocalDate.now(), LocalDate.now().plusDays(2),
+    	    operadorIberia.proponerVuelo("AFR3101", LocalDate.now().plusDays(31), LocalDate.now().plusDays(31), LocalDate.now().plusDays(33),
     	            LocalTime.of(10, 0), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
     	            Periodicidad.DIARIO, TipoVuelo.SALIDA, avionF_GKXC, aeMallorca, aePropio, null);
     	    System.out.println("Vuelo AFR3101 propuesto correctamente.");
@@ -357,7 +352,7 @@ public class AirportManagerMain {
 
     	try {
     	    System.out.println("Proponiendo vuelo AFR8802...");
-    	    operadorAirFrance.proponerVuelo("AFR8802", LocalDate.now(), LocalDate.now(), LocalDate.now().plusDays(2),
+    	    operadorAirFrance.proponerVuelo("AFR8802", LocalDate.now().plusDays(31), LocalDate.now(), LocalDate.now().plusDays(2),
     	            LocalTime.of(17, 0), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
     	            Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionF_GKXC, aePropio, aeFKennedy,
     	            new Escala(aePropio, aeTokio, LocalTime.of(17, 0), LocalTime.of(23, 0)));
@@ -368,7 +363,7 @@ public class AirportManagerMain {
 
     	try {
     	    System.out.println("Proponiendo vuelo AFR7107...");
-    	    operadorIberia.proponerVuelo("AFR7107", LocalDate.now(), LocalDate.now(), LocalDate.now().plusDays(2),
+    	    operadorIberia.proponerVuelo("AFR7107", LocalDate.now().plusDays(31), LocalDate.now(), LocalDate.now().plusDays(2),
     	            LocalTime.of(10, 0), null, TipoCarga.PASAJEROS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
     	            Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionF_GKXC, aeTokio, aePropio, null);
     	    System.out.println("Vuelo AFR7107 propuesto correctamente.");
@@ -397,7 +392,7 @@ public class AirportManagerMain {
     	System.out.println("\nIniciando propuestas de vuelos que generan errores.");
     	try {
     	    System.out.println("Proponiendo vuelo AFR2993...");
-    	    operadorAirFrance.proponerVuelo("AFR2993", LocalDate.now(), LocalDate.now(), LocalDate.now().plusDays(2),
+    	    operadorAirFrance.proponerVuelo("AFR2993", LocalDate.now().plusDays(31), LocalDate.now().plusDays(31), LocalDate.now().plusDays(33),
     	            LocalTime.of(20, 0), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
     	            Periodicidad.DIARIO, TipoVuelo.LLEGADA, avionF_GKXG, aePropio, aeCairo,
     	            new Escala(aePropio, aeFKennedy, LocalTime.of(20, 0), LocalTime.of(20, 30)));
@@ -413,7 +408,7 @@ public class AirportManagerMain {
     	System.out.println("\nIniciando la propuesta del vuelos del Operador de Iberia.");
     	try {
     		System.out.println("Proponiendo vuelo IBE1721...");
-    	    operadorIberia.proponerVuelo("IBE1721", LocalDate.now(), LocalDate.now(), LocalDate.now().plusDays(2),
+    	    operadorIberia.proponerVuelo("IBE1721", LocalDate.now().plusDays(31), LocalDate.now(), LocalDate.now().plusDays(2),
     	            LocalTime.of(10, 0), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
     	            Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionEC_HGR, aeTokio, aePropio, null);
     	    System.out.println("Vuelo IBE1721 propuesto correctamente.");
@@ -423,7 +418,7 @@ public class AirportManagerMain {
 
     	try {
     	    System.out.println("Proponiendo vuelo IBE8246...");
-    	    operadorAirFrance.proponerVuelo("IBE8246", LocalDate.now(), LocalDate.now(), LocalDate.now().plusDays(2),
+    	    operadorAirFrance.proponerVuelo("IBE8246", LocalDate.now().plusDays(31), LocalDate.now(), LocalDate.now().plusDays(2),
     	            LocalTime.of(10, 0), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
     	            Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionEC_HGS, aeCairo, aePropio, null);
     	    System.out.println("Vuelo IBE8246 propuesto correctamente.");
@@ -433,7 +428,7 @@ public class AirportManagerMain {
 
     	try {
     	    System.out.println("Proponiendo vuelo IBE2325...");
-    	    operadorIberia.proponerVuelo("IBE2325", LocalDate.now(), LocalDate.now(), LocalDate.now().plusDays(2),
+    	    operadorIberia.proponerVuelo("IBE2325", LocalDate.now().plusDays(31), LocalDate.now(), LocalDate.now().plusDays(2),
     	            LocalTime.of(10, 0), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
     	            Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionEC_KBX, aePropio, aeFKennedy, null);
     	    System.out.println("Vuelo IBE2325 propuesto correctamente.");
@@ -443,7 +438,7 @@ public class AirportManagerMain {
 
     	try {
     	    System.out.println("Proponiendo vuelo IBE5017...");
-    	    operadorAirFrance.proponerVuelo("IBE5017", LocalDate.now(), LocalDate.now(), LocalDate.now().plusDays(2),
+    	    operadorAirFrance.proponerVuelo("IBE5017", LocalDate.now().plusDays(31), LocalDate.now().plusDays(31), LocalDate.now().plusDays(33),
     	            LocalTime.of(10, 0), Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.SATURDAY), TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
     	            Periodicidad.RECURRENTE, TipoVuelo.LLEGADA, avionEC_KBX, aePropio, aeMallorca, null);
     	    System.out.println("Vuelo IBE5017 propuesto correctamente.");
@@ -453,7 +448,7 @@ public class AirportManagerMain {
 
     	try {
     	    System.out.println("Proponiendo vuelo IBE3371...");
-    	    operadorIberia.proponerVuelo("IBE3371", LocalDate.now(), LocalDate.now(), LocalDate.now().plusDays(2),
+    	    operadorIberia.proponerVuelo("IBE3371", LocalDate.now().plusDays(31), LocalDate.now(), LocalDate.now().plusDays(2),
     	            LocalTime.of(10, 0), null, TipoCarga.PASAJEROS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
     	            Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionEC_HGT, aeFKennedy, aePropio, null);
     	    System.out.println("Vuelo IBE3371 propuesto correctamente.");

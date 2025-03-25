@@ -541,26 +541,23 @@ public class Gestor extends Usuario {
     public void recibirProposicionVuelo(List<VueloProgramado> vuelosPropuestosOperador) throws AntelacionInvalidaException {
         
         recibirNotificacion(new Notificacion("Nuevo vuelo propuesto", TipoNotificacion.SOLICITUD_VUELO_PROGRAMADO));
-        List<VueloProgramado> vuelosPropuestos = new ArrayList<>();
+        if(vuelosPropuestos==null) {
+        	this.vuelosPropuestos=new ArrayList<>();
+        }
         
     	for (VueloProgramado vuelo : vuelosPropuestosOperador) {
         	if(vuelo!=null) {
-        		if (!vuelo.getFecha().isBefore(LocalDate.now().plusDays(Gestor.diasAnticipacionMinima))) {
+        		if (!vuelo.getFecha().isAfter(LocalDate.now().plusDays(Gestor.diasAnticipacionMinima))) {
                 throw new AntelacionInvalidaException(
                         "La propuesta del vuelo " + vuelo.getCodigo() + " no cumple con la antelación mínima de días.");
 	            } else {
-	                vuelosPropuestos.add(vuelo);
+	            	vuelosPropuestos.add(vuelo);
 	            }
         	}
-           
         }
-    	if(vuelosPropuestos!=null) {
-    		this.vuelosPropuestos=vuelosPropuestosOperador;
-    	}
     }
     
     public void gestionarVuelos(List<VueloProgramado> vuelosGestionar) {
-    	
     	for(VueloProgramado vuelo: vuelosGestionar) {
     		for(Vuelo vueloAceptado: getAeropuerto().getVuelosAceptados()) {
     			 for (Terminal terminal : aeropuerto.getTerminales()) {
@@ -572,15 +569,18 @@ public class Gestor extends Usuario {
 	                	/** El nuevo vuelo coincide en terminal, controlador y hora con alguno existente*/
 	                	if (vuelo.getFecha().equals(vueloAceptado.getFecha()) && vuelo.getHora().equals(vueloAceptado.getHora())
 	                	&& terminal.equals(vueloAceptado.getTerminal()) && controlador.equals(vueloAceptado.getControlador())) {
+	                		System.out.println("El vuelo coincide con alguno ya programado.");
 	                		if(sePuedeMover(vuelo, terminal, controlador)) {
-	                			aceptarVuelo(vuelo, terminal, controlador);
+	                			System.out.println("El vuelo coincide con alguno ya programado, se ha movido.");
 	                        }
 	                		else {
 	                			List<Vuelo> alternativas= generarAlternativas(vuelo, terminal, controlador);
 	                			vuelo.getAvion().getAerolinea().getOperador().recibirAlternativas(alternativas);
+	                			System.out.println("El vuelo coincide con alguno ya programado, se han buscado alternativas.");
 	                		}
 	                    }
 	                	else {
+	                		System.out.println("El vuelo no coincide con alguno ya programado. Añadir.");
                 			aceptarVuelo(vuelo, terminal, controlador);
 	                	}
 	                }
