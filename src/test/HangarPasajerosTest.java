@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import src.airportmanager.*;
 import src.airportmanager.avion.*;
+import src.airportmanager.exceptions.CargaAvionEquivocadaException;
 import src.airportmanager.vuelo.*;
 import src.airportmanager.aeropuerto.*;
 import src.airportmanager.usuario.*;
@@ -50,7 +51,7 @@ class HangarPasajerosTest{
     }
 
     @Test
-    void testAddAvion() {
+    void testAddAvion() throws CargaAvionEquivocadaException {
         hangar.addAvion(avion);
         assertTrue(hangar.getAviones().contains(avion), "Error la lista de aviones del hangar debería contener un avión");
         hangar.addAvion(avion2);
@@ -63,7 +64,7 @@ class HangarPasajerosTest{
     }
 
     @Test
-    void testSacarAvion() {
+    void testSacarAvion() throws CargaAvionEquivocadaException {
 
         hangar.addAvion(avion);
         hangar.sacarAvion(avion);
@@ -72,7 +73,7 @@ class HangarPasajerosTest{
     }
 
     @Test
-    void testComprobarAvionHangar() {
+    void testComprobarAvionHangar() throws CargaAvionEquivocadaException {
 
         hangar.addAvion(avion);
         assertTrue(hangar.comprobarAvionEnHangar(avion), "Error, el avion debería estar en el hangar");
@@ -80,7 +81,7 @@ class HangarPasajerosTest{
     }
 
     @Test
-    void testHayEspacioEnHangar() {
+    void testHayEspacioEnHangar() throws CargaAvionEquivocadaException {
 
         hangar.addAvion(avion);
         assertTrue(hangar.hayEspacioEnHangar(), "Error, debería haber espacio para más aviones en el hangar");

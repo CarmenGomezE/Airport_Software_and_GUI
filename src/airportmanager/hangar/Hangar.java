@@ -3,6 +3,7 @@ package src.airportmanager.hangar;
 import java.io.Serializable;
 
 import src.airportmanager.avion.Avion;
+import src.airportmanager.exceptions.CargaAvionEquivocadaException;
 import src.airportmanager.vuelo.Vuelo;
 
 /**
@@ -161,8 +162,9 @@ public abstract class Hangar implements Serializable {
      * Método para añadir un avion al hangar.
      * 
      * @param avion Avion que se añade al hangar.
+     * @throws CargaAvionEquivocadaException 
      */
-    public abstract void addAvion(Avion avion);
+    public abstract void addAvion(Avion avion) throws CargaAvionEquivocadaException;
 
     /**
      * Método para comprobar si un avión está en el hangar.
@@ -170,13 +172,15 @@ public abstract class Hangar implements Serializable {
      * @param avion Avión a comprobar.
      * 
      * @return true si está, false si no.
+     * @throws CargaAvionEquivocadaException 
      */
-    public abstract boolean comprobarAvionEnHangar(Avion avion);
+    public abstract boolean comprobarAvionEnHangar(Avion avion) throws CargaAvionEquivocadaException;
 
     /**
      * Método para sacar un avión del hangar.
      * 
      * @param avion Avión que sale del hangar.
+     * @throws CargaAvionEquivocadaException 
      */
-    public abstract void sacarAvion(Avion avion);
+    public abstract void sacarAvion(Avion avion) throws CargaAvionEquivocadaException;
 }

@@ -2,6 +2,7 @@ package src.airportmanager.usuario;
 
 import src.airportmanager.AirportManager;
 import src.airportmanager.aeropuerto.AeropuertoPropio;
+import src.airportmanager.exceptions.CargaAvionEquivocadaException;
 import src.airportmanager.exceptions.ContrasenaInvalidaException;
 import src.airportmanager.exceptions.EstadoEquivocadoException;
 import src.airportmanager.exceptions.EstadoNoDelUsuarioException;
@@ -96,12 +97,13 @@ public abstract class UsuarioConDni extends Usuario {
      * @throws VueloEnMenosDe1HoraException
      * @throws NoVueloEnMenosDe1HoraException
      * @throws IllegalArgumentException
+     * @throws CargaAvionEquivocadaException 
      */
     public abstract void cambiarEstadoVuelo(Vuelo vuelo, EstadoVuelo estado)
             throws VueloNoDelUsuarioException, EstadoNoDelUsuarioException, EstadoEquivocadoException,
             NoModosEmbarqueDisponiblesException, NoPistasDisponiblesException, IllegalArgumentException,
             NoVueloEnMenosDe1HoraException, VueloEnMenosDe1HoraException, NoFingerMercanciasException,
-            NoModosPuertasEmbarqueDisponiblesException, NoHangaresDisponiblesException;
+            NoModosPuertasEmbarqueDisponiblesException, NoHangaresDisponiblesException, CargaAvionEquivocadaException;
 
     /**
      * Método para recibir una notificación de cambio de estado de un vuelo.

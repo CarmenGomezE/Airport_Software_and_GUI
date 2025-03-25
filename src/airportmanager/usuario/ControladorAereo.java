@@ -6,6 +6,7 @@ import java.util.*;
 
 import src.airportmanager.aeropuerto.AeropuertoPropio;
 import src.airportmanager.avion.*;
+import src.airportmanager.exceptions.CargaAvionEquivocadaException;
 import src.airportmanager.exceptions.EstadoEquivocadoException;
 import src.airportmanager.exceptions.EstadoNoDelUsuarioException;
 import src.airportmanager.exceptions.NoFingerMercanciasException;
@@ -79,6 +80,7 @@ public class ControladorAereo extends UsuarioConDni {
      * @throws NoFingerMercanciasException
      * @throws NoModosPuertasEmbarqueDisponiblesException
      * @throws NoHangaresDisponiblesException
+     * @throws CargaAvionEquivocadaException 
      */
     @Override
     public void cambiarEstadoVuelo(Vuelo vuelo, EstadoVuelo estado)
@@ -86,7 +88,7 @@ public class ControladorAereo extends UsuarioConDni {
             EstadoEquivocadoException, NoPistasDisponiblesException, IllegalArgumentException,
             NoVueloEnMenosDe1HoraException,
             VueloEnMenosDe1HoraException, NoFingerMercanciasException, NoModosPuertasEmbarqueDisponiblesException,
-            NoHangaresDisponiblesException {
+            NoHangaresDisponiblesException, CargaAvionEquivocadaException {
         if (vuelo == null || estado == null) {
             throw new IllegalArgumentException("El vuelo y el nuevo estado no pueden ser null.");
         }
@@ -264,9 +266,10 @@ public class ControladorAereo extends UsuarioConDni {
      * @throws EstadoEquivocadoException
      * @throws VueloEnMenosDe1HoraException
      * @throws NoHangaresDisponiblesException
+     * @throws CargaAvionEquivocadaException 
      */
     private void cambiarEstadoAHangar(Vuelo vuelo)
-            throws EstadoEquivocadoException, VueloEnMenosDe1HoraException, NoHangaresDisponiblesException {
+            throws EstadoEquivocadoException, VueloEnMenosDe1HoraException, NoHangaresDisponiblesException, CargaAvionEquivocadaException {
         if (vuelo.getEstado() != EstadoVuelo.FIN_DEL_DESEMBARQUE) {
             throw new EstadoEquivocadoException("El vuelo no está en el estado correcto para cambiar a este estado");
         }

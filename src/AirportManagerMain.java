@@ -283,7 +283,7 @@ public class AirportManagerMain {
     	try {
     	    System.out.println("Proponiendo vuelo IBE2325...");
     	    operadorIberia.proponerVuelo("IBE2325", LocalDate.now(), LocalDate.now(), LocalDate.now().plusDays(2),
-    	            LocalTime.of(15, 0), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
+    	            LocalTime.of(10, 0), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
     	            Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionEC_KBX, aePropio, aeFKennedy, null);
     	    System.out.println("Vuelo IBE2325 propuesto correctamente.");
     	} catch (Exception e) {
@@ -293,7 +293,7 @@ public class AirportManagerMain {
     	try {
     	    System.out.println("Proponiendo vuelo IBE5017...");
     	    operadorAirFrance.proponerVuelo("IBE5017", LocalDate.now(), LocalDate.now(), LocalDate.now().plusDays(2),
-    	            LocalTime.of(15, 0), Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.SATURDAY), TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
+    	            LocalTime.of(10, 0), Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.SATURDAY), TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
     	            Periodicidad.RECURRENTE, TipoVuelo.LLEGADA, avionEC_KBX, aePropio, aeMallorca, null);
     	    System.out.println("Vuelo IBE5017 propuesto correctamente.");
     	} catch (Exception e) {
@@ -303,7 +303,7 @@ public class AirportManagerMain {
     	try {
     	    System.out.println("Proponiendo vuelo IBE3371...");
     	    operadorIberia.proponerVuelo("IBE3371", LocalDate.now(), LocalDate.now(), LocalDate.now().plusDays(2),
-    	            LocalTime.of(15, 30), null, TipoCarga.PASAJEROS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
+    	            LocalTime.of(10, 0), null, TipoCarga.PASAJEROS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
     	            Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionEC_HGT, aeFKennedy, aePropio, null);
     	    System.out.println("Vuelo IBE3371 propuesto correctamente.");
     	} catch (Exception e) {
@@ -312,45 +312,28 @@ public class AirportManagerMain {
     	
     	System.out.println("\nMostrando notificaciones del gestor de Barajas...");
     	gestorBarajas.verNotificaciones();
+    	
 
-    	try {
-    	    System.out.println("Iniciando gestión de vuelo del Gestor.");
-    	    gestorBarajas.gestionarVuelos();
-    	    System.out.println("Gestión de vuelos completada con éxito.");
-    	} catch (VueloSolapadoException e) {
-    	    System.err.println("Error: Se ha detectado un conflicto de solapamiento entre vuelos.");
-    	    System.err.println("Detalle: " + e.getMessage());
-    	    e.printStackTrace(); 
-    	}
+	    System.out.println("Iniciando gestión de vuelo del Gestor.");
+	    gestorBarajas.gestionarVuelos(gestorBarajas.getVuelosPropuestos());
+	    System.out.println("Gestión de vuelos completada con éxito.");
+ 
     	
     	System.out.println("\nMostrando notificaciones del operador de Iberia...");
     	operadorIberia.verNotificaciones();
     	
-    	try {
-    	    System.out.println("Iniciando gestiónde alternativas del Operador.");
-    	    if(operadorIberia.getAlternativas()!=null) {
-    	    	operadorIberia.aceptarAlternativa(operadorIberia.getAlternativas().get(0));
-    	    }
-    	    System.out.println("Gestión de vuelos completada con éxito.");
-    	} catch (AvionNoDisponibleException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (AvionNoValidoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (EscalaInvalidaException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (AntelacionInvalidaException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+	    System.out.println("Iniciando gestiónde alternativas del Operador.");
+	    if(operadorIberia.getAlternativas()!=null) {
+	    	operadorIberia.aceptarVuelo(operadorIberia.getAlternativas().get(0));
+	    }
+	    System.out.println("Gestión de vuelos completada con éxito.");
 
     	System.out.println("\nIniciando la propuesta del vuelos del Operador de AirFrance.");
     	try {
     	    System.out.println("Proponiendo vuelo AFR2270...");
     	    operadorAirFrance.proponerVuelo("AFR2270", LocalDate.now(), LocalDate.now(), LocalDate.now().plusDays(2),
-    	            LocalTime.of(16, 0), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
+    	            LocalTime.of(10, 0), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
     	            Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionF_GKXL, aeMalaga, aePropio, null);
     	    System.out.println("Vuelo AFR2270 propuesto correctamente.");
     	} catch (Exception e) {
@@ -360,7 +343,7 @@ public class AirportManagerMain {
     	try {
     	    System.out.println("Proponiendo vuelo AFR3101...");
     	    operadorIberia.proponerVuelo("AFR3101", LocalDate.now(), LocalDate.now(), LocalDate.now().plusDays(2),
-    	            LocalTime.of(16, 30), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
+    	            LocalTime.of(10, 0), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
     	            Periodicidad.DIARIO, TipoVuelo.SALIDA, avionF_GKXC, aeMallorca, aePropio, null);
     	    System.out.println("Vuelo AFR3101 propuesto correctamente.");
     	} catch (Exception e) {
@@ -381,13 +364,14 @@ public class AirportManagerMain {
     	try {
     	    System.out.println("Proponiendo vuelo AFR7107...");
     	    operadorIberia.proponerVuelo("AFR7107", LocalDate.now(), LocalDate.now(), LocalDate.now().plusDays(2),
-    	            LocalTime.of(18, 0), null, TipoCarga.PASAJEROS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
+    	            LocalTime.of(10, 0), null, TipoCarga.PASAJEROS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
     	            Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionF_GKXC, aeTokio, aePropio, null);
     	    System.out.println("Vuelo AFR7107 propuesto correctamente.");
     	} catch (Exception e) {
     	    System.err.println("Error al proponer el vuelo AFR7107: " + e.getMessage());
     	}
-
+    	
+    	
     	System.out.println("\nIniciando propuestas de vuelos que generan errores.");
     	try {
     	    System.out.println("Proponiendo vuelo AFR2993...");
@@ -399,6 +383,73 @@ public class AirportManagerMain {
     	} catch (Exception e) {
     	    System.err.println("Error al proponer el vuelo AFR2993: " + e.getMessage());
     	}
+    	
+    	System.out.println("\nSe repite la prueba forzando al sistema a enviar alternativas, para ello rango en el que se puede mover=0.");
+    	Gestor.setRangoMinutosMaximoCambioVuelo(0);
+    	System.out.println(Gestor.rangoMinutosMaximoCambioVuelo);
+    	
+    	System.out.println("\nIniciando la propuesta del vuelos del Operador de Iberia.");
+    	try {
+    		System.out.println("Proponiendo vuelo IBE1721...");
+    	    operadorIberia.proponerVuelo("IBE1721", LocalDate.now(), LocalDate.now(), LocalDate.now().plusDays(2),
+    	            LocalTime.of(10, 0), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
+    	            Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionEC_HGR, aeTokio, aePropio, null);
+    	    System.out.println("Vuelo IBE1721 propuesto correctamente.");
+    	} catch (Exception e) {
+    	    System.err.println("Error al proponer el vuelo IBE1721: " + e.getMessage());
+    	}
+
+    	try {
+    	    System.out.println("Proponiendo vuelo IBE8246...");
+    	    operadorAirFrance.proponerVuelo("IBE8246", LocalDate.now(), LocalDate.now(), LocalDate.now().plusDays(2),
+    	            LocalTime.of(10, 0), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
+    	            Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionEC_HGS, aeCairo, aePropio, null);
+    	    System.out.println("Vuelo IBE8246 propuesto correctamente.");
+    	} catch (Exception e) {
+    	    System.err.println("Error al proponer el vuelo IBE8246: " + e.getMessage());
+    	}
+
+    	try {
+    	    System.out.println("Proponiendo vuelo IBE2325...");
+    	    operadorIberia.proponerVuelo("IBE2325", LocalDate.now(), LocalDate.now(), LocalDate.now().plusDays(2),
+    	            LocalTime.of(10, 0), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
+    	            Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionEC_KBX, aePropio, aeFKennedy, null);
+    	    System.out.println("Vuelo IBE2325 propuesto correctamente.");
+    	} catch (Exception e) {
+    	    System.err.println("Error al proponer el vuelo IBE2325: " + e.getMessage());
+    	}
+
+    	try {
+    	    System.out.println("Proponiendo vuelo IBE5017...");
+    	    operadorAirFrance.proponerVuelo("IBE5017", LocalDate.now(), LocalDate.now(), LocalDate.now().plusDays(2),
+    	            LocalTime.of(10, 0), Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.SATURDAY), TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
+    	            Periodicidad.RECURRENTE, TipoVuelo.LLEGADA, avionEC_KBX, aePropio, aeMallorca, null);
+    	    System.out.println("Vuelo IBE5017 propuesto correctamente.");
+    	} catch (Exception e) {
+    	    System.err.println("Error al proponer el vuelo IBE5017: " + e.getMessage());
+    	}
+
+    	try {
+    	    System.out.println("Proponiendo vuelo IBE3371...");
+    	    operadorIberia.proponerVuelo("IBE3371", LocalDate.now(), LocalDate.now(), LocalDate.now().plusDays(2),
+    	            LocalTime.of(10, 0), null, TipoCarga.PASAJEROS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
+    	            Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionEC_HGT, aeFKennedy, aePropio, null);
+    	    System.out.println("Vuelo IBE3371 propuesto correctamente.");
+    	} catch (Exception e) {
+    	    System.err.println("Error al proponer el vuelo IBE3371: " + e.getMessage());
+    	}
+    	
+    	System.out.println("[DEBUG] Lista de vuelos propuestos:");
+    	for (VueloProgramado v : gestorBarajas.getVuelosPropuestos()) {
+    	    System.out.println("[DEBUG] Vuelo: " + v.getCodigo() + " - Fecha: " + v.getFecha() + " - Hora: " + v.getHora());
+    	}
+    	System.out.println("[DEBUG] Lista de vuelos aceptados:");
+    	for (VueloProgramado v : airportManager.getAeropuerto().getVuelosAceptados()) {
+    	    System.out.println("[DEBUG] Vuelo: " + v.getCodigo() + " - Fecha: " + v.getFecha() + " - Hora: " + v.getHora());
+    	}
+    	System.out.println("\nMostrando notificaciones del gestor de Barajas...");
+    	gestorBarajas.verNotificaciones();
+    	
     	
     	System.out.println("Proceso de propuesta de vuelos finalizado.");
 	}

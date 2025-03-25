@@ -49,9 +49,8 @@ public class Operador extends UsuarioConDni {
     /** Estadísticas del operador sobre vuelos de su aerolinea */
     private EstadisticasOperador estadisticas;
     /** Alternativas que le propone el gestor a sus propuestas de vuelo */
-    private List<VueloProgramado> vuelosAlternativas;
-    /* Temporizador para responder a las opciones de vuelo */
-    private Timer timer;
+    private List<Vuelo> vuelosAlternativas;
+	private boolean decisionTomada;
 
     /**
      * Constructor de la clase SolicitudVueloCompartido.
@@ -69,6 +68,8 @@ public class Operador extends UsuarioConDni {
         this.solicitudesRecibidas = new ArrayList<>();
         this.solicitudesEnviadas = new ArrayList<>();
         this.estadisticas = new EstadisticasOperador(this);
+        this.vuelosAlternativas= new ArrayList<>();
+        this.decisionTomada=false;
     }
 
     /**
@@ -253,80 +254,12 @@ public class Operador extends UsuarioConDni {
                 capacidadMaxCarga, mercaPeligrosa, controlTemperatura);
 
         this.getAerolinea().agregarAvion(nuevoAvion);
-        
+       
         System.out.println("Total aviones en aerolínea " + this.getAerolinea().getNombre() + ": " 
                             + this.getAerolinea().getAviones().size());
     }
-
-    /**
-     * Método para recibir opciones de reprograamacion.
-     * 
-     * @param alternativas Vuelo al que se le cambia el estado.
-     */
-    public void recibirNotificacionOpcionesReprogramacion(List<VueloProgramado> alternativas) {
-        for(VueloProgramado alternativa: alternativas) {
-        	this.vuelosAlternativas.add(alternativa);
-        }
-        recibirNotificacion(new Notificacion("Recibidas " + alternativas.size() + " alternativas de vuelos para su aceptación.", TipoNotificacion.OPCIONES_REPROGRAMAR_VUELO));
-
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                eliminarAlternativas();
-            }
-        }, gestor.getTiempoAceptarPropuesta() * 60 * 1000);
-    }
-
-	/**
-     * Método para aceptar una opción reprogramada.
-     * 
-     * @param vuelo Vuelo que se acepta.
-     */
-    public void aceptarAlternativa(VueloProgramado vuelo) throws AvionNoDisponibleException, AvionNoValidoException,
-            EscalaInvalidaException, AntelacionInvalidaException {
-        if (vuelosAlternativas.contains(vuelo)) {
-            vuelosAlternativas.remove(vuelo);
-            System.out.println("Vuelo " + vuelo.getCodigo() + " aceptado.");
-            timer.cancel();
-            proponerVuelo(vuelo.getCodigo(), vuelo.getFecha(), vuelo.getFechaInicio(), vuelo.getFechaFinal(),
-                    vuelo.getHora(),
-                    vuelo.getDiasRecurrente(), vuelo.getTipoCarga(), vuelo.getTipoModoEmbarque(),
-                    vuelo.getPeriodicidad(), vuelo.getTipoVuelo(), vuelo.getAvion(),
-                    vuelo.getAeropuertoDestino(), vuelo.getAeropuertoSalida(), vuelo.getEscala());
-        }
-    }
-
-    /**
-     * Método para rechazar una opción reprogramada.
-     * 
-     * @param vuelo Vuelo que se rechaza.
-     */
-    public void rechazarAlternativa(VueloProgramado vuelo) {
-        if (vuelosAlternativas.contains(vuelo)) {
-            vuelosAlternativas.remove(vuelo);
-        }
-    }
-
-    /**
-     * Método para eliminar las opciones reprogramadas.
-     * 
-     */
-    private void eliminarAlternativas() {
-        if (!vuelosAlternativas.isEmpty()) {
-            System.out.println("El tiempo para aceptar las alternativas ha pasado. Se eliminan las propuestas.");
-            vuelosAlternativas.clear();
-        }
-    }
-
-    /**
-     * Método que añade vuelos propuestos del Operador.
-     * 
-     * @param vueloProgramado Vuelo a añadir.
-     * @throws AvionNoDisponibleException
-     * @throws AvionNoValidoException
-     * @throws EscalaInvalidaException
-     * @throws AntelacionInvalidaException
-     */
+   
+  
     public void proponerVuelo(String codigo, LocalDate fecha, LocalDate fechaInicio, LocalDate fechaFinal,
             LocalTime hora, List<DayOfWeek> diasRecurrente, TipoCarga tipoCarga, TipoModoEmbarque tipoModoEmbarque,
             Periodicidad periodicidad, TipoVuelo tipoVuelo, Avion avion, Aeropuerto aeropuertoDestino,
@@ -338,14 +271,11 @@ public class Operador extends UsuarioConDni {
         if (aeropuertoSalida == null || aeropuertoDestino == null) {
             throw new IllegalArgumentException("El aeropuerto de salida y el de llegada no pueden ser nulos.");
         }
-
         if (escala == null) {
             if (aeropuertoSalida.equals(aeropuertoDestino)) {
-                throw new IllegalArgumentException(
-                        "El aeropuerto de salida no puede ser igual al de llegada si no hay escalas.");
+                throw new IllegalArgumentException("El aeropuerto de salida no puede ser igual al de llegada si no hay escalas.");
             }
         }
-
         if (tipoVuelo == TipoVuelo.LLEGADA && !aeropuertoDestino.equals(getAeropuerto())) {
             throw new IllegalArgumentException("El aeropuerto destino debe ser el actual si el vuelo es de llegada.");
         }
@@ -353,12 +283,9 @@ public class Operador extends UsuarioConDni {
         if (tipoVuelo == TipoVuelo.SALIDA && !aeropuertoSalida.equals(getAeropuerto())) {
             throw new IllegalArgumentException("El aeropuerto de salida debe ser el actual si el vuelo es de salida.");
         }
-
-        if ((avion instanceof AvionMercancias && tipoCarga == TipoCarga.PASAJEROS)
-                || (avion instanceof AvionPasajeros && tipoCarga == TipoCarga.MERCANCIAS)) {
+        if ((avion instanceof AvionMercancias && tipoCarga == TipoCarga.PASAJEROS) || (avion instanceof AvionPasajeros && tipoCarga == TipoCarga.MERCANCIAS)) {
             throw new AvionNoValidoException("El avión seleccionado no concuerda con la carga que transporta.");
         }
-
         if (!avion.estaDisponible(fecha, hora)) {
             throw new AvionNoDisponibleException("El avión seleccionado no está disponible.");
         }
@@ -374,50 +301,87 @@ public class Operador extends UsuarioConDni {
             }
         }
         
-
-        VueloProgramado vueloPropuesto = new VueloProgramado(codigo, fecha, fechaInicio, fechaFinal, hora,
-                diasRecurrente, tipoCarga, tipoModoEmbarque,
-                periodicidad, tipoVuelo, avion, aeropuertoDestino, aeropuertoSalida, escala);
-        if(vueloPropuesto!=null) {
-        	vueloPropuestos.add(vueloPropuesto);
-        }
-
+        /** Si cumple todo, se crea un vuelo*/
+        VueloProgramado vueloPropuesto = new VueloProgramado(codigo, fecha, fechaInicio, fechaFinal, hora,diasRecurrente, tipoCarga, tipoModoEmbarque,
+                											periodicidad, tipoVuelo, avion, aeropuertoDestino, aeropuertoSalida, escala);
+        /** Si es puntual, creo un vuelo*/
         if (periodicidad == Periodicidad.PUNTUAL) {
             vueloPropuestos.add(vueloPropuesto);
-        } else if (periodicidad == Periodicidad.DIARIO) {
+        } 
+        /** Si es diario, creo uno cada día*/
+        else if (periodicidad == Periodicidad.DIARIO) {
             LocalDate fechaIterativa = fechaInicio;
             while (!fechaIterativa.isAfter(fechaFinal)) {
                 if (!avion.estaDisponible(fechaIterativa, hora)) {
-                    throw new AvionNoDisponibleException(
-                            "El avión no está disponible para el vuelo diario en la fecha " + fechaIterativa);
+                    throw new AvionNoDisponibleException( "El avión no está disponible para el vuelo diario en la fecha " + fechaIterativa);
                 }
-
-                vueloPropuestos
-                        .add(new VueloProgramado(codigo + "-" + fechaIterativa, fecha, fechaIterativa, fechaIterativa,
-                                hora, null, tipoCarga, tipoModoEmbarque, periodicidad, tipoVuelo, avion,
-                                aeropuertoDestino, aeropuertoSalida, escala));
+                vueloPropuestos.add(new VueloProgramado(codigo + "-" + fechaIterativa, fechaIterativa, fechaInicio, fechaFinal,
+                                hora, null, tipoCarga, tipoModoEmbarque, periodicidad, tipoVuelo, avion, aeropuertoDestino, aeropuertoSalida, escala));
                 fechaIterativa = fechaIterativa.plusDays(1);
             }
-        } else if (periodicidad == Periodicidad.RECURRENTE) {
+        } 
+        /** Si es puntual, creo uno los días indicados*/
+        else if (periodicidad == Periodicidad.RECURRENTE) {
             LocalDate fechaIterativa = fechaInicio;
             while (!fechaIterativa.isAfter(fechaFinal)) {
                 if (!avion.estaDisponible(fechaIterativa, hora)) {
-                    throw new AvionNoDisponibleException(
-                            "El avión no está disponible para el vuelo diario en la fecha " + fechaIterativa);
+                    throw new AvionNoDisponibleException("El avión no está disponible para el vuelo diario en la fecha " + fechaIterativa);
                 }
 
                 if (diasRecurrente.contains(fechaIterativa.getDayOfWeek())) {
                     vueloPropuestos.add(
-                            new VueloProgramado(codigo + "-" + fechaIterativa, fechaIterativa, fechaIterativa, fechaIterativa,
-                                    hora, diasRecurrente, tipoCarga, tipoModoEmbarque, periodicidad, tipoVuelo, avion,
-                                    aeropuertoDestino, aeropuertoSalida, escala));
+                            new VueloProgramado(codigo + "-" + fechaIterativa, fechaIterativa, fechaInicio, fechaFinal,
+                                    hora, diasRecurrente, tipoCarga, tipoModoEmbarque, periodicidad, tipoVuelo, avion, aeropuertoDestino, aeropuertoSalida, escala));
                 }
                 fechaIterativa = fechaIterativa.plusDays(1);
             }
         }
-        getGestor().recibirNotificacionProposicionVuelo(vueloPropuestos);
-
+        
+        /**Se envian al gestor*/
+        getGestor().recibirProposicionVuelo(vueloPropuestos);
         System.out.println("Vuelo propuesto exitosamente.");
+    }
+    
+    public void recibirAlternativas(List<Vuelo> alternativas) {
+    	recibirNotificacion(new Notificacion("Nuevo vuelo propuesto", TipoNotificacion.SOLICITUD_VUELO_PROGRAMADO));
+    	iniciarTemporizador();
+    	this.vuelosAlternativas=alternativas;
+    }
+  
+    private void iniciarTemporizador() {
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (!decisionTomada) {
+                    rechazarVuelo();
+                }
+            }
+        }, Gestor.getTiempoAceptarPropuesta() * 60 * 1000);
+    }
+    
+    public void aceptarVuelo(Vuelo alternativa) {
+        if (!decisionTomada) {
+        	this.getGestor().aceptarVuelo(alternativa, alternativa.getTerminal(), alternativa.getControlador());
+            decisionTomada = true;
+            System.out.println("Vuelo aceptado.");
+        }
+    }
+
+    public void rechazarVuelo() {
+		if (!decisionTomada) {
+            decisionTomada = true;
+            System.out.println("Vuelo rechazado.");
+            this.vuelosAlternativas=null;
+        }
+    }
+    
+    public void recibirNotificacion(Notificacion notificacion) {
+        System.out.println("Notificación recibida: " + notificacion.getMensaje());
+    }
+
+    public Gestor getGestor() {
+        return gestor;
     }
 
     /**
@@ -560,7 +524,7 @@ public class Operador extends UsuarioConDni {
     	return sistema.generarContrasena();
     }
 
-	public List<VueloProgramado> getAlternativas() {
+	public List<Vuelo> getAlternativas() {
 		if(this.vuelosAlternativas==null) {
 			System.out.println("No hay aternativas propuestas.");
 			return null;
