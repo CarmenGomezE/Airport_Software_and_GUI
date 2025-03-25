@@ -70,7 +70,7 @@ public class VueloProgramado implements Serializable {
             LocalTime hora, List<DayOfWeek> diasRecurrente, TipoCarga tipoCarga, TipoModoEmbarque tipoModoEmbarque,
             Periodicidad periodicidad, TipoVuelo tipoVuelo, Avion avion, Aeropuerto aeropuertoDestino,
             Aeropuerto aeropuertoSalida, Escala escala) {
-
+    	
         this.codigo = codigo;
         this.hora = hora;
         this.tipoCarga = tipoCarga;
@@ -87,10 +87,12 @@ public class VueloProgramado implements Serializable {
             this.fechaFinal = null;
             this.diasRecurrente = null;
         } else if (periodicidad == Periodicidad.DIARIO) {
+        	this.fecha = fecha;
             this.fechaInicio = fechaInicio;
             this.fechaFinal = fechaFinal;
             this.diasRecurrente = null;
         } else if (periodicidad == Periodicidad.RECURRENTE) {
+        	this.fecha = fecha;
             this.fechaInicio = fechaInicio;
             this.fechaFinal = fechaFinal;
             this.diasRecurrente = diasRecurrente;
@@ -225,6 +227,9 @@ public class VueloProgramado implements Serializable {
      * @param nuevaHora Nueva hora del vuelo.
      */
     public void setHora(LocalTime nuevaHora) {
+    	if (nuevaHora == null) {
+	        throw new IllegalArgumentException("La hora del vuelo no puede ser nula.");
+	    }
         this.hora = nuevaHora;
     }
 
@@ -234,6 +239,9 @@ public class VueloProgramado implements Serializable {
      * @param avion Nuevo avion del vuelo.
      */
     public void setAvion(Avion avion) {
+    	if (avion == null) {
+	        throw new IllegalArgumentException("EL avion del vuelo no puede ser nula.");
+	    }
         this.avion = avion;
     }
 
@@ -243,6 +251,11 @@ public class VueloProgramado implements Serializable {
      * @param nuevaFecha Nueva fecha del vuelo.
      */
     public void setFecha(LocalDate nuevaFecha) {
+    	
+	    if (nuevaFecha == null) {
+	        throw new IllegalArgumentException("La fecha del vuelo no puede ser nula.");
+	    }
+
         this.fecha = nuevaFecha;
 
     }

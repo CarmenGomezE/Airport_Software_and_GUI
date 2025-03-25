@@ -223,11 +223,13 @@ public class Operador extends UsuarioConDni {
             int capacidadMaxPasajeros) {
 
         Avion nuevoAvion = new AvionPasajeros(marca, modelo, dimAlto, dimAncho, dimLargo, autonomia, anoCompra,
-                fechaUltimaRevision,
-                matricula, capacidadMaxPasajeros);
+                fechaUltimaRevision, matricula, capacidadMaxPasajeros);
 
         this.getAerolinea().agregarAvion(nuevoAvion);
-        nuevoAvion.setAerolinea(this.getAerolinea());
+
+        System.out.println("Avión de pasajeros agregado: " + nuevoAvion);
+        System.out.println("Total aviones en aerolínea " + this.getAerolinea().getNombre() + ": " 
+                            + this.getAerolinea().getAviones().size());
     }
 
     /**
@@ -253,7 +255,10 @@ public class Operador extends UsuarioConDni {
                 capacidadMaxCarga, mercaPeligrosa, controlTemperatura);
 
         this.getAerolinea().agregarAvion(nuevoAvion);
-        nuevoAvion.setAerolinea(this.getAerolinea());
+        
+        System.out.println("Avión de carga agregado: " + nuevoAvion);
+        System.out.println("Total aviones en aerolínea " + this.getAerolinea().getNombre() + ": " 
+                            + this.getAerolinea().getAviones().size());
     }
 
     /**
@@ -358,23 +363,25 @@ public class Operador extends UsuarioConDni {
         if (!avion.estaDisponible(fecha, hora)) {
             throw new AvionNoDisponibleException("El avión seleccionado no está disponible.");
         }
-
-        if (escala.getAeropuertoOrigen().equals(aeropuertoSalida)
+        if(escala!=null) {
+        	if (escala.getAeropuertoOrigen().equals(aeropuertoSalida)
                 && !escala.getAeropuertoDestino().equals(aeropuertoDestino)) {
             throw new IllegalArgumentException(
                     "No se puede hacer escala en el aeropuerto de salida sin pasar por el de llegada.");
+	        }
+	
+        	if (Duration.between(escala.getHoraSalida(), escala.getHoraLlegada()).toMinutes() < 60) {
+                throw new IllegalArgumentException("La escala debe ser de al menos una hora.");
+            }
         }
-
-        if (escala.getHoraSalida().isBefore(escala.getHoraLlegada().plusHours(1))) {
-            throw new EscalaInvalidaException("La escala en " + escala.getAeropuertoDestino().getCiudad()
-                    + " tiene menos de una hora de permanencia.");
-        }
+        
 
         VueloProgramado vueloPropuesto = new VueloProgramado(codigo, fecha, fechaInicio, fechaFinal, hora,
                 diasRecurrente, tipoCarga, tipoModoEmbarque,
                 periodicidad, tipoVuelo, avion, aeropuertoDestino, aeropuertoSalida, escala);
-
-        vueloPropuestos.add(vueloPropuesto);
+        if(vueloPropuesto!=null) {
+        	vueloPropuestos.add(vueloPropuesto);
+        }
 
         if (periodicidad == Periodicidad.PUNTUAL) {
             vueloPropuestos.add(vueloPropuesto);
@@ -387,7 +394,7 @@ public class Operador extends UsuarioConDni {
                 }
 
                 vueloPropuestos
-                        .add(new VueloProgramado(codigo + "-" + fechaIterativa, null, fechaIterativa, fechaIterativa,
+                        .add(new VueloProgramado(codigo + "-" + fechaIterativa, fecha, fechaIterativa, fechaIterativa,
                                 hora, null, tipoCarga, tipoModoEmbarque, periodicidad, tipoVuelo, avion,
                                 aeropuertoDestino, aeropuertoSalida, escala));
                 fechaIterativa = fechaIterativa.plusDays(1);
@@ -402,7 +409,7 @@ public class Operador extends UsuarioConDni {
 
                 if (diasRecurrente.contains(fechaIterativa.getDayOfWeek())) {
                     vueloPropuestos.add(
-                            new VueloProgramado(codigo + "-" + fechaIterativa, null, fechaIterativa, fechaIterativa,
+                            new VueloProgramado(codigo + "-" + fechaIterativa, fechaIterativa, fechaIterativa, fechaIterativa,
                                     hora, diasRecurrente, tipoCarga, tipoModoEmbarque, periodicidad, tipoVuelo, avion,
                                     aeropuertoDestino, aeropuertoSalida, escala));
                 }
@@ -551,4 +558,8 @@ public class Operador extends UsuarioConDni {
     private String establecerContrasena() {
     	return sistema.generarContrasena();
     }
+
+	public List<VueloProgramado> getAlternativas() {
+		return this.vuelosAlternativas;
+	}
 }
