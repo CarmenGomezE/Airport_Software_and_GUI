@@ -226,8 +226,6 @@ public class Operador extends UsuarioConDni {
                 fechaUltimaRevision, matricula, capacidadMaxPasajeros);
 
         this.getAerolinea().agregarAvion(nuevoAvion);
-
-        System.out.println("Avión de pasajeros agregado: " + nuevoAvion);
         System.out.println("Total aviones en aerolínea " + this.getAerolinea().getNombre() + ": " 
                             + this.getAerolinea().getAviones().size());
     }
@@ -256,7 +254,6 @@ public class Operador extends UsuarioConDni {
 
         this.getAerolinea().agregarAvion(nuevoAvion);
         
-        System.out.println("Avión de carga agregado: " + nuevoAvion);
         System.out.println("Total aviones en aerolínea " + this.getAerolinea().getNombre() + ": " 
                             + this.getAerolinea().getAviones().size());
     }
@@ -267,7 +264,9 @@ public class Operador extends UsuarioConDni {
      * @param alternativas Vuelo al que se le cambia el estado.
      */
     public void recibirNotificacionOpcionesReprogramacion(List<VueloProgramado> alternativas) {
-        vuelosAlternativas = alternativas;
+        for(VueloProgramado alternativa: alternativas) {
+        	this.vuelosAlternativas.add(alternativa);
+        }
         System.out.println("Recibidas " + alternativas.size() + " alternativas de vuelos para su aceptación.");
 
         timer.schedule(new TimerTask() {
@@ -278,7 +277,7 @@ public class Operador extends UsuarioConDni {
         }, gestor.getTiempoAceptarPropuesta() * 60 * 1000);
     }
 
-    /**
+	/**
      * Método para aceptar una opción reprogramada.
      * 
      * @param vuelo Vuelo que se acepta.
@@ -560,6 +559,13 @@ public class Operador extends UsuarioConDni {
     }
 
 	public List<VueloProgramado> getAlternativas() {
-		return this.vuelosAlternativas;
+		if(this.vuelosAlternativas==null) {
+			System.out.println("No hay aternativas propuestas.");
+			return null;
+		}
+		else {
+			return this.vuelosAlternativas;
+		}
+		
 	}
 }

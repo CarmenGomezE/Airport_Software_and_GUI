@@ -56,43 +56,44 @@ public class AirportManagerMain {
         System.out.println("\n*********************************************************************************************************************");
         System.out.println("\n1.- Dar de alta elementos del aeropuerto.");
         darDeAlta();
-
+        
         System.out.println("\n*********************************************************************************************************************");
-        System.out.println("\n2.- Programar vuelos y compartirlos.");
-        programarVuelos();
-        compartirVuelosProgramados();
-
+        System.out.println("\n2.- Configurar datos del aeropuerto propio.");
+        configurarDatosAeropuertoPropio();
+        resetearDatosAeropuertoPropio();
+        
         System.out.println("\n*********************************************************************************************************************");
         System.out.println("\n3.- Iniciar y cerrar sesión.");
         inicioSesion();
         cierreSesion();
+        
+        System.out.println("\n*********************************************************************************************************************");
+        System.out.println("\n4.- Programar vuelos y compartirlos.");
+        programarVuelos();
+        compartirVuelosProgramados();
 
         System.out.println("\n*********************************************************************************************************************");
-        System.out.println("\n4.- Ver estadísticas.");
-        verEstadisticas();
-
-        System.out.println("\n*********************************************************************************************************************");
-        System.out.println("\n5.- Buscar vuelos.");
-        buscarVuelos();
-
-        System.out.println("\n*********************************************************************************************************************");
-        System.out.println("\n6.- Ver y recargar la lista de vuelos del día y sus estados.");
-        verListaVuelosDia();
-
-        System.out.println("\n*********************************************************************************************************************");
-        System.out.println("\n7.- Notificaciones.");
+        System.out.println("\n5.- Notificaciones.");
         recibirNotificaciones();
-
+        
         System.out.println("\n*********************************************************************************************************************");
-        System.out.println("\n8.- Configurar datos del aeropuerto propio.");
-        configurarDatosAeropuertoPropio();
-
+        System.out.println("\n6.- Buscar vuelos.");
+        buscarVuelos();
+        
         System.out.println("\n*********************************************************************************************************************");
-        System.out.println("\n9.- Cambiar el estado de los vuelos.");
+        System.out.println("\n7.- Cambiar el estado de los vuelos.");
         cambiarEstadoVueloContorlador();
         cambiarEstadoVueloOperador();
         cambiarEstadoVueloAutomatico();
-
+        
+        System.out.println("\n*********************************************************************************************************************");
+        System.out.println("\n8.- Ver y recargar la lista de vuelos del día y sus estados.");
+        verListaVuelosDia();
+        
+        System.out.println("\n*********************************************************************************************************************");
+        System.out.println("\n9.- Ver estadísticas.");
+        verEstadisticas();
+        
         System.out.println("\n*********************************************************************************************************************");
         System.out.println("\n10.- Emisión y pago de facturas.");
         emisionFacturas();
@@ -110,6 +111,7 @@ public class AirportManagerMain {
         System.out.println("\n*********************************************************************************************************************");
         System.out.println("\nFinalizando simulación...");
     }
+
 
 	public static void vaciarArchivo(String archivo) {
         try {
@@ -329,7 +331,9 @@ public class AirportManagerMain {
     	
     	try {
     	    System.out.println("Iniciando gestiónde alternativas del Operador.");
-    	    operadorIberia.aceptarAlternativa(operadorIberia.getAlternativas().get(0));
+    	    if(operadorIberia.getAlternativas()!=null) {
+    	    	operadorIberia.aceptarAlternativa(operadorIberia.getAlternativas().get(0));
+    	    }
     	    System.out.println("Gestión de vuelos completada con éxito.");
     	} catch (AvionNoDisponibleException e) {
 			// TODO Auto-generated catch block
@@ -419,20 +423,58 @@ public class AirportManagerMain {
 	}
 
 	private static void configurarDatosAeropuertoPropio() {
-		/**
-    	List<Temporada> temporadas = new ArrayList<>();
-    	temporadas.add(new Temporada("01/06", "10:00", "20:00", "30/09"));
-    	
-    	/**Modificar aeropuerto propio */
-    	/**try {
-    		System.out.println("Aeropuerto antes de configuración. Número de temporadas:"+airportManager.getAeropuerto().getTemporadas().size());
-    	    airportManager.getGestor().configurarAeropuertoPropio("Aeropuerto Adolfo Suárez Madrid-Barajas", "MAD", "Madrid", "España", 
-    	                                                          10.5, ZoneOffset.ofHours(0), 2, DireccionRelativaCiudad.ESTE, temporadas);
-    	    System.out.println("Aeropuerto propio configurado correctamente, se ha añadido una temporada. Nuevo número de temporadas:"+airportManager.getAeropuerto().getTemporadas().size());
-    	} catch (TemporadasSolapadasException e) {
-    	    System.err.println("Error al configurar el aeropuerto: " + e.getMessage());
-    	}*/
+		System.out.println("\nIniciando configuración del aeropuerto: "+airportManager.getAeropuerto().getNombre());
+
+        System.out.println("Nombre del aeropuerto antes de la configuración:" + airportManager.getAeropuerto().getNombre());
+        airportManager.getGestor().configurarAeropuertoPropioNombre("Heathrow");
+        System.out.println("Nombre del aeropuerto después de la configuración: "+ airportManager.getAeropuerto().getNombre());
+
+        System.out.println("Código del aeropuerto antes de la configuración:" + airportManager.getAeropuerto().getCodigo());
+        airportManager.getGestor().configurarAeropuertoPropioCodigo("LHR");
+        System.out.println("Código del aeropuerto después de la configuración: "+ airportManager.getAeropuerto().getCodigo());
+
+        System.out.println("Ciudad del aeropuerto antes de la configuración:" + airportManager.getAeropuerto().getCiudad());
+        airportManager.getGestor().configurarAeropuertoPropioCiudad("Londres");
+        System.out.println("Ciudad del aeropuerto después de la configuración: "+ airportManager.getAeropuerto().getCiudad());
+
+        System.out.println("País del aeropuerto antes de la configuración:" + airportManager.getAeropuerto().getPais());
+        airportManager.getGestor().configurarAeropuertoPropioPais("Reino Unido");
+        System.out.println("País del aeropuerto después de la configuración: "+ airportManager.getAeropuerto().getPais());
+
+        System.out.println("Distancia ciudad del aeropuerto antes de la configuración:" + airportManager.getAeropuerto().getDistanciaCiudad());
+        airportManager.getGestor().configurarAeropuertoPropioDistanciaCiudad(24);
+        System.out.println("Distancia ciudad del aeropuerto después de la configuración: "+ airportManager.getAeropuerto().getDistanciaCiudad());
+       
+        System.out.println("Diferencia horaria del aeropuerto antes de la configuración:" + airportManager.getAeropuerto().getDiferenciaHoraria());
+        airportManager.getGestor().configurarAeropuertoPropioDiferenciaHoraria(ZoneOffset.ofHours(+1));
+        System.out.println("Diferencia horaria del aeropuerto después de la configuración: "+ airportManager.getAeropuerto().getDiferenciaHoraria());
+
+        System.out.println("Número de temporadas del aeropuerto antes de la configuración:" + airportManager.getAeropuerto().getTemporadas().size());
+        airportManager.getGestor().configurarAeropuertoPropioNumTemporadas(3);
+        try {
+			airportManager.getAeropuerto().agregarTemporada(new Temporada("01/01", "10:00", "20:00", "30/06"));
+		 } catch (TemporadasSolapadasException e) {
+			  System.out.println("Error al configurar el aeropuerto: " + e.getMessage());
+		 }
+        System.out.println("Número de temporadas del aeropuerto después de la configuración: "+ airportManager.getAeropuerto().getTemporadas().size());
+
+        System.out.println("Dirección ciudad del aeropuerto antes de la configuración:" + airportManager.getAeropuerto().getDireccionCiudad());
+        airportManager.getGestor().configurarAeropuertoPropioDireccionCiudad(DireccionRelativaCiudad.SUR);
+        System.out.println("Dirección ciudad  del aeropuerto después de la configuración: "+ airportManager.getAeropuerto().getDireccionCiudad());
 		
+
+		System.out.println("Procedimiento de configuración del aeropuerto finalizado.");
+	}
+	
+	private static void resetearDatosAeropuertoPropio() {
+		airportManager.getGestor().configurarAeropuertoPropioNombre("Aeropuerto Adolfo Suarez Madrid-Barajas");
+        airportManager.getGestor().configurarAeropuertoPropioCodigo("MAD");
+        airportManager.getGestor().configurarAeropuertoPropioCiudad("Madrid");
+        airportManager.getGestor().configurarAeropuertoPropioPais("España");
+        airportManager.getGestor().configurarAeropuertoPropioDistanciaCiudad(10.5);
+        airportManager.getGestor().configurarAeropuertoPropioDiferenciaHoraria(ZoneOffset.ofHours(0));
+        airportManager.getGestor().configurarAeropuertoPropioNumTemporadas(2);
+        airportManager.getGestor().configurarAeropuertoPropioDireccionCiudad( DireccionRelativaCiudad.ESTE);
 	}
 
 	private static void cambiarEstadoVueloContorlador() {

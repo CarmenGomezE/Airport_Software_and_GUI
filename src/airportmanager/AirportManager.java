@@ -43,8 +43,8 @@ public class AirportManager implements Serializable {
 
             try {
                 aeropuerto = new AeropuertoPropio("Aeropuerto Adolfo Suarez Madrid-Barajas", "MAD", "Madrid", "España", 10.5, ZoneOffset.ofHours(0), 2, DireccionRelativaCiudad.ESTE);
-                aeropuerto.agregarTemporada(new Temporada("01/06", "10:00", "20:00", "30/09"));
-                aeropuerto.agregarTemporada(new Temporada("01/10", "08:00", "24:00", "30/05"));
+                aeropuerto.agregarTemporada(new Temporada("01/07", "10:00", "20:00", "30/09"));
+                aeropuerto.agregarTemporada(new Temporada("01/10", "08:00", "24:00", "31/12"));
             } catch (TemporadasSolapadasException e) {
                 System.out.println("Error al configurar el aeropuerto: " + e.getMessage());
             }
