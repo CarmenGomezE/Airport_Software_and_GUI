@@ -267,7 +267,7 @@ public class Operador extends UsuarioConDni {
         for(VueloProgramado alternativa: alternativas) {
         	this.vuelosAlternativas.add(alternativa);
         }
-        recibirNotificacion(new Notificacion("Recibidas " + alternativas.size() + " alternativas de vuelos para su aceptación.", TipoNotificacion.OPCIONES_REPROGRAMAR_VUELO);
+        recibirNotificacion(new Notificacion("Recibidas " + alternativas.size() + " alternativas de vuelos para su aceptación.", TipoNotificacion.OPCIONES_REPROGRAMAR_VUELO));
 
         timer.schedule(new TimerTask() {
             @Override
@@ -427,7 +427,7 @@ public class Operador extends UsuarioConDni {
      */
     public void recibirNotificacionFacturaEmitida(Factura factura) {
         getAerolinea().addFactura(factura);
-        recibirNotificacion(new Notificacion("Factura " + factura.getCodigo() + " emitida.", TipoNotificacion.FACTURA_EMITIDA));
+        recibirNotificacion(new Notificacion("Factura " + factura.getInvoiceIdentifier() + " emitida.", TipoNotificacion.FACTURA_EMITIDA));
     }
 
     /**
