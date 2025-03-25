@@ -10,13 +10,15 @@ import java.time.*;
  * @author Claudia Municio, Carmen Gómez, María Pozo
  */
 public class Notificacion implements Serializable {
+    /** Formato de la fecha y hora de la notificación */
+    DateTimeFormatter formatoFechaHora = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
 	/** Número de versión de la clase */
 	private static final long serialVersionUID = 1L;
 
     /** Mensaje de la notificación */
     private String mensaje;
-    /** Fecha de la notificación */
+    /** Fecha y hora de la notificación */
     private LocalDateTime fecha;
     /** Tipo de la notificación */
     private TipoNotificacion tipoNotificacion;
@@ -65,7 +67,7 @@ public class Notificacion implements Serializable {
      * Método para imprimir una notificación.
      */
     public String toString() {
-    	return "Notificación de " + tipoNotificacion + " a las " + fecha + ":\n" + mensaje;
+    	return "Notificación de " + tipoNotificacion + " a las " + fecha.format(formatoFechaHora) + ":\n" + mensaje;
     }
     
 }
