@@ -342,7 +342,7 @@ public class AirportManagerMain {
 
     	try {
     	    System.out.println("Proponiendo vuelo AFR3101...");
-    	    operadorIberia.proponerVuelo("AFR3101", LocalDate.now().plusDays(31), LocalDate.now().plusDays(31), LocalDate.now().plusDays(33),
+    	    operadorAirFrance.proponerVuelo("AFR3101", LocalDate.now().plusDays(31), LocalDate.now().plusDays(31), LocalDate.now().plusDays(33),
     	            LocalTime.of(10, 0), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
     	            Periodicidad.DIARIO, TipoVuelo.SALIDA, avionF_GKXC, aeMallorca, aePropio, null);
     	    System.out.println("Vuelo AFR3101 propuesto correctamente.");
@@ -363,7 +363,7 @@ public class AirportManagerMain {
 
     	try {
     	    System.out.println("Proponiendo vuelo AFR7107...");
-    	    operadorIberia.proponerVuelo("AFR7107", LocalDate.now().plusDays(31), LocalDate.now(), LocalDate.now().plusDays(2),
+    	    operadorAirFrance.proponerVuelo("AFR7107", LocalDate.now().plusDays(31), LocalDate.now(), LocalDate.now().plusDays(2),
     	            LocalTime.of(10, 0), null, TipoCarga.PASAJEROS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
     	            Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionF_GKXC, aeTokio, aePropio, null);
     	    System.out.println("Vuelo AFR7107 propuesto correctamente.");
@@ -380,13 +380,13 @@ public class AirportManagerMain {
 	    System.out.println("Gestión de vuelos completada con éxito.");
 	    
 	    System.out.println("Iniciando gestión de alternativas del Operador.");
-	    if(!operadorIberia.getAlternativas().isEmpty()) {
-	    	operadorIberia.aceptarVuelo(operadorIberia.getAlternativas().get(0));
+	    if(!operadorAirFrance.getAlternativas().isEmpty()) {
+	    	operadorAirFrance.aceptarVuelo(operadorAirFrance.getAlternativas().get(0));
 	    	System.out.println("Alternativa aceptada.");
 	    }
 	   
-    	System.out.println("\nMostrando notificaciones del operador de Iberia...");
-    	operadorIberia.verNotificaciones();
+    	System.out.println("\nMostrando notificaciones del operador de AirFrance...");
+    	operadorAirFrance.verNotificaciones();
     	
     	
     	System.out.println("\nIniciando propuestas de vuelos que generan errores.");
@@ -401,6 +401,7 @@ public class AirportManagerMain {
     	    System.err.println("Error al proponer el vuelo AFR2993: " + e.getMessage());
     	}
     	
+    	/**
     	System.out.println("\nSe repite la prueba forzando al sistema a enviar alternativas, para ello rango en el que se puede mover=0.");
     	Gestor.setRangoMinutosMaximoCambioVuelo(0);
     	System.out.println(Gestor.rangoMinutosMaximoCambioVuelo);
@@ -471,7 +472,7 @@ public class AirportManagerMain {
 	    }
 	   
     	System.out.println("\nMostrando notificaciones del operador de Iberia...");
-    	operadorIberia.verNotificaciones();
+    	operadorIberia.verNotificaciones();*/
     	
     	System.out.println("[\nLista de vuelos aceptados:");
     	for (VueloProgramado v : airportManager.getAeropuerto().getVuelosAceptados()) {

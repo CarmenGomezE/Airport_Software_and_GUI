@@ -588,9 +588,7 @@ public class Gestor extends Usuario {
             }
         }
     	for(VueloProgramado vuelo: vuelosGestionar) {
-    		System.out.println("aaaaa");
     		for(Vuelo vueloAceptado: getAeropuerto().getVuelosAceptados()) {
-    			System.out.println("bbbbb");
     			 for (Terminal terminal : aeropuerto.getTerminales()) {
 	                if ((vuelo.getTipoCarga() == TipoCarga.MERCANCIAS && !(terminal instanceof TerminalMercancias)) ||
 	                        (vuelo.getTipoCarga() == TipoCarga.PASAJEROS && !(terminal instanceof TerminalPasajeros))) {
@@ -600,7 +598,6 @@ public class Gestor extends Usuario {
 	                	/** El nuevo vuelo coincide en terminal, controlador y hora con alguno existente*/
 	                	if (vuelo.getFecha().equals(vueloAceptado.getFecha()) && vuelo.getHora().equals(vueloAceptado.getHora())
 	                	&& terminal.equals(vueloAceptado.getTerminal()) && controlador.equals(vueloAceptado.getControlador())) {
-	                		System.out.println("El vuelo coincide con alguno ya programado.");
 	                		if(sePuedeMover(vuelo, terminal, controlador)) {
 	                			System.out.println("El vuelo coincide con alguno ya programado, se ha movido.");
 	                        }
