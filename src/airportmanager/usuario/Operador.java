@@ -25,6 +25,7 @@ import src.airportmanager.*;
 
 import java.util.*;
 import java.time.*;
+import java.time.temporal.ChronoUnit;
 
 /**
  * La clase Operador representa un tipo de usuario con dni, este usuario es el
@@ -296,7 +297,7 @@ public class Operador extends UsuarioConDni {
                     "No se puede hacer escala en el aeropuerto de salida sin pasar por el de llegada.");
 	        }
 	
-        	if (Duration.between(escala.getHoraSalida(), escala.getHoraLlegada()).toMinutes() < 60) {
+        	if (ChronoUnit.MINUTES.between(escala.getHoraLlegada(), escala.getHoraSalida()) < 60) {
                 throw new IllegalArgumentException("La escala debe ser de al menos una hora.");
             }
         }
@@ -343,7 +344,7 @@ public class Operador extends UsuarioConDni {
     }
     
     public void recibirAlternativas(List<Vuelo> alternativas) {
-    	recibirNotificacion(new Notificacion("Nuevo vuelo propuesto", TipoNotificacion.SOLICITUD_VUELO_PROGRAMADO));
+    	recibirNotificacion(new Notificacion("Nueva alternativa recibida", TipoNotificacion.OPCIONES_REPROGRAMAR_VUELO));
     	iniciarTemporizador();
     	this.vuelosAlternativas=alternativas;
     }
@@ -525,13 +526,10 @@ public class Operador extends UsuarioConDni {
     }
 
 	public List<Vuelo> getAlternativas() {
-		if(this.vuelosAlternativas==null) {
+		if(this.vuelosAlternativas.isEmpty()) {
 			System.out.println("No hay aternativas propuestas.");
-			return null;
 		}
-		else {
-			return this.vuelosAlternativas;
-		}
+		return this.vuelosAlternativas;
 		
 	}
 }

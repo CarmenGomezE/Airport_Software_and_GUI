@@ -318,15 +318,20 @@ public class AirportManagerMain {
 	    gestorBarajas.gestionarVuelos(gestorBarajas.getVuelosPropuestos());
 	    System.out.println("Gestión de vuelos completada con éxito.");
  
-    	
+	   
     	System.out.println("\nMostrando notificaciones del operador de Iberia...");
     	operadorIberia.verNotificaciones();
     	
 
-	    System.out.println("Iniciando gestiónde alternativas del Operador.");
-	    if(operadorIberia.getAlternativas()!=null) {
+	    System.out.println("Iniciando gestión de alternativas del Operador.");
+	    if(!operadorIberia.getAlternativas().isEmpty()) {
 	    	operadorIberia.aceptarVuelo(operadorIberia.getAlternativas().get(0));
+	    	System.out.println("Alternativa aceptada.");
 	    }
+	    
+	    System.out.println("\nMostrando notificaciones del operador de Iberia...");
+    	operadorIberia.verNotificaciones();
+	    
 	    System.out.println("Gestión de vuelos completada con éxito.");
 
     	System.out.println("\nIniciando la propuesta del vuelos del Operador de AirFrance.");
@@ -355,7 +360,7 @@ public class AirportManagerMain {
     	    operadorAirFrance.proponerVuelo("AFR8802", LocalDate.now(), LocalDate.now(), LocalDate.now().plusDays(2),
     	            LocalTime.of(17, 0), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
     	            Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionF_GKXC, aePropio, aeFKennedy,
-    	            new Escala(aePropio, aeTokio, LocalTime.of(17, 0), LocalTime.of(19, 0)));
+    	            new Escala(aePropio, aeTokio, LocalTime.of(17, 0), LocalTime.of(23, 0)));
     	    System.out.println("Vuelo AFR8802 propuesto correctamente.");
     	} catch (Exception e) {
     	    System.err.println("Error al proponer el vuelo AFR8802: " + e.getMessage());
@@ -370,6 +375,23 @@ public class AirportManagerMain {
     	} catch (Exception e) {
     	    System.err.println("Error al proponer el vuelo AFR7107: " + e.getMessage());
     	}
+    	
+    	System.out.println("\nMostrando notificaciones del gestor de Barajas...");
+    	gestorBarajas.verNotificaciones();
+    	
+
+	    System.out.println("Iniciando gestión de vuelo del Gestor.");
+	    gestorBarajas.gestionarVuelos(gestorBarajas.getVuelosPropuestos());
+	    System.out.println("Gestión de vuelos completada con éxito.");
+	    
+	    System.out.println("Iniciando gestión de alternativas del Operador.");
+	    if(!operadorIberia.getAlternativas().isEmpty()) {
+	    	operadorIberia.aceptarVuelo(operadorIberia.getAlternativas().get(0));
+	    	System.out.println("Alternativa aceptada.");
+	    }
+	   
+    	System.out.println("\nMostrando notificaciones del operador de Iberia...");
+    	operadorIberia.verNotificaciones();
     	
     	
     	System.out.println("\nIniciando propuestas de vuelos que generan errores.");
@@ -439,17 +461,27 @@ public class AirportManagerMain {
     	    System.err.println("Error al proponer el vuelo IBE3371: " + e.getMessage());
     	}
     	
-    	System.out.println("[DEBUG] Lista de vuelos propuestos:");
-    	for (VueloProgramado v : gestorBarajas.getVuelosPropuestos()) {
-    	    System.out.println("[DEBUG] Vuelo: " + v.getCodigo() + " - Fecha: " + v.getFecha() + " - Hora: " + v.getHora());
-    	}
-    	System.out.println("[DEBUG] Lista de vuelos aceptados:");
-    	for (VueloProgramado v : airportManager.getAeropuerto().getVuelosAceptados()) {
-    	    System.out.println("[DEBUG] Vuelo: " + v.getCodigo() + " - Fecha: " + v.getFecha() + " - Hora: " + v.getHora());
-    	}
     	System.out.println("\nMostrando notificaciones del gestor de Barajas...");
     	gestorBarajas.verNotificaciones();
     	
+
+	    System.out.println("Iniciando gestión de vuelo del Gestor.");
+	    gestorBarajas.gestionarVuelos(gestorBarajas.getVuelosPropuestos());
+	    System.out.println("Gestión de vuelos completada con éxito.");
+	    
+	    System.out.println("Iniciando gestión de alternativas del Operador.");
+	    if(!operadorIberia.getAlternativas().isEmpty()) {
+	    	operadorIberia.aceptarVuelo(operadorIberia.getAlternativas().get(0));
+	    	System.out.println("Alternativa aceptada.");
+	    }
+	   
+    	System.out.println("\nMostrando notificaciones del operador de Iberia...");
+    	operadorIberia.verNotificaciones();
+    	
+    	System.out.println("[\nLista de vuelos aceptados:");
+    	for (VueloProgramado v : airportManager.getAeropuerto().getVuelosAceptados()) {
+    	    System.out.println("[DEBUG] Vuelo: " + v.getCodigo() + " - Fecha: " + v.getFecha() + " - Hora: " + v.getHora());
+    	}
     	
     	System.out.println("Proceso de propuesta de vuelos finalizado.");
 	}
