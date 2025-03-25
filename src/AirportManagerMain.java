@@ -98,10 +98,7 @@ public class AirportManagerMain {
         System.out.println("\n10.- Emisión y pago de facturas.");
         emisionFacturas();
         pagoFacturas();
-  
         
-        
-
         System.out.println("\n*********************************************************************************************************************");
 
         System.out.println("\n11.-Guardamos el estado en un fichero.");
