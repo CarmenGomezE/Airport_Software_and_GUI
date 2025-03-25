@@ -63,7 +63,7 @@ public class Escala implements Serializable {
      * @return Hora de llegada.
      */
     public LocalTime getHoraLlegada() {
-        return this.horaSalida;
+        return this.horaLlegada;
     }
 
     /**
@@ -72,7 +72,7 @@ public class Escala implements Serializable {
      * @return Hora de salida.
      */
     public LocalTime getHoraSalida() {
-        return this.horaLlegada;
+        return this.horaSalida;
     }
 
 }
