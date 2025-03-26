@@ -1,5 +1,7 @@
 package src.airportmanager.terminal;
 
+import java.util.List;
+
 /**
  * La clase TerminalPasajeros representa las terminales de pasajeros del
  * aeropuerto.
@@ -21,7 +23,7 @@ public class TerminalPasajeros extends Terminal {
      * @param numeroMaxPasajeros Número máximo de pasajeros de la terminal de
      *                           pasajeros.
      */
-    public TerminalPasajeros(String codigo, PuertaEmbarque puertaEmbarque, int numeroMaxPasajeros) {
+    public TerminalPasajeros(String codigo, List<PuertaEmbarque> puertaEmbarque, int numeroMaxPasajeros) {
         super(codigo, puertaEmbarque);
         this.numeroMaxPasajeros = numeroMaxPasajeros;
     }

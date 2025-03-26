@@ -1,5 +1,7 @@
 package src.airportmanager.terminal;
 
+import java.util.List;
+
 /**
  * La clase TerminalMercancias representa las terminales de mercancias del
  * aeropuerto.
@@ -17,7 +19,7 @@ public class TerminalMercancias extends Terminal {
      * @param puertaEmbarque Una de las puertas de embarque de la terminal de
      *                       mercancías.
      */
-    public TerminalMercancias(String codigo, PuertaEmbarque puertaEmbarque) {
+    public TerminalMercancias(String codigo, List<PuertaEmbarque> puertaEmbarque) {
         super(codigo, puertaEmbarque);
     }
 }

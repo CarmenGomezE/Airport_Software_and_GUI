@@ -19,6 +19,8 @@ import src.airportmanager.exceptions.VueloNoDelUsuarioException;
 import src.airportmanager.hangar.Hangar;
 import src.airportmanager.hangar.HangarMercancias;
 import src.airportmanager.hangar.HangarPasajeros;
+import src.airportmanager.notificacion.Notificacion;
+import src.airportmanager.notificacion.TipoNotificacion;
 import src.airportmanager.pista.Pista;
 import src.airportmanager.pista.TipoPista;
 import src.airportmanager.terminal.Finger;
@@ -664,5 +666,28 @@ public class ControladorAereo extends UsuarioConDni {
         }
 
         return false;
+    }
+    
+    @Override
+    public void recibirNotificacion(Notificacion notificacion) {
+    	
+		if(notificacion.getTipoNotificacion()==TipoNotificacion.CAMBIO_ESTADO_VUELO) {
+			 notificaciones.add(notificacion);
+			 System.out.println("Nueva notificación: " + notificacion.getMensaje());
+		}
+    }
+    
+    /**
+     * Método para recibir una notificación de cambio de estado de un vuelo.
+     * 
+     * @param vuelo El vuelo del que trata la notificación.
+     */
+	@Override
+    public void recibirNotificacionCambioEstado(Vuelo vuelo) {
+        String mensaje = "El vuelo " + vuelo.getCodigo() + " ha cambiado su estado a " + vuelo.getEstado() + ".";
+        Notificacion notificacion = new Notificacion(mensaje, TipoNotificacion.CAMBIO_ESTADO_VUELO);
+	    if(vuelo.getTerminal().equals(this.terminal)) {
+	        recibirNotificacion(notificacion);
+		}
     }
 }

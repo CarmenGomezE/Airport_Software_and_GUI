@@ -134,7 +134,7 @@ public class EstadisticasOperador implements Serializable {
      * @param mes Mes del que se devuelve el tiempo medio de retraso.
      * @return Tiempo medio de retraso por mes.
      */
-    public double tiempoMedioRetrasoPorMes(Month mes) {
+    public double getTiempoMedioRetrasoPorMes(Month mes) {
         return tiempoMedioRetrasoPorMes.getOrDefault(mes, 0.0);
     }
 
@@ -145,7 +145,7 @@ public class EstadisticasOperador implements Serializable {
      *                      retraso.
      * @return Tiempo medio de retraso por franja horaria.
      */
-    public double tiempoMedioRetrasoPorFranjaHoraria(ZoneId franjaHoraria) {
+    public double getTiempoMedioRetrasoPorFranjaHoraria(ZoneId franjaHoraria) {
         return tiempoMedioRetrasoPorFranjaHoraria.getOrDefault(franjaHoraria, 0.0);
     }
 
@@ -155,7 +155,7 @@ public class EstadisticasOperador implements Serializable {
      * @param vuelo Vuelo del que se devuelve el tiempo medio de retraso.
      * @return Tiempo medio de retraso por vuelo.
      */
-    public double tiempoMedioRetrasoPorVuelo(Vuelo vuelo) {
+    public double getTiempoMedioRetrasoPorVuelo(Vuelo vuelo) {
         return tiempoMedioRetrasoPorVuelo.getOrDefault(vuelo, 0.0);
     }
 
@@ -180,7 +180,7 @@ public class EstadisticasOperador implements Serializable {
      * 
      */
     public void imprimirTiempoMedioRetraso(Month mes) {
-        System.out.println("Tiempo medio de retraso: " + tiempoMedioRetrasoPorMes(mes) + " minutos.");
+        System.out.println("Tiempo medio de retraso: " + getTiempoMedioRetrasoPorMes(mes) + " minutos.");
     }
 
     /**
@@ -189,7 +189,7 @@ public class EstadisticasOperador implements Serializable {
      */
     public void imprimirTiempoMedioRetraso(ZoneId franjaHoraria) {
         System.out
-                .println("Tiempo medio de retraso: " + tiempoMedioRetrasoPorFranjaHoraria(franjaHoraria) + " minutos.");
+                .println("Tiempo medio de retraso: " + getTiempoMedioRetrasoPorFranjaHoraria(franjaHoraria) + " minutos.");
     }
 
     /**
@@ -197,6 +197,6 @@ public class EstadisticasOperador implements Serializable {
      * 
      */
     public void imprimirTiempoMedioRetraso(Vuelo vuelo) {
-        System.out.println("Tiempo medio de retraso:" + tiempoMedioRetrasoPorVuelo(vuelo) + " minutos.");
+        System.out.println("Tiempo medio de retraso:" + getTiempoMedioRetrasoPorVuelo(vuelo) + " minutos.");
     }
 }

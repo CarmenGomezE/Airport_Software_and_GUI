@@ -6,6 +6,7 @@ import java.util.*;
 import src.airportmanager.hangar.Hangar;
 import src.airportmanager.terminal.Finger;
 import src.airportmanager.terminal.PuertaEmbarque;
+import src.airportmanager.terminal.Terminal;
 import src.airportmanager.terminal.ZonaAparcamiento;
 import src.airportmanager.usuario.Gestor;
 
@@ -125,7 +126,8 @@ public class EstadisticasGestor implements Serializable {
      */
     public void imprimirUsoMedioPuertasEmbarque() {
         System.out.println("Estadísticas de uso de las puertas de embarque:");
-        for (PuertaEmbarque puerta : gestor.getAeropuerto().getPuertasEmbarque()) {
+        for (Terminal terminal : gestor.getAeropuerto().getTerminales()) {
+        	for(PuertaEmbarque puerta: terminal.getPuertasEmbarque())
             System.out.println("Puerta de embarque: " + puerta.getId() + ", Tiempo de uso medio diario: "
                     + getUsoMedioDiarioPuertaEmbarque(puerta) + " horas.");
         }

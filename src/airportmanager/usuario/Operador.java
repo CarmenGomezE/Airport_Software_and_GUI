@@ -376,10 +376,6 @@ public class Operador extends UsuarioConDni {
             this.vuelosAlternativas=null;
         }
     }
-    
-    public void recibirNotificacion(Notificacion notificacion) {
-        System.out.println("Notificación recibida: " + notificacion.getMensaje());
-    }
 
     public Gestor getGestor() {
         return gestor;
@@ -532,4 +528,35 @@ public class Operador extends UsuarioConDni {
 		return this.vuelosAlternativas;
 		
 	}
+
+	public List<SolicitudVueloCompartido> getSolicitudesRecibidas() {
+		return this.solicitudesRecibidas;
+	}
+	
+	@Override
+    public void recibirNotificacion(Notificacion notificacion) {
+    	
+		if(notificacion.getTipoNotificacion()==TipoNotificacion.CAMBIO_ESTADO_VUELO || notificacion.getTipoNotificacion()==TipoNotificacion.FACTURA_EMITIDA 
+				|| notificacion.getTipoNotificacion()==TipoNotificacion.OPCIONES_REPROGRAMAR_VUELO || notificacion.getTipoNotificacion()==TipoNotificacion.SOLICITUD_COMPARTIR_VUELO) {
+			 notificaciones.add(notificacion);
+			 System.out.println("Nueva notificación: " + notificacion.getMensaje());
+		}
+    }
+	
+	 /**
+     * Método para recibir una notificación de cambio de estado de un vuelo.
+     * 
+     * @param vuelo El vuelo del que trata la notificación.
+     */
+	@Override
+    public void recibirNotificacionCambioEstado(Vuelo vuelo) {
+		String mensaje = "El vuelo " + vuelo.getCodigo() + " ha cambiado su estado a " + vuelo.getEstado() + ".";
+        Notificacion notificacion = new Notificacion(mensaje, TipoNotificacion.CAMBIO_ESTADO_VUELO);
+        
+		for(Operador o: vuelo.getOperadores()) {
+			if(o==this) {
+				recibirNotificacion(notificacion); 
+			}
+		}
+    }
 }

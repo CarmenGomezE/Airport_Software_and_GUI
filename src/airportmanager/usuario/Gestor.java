@@ -92,8 +92,8 @@ public class Gestor extends Usuario {
      * 
      * @return Sistema de facturación.
      */
-    public SistemaFacturacion establecerSistemaFacturacion() {
-        return new SistemaFacturacion(recargoAvionMercancias, costeBaseVueloSalida, costeBaseVueloLlegada);
+    public void establecerSistemaFacturacion() {
+        this.sistemaFacturacion= new SistemaFacturacion(recargoAvionMercancias, costeBaseVueloSalida, costeBaseVueloLlegada);
 
     }
 
@@ -433,28 +433,22 @@ public class Gestor extends Usuario {
     public void darDeAltaTerminal(String codigo, String tipo, int aforo, List<PuertaEmbarque> puertasEmbarque) {
 
         Terminal terminal;
-        if(puertasEmbarque.size()<1) {
-        	 throw new IllegalArgumentException("La terminal debe tener mínimo una puerta.");
+        if (puertasEmbarque == null || puertasEmbarque.isEmpty()) {
+            throw new IllegalArgumentException("La terminal debe tener al menos una puerta.");
         }
 
         if (tipo.equals("Pasajeros")) {
-            terminal = new TerminalPasajeros(codigo, puertasEmbarque.get(0), aforo);
+            terminal = new TerminalPasajeros(codigo, puertasEmbarque, aforo);
         }
 
         else if (tipo.equals("Mercancías")) {
-            terminal = new TerminalMercancias(codigo, puertasEmbarque.get(0));
+            terminal = new TerminalMercancias(codigo, puertasEmbarque);
         }
 
         else {
             throw new IllegalArgumentException("Tipo de terminal no válido" + tipo);
         }
-
-        for (PuertaEmbarque puerta: puertasEmbarque) {
-            terminal.addPuertaEmbarque(puerta);
-        }
-
         aeropuerto.addTerminal(terminal);
-
     }
 
     /**
@@ -803,7 +797,8 @@ public class Gestor extends Usuario {
      * @param notificacion Notificación que se recibe.
      * 
      */
-    public void recibirNotificaciones(Notificacion notificacion) {
+    @Override
+    public void recibirNotificacion(Notificacion notificacion) {
     	for(TipoNotificacion tipo: getTiposPermitidosNotificaciones() )	{
     		if(notificacion.getTipoNotificacion()==tipo) {
     			 notificaciones.add(notificacion);
@@ -946,6 +941,10 @@ public class Gestor extends Usuario {
 	public static void setRangoMinutosMaximoCambioVuelo(int i) {
 		rangoMinutosMaximoCambioVuelo=i;
 		
+	}
+
+	public SistemaFacturacion getSistemaFacturacion() {
+		return sistemaFacturacion;
 	}
 
 }

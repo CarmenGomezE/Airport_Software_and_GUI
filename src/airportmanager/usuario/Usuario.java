@@ -145,16 +145,16 @@ public abstract class Usuario implements Serializable {
      * Método para imprimir la lista de vuelos del usuario con sus estados.
      */
     public void verListaVuelos() {
-    	LocalDate fecha = LocalDate.now();
-    	System.out.printf("LISTA DE VUELOS DEL DÍA %d%n", fecha.format(formatoFecha));
+        LocalDate fecha = LocalDate.now();
+        System.out.printf("LISTA DE VUELOS DEL DÍA %s%n", fecha.format(formatoFecha)); // Cambio de %d a %s
         System.out.println("+-----------------+----------------------+");
         System.out.println("| Código de Vuelo | Estado del Vuelo     |");
         System.out.println("+-----------------+----------------------+");
 
         for (Vuelo v : getAeropuerto().getVuelosAceptados()) {
-        	if (v.getFecha() == fecha) {
+            if (v.getFecha().equals(fecha)) { // Usar equals() en vez de ==
                 System.out.printf("| %-15s | %-20s |\n", v.getCodigo(), v.getEstado());
-        	}
+            }
         }
 
         System.out.println("+-----------------+----------------------+");
@@ -210,21 +210,24 @@ public abstract class Usuario implements Serializable {
             return;
         }
 
-        System.out.println("+-----------------+----------------------+");
-        System.out.println("| Código de Vuelo | Estado del Vuelo     |");
-        System.out.println("+-----------------+----------------------+");
+        String formato = "| %-19s | %-16s |\n";
+        
+        System.out.println("+---------------------+------------------+");
+        System.out.printf(formato, "Código de Vuelo", "Estado del Vuelo");
+        System.out.println("+---------------------+------------------+");
 
         for (Vuelo v : vuelosEncontrados) {
-            System.out.printf("| %-15s | %-20s |\n", v.getCodigo(), v.getEstado());
+            System.out.printf(formato, v.getCodigo(), v.getEstado());
         }
 
-        System.out.println("+-----------------+----------------------+");
+        System.out.println("+---------------------+------------------+");
+        System.out.println("+---------------------+------------------+");
     }
 
     private List<Vuelo> buscarVueloPorCodigo(String codigo) {
         List<Vuelo> vuelosEncontrados = new ArrayList<>();
 
-        for (Vuelo v : vuelosQueControla) {
+        for (Vuelo v : aeropuerto.getVuelosAceptados()) {
             if (v.getCodigo().equals(codigo)) {
                 vuelosEncontrados.add(v);
             }
@@ -236,7 +239,7 @@ public abstract class Usuario implements Serializable {
     private List<Vuelo> buscarVueloPorOrigen(String origen) {
         List<Vuelo> vuelosEncontrados = new ArrayList<>();
 
-        for (Vuelo v : vuelosQueControla) {
+        for (Vuelo v : aeropuerto.getVuelosAceptados()) {
             if (v.getTipoVuelo() == TipoVuelo.LLEGADA && v.getAeropuertoDestino().getPais().equals(origen)) {
                 vuelosEncontrados.add(v);
             }
@@ -248,7 +251,7 @@ public abstract class Usuario implements Serializable {
     private List<Vuelo> buscarVueloPorDestino(String destino) {
         List<Vuelo> vuelosEncontrados = new ArrayList<>();
 
-        for (Vuelo v : vuelosQueControla) {
+        for (Vuelo v : aeropuerto.getVuelosAceptados()) {
             if (v.getTipoVuelo() == TipoVuelo.SALIDA && v.getAeropuertoDestino().getPais().equals(destino)) {
                 vuelosEncontrados.add(v);
             }
@@ -262,7 +265,7 @@ public abstract class Usuario implements Serializable {
 
         LocalDate fechaVuelo = LocalDate.parse(fecha, formatoFecha);
 
-        for (Vuelo v : vuelosQueControla) {
+        for (Vuelo v : aeropuerto.getVuelosAceptados()) {
             if (v.getFecha().equals(fechaVuelo)) {
                 vuelosEncontrados.add(v);
             }
@@ -276,7 +279,7 @@ public abstract class Usuario implements Serializable {
 
         LocalTime horaVuelo = LocalTime.parse(horaSalida, formatoHora);
 
-        for (Vuelo v : vuelosQueControla) {
+        for (Vuelo v : aeropuerto.getVuelosAceptados()) {
             if (v.getTipoVuelo() == TipoVuelo.SALIDA && v.getHora().equals(horaVuelo)) {
                 vuelosEncontrados.add(v);
             }
@@ -290,7 +293,7 @@ public abstract class Usuario implements Serializable {
 
         LocalTime horaVuelo = LocalTime.parse(horaLlegada, formatoHora);
 
-        for (Vuelo v : vuelosQueControla) {
+        for (Vuelo v : aeropuerto.getVuelosAceptados()) {
             if (v.getTipoVuelo() == TipoVuelo.LLEGADA && v.getHora().equals(horaVuelo)) {
                 vuelosEncontrados.add(v);
             }
@@ -302,7 +305,7 @@ public abstract class Usuario implements Serializable {
     private List<Vuelo> buscarVueloPorTerminal(String codigoTerminal) {
         List<Vuelo> vuelosTerminal = new ArrayList<>();
 
-        for (Vuelo v : vuelosQueControla) {
+        for (Vuelo v : aeropuerto.getVuelosAceptados()) {
             if (v.getControlador().getTerminal().getCodigo().equals(codigoTerminal)) {
                 vuelosTerminal.add(v);
             }
