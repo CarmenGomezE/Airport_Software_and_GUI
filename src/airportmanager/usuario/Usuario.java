@@ -165,6 +165,9 @@ public abstract class Usuario implements Serializable {
      */
     public void recargarListaVuelos() {
     	System.out.println("Refrescando lista de vuelos...");
+		 for (Vuelo v : aeropuerto.getVuelosAceptados()) {
+		        sistema.actualizarEstadoVueloAutomatico(v);
+		    }
     	verListaVuelos();
     }
 

@@ -40,8 +40,19 @@ public class AirportManagerMain {
      * @throws UsuarioNoEncontradoException 
      * @throws OperacionInvalidaException 
      * @throws SolicitudInvalidaExcepcion 
+     * @throws CargaAvionEquivocadaException 
+     * @throws NoHangaresDisponiblesException 
+     * @throws NoModosPuertasEmbarqueDisponiblesException 
+     * @throws NoFingerMercanciasException 
+     * @throws VueloEnMenosDe1HoraException 
+     * @throws NoVueloEnMenosDe1HoraException 
+     * @throws NoPistasDisponiblesException 
+     * @throws EstadoEquivocadoException 
+     * @throws EstadoNoDelUsuarioException 
+     * @throws VueloNoDelUsuarioException 
+     * @throws IllegalArgumentException 
      */
-    public static void main(String[] args) throws UsuarioNoEncontradoException, ContrasenaInvalidaException, SolicitudInvalidaExcepcion, OperacionInvalidaException {
+    public static void main(String[] args) throws UsuarioNoEncontradoException, ContrasenaInvalidaException, SolicitudInvalidaExcepcion, OperacionInvalidaException, IllegalArgumentException, VueloNoDelUsuarioException, EstadoNoDelUsuarioException, EstadoEquivocadoException, NoPistasDisponiblesException, NoVueloEnMenosDe1HoraException, VueloEnMenosDe1HoraException, NoFingerMercanciasException, NoModosPuertasEmbarqueDisponiblesException, NoHangaresDisponiblesException, CargaAvionEquivocadaException {
     	/** Inicialización del estado*/
     	vaciarArchivo(ARCHIVO_ESTADO);
     	System.out.println("Iniciando simulación...");
@@ -97,9 +108,7 @@ public class AirportManagerMain {
         
         System.out.println("\n*********************************************************************************************************************");
         System.out.println("\n9.- Cambiar el estado de los vuelos.");
-        cambiarEstadoVueloContorlador();
-        cambiarEstadoVueloOperador();
-        cambiarEstadoVueloAutomatico();
+        cambiarEstadoVuelo();
         
         System.out.println("\n*********************************************************************************************************************");
         System.out.println("\n10.- Emisión y pago de facturas.");
@@ -115,44 +124,6 @@ public class AirportManagerMain {
         System.out.println("\n*********************************************************************************************************************");
         System.out.println("\nFinalizando simulación...");
     }
-
-
-	private static void generarListaVuelosDia() throws SolicitudInvalidaExcepcion, OperacionInvalidaException {
-		Operador operadorRyanair=(Operador)airportManager.getGestor().buscarUsuarioPorDni("50738890L");
-		Operador operadorIberia= airportManager.getAeropuerto().getAerolineas().get(0).getOperador();
-    	Gestor gestorBarajas=airportManager.getGestor();
-    	
-    	operadorRyanair.darDeAltaAvionPasajeros("Boeing", "787", 12.5, 30.5, 40.0, 3500, 2020, new Date(), "FR_HGR", 180);
-    	operadorRyanair.darDeAltaAvionMercancias("Boeing", "737", 16.0, 45.0, 60.0, 8000, 2010, new Date(), "FR_HGS", 10000, true, true);
-
-    	Avion avionFR_HGR= airportManager.getAeropuerto().getAerolineas().get(2).getAviones().get(0);
-    	Avion avionFR_HGS= airportManager.getAeropuerto().getAerolineas().get(2).getAviones().get(1);
-    	
-    	AeropuertoPropio aePropio= airportManager.getAeropuerto();
-    	Aeropuerto aeTokio= airportManager.getAeropuerto().getAeropuertosDestino().get(6);
-    	Aeropuerto aeMallorca= airportManager.getAeropuerto().getAeropuertosDestino().get(2);
-    	
-		Vuelo vueloFRK2234= new Vuelo("FRK2234", LocalDate.now(), LocalDate.now(), LocalDate.now(),
-	            LocalTime.of(10, 0), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
-	            Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionFR_HGR, aeTokio, aePropio, null, operadorRyanair);
-		Vuelo vueloFRK8103= new Vuelo("FRK8103", LocalDate.now(), LocalDate.now(), LocalDate.now(),
-	            LocalTime.of(10, 30), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
-	            Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionFR_HGR, aePropio, aeMallorca, null, operadorRyanair);
-		Vuelo vueloFRK1101= new Vuelo("FRK1101", LocalDate.now(), LocalDate.now(), LocalDate.now(),
-	            LocalTime.of(11, 0), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.FINGER,
-	            Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionFR_HGS, aeTokio, aePropio, null, operadorRyanair);
-		airportManager.getAeropuerto().addVueloAceptado(vueloFRK2234);
-		airportManager.getAeropuerto().addVueloAceptado(vueloFRK8103);
-		airportManager.getAeropuerto().addVueloAceptado(vueloFRK1101);
-		
-		operadorIberia.solicitarCompartirVuelo(vueloFRK8103, operadorRyanair, 30);
-		
-		System.out.println("\nLista de vuelos aceptados:");
-    	for (VueloProgramado v : airportManager.getAeropuerto().getVuelosAceptados()) {
-    	    System.out.println("Vuelo: " + v.getCodigo() + " - Fecha: " + v.getFecha() + " - Hora: " + v.getHora());
-    	}
-	}
-
 
 	public static void vaciarArchivo(String archivo) {
         try {
@@ -663,18 +634,64 @@ public class AirportManagerMain {
         airportManager.getGestor().configurarAeropuertoPropioDireccionCiudad( DireccionRelativaCiudad.ESTE);
 	}
 
-	private static void cambiarEstadoVueloContorlador() {
-		// TODO Auto-generated method stub
+	private static void generarListaVuelosDia() throws SolicitudInvalidaExcepcion, OperacionInvalidaException {
+		Operador operadorRyanair=(Operador)airportManager.getGestor().buscarUsuarioPorDni("50738890L");
+		Operador operadorIberia= airportManager.getAeropuerto().getAerolineas().get(0).getOperador();
+    	
+    	operadorRyanair.darDeAltaAvionPasajeros("Boeing", "787", 12.5, 30.5, 40.0, 3500, 2020, new Date(), "FR_HGR", 180);
+    	operadorRyanair.darDeAltaAvionMercancias("Boeing", "737", 16.0, 45.0, 60.0, 8000, 2010, new Date(), "FR_HGS", 10000, true, true);
+
+    	Avion avionFR_HGR= airportManager.getAeropuerto().getAerolineas().get(2).getAviones().get(0);
+    	Avion avionFR_HGS= airportManager.getAeropuerto().getAerolineas().get(2).getAviones().get(1);
+    	
+    	AeropuertoPropio aePropio= airportManager.getAeropuerto();
+    	Aeropuerto aeTokio= airportManager.getAeropuerto().getAeropuertosDestino().get(6);
+    	Aeropuerto aeMallorca= airportManager.getAeropuerto().getAeropuertosDestino().get(2);
+    	
+		Vuelo vueloFRK2234= new Vuelo("FRK2234", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+	            LocalTime.of(10, 0), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
+	            Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionFR_HGR, aeTokio, aePropio, null, operadorRyanair);
+		Vuelo vueloFRK8103= new Vuelo("FRK8103", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+	            LocalTime.of(10, 30), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.FINGER,
+	            Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionFR_HGR, aePropio, aeMallorca, null, operadorRyanair);
+		operadorIberia.solicitarCompartirVuelo(vueloFRK8103, operadorRyanair, 30);
 		
+		Terminal terminalT1= airportManager.getAeropuerto().getTerminales().get(0);
+    	Terminal terminalT2=airportManager.getAeropuerto().getTerminales().get(1);
+    	
+    	ControladorAereo controladorT1= terminalT1.getControladores().get(0);
+    	ControladorAereo controladorT2= terminalT2.getControladores().get(0);
+    	
+		airportManager.getGestor().aceptarVuelo(vueloFRK2234, terminalT1, terminalT1.getControladores().get(0) );
+		airportManager.getGestor().aceptarVuelo(vueloFRK8103, terminalT2, terminalT1.getControladores().get(0));
+		
+		System.out.println("\nLista de vuelos aceptados:");
+    	for (VueloProgramado v : airportManager.getAeropuerto().getVuelosAceptados()) {
+    	    System.out.println("Vuelo: " + v.getCodigo() + " - Fecha: " + v.getFecha() + " - Hora: " + v.getHora());
+    	}
 	}
 
-	private static void cambiarEstadoVueloOperador() {
-		// TODO Auto-generated method stub
+	private static void cambiarEstadoVuelo() throws VueloNoDelUsuarioException, EstadoNoDelUsuarioException, IllegalArgumentException, EstadoEquivocadoException, NoPistasDisponiblesException, NoVueloEnMenosDe1HoraException, VueloEnMenosDe1HoraException, NoFingerMercanciasException, NoModosPuertasEmbarqueDisponiblesException, NoHangaresDisponiblesException, CargaAvionEquivocadaException {
+		Operador operadorAirFrance=(Operador)airportManager.getGestor().buscarUsuarioPorDni("87654321B");
+		Terminal terminalT1= airportManager.getAeropuerto().getTerminales().get(0);
+    	Terminal terminalT2=airportManager.getAeropuerto().getTerminales().get(1);
+		ControladorAereo controladorT1= terminalT1.getControladores().get(0);
+    	ControladorAereo controladorT2= terminalT2.getControladores().get(0);
+    	
+    	Vuelo vueloFRK2234= airportManager.getAeropuerto().getVuelosAceptados().get(11);
+		Vuelo vueloFRK8103=airportManager.getAeropuerto().getVuelosAceptados().get(12);
 		
-	}
-
-	private static void cambiarEstadoVueloAutomatico() {
-		// TODO Auto-generated method stub
+		operadorAirFrance.cambiarEstadoVuelo(vueloFRK2234, EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR);
+		operadorAirFrance.cambiarEstadoVuelo(vueloFRK2234, EstadoVuelo.INICIO_DEL_EMBARQUE);
+		operadorAirFrance.cambiarEstadoVuelo(vueloFRK2234, EstadoVuelo.FIN_DEL_EMBARQUE);
+		
+		controladorT1.cambiarEstadoVuelo(vueloFRK2234, EstadoVuelo.ESPERANDO_PISTA_DE_DESPEGUE);
+		controladorT1.cambiarEstadoVuelo(vueloFRK2234, EstadoVuelo.ESPERANDO_DESPEGUE);
+		
+		
+	
+		operadorAirFrance.cambiarEstadoVuelo(vueloFRK8103, EstadoVuelo.INICIO_DEL_DESEMBARQUE);
+		operadorAirFrance.cambiarEstadoVuelo(vueloFRK8103, EstadoVuelo.FIN_DEL_DESEMBARQUE);
 		
 	}
 

@@ -94,6 +94,7 @@ public class ControladorAereo extends UsuarioConDni {
         if (vuelo == null || estado == null) {
             throw new IllegalArgumentException("El vuelo y el nuevo estado no pueden ser null.");
         }
+        sistema.actualizarEstadoVueloAutomatico(vuelo);
 
         if (vuelosQueControla.contains(vuelo) == false) {
             throw new VueloNoDelUsuarioException("Este vuelo no está asignado a este usuario.");

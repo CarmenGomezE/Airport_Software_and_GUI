@@ -106,6 +106,7 @@ public class Operador extends UsuarioConDni {
         if (vuelo == null || estado == null) {
             throw new IllegalArgumentException("El vuelo y el nuevo estado no pueden ser null");
         }
+        sistema.actualizarEstadoVueloAutomatico(vuelo);
 
         if (getVuelos().contains(vuelo) == false) {
             throw new VueloNoDelUsuarioException("Este vuelo no está asignado a este usuario");
