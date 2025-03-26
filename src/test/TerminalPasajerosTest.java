@@ -32,7 +32,9 @@ public class TerminalPasajerosTest {
 
         zone = ZoneOffset.ofHours((+1));
         puerta = new PuertaEmbarque();
-        terminal = new TerminalPasajeros("T1", puerta, 100);
+        puertas = new ArrayList<>();
+        puertas.add(puerta);
+        terminal = new TerminalPasajeros("T1", puertas, 100);
         aeropuertoPropio = new AeropuertoPropio("Barajas", "MAD", "Madrid", "España", 35.0, zone, 3, DireccionRelativaCiudad.ESTE);
         sistema = new AirportManager();
         gestor = new Gestor("Pedro", "Pedrito10", aeropuertoPropio, sistema);
