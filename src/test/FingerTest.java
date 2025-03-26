@@ -31,7 +31,7 @@ class FingerTest{
         puertas.add(puerta1);
         puertas.add(puerta2);
 
-        finger = new Finger(50.0, 70.0, puertas);
+        finger = new Finger(50.0, 70.0);
 
     }
 
@@ -41,28 +41,8 @@ class FingerTest{
     }
 
     @Test
-    void testGetPuertasEmbarque() {
-
-        puertasEsperadas = new HashSet<>();
-       
-        puertasEsperadas.add(puerta1);
-        puertasEsperadas.add(puerta2);
-
-        assertEquals(puertasEsperadas, finger.getPuertasEmbarque(), "Error, las puertas de embarque no coinciden.");
-        
-    }
-
-    @Test
     void testGetId() {
-      
-        p1 = new PuertaEmbarque();
-        p2 = new PuertaEmbarque();
-
-        p = new HashSet<PuertaEmbarque>();
-        p.add(p1);
-        p.add(p2);
-
-        otroFinger = new Finger(40.0, 4.0, p);
+        otroFinger = new Finger(40.0, 4.0);
         assertNotEquals(finger.getId(), otroFinger.getId(), "Error, los id de los fingers deberían ser diferentes");
     }
 

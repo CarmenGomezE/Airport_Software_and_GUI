@@ -31,7 +31,7 @@ public class PuertaEmbarqueTest {
     ZonaAparcamiento zona1, zona2;
     List<ZonaAparcamiento> zonas;
     Finger finger;
-    Set puertas;
+    Set<PuertaEmbarque> puertas;
     Exception excepcion;
     Vuelo vuelo;
     LocalDate fecha;
@@ -59,7 +59,7 @@ public class PuertaEmbarqueTest {
         puertas = new HashSet<>();
         puertas.add(puerta1);
 
-        finger = new Finger(10, 5, puertas);
+        finger = new Finger(10, 5);
 
     }
 
