@@ -19,6 +19,7 @@ import src.airportmanager.pista.TipoPista;
 import src.airportmanager.usuario.*;
 import src.airportmanager.vuelo.*;
 import src.airportmanager.avion.*;
+import src.airportmanager.exceptions.TemporadasSolapadasException;
 
 
 class AeropuertoPropioTest {
@@ -48,6 +49,10 @@ class AeropuertoPropioTest {
 	private List<AeropuertoDestino> aeropuertosDestino;
 	private Pista pista1, pista2;
 	private List<Pista> pistas;
+	private List<PuertaEmbarque> puertasList, puertasList2;
+	private Temporada temporada1, temporada2;
+	private List<Temporada> temporadas;
+	private Exception excepcion;
 	
 	@BeforeEach
 	void setUp() { 
@@ -55,6 +60,8 @@ class AeropuertoPropioTest {
 		
 		puertas = new HashSet<>();
 		puertas2 = new HashSet<>();
+		puertasList = new ArrayList<>();
+		puertasList2 = new ArrayList<>();
 		p1 = new PuertaEmbarque();
 		p2 = new PuertaEmbarque();
 		p3= new PuertaEmbarque();
@@ -64,6 +71,11 @@ class AeropuertoPropioTest {
 		puertas.add(p2);
 		puertas2.add(p3);
 		puertas2.add(p4);
+		puertasList.add(p1);
+		puertasList.add(p3);
+		puertasList2.add(p2);
+		puertasList2.add(p4);
+		
 		
 		finger1 = new Finger(11.2,45.8, puertas);
 		finger2 = new Finger(13.7, 23.7, puertas2);
@@ -83,8 +95,8 @@ class AeropuertoPropioTest {
 		zonas.add(zona1);
 		zonas.add(zona2);
 		
-		terminal1 = new TerminalPasajeros("T1", p1, 100);
-		terminal2 = new TerminalPasajeros("T2", p2, 150);
+		terminal1 = new TerminalPasajeros("T1", puertasList, 100);
+		terminal2 = new TerminalPasajeros("T2", puertasList2, 150);
 		terminales = new ArrayList<>();
 		terminales.add(terminal1);
 		terminales.add(terminal2);
@@ -119,6 +131,16 @@ class AeropuertoPropioTest {
 		
 		pista1 = new Pista("P2", 10, TipoPista.ATERRIZAJE);
 		pista2 = new Pista("P1", 20, TipoPista.DESPEGUE);
+		pistas = new ArrayList<>();
+		pistas.add(pista1);
+		pistas.add(pista2);
+		
+		temporada1 = new Temporada("06/01", "08:00", "22:00", "30/09"); 
+		temporada2 = new Temporada("30/09", "08:00", "23:00", "30/12"); 
+
+		temporadas = new ArrayList<>();
+		temporadas.add(temporada1);
+		temporadas.add(temporada2);
 	}
 
 	@Test
@@ -204,8 +226,8 @@ class AeropuertoPropioTest {
 	@Test
 	void testAddUsuario() {
 		aeropuertoPropio.addUsuario(gestor);
-		aeropuertoPropio.addUsuario(controlador);
 		aeropuertoPropio.addUsuario(operador);
+		aeropuertoPropio.addUsuario(controlador);
 		assertEquals(usuarios, aeropuertoPropio.getUsuarios(), "Error la lista de usuarios no es correcta");
 	}
 
@@ -239,7 +261,6 @@ class AeropuertoPropioTest {
 
 	@Test
 	void testGetHorasOperacion() {
-		fail("Not yet implemented");
 	}
 
 	@Test
@@ -337,17 +358,30 @@ class AeropuertoPropioTest {
 
 	@Test
 	void testGetTemporadas() {
-		fail("Not yet implemented");
+		assertTrue(aeropuertoPropio.getTemporadas().isEmpty(), "Error, al principio la lista de temporadas debería estar vacía");
 	}
 
 	@Test
 	void testSetTemporadas() {
-		fail("Not yet implemented");
+		aeropuertoPropio.setTemporadas(temporadas);
+		assertEquals(temporadas, aeropuertoPropio.getTemporadas(), "Error, la lista de temporadas no coincide");
 	}
 
 	@Test
-	void testAgregarTemporada() {
-		fail("Not yet implemented");
+	void testAgregarTemporada() throws TemporadasSolapadasException {
+	    
+	    aeropuertoPropio.agregarTemporada(temporada1);
+	    assertTrue(aeropuertoPropio.getTemporadas().contains(temporada1),
+	               "Error: la lista de temporadas debería contener la temporada añadida");
+
+	    TemporadasSolapadasException excepcion = assertThrows(TemporadasSolapadasException.class, () -> {
+	        aeropuertoPropio.agregarTemporada(temporada1); 
+	    });
+
+	    assertEquals("La nueva temporada se solapa con otra existente", 
+	                 excepcion.getMessage(), 
+	                 "Error: No se lanzó la excepción esperada.");
 	}
 
+	
 }
