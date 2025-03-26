@@ -19,6 +19,7 @@ import src.airportmanager.estadisticas.*;
 import java.util.*;
 import java.io.*;
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Clase que implementa un demostrador básico de la aplicación.
@@ -37,8 +38,10 @@ public class AirportManagerMain {
      * @param args		Argumentos recibidos.
      * @throws ContrasenaInvalidaException 
      * @throws UsuarioNoEncontradoException 
+     * @throws OperacionInvalidaException 
+     * @throws SolicitudInvalidaExcepcion 
      */
-    public static void main(String[] args) throws UsuarioNoEncontradoException, ContrasenaInvalidaException {
+    public static void main(String[] args) throws UsuarioNoEncontradoException, ContrasenaInvalidaException, SolicitudInvalidaExcepcion, OperacionInvalidaException {
     	/** Inicialización del estado*/
     	vaciarArchivo(ARCHIVO_ESTADO);
     	System.out.println("Iniciando simulación...");
@@ -77,22 +80,26 @@ public class AirportManagerMain {
         recibirNotificaciones();
         
         System.out.println("\n*********************************************************************************************************************");
-        System.out.println("\n6.- Ver y recargar la lista de vuelos del día y sus estados.");
-        verListaVuelosDia();
-        
-        System.out.println("\n*********************************************************************************************************************");
-        System.out.println("\n7.- Cambiar el estado de los vuelos.");
-        cambiarEstadoVueloContorlador();
-        cambiarEstadoVueloOperador();
-        cambiarEstadoVueloAutomatico();
-        
-        System.out.println("\n*********************************************************************************************************************");
-        System.out.println("\n8.- Buscar vuelos.");
+        System.out.println("\n6.- Buscar vuelos.");
         buscarVuelos();
         
         System.out.println("\n*********************************************************************************************************************");
-        System.out.println("\n9.- Ver estadísticas.");
+        System.out.println("\nPara lo que queda de simulación se van a añadir vuelos a mano.");
+        generarListaVuelosDia();
+        
+        System.out.println("\n*********************************************************************************************************************");
+        System.out.println("\n7.- Ver y recargar la lista de vuelos del día y sus estados.");
+        verListaVuelosDia();
+        
+        System.out.println("\n*********************************************************************************************************************");
+        System.out.println("\n8.- Ver estadísticas.");
         verEstadisticas();
+        
+        System.out.println("\n*********************************************************************************************************************");
+        System.out.println("\n9.- Cambiar el estado de los vuelos.");
+        cambiarEstadoVueloContorlador();
+        cambiarEstadoVueloOperador();
+        cambiarEstadoVueloAutomatico();
         
         System.out.println("\n*********************************************************************************************************************");
         System.out.println("\n10.- Emisión y pago de facturas.");
@@ -108,6 +115,43 @@ public class AirportManagerMain {
         System.out.println("\n*********************************************************************************************************************");
         System.out.println("\nFinalizando simulación...");
     }
+
+
+	private static void generarListaVuelosDia() throws SolicitudInvalidaExcepcion, OperacionInvalidaException {
+		Operador operadorRyanair=(Operador)airportManager.getGestor().buscarUsuarioPorDni("50738890L");
+		Operador operadorIberia= airportManager.getAeropuerto().getAerolineas().get(0).getOperador();
+    	Gestor gestorBarajas=airportManager.getGestor();
+    	
+    	operadorRyanair.darDeAltaAvionPasajeros("Boeing", "787", 12.5, 30.5, 40.0, 3500, 2020, new Date(), "FR_HGR", 180);
+    	operadorRyanair.darDeAltaAvionMercancias("Boeing", "737", 16.0, 45.0, 60.0, 8000, 2010, new Date(), "FR_HGS", 10000, true, true);
+
+    	Avion avionFR_HGR= airportManager.getAeropuerto().getAerolineas().get(2).getAviones().get(0);
+    	Avion avionFR_HGS= airportManager.getAeropuerto().getAerolineas().get(2).getAviones().get(1);
+    	
+    	AeropuertoPropio aePropio= airportManager.getAeropuerto();
+    	Aeropuerto aeTokio= airportManager.getAeropuerto().getAeropuertosDestino().get(6);
+    	Aeropuerto aeMallorca= airportManager.getAeropuerto().getAeropuertosDestino().get(2);
+    	
+		Vuelo vueloFRK2234= new Vuelo("FRK2234", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+	            LocalTime.of(10, 0), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
+	            Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionFR_HGR, aeTokio, aePropio, null, operadorRyanair);
+		Vuelo vueloFRK8103= new Vuelo("FRK8103", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+	            LocalTime.of(10, 30), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
+	            Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionFR_HGR, aePropio, aeMallorca, null, operadorRyanair);
+		Vuelo vueloFRK1101= new Vuelo("FRK1101", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+	            LocalTime.of(11, 0), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.FINGER,
+	            Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionFR_HGS, aeTokio, aePropio, null, operadorRyanair);
+		airportManager.getAeropuerto().addVueloAceptado(vueloFRK2234);
+		airportManager.getAeropuerto().addVueloAceptado(vueloFRK8103);
+		airportManager.getAeropuerto().addVueloAceptado(vueloFRK1101);
+		
+		operadorIberia.solicitarCompartirVuelo(vueloFRK8103, operadorRyanair, 30);
+		
+		System.out.println("\nLista de vuelos aceptados:");
+    	for (VueloProgramado v : airportManager.getAeropuerto().getVuelosAceptados()) {
+    	    System.out.println("Vuelo: " + v.getCodigo() + " - Fecha: " + v.getFecha() + " - Hora: " + v.getHora());
+    	}
+	}
 
 
 	public static void vaciarArchivo(String archivo) {
@@ -642,7 +686,7 @@ public class AirportManagerMain {
     	controladorT2.recibirNotificacion(notificacionFacturaEmitida);
     	controladorT2.recibirNotificacion(notificacionOpcionesReprogramarVuelo);
     	controladorT2.recibirNotificacion(notificacionSolicitudVueloProgramado);
-    	System.out.println("Imprimimos las notificaciones que ha recibido el operador de AirFrance.");
+    	System.out.println("Imprimimos las notificaciones que ha recibido el controlador de la T2.");
     	controladorT2.verNotificaciones();
     	
     	System.out.println("\nEnviamos al gestor del aeropuerto todas las posibles notificaciones.");
@@ -652,8 +696,14 @@ public class AirportManagerMain {
     	gestorBarajas.recibirNotificacion(notificacionFacturaEmitida);
     	gestorBarajas.recibirNotificacion(notificacionOpcionesReprogramarVuelo);
     	gestorBarajas.recibirNotificacion(notificacionSolicitudVueloProgramado);
-    	System.out.println("Imprimimos las notificaciones que ha recibido el operador de AirFrance.");
+    	System.out.println("Imprimimos las notificaciones que ha recibido el gestor de Barajas.");
     	gestorBarajas.verNotificaciones();
+    	
+    	System.out.println("\nEliminamos que el gestor reciba notificaciones de cambio de estado de vuelo, y le mandamos una para comprobar que no la recibe.");
+    	List<TipoNotificacion> nuevaConfiguracion= gestorBarajas.getTiposPermitidosNotificaciones();
+    	nuevaConfiguracion.remove(TipoNotificacion.CAMBIO_ESTADO_VUELO);
+    	gestorBarajas.configurarNotificaciones(nuevaConfiguracion);
+    	gestorBarajas.recibirNotificacion(notificacionCambioEstado);
     	
     	System.out.println("\nSegundo comprobamos otras situaciones.");
     	System.out.println("Al operador de AirFrance con un vuelo de su aerolinea.");
@@ -679,6 +729,7 @@ public class AirportManagerMain {
 		Operador operadorAirFrance=(Operador)airportManager.getGestor().buscarUsuarioPorDni("87654321B");
     	ControladorAereo controladorT2=(ControladorAereo)airportManager.getGestor().buscarUsuarioPorDni("123126789K");
     	Gestor gestorBarajas= airportManager.getGestor();
+    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
  
     	/** Con parámetros válidos */
     	System.out.println("\nIniciando búsqueda de vuelos por criterios de búsqueda.");
@@ -689,7 +740,7 @@ public class AirportManagerMain {
         operadorAirFrance.buscarVuelo(CriterioBusqueda.DESTINO, "España");
 
         System.out.println("Controlador T2 busca vuelo por fecha...");
-        controladorT2.buscarVuelo(CriterioBusqueda.FECHA, "26/03/2025");
+        controladorT2.buscarVuelo(CriterioBusqueda.FECHA, LocalDate.now().plusDays(31).format(formatter));
 
         System.out.println("Controlador T2 busca vuelo por hora de llegada...");
         controladorT2.buscarVuelo(CriterioBusqueda.HORA_LLEGADA, "10:00");
@@ -720,7 +771,7 @@ public class AirportManagerMain {
     	operadorIberia.getEstadisticasOperador().imprimirTiempoMedioRetraso(ZoneId.of("Europe/Madrid"));
     	operadorIberia.getEstadisticasOperador().imprimirTiempoMedioRetraso(airportManager.getAeropuerto().getVuelosAceptados().get(2));
     	
-    	System.out.println("Estadísticas del gestor de Barajas.");
+    	System.out.println("\nEstadísticas del gestor de Barajas.");
     	gestorBarajas.getEstadisticasAeropuerto().imprimirUsoMedioFingers();
     	gestorBarajas.getEstadisticasAeropuerto().imprimirUsoMedioHangares();
     	gestorBarajas.getEstadisticasAeropuerto().imprimirUsoMedioPuertasEmbarque();
