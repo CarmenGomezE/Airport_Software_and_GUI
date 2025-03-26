@@ -735,6 +735,7 @@ public class Gestor extends Usuario {
     			,vueloAceptar.getTipoVuelo(), vueloAceptar.getAvion(), vueloAceptar.getAeropuertoDestino(), vueloAceptar.getAeropuertoSalida(), vueloAceptar.getEscala(),
     			vueloAceptar.getAvion().getAerolinea().getOperador());
     	aeropuerto.addVueloAceptado(nuevoVuelo);
+    	nuevoVuelo.cambiarEstado(EstadoVuelo.ACEPTADO);
     	nuevoVuelo.setTerminal(terminal);
     	nuevoVuelo.setControlador(controlador);
     }

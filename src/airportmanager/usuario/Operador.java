@@ -13,6 +13,7 @@ import src.airportmanager.exceptions.AntelacionInvalidaException;
 import src.airportmanager.exceptions.AvionNoDisponibleException;
 import src.airportmanager.exceptions.AvionNoValidoException;
 import src.airportmanager.exceptions.EscalaInvalidaException;
+import src.airportmanager.exceptions.EstadoEquivocadoException;
 import src.airportmanager.exceptions.EstadoNoDelUsuarioException;
 import src.airportmanager.exceptions.OperacionInvalidaException;
 import src.airportmanager.exceptions.SolicitudInvalidaExcepcion;
@@ -99,10 +100,11 @@ public class Operador extends UsuarioConDni {
      * @param estado Nuevo estado del vuelo.
      * @throws VueloNoDelUsuarioException
      * @throws EstadoNoDelUsuarioException
+     * @throws EstadoEquivocadoException 
      */
     @Override
     public void cambiarEstadoVuelo(Vuelo vuelo, EstadoVuelo estado)
-            throws VueloNoDelUsuarioException, EstadoNoDelUsuarioException {
+            throws VueloNoDelUsuarioException, EstadoNoDelUsuarioException, EstadoEquivocadoException {
         if (vuelo == null || estado == null) {
             throw new IllegalArgumentException("El vuelo y el nuevo estado no pueden ser null");
         }
@@ -114,18 +116,23 @@ public class Operador extends UsuarioConDni {
 
         switch (estado) {
             case EN_PREPARACION_PARA_DESPEGAR:
+            	System.out.println("He entrado en preparacion.");
                 this.cambiarEstadoEnPreparacionDespegar(vuelo);
                 break;
             case INICIO_DEL_EMBARQUE:
+            	System.out.println("He entrado en embarque.");
                 this.cambiarEstadoInicioEmbarque(vuelo);
                 break;
             case FIN_DEL_EMBARQUE:
+            	System.out.println("He entrado en fin embarque.");
                 this.cambiarEstadoFinEmbarque(vuelo);
                 break;
             case INICIO_DEL_DESEMBARQUE:
+            	System.out.println("He entrado en desembarque.");
                 this.cambiarEstadoInicioDesembarque(vuelo);
                 break;
             case FIN_DEL_DESEMBARQUE:
+            	System.out.println("He entrado en fin desembarque.");
                 this.cambiarEstadoFinDesembarque(vuelo);
                 break;
             default:
@@ -137,9 +144,13 @@ public class Operador extends UsuarioConDni {
      * Método para cambiar el estado de un vuelo a en preparación para despegar.
      * 
      * @param vuelo Vuelo al que se le cambia el estado.
+     * @throws EstadoEquivocadoException 
      */
-    private void cambiarEstadoEnPreparacionDespegar(Vuelo vuelo) {
-        if (vuelo.getEstado() == EstadoVuelo.OPERATIVO || vuelo.getEstado() == EstadoVuelo.A_TIEMPO || vuelo.getEstado() == EstadoVuelo.RETRASADO) {
+    private void cambiarEstadoEnPreparacionDespegar(Vuelo vuelo) throws EstadoEquivocadoException {
+        if (vuelo.getEstado() != EstadoVuelo.OPERATIVO && vuelo.getEstado() != EstadoVuelo.A_TIEMPO && vuelo.getEstado() != EstadoVuelo.RETRASADO) {
+        	  throw new EstadoEquivocadoException("El vuelo no está en el estado correcto para cambiar a este estado");
+        }
+        else {
             vuelo.cambiarEstado(EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR);
         }
     }
@@ -148,8 +159,9 @@ public class Operador extends UsuarioConDni {
      * Método para cambiar el estado de un vuelo a inicio de embarque.
      * 
      * @param vuelo Vuelo al que se le cambia el estado.
+     * @throws EstadoEquivocadoException 
      */
-    private void cambiarEstadoInicioEmbarque(Vuelo vuelo) {
+    private void cambiarEstadoInicioEmbarque(Vuelo vuelo) throws EstadoEquivocadoException {
         LocalTime horaActual = LocalTime.now();
         long minutosDeDiferencia = Duration.between(horaActual, vuelo.getHora()).toMinutes();
 
@@ -158,7 +170,10 @@ public class Operador extends UsuarioConDni {
             double capacidadCarga = avion.getCapacidadMaxCarga();
             if (minutosDeDiferencia <= 30 && (capacidadCarga < 10000)
                     || (minutosDeDiferencia <= 45 && capacidadCarga > 10000)) {
-                if (vuelo.getEstado() == EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR || vuelo.getEstado() == EstadoVuelo.A_TIEMPO || vuelo.getEstado() == EstadoVuelo.RETRASADO) {
+                if (vuelo.getEstado() != EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR && vuelo.getEstado() != EstadoVuelo.A_TIEMPO && vuelo.getEstado() != EstadoVuelo.RETRASADO) {
+                	throw new EstadoEquivocadoException("El vuelo no está en el estado correcto para cambiar a este estado");
+                }
+                else {
                     vuelo.cambiarEstado(EstadoVuelo.INICIO_DEL_EMBARQUE);
                 }
             }
@@ -167,7 +182,10 @@ public class Operador extends UsuarioConDni {
             int numeroPasajeros = avion.getCapacidadMaxPasajeros();
             if ((minutosDeDiferencia <= 30 && numeroPasajeros < 100)
                     || (minutosDeDiferencia <= 45 && numeroPasajeros > 100)) {
-                if (vuelo.getEstado() == EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR || vuelo.getEstado() == EstadoVuelo.A_TIEMPO || vuelo.getEstado() == EstadoVuelo.RETRASADO) {
+                if (vuelo.getEstado() != EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR && vuelo.getEstado() != EstadoVuelo.A_TIEMPO && vuelo.getEstado() != EstadoVuelo.RETRASADO) {
+                	throw new EstadoEquivocadoException("El vuelo no está en el estado correcto para cambiar a este estado");
+                }
+                else {
                     vuelo.cambiarEstado(EstadoVuelo.INICIO_DEL_EMBARQUE);
                 }
             }
@@ -178,9 +196,13 @@ public class Operador extends UsuarioConDni {
      * Método para cambiar el estado de un vuelo a fin de embarque.
      * 
      * @param vuelo Vuelo al que se le cambia el estado.
+     * @throws EstadoEquivocadoException 
      */
-    private void cambiarEstadoFinEmbarque(Vuelo vuelo) {
-        if (vuelo.getEstado() == EstadoVuelo.INICIO_DEL_EMBARQUE || vuelo.getEstado() == EstadoVuelo.A_TIEMPO || vuelo.getEstado() == EstadoVuelo.RETRASADO) {
+    private void cambiarEstadoFinEmbarque(Vuelo vuelo) throws EstadoEquivocadoException {
+        if (vuelo.getEstado() != EstadoVuelo.INICIO_DEL_EMBARQUE && vuelo.getEstado() != EstadoVuelo.A_TIEMPO && vuelo.getEstado() != EstadoVuelo.RETRASADO) {
+        	throw new EstadoEquivocadoException("El vuelo no está en el estado correcto para cambiar a este estado");
+        }
+        else {
             vuelo.cambiarEstado(EstadoVuelo.FIN_DEL_EMBARQUE);
         }
     }
@@ -189,9 +211,13 @@ public class Operador extends UsuarioConDni {
      * Método para cambiar el estado de un vuelo a inicio de desembarque.
      * 
      * @param vuelo Vuelo al que se le cambia el estado.
+     * @throws EstadoEquivocadoException 
      */
-    private void cambiarEstadoInicioDesembarque(Vuelo vuelo) {
-        if (vuelo.getEstado() == EstadoVuelo.ATERRIZAJE || vuelo.getEstado() == EstadoVuelo.A_TIEMPO || vuelo.getEstado() == EstadoVuelo.RETRASADO) {
+    private void cambiarEstadoInicioDesembarque(Vuelo vuelo) throws EstadoEquivocadoException {
+        if (vuelo.getEstado() != EstadoVuelo.ATERRIZAJE && vuelo.getEstado() != EstadoVuelo.A_TIEMPO && vuelo.getEstado() != EstadoVuelo.RETRASADO) {
+        	throw new EstadoEquivocadoException("El vuelo no está en el estado correcto para cambiar a este estado");
+        }
+        else {
             vuelo.cambiarEstado(EstadoVuelo.INICIO_DEL_DESEMBARQUE);
         }
     }
@@ -200,9 +226,13 @@ public class Operador extends UsuarioConDni {
      * Método para cambiar el estado de un vuelo a fin de desembarque.
      * 
      * @param vuelo Vuelo al que se le cambia el estado.
+     * @throws EstadoEquivocadoException 
      */
-    private void cambiarEstadoFinDesembarque(Vuelo vuelo) {
-        if (vuelo.getEstado() == EstadoVuelo.INICIO_DEL_DESEMBARQUE || vuelo.getEstado() == EstadoVuelo.A_TIEMPO || vuelo.getEstado() == EstadoVuelo.RETRASADO) {
+    private void cambiarEstadoFinDesembarque(Vuelo vuelo) throws EstadoEquivocadoException {
+        if (vuelo.getEstado() != EstadoVuelo.INICIO_DEL_DESEMBARQUE && vuelo.getEstado() != EstadoVuelo.A_TIEMPO && vuelo.getEstado() != EstadoVuelo.RETRASADO) {
+        	throw new EstadoEquivocadoException("El vuelo no está en el estado correcto para cambiar a este estado");
+        }
+        else {
             vuelo.cambiarEstado(EstadoVuelo.FIN_DEL_DESEMBARQUE);
         }
     }
@@ -551,7 +581,7 @@ public class Operador extends UsuarioConDni {
 			 System.out.println("Nueva notificación: " + notificacion.getMensaje());
 		}
     }
-	
+
 	 /**
      * Método para recibir una notificación de cambio de estado de un vuelo.
      * 

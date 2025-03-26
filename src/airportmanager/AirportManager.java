@@ -135,28 +135,42 @@ public class AirportManager implements Serializable {
      */
 	public void actualizarEstadoVueloAutomatico(Vuelo v) {
 		LocalDateTime ahora = LocalDateTime.now();
-		LocalDateTime horaVuelo = LocalDateTime.of(LocalDate.now(), v.getHora()); // Convierte LocalTime a LocalDateTime
+		LocalDateTime horaVuelo = LocalDateTime.of(LocalDate.now(), v.getHora()); 
 
 		if (v.getTipoVuelo() == TipoVuelo.LLEGADA) {
 		    if (ahora.isBefore(horaVuelo)) {
 		        v.cambiarEstado(EstadoVuelo.A_TIEMPO);
-		    } else if (v.getEstado() != EstadoVuelo.ATERRIZAJE && ahora.isAfter(horaVuelo)) {
+		    } else if (v.getEstado() != EstadoVuelo.ATERRIZAJE || v.getEstado() != EstadoVuelo.OPERATIVO || v.getEstado() != EstadoVuelo.AVION_A_HANGAR
+		    		|| v.getEstado() != EstadoVuelo.RETRASADO){
+		    	
 		        v.cambiarEstado(EstadoVuelo.RETRASADO);
 		    }
 		} else if (v.getTipoVuelo() == TipoVuelo.SALIDA) {
-		    long minutosRestantes = Duration.between(ahora, horaVuelo).toMinutes(); // Ahora funciona correctamente
-
-		    if (ahora.isAfter(horaVuelo)) {
-		        v.cambiarEstado(EstadoVuelo.VUELO);
-		    } else if ((v.getEstado() == EstadoVuelo.ESPERANDO_PISTA_DE_DESPEGUE
-		            || v.getEstado() == EstadoVuelo.ESPERANDO_DESPEGUE)
-		            && minutosRestantes < 45) {
+		    long minutosRestantes = Duration.between(ahora, horaVuelo).toMinutes(); 
+		    if ((v.getEstado() == EstadoVuelo.OPERATIVO || v.getEstado() == EstadoVuelo.ATERRIZAJE || v.getEstado() == EstadoVuelo.ACEPTADO) && minutosRestantes > 45) {
+		        v.cambiarEstado(EstadoVuelo.A_TIEMPO);
+		    } else{
 		        v.cambiarEstado(EstadoVuelo.RETRASADO);
 		    }
 		}
-
     System.out.println("Estado de vuelo actualizado: " + v.getEstado());
 	}
+	
+	public void iniciarActualizacionCada5Min(Vuelo v) {
+        Timer timer = new Timer();
+
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                actualizarEstadoVueloAutomatico(v);
+           
+                if (LocalTime.now().isAfter(v.getHora())) {
+                    timer.cancel();
+                    System.out.println("La hora de salida ha pasado, deteniendo las actualizaciones.");
+                }
+            }
+        }, 0, 5 * 60 * 1000); 
+    }
 
 
      /**

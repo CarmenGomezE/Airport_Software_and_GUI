@@ -271,8 +271,8 @@ public class AirportManagerMain {
     	
     	/** Zonas de aparcamiento */
     	System.out.println("Dando de alta zonas de aparcamiento en el aeropuerto.");
-    	airportManager.getGestor().darDeAltaZonaAparcamiento(2.5, 5.0, 5.0, puertasZ1);
-    	airportManager.getGestor().darDeAltaZonaAparcamiento(3.0, 6.0, 6.0, puertasZ2);
+    	airportManager.getGestor().darDeAltaZonaAparcamiento(2.5, 50, 70, puertasZ1);
+    	airportManager.getGestor().darDeAltaZonaAparcamiento(3.0, 50, 70, puertasZ2);
     	System.out.println("Zonas de aparcamiento dadas de alta.");
 
     	/** Pistas */
@@ -652,7 +652,7 @@ public class AirportManagerMain {
 				LocalTime.now().plusMinutes(42), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
 	            Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionFR_HGR, aeTokio, aePropio, null, operadorRyanair);
 		Vuelo vueloFRK8103= new Vuelo("FRK8103", LocalDate.now(), LocalDate.now(), LocalDate.now(),
-	            LocalTime.now().plusMinutes(28), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.FINGER,
+	            LocalTime.now().plusMinutes(28), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
 	            Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionFR_HGS, aePropio, aeMallorca, null, operadorRyanair);
 		operadorIberia.solicitarCompartirVuelo(vueloFRK8103, operadorRyanair, 30);
 		
@@ -679,21 +679,43 @@ public class AirportManagerMain {
     	ControladorAereo controladorT2= terminalT2.getControladores().get(0);
     	
     	Vuelo vueloFRK2234= airportManager.getAeropuerto().getVuelosAceptados().get(11);
-		Vuelo vueloFRK8103=airportManager.getAeropuerto().getVuelosAceptados().get(12);
+		Vuelo vueloFRK8103= airportManager.getAeropuerto().getVuelosAceptados().get(12);
 		
 		operadorRyanair.cambiarEstadoVuelo(vueloFRK2234, EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR);
+		System.out.println("Vuelo FRK2234: Estado cambiado a EN_PREPARACION_PARA_DESPEGAR");
+
 		operadorRyanair.cambiarEstadoVuelo(vueloFRK2234, EstadoVuelo.INICIO_DEL_EMBARQUE);
+		System.out.println("Vuelo FRK2234: Estado cambiado a INICIO_DEL_EMBARQUE");
+
 		operadorRyanair.cambiarEstadoVuelo(vueloFRK2234, EstadoVuelo.FIN_DEL_EMBARQUE);
+		System.out.println("Vuelo FRK2234: Estado cambiado a FIN_DEL_EMBARQUE");
+
 		controladorT1.cambiarEstadoVuelo(vueloFRK2234, EstadoVuelo.ESPERANDO_PISTA_DE_DESPEGUE);
+		System.out.println("Vuelo FRK2234: Estado cambiado a ESPERANDO_PISTA_DE_DESPEGUE");
+
 		controladorT1.cambiarEstadoVuelo(vueloFRK2234, EstadoVuelo.ESPERANDO_DESPEGUE);
-		
+		System.out.println("Vuelo FRK2234: Estado cambiado a ESPERANDO_DESPEGUE");
+
 		controladorT2.cambiarEstadoVuelo(vueloFRK8103, EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE);
+		System.out.println("Vuelo FRK8103: Estado cambiado a ESPERANDO_PISTA_DE_ATERRIZAJE");
+
 		controladorT2.cambiarEstadoVuelo(vueloFRK8103, EstadoVuelo.ESPERANDO_ATERRIZAJE);
+		System.out.println("Vuelo FRK8103: Estado cambiado a ESPERANDO_ATERRIZAJE");
+
 		controladorT2.cambiarEstadoVuelo(vueloFRK8103, EstadoVuelo.ATERRIZAJE);
+		System.out.println("Vuelo FRK8103: Estado cambiado a ATERRIZAJE");
+
 		operadorRyanair.cambiarEstadoVuelo(vueloFRK8103, EstadoVuelo.INICIO_DEL_DESEMBARQUE);
+		System.out.println("Vuelo FRK8103: Estado cambiado a INICIO_DEL_DESEMBARQUE");
+
 		operadorRyanair.cambiarEstadoVuelo(vueloFRK8103, EstadoVuelo.FIN_DEL_DESEMBARQUE);
+		System.out.println("Vuelo FRK8103: Estado cambiado a FIN_DEL_DESEMBARQUE");
+
 		controladorT2.cambiarEstadoVuelo(vueloFRK8103, EstadoVuelo.OPERATIVO);
+		System.out.println("Vuelo FRK8103: Estado cambiado a OPERATIVO");
+
 		controladorT2.cambiarEstadoVuelo(vueloFRK8103, EstadoVuelo.AVION_A_HANGAR);
+		System.out.println("Vuelo FRK8103: Estado cambiado a AVION_A_HANGAR");
 		
 		
 	}

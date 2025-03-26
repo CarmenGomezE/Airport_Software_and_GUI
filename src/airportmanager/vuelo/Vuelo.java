@@ -20,8 +20,6 @@ import src.airportmanager.usuario.Operador;
 public class Vuelo extends VueloProgramado {
 	/** Número de versión de la clase */
 	private static final long serialVersionUID = 1L;
-    /** El estado del vuelo */
-    private EstadoVuelo estado;
     /** El historial de estados del vuelo */
     private HistorialEstadoVuelo historialEstadoVuelo;
     /** El tiempo de retraso del vuelo */
@@ -63,7 +61,6 @@ public class Vuelo extends VueloProgramado {
             Aeropuerto aeropuertoSalida, Escala escala, Operador operadorPrincipal) {
         super(codigo, fecha, fechaInicio, fechaFinal, hora, diasRecurrente, tipoCarga, tipoModoEmbarque, periodicidad,
                 tipoVuelo, avion, aeropuertoDestino, aeropuertoSalida, escala);
-        this.estado = EstadoVuelo.ACEPTADO;
         this.historialEstadoVuelo = new HistorialEstadoVuelo();
         this.tiempoRetraso = 0;
         this.puertaEmbarque = null;
@@ -82,7 +79,6 @@ public class Vuelo extends VueloProgramado {
      * @param estado El nuevo estado del vuelo
      */
     public void cambiarEstado(EstadoVuelo nuevoEstado) {
-        this.estado = nuevoEstado;
         this.historialEstadoVuelo.agregarCambioEstado(nuevoEstado, LocalTime.now());
     }
 
@@ -93,7 +89,7 @@ public class Vuelo extends VueloProgramado {
      */
 
     public EstadoVuelo getEstado() {
-        return this.estado;
+        return this.historialEstadoVuelo.getUltimoEstado();
     }
 
     /**
