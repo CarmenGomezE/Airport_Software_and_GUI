@@ -6,7 +6,6 @@ package src.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
 import java.time.*;
 import java.util.*;
 
@@ -16,6 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import src.airportmanager.vuelo.Escala;
 import src.airportmanager.vuelo.EstadoVuelo;
+import src.airportmanager.vuelo.HistorialEstadoVuelo;
 import src.airportmanager.vuelo.Periodicidad;
 import src.airportmanager.vuelo.TipoCarga;
 import src.airportmanager.vuelo.TipoModoEmbarque;
@@ -85,7 +85,7 @@ class VueloTest {
 		dias = new ArrayList<DayOfWeek>();
 		dias.add(DayOfWeek.MONDAY);
 		dias.add(DayOfWeek.WEDNESDAY);
-		finger = new Finger(11.2,45.8, puertas);
+		finger = new Finger(11.2,45.8);
 		avion = new Avion("AIRBUS", "AIR7", 87.0, 67.9, 54.2, 900000, 2021, new Date(), "PSJWU78");
 		avion2 = new Avion("BOEING", "BTE3", 65.003, 56.3, 87.4, 800000, 2022, new Date(), "9387438JK");
 		aeropuertoPropio = new AeropuertoPropio("Barajas", "MAD", "Madrid", "España", 64.9, ZoneOffset.UTC, 2, DireccionRelativaCiudad.ESTE);
@@ -144,7 +144,16 @@ class VueloTest {
 	 */
 	@Test
 	void testGetHistorialEstadoVuelo() {
-		fail("Not yet implemented");
+	    vuelo.cambiarEstado(EstadoVuelo.A_TIEMPO);
+	    vuelo.cambiarEstado(EstadoVuelo.ESPERANDO_DESPEGUE);
+	    vuelo.cambiarEstado(EstadoVuelo.VUELO);
+
+	    System.out.println(vuelo.getHistorialEstadoVuelo().getHistorial());
+	    
+	    assertNotNull(vuelo.getHistorialEstadoVuelo(), "Error: El historial de estado del vuelo no debería ser nulo");
+	    assertEquals(LocalTime.now(), vuelo.getHistorialEstadoVuelo().getHoraCambio(EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR).getHour(), "Error: No se registró correctamente el estado EN_PREPARACION_PARA_DESPEGAR");
+	    assertEquals(LocalTime.now(), vuelo.getHistorialEstadoVuelo().getHoraCambio(EstadoVuelo.ESPERANDO_DESPEGUE).getHour(), "Error: No se registró correctamente el estado ESPERANDO_DESPEGUE");
+	    assertEquals(LocalTime.now(), vuelo.getHistorialEstadoVuelo().getHoraCambio(EstadoVuelo.VUELO).getHour(), "Error: No se registró correctamente el estado VUELO");
 	}
 
 	/**
