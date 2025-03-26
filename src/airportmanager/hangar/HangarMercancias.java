@@ -3,6 +3,7 @@ package src.airportmanager.hangar;
 import java.util.*;
 
 import src.airportmanager.avion.*;
+import src.airportmanager.exceptions.CargaAvionEquivocadaException;
 import src.airportmanager.vuelo.Vuelo;
 
 /**
@@ -72,9 +73,16 @@ public class HangarMercancias extends Hangar {
      * @param avion Avión a comprobar.
      * 
      * @return true si está, false si no.
+     * @throws CargaAvionEquivocadaException 
      */
     @Override
-    public boolean comprobarAvionEnHangar(Avion avion) {
+    public boolean comprobarAvionEnHangar(Avion avion) throws CargaAvionEquivocadaException {
+    	if (avion == null) {
+    		throw new IllegalArgumentException("El avión no puede ser nulo.");
+    	}
+    	if (avion instanceof AvionMercancias == false) {
+    		throw new CargaAvionEquivocadaException("El avión debe ser de mercancías para comprobar si está en el hangar.");
+    	}
         return aviones.contains((AvionMercancias)avion);
     }
 

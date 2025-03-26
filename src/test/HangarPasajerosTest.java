@@ -40,8 +40,8 @@ class HangarPasajerosTest{
 
         hangar = new HangarPasajeros(2, 45.5, 34.5, 40.8, 5.0);
         hangar2 = new HangarPasajeros(3, 43.8, 46.9, 35.0, 5.5);
-        avion = new Avion("BOEING", "767-300ER", 35.5, 67.3, 34.8, 90098.5, 2022, calendar.getTime(), "83472PL");
-        avion2 = new Avion("AIRBUS", "8863-JDID", 67.9, 45.5, 34.5, 78009, 2024, calendar.getTime(), "98378KL");
+        avion = new AvionPasajeros("BOEING", "767-300ER", 35.5, 67.3, 34.8, 90098.5, 2022, calendar.getTime(), "83472PL", 0);
+        avion2 = new AvionPasajeros("AIRBUS", "8863-JDID", 67.9, 45.5, 34.5, 78009, 2024, calendar.getTime(), "98378KL", 0);
 
     }
 
