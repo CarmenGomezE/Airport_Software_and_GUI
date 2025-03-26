@@ -84,20 +84,18 @@ public class SolicitudVueloCompartido implements Serializable {
 
     /**
      * Método que acepta una solicitud.
+     * @throws SolicitudInvalidaExcepcion 
      */
-    public void aceptar() {
-        try {
-            if (esSolicitudValida()) {
-                vueloOriginal.agregarOperadorSecundario(operadorSolicita, porcentajeCarga);
-                this.estadoSolicitud = EstadoSolicitud.ACEPTADA;
-                System.out.println("Solicitud aceptada: " + operadorSolicita.getNombre() + " ahora comparte el vuelo "
-                        + vueloOriginal.getCodigo());
-            }
-        } catch (SolicitudInvalidaExcepcion e) {
-            this.estadoSolicitud = EstadoSolicitud.RECHAZADA;
-            System.out.println("Error al aceptar la solicitud: " + e.getMessage());
-        }
-    }
+    public void aceptar() throws SolicitudInvalidaExcepcion {
+    	 if (!esSolicitudValida()) {
+    		 	throw new SolicitudInvalidaExcepcion("La solicitud es inválida. Ha sido rechazada.");
+    	    }
+    	    
+    	    vueloOriginal.agregarOperadorSecundario(operadorSolicita, porcentajeCarga);
+    	    this.estadoSolicitud = EstadoSolicitud.ACEPTADA;
+    	    System.out.println("Solicitud aceptada: " + operadorSolicita.getNombre() + " ahora comparte el vuelo "
+    	            + vueloOriginal.getCodigo());
+    	}
 
     /**
      * Método que rechaza la solicitud.
@@ -116,16 +114,20 @@ public class SolicitudVueloCompartido implements Serializable {
      */
     public boolean esSolicitudValida() throws SolicitudInvalidaExcepcion {
         double cargaActual = vueloOriginal.getCargaTotalAsignada();
-        double cargaPrincipal = vueloOriginal.getCargaAsignada(vueloOriginal.getOperadorPrincipal());
+        double cargaRestanteOperadorPrincipal = vueloOriginal.getCargaAsignada(vueloOriginal.getOperadorPrincipal()) - porcentajeCarga;
+        double nuevaCargaTotal = cargaActual - porcentajeCarga + porcentajeCarga;
 
-        if (cargaActual + porcentajeCarga > 100.0) {
+        if (nuevaCargaTotal > 100.0) {
+        	rechazar();
             throw new SolicitudInvalidaExcepcion("El porcentaje total de carga no puede superar el 100%.");
         }
 
-        if (cargaPrincipal - porcentajeCarga < 50.0) {
+        if (cargaRestanteOperadorPrincipal < 50.0) {
+        	rechazar();
             throw new SolicitudInvalidaExcepcion("El operador principal debe conservar al menos el 50% de la carga.");
         }
-        return true;
+
+		return true;
     }
 
     /**

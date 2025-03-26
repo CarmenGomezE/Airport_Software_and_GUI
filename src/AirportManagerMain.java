@@ -439,6 +439,7 @@ public class AirportManagerMain {
     	airportManager.getGestor().darDeAltaOperador("Eustaquio Hernandez", "50738890L", airportManager.getAeropuerto().getAerolineas().get(2));
     	Operador operadorRyanair=airportManager.getAeropuerto().getAerolineas().get(2).getOperador();   
     	Vuelo vueloAFR2270= airportManager.getAeropuerto().getVuelosAceptados().get(6);
+    	Vuelo vueloAFR7107=  airportManager.getAeropuerto().getVuelosAceptados().get(10);
     	
     	System.out.println("\nIniciando las solicitudes de compartir vuelo.");
     	System.out.println("Realizando una solicitud del Operador de Iberia de compartir vuelo al Operador de AirFrance.");
@@ -450,7 +451,7 @@ public class AirportManagerMain {
 			System.err.println("Error al solicitar compartir el vuelo AFR2270: " + e.getMessage());
 		}
 
-    	System.out.println("El operador de Iberia la rechaza.");
+    	System.out.println("El operador de AirFrance la rechaza.");
     	operadorAirFrance.rechazarSolicitud(operadorAirFrance.getSolicitudesRecibidas().get(0));
     	
     	System.out.println("Realizando otra solicitud del Operador de Iberia de compartir vuelo al Operador de AirFrance.");
@@ -462,7 +463,7 @@ public class AirportManagerMain {
 			System.err.println("Error al solicitar compartir el vuelo AFR2270: " + e.getMessage());
 		}
 
-    	System.out.println("El operador de Iberia la acepta.");
+    	System.out.println("El operador de AirFrance la acepta.");
     	operadorAirFrance.aceptarSolicitud(operadorAirFrance.getSolicitudesRecibidas().get(1));
     	
     	System.out.println("Realizando una solicitud del Operador de Ryanair de compartir vuelo al Operador de AirFrance.");
@@ -474,17 +475,33 @@ public class AirportManagerMain {
 			System.err.println("Error al solicitar compartir el vuelo AFR2270: " + e.getMessage());
 		}
 
-    	System.out.println("El operador de Iberia la acepta.");
+    	System.out.println("El operador de AirFrance la acepta.");
     	operadorAirFrance.aceptarSolicitud(operadorAirFrance.getSolicitudesRecibidas().get(2));
     	
-    	System.out.println("ºnRealizando una solicitud inválida del Operador de Ryanair de compartir vuelo al Operador de AirFrance.");
+    	System.out.println("\nRealizando solicitudes inválidas del Operador de Ryanair de compartir vuelo al Operador de AirFrance.");
     	try {
-			operadorRyanair.solicitarCompartirVuelo(vueloAFR2270, operadorAirFrance, 80);
+			operadorRyanair.solicitarCompartirVuelo(vueloAFR2270, operadorAirFrance, 20);
 		} catch (SolicitudInvalidaExcepcion e) {
 			System.err.println("Error al solicitar compartir el vuelo AFR2270: " + e.getMessage());
 		} catch (OperacionInvalidaException e) {
 			System.err.println("Error al solicitar compartir el vuelo AFR2270: " + e.getMessage());
 		}
+    	try {
+			operadorRyanair.solicitarCompartirVuelo(vueloAFR7107, operadorIberia, 80);
+		} catch (SolicitudInvalidaExcepcion e) {
+			System.err.println("Error al solicitar compartir el vuelo AFR2270: " + e.getMessage());
+		} catch (OperacionInvalidaException e) {
+			System.err.println("Error al solicitar compartir el vuelo AFR2270: " + e.getMessage());
+		}
+    	try {
+			operadorRyanair.solicitarCompartirVuelo(vueloAFR7107, operadorAirFrance, 80);
+		} catch (SolicitudInvalidaExcepcion e) {
+			System.err.println("Error al solicitar compartir el vuelo AFR2270: " + e.getMessage());
+		} catch (OperacionInvalidaException e) {
+			System.err.println("Error al solicitar compartir el vuelo AFR2270: " + e.getMessage());
+		}
+    	System.out.println("El operador de AirFrance la intenta aceptar.");
+    	operadorAirFrance.aceptarSolicitud(operadorAirFrance.getSolicitudesRecibidas().get(3));
 
     	System.out.println("\nBandeja de solicitudes del Operador de Iberia");
     	operadorIberia.verSolicitudes();

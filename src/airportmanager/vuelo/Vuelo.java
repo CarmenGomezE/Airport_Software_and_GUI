@@ -72,6 +72,7 @@ public class Vuelo extends VueloProgramado {
         this.pista = null;
         this.modoEmbarque = null;
         this.cargaPorOperador = new HashMap<>();
+        this.cargaPorOperador.put(operadorPrincipal, 100.0);
         this.operadorPrincipal = operadorPrincipal;
     }
 
@@ -219,6 +220,12 @@ public class Vuelo extends VueloProgramado {
      * @param porcentajeCarga Porcentaje asume,
      */
     public void agregarOperadorSecundario(Operador operador, double porcentajeCarga) {
+        if (this.cargaPorOperador.containsKey(operador)) {
+            throw new IllegalArgumentException("El operador " + operador.getNombre() + " ya está asignado al vuelo.");
+        }
+        double cargaPrincipal = this.cargaPorOperador.get(operadorPrincipal);
+
+        this.cargaPorOperador.put(operadorPrincipal, cargaPrincipal - porcentajeCarga);
         this.cargaPorOperador.put(operador, porcentajeCarga);
     }
 
@@ -266,8 +273,12 @@ public class Vuelo extends VueloProgramado {
      */
     public List<Operador> getOperadores() {
         List<Operador> operadores = new ArrayList<>();
-        operadores.add(this.operadorPrincipal);
-        operadores.addAll(this.cargaPorOperador.keySet());
+        if (this.operadorPrincipal != null) {
+            operadores.add(this.operadorPrincipal);
+        }
+        if (this.cargaPorOperador != null) {
+            operadores.addAll(this.cargaPorOperador.keySet());
+        }
         return operadores;
     }
 

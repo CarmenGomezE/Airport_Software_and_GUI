@@ -428,9 +428,22 @@ public class Operador extends UsuarioConDni {
         if (vuelo.getOperadoresAsignados().containsKey(this)) {
             throw new OperacionInvalidaException("No puedes solicitar compartir un vuelo en el que ya participas.");
         }
+        if (!vuelo.getOperadorPrincipal().equals(operadorReceptor)) {
+            throw new OperacionInvalidaException("Solo el operador principal del vuelo puede recibir solicitudes.");
+        }
+        if (porcentajeCarga <= 0) {
+            throw new SolicitudInvalidaExcepcion("El porcentaje de carga debe ser mayor que 0.");
+        }
 
         SolicitudVueloCompartido solicitud = new SolicitudVueloCompartido(vuelo, this, operadorReceptor,
                 porcentajeCarga);
+        
+        for (SolicitudVueloCompartido solicitudEnviada : solicitudesEnviadas) {
+            if (solicitud.getVueloOriginal().equals(vuelo) && solicitudEnviada.getEstadoSolicitud() == EstadoSolicitud.PENDIENTE) {
+                throw new OperacionInvalidaException("Ya tienes una solicitud pendiente para este vuelo.");
+            }
+        }
+        
         operadorReceptor.recibirSolicitud(solicitud);
         solicitudesEnviadas.add(solicitud);
         enviarNotificacionCompartirVuelo(operadorReceptor, vuelo);
@@ -442,8 +455,10 @@ public class Operador extends UsuarioConDni {
      * @param solicitud Solicitud que se recibe.
      */
     public void recibirSolicitud(SolicitudVueloCompartido solicitud) {
-        this.solicitudesRecibidas.add(solicitud);
-        System.out.println("Nueva solicitud recibida para compartir vuelo " + solicitud.getVueloOriginal().getCodigo());
+        if (!solicitudesRecibidas.contains(solicitud)) {
+            this.solicitudesRecibidas.add(solicitud);
+            System.out.println("Nueva solicitud recibida para compartir vuelo " + solicitud.getVueloOriginal().getCodigo());
+        }
     }
 
     /**
@@ -459,13 +474,7 @@ public class Operador extends UsuarioConDni {
         }
 
         try {
-            if (solicitud.esSolicitudValida()) {
-                solicitud.aceptar();
-                vuelo.agregarOperadorSecundario(solicitud.getOperadorSolicitante(), solicitud.getPorcentaje());
-
-                System.out.println("Solicitud aceptada: " + solicitud.getOperadorSolicitante().getNombre()
-                        + " ahora comparte el vuelo " + vuelo.getCodigo());
-            }
+            solicitud.aceptar();
         } catch (SolicitudInvalidaExcepcion e) {
             System.out.println("No se pudo aceptar la solicitud: " + e.getMessage());
         }
@@ -478,7 +487,6 @@ public class Operador extends UsuarioConDni {
      */
     public void rechazarSolicitud(SolicitudVueloCompartido solicitud) {
         solicitud.rechazar();
-        System.out.println("Solicitud rechazada por " + this.getNombre());
     }
 
     /**
