@@ -218,17 +218,17 @@ public class ControladorAereo extends UsuarioConDni {
                     }
                 } else {
                     if (vueloNuevo.getTipoModoEmbarque() == TipoModoEmbarque.FINGER) {
-                        for (Finger f : aeropuerto.getFingers()) {
-                            if (f.comprobarTamano(vueloNuevo) == true && f.getVuelo() == null
-                                    && vueloNuevo.getModoEmbarque() == null) {
-                                for (PuertaEmbarque p : f.getPuertasEmbarque()) {
-                                    if (p.getVuelo() == null) {
-                                        asignarModoEmbarque(f, vueloNuevo);
-                                        asignarPuertaEmbarque(p, vueloNuevo);
-                                        break;
-                                    }
-                                }
-                            }
+                    	for (Terminal t : aeropuerto.getTerminales()) {
+                    	    for (PuertaEmbarque p : t.getPuertasEmbarque()) {
+                    	        Finger f = p.getFinger();
+                    	        if (f != null && f.comprobarTamano(vueloNuevo) && f.getVuelo() == null && vueloNuevo.getModoEmbarque() == null) {
+                    	            if (p.getVuelo() == null) {
+                    	                asignarModoEmbarque(f, vueloNuevo);
+                    	                asignarPuertaEmbarque(p, vueloNuevo);
+                    	                break; 
+                    	            }
+                    	        }
+                    	    }
                         }
                         if (vueloNuevo.getModoEmbarque() == null || vueloNuevo.getPuertaEmbarque() == null) {
                             throw new NoModosPuertasEmbarqueDisponiblesException(
@@ -431,17 +431,18 @@ public class ControladorAereo extends UsuarioConDni {
             }
         } else {
             if (vuelo.getTipoModoEmbarque() == TipoModoEmbarque.FINGER) {
-                for (Finger f : aeropuerto.getFingers()) {
-                    if (f.comprobarTamano(vuelo) == true && f.getVuelo() == null && vuelo.getModoEmbarque() == null) {
-                        for (PuertaEmbarque p : f.getPuertasEmbarque()) {
-                            if (p.getVuelo() == null) {
-                                asignarModoEmbarque(f, vuelo);
-                                asignarPuertaEmbarque(p, vuelo);
-                                break;
-                            }
-                        }
-                    }
-                }
+            	for (Terminal t : aeropuerto.getTerminales()) {
+            	    for (PuertaEmbarque p : t.getPuertasEmbarque()) {
+            	        Finger f = p.getFinger();
+            	        if (f != null && f.comprobarTamano(vuelo) && f.getVuelo() == null && vuelo.getModoEmbarque() == null) {
+            	            if (p.getVuelo() == null) {
+            	                asignarModoEmbarque(f, vuelo);
+            	                asignarPuertaEmbarque(p, vuelo);
+            	                break;  
+            	            }
+            	        }
+            	    }
+            	}
                 if (vuelo.getModoEmbarque() == null || vuelo.getPuertaEmbarque() == null) {
                     liberarPista(vuelo);
                     throw new NoModosPuertasEmbarqueDisponiblesException(
