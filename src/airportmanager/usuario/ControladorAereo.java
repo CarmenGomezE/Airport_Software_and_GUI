@@ -96,7 +96,7 @@ public class ControladorAereo extends UsuarioConDni {
         }
         sistema.actualizarEstadoVueloAutomatico(vuelo);
 
-        if (vuelosQueControla.contains(vuelo) == false) {
+        if (vuelo.getControlador()==this) {
             throw new VueloNoDelUsuarioException("Este vuelo no está asignado a este usuario.");
         }
 
@@ -660,7 +660,7 @@ public class ControladorAereo extends UsuarioConDni {
     private boolean verificarVueloMenosHora(Avion avion) {
         LocalDateTime ahora = LocalDateTime.now();
 
-        for (Vuelo vuelo : vuelosQueControla) {
+        for (Vuelo vuelo : aeropuerto.getVuelosAceptados()) {
             if (vuelo.getAvion().equals(avion) && vuelo.getTipoVuelo() == TipoVuelo.SALIDA) {
                 LocalTime salida = vuelo.getHora();
 

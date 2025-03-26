@@ -133,26 +133,27 @@ public class AirportManager implements Serializable {
      * Método que actualiza los estados automáticos de los vuelos (A_TIEMPO, RETRASADO, VUELO) teniendo en cuenta la cola de los vuelos en esperando despegue.
      * @param v                             Vuelo al que actualizar sus estados.
      */
-public void actualizarEstadoVueloAutomatico(Vuelo v) {
-    LocalDateTime ahora = LocalDateTime.now();
+	public void actualizarEstadoVueloAutomatico(Vuelo v) {
+		LocalDateTime ahora = LocalDateTime.now();
+		LocalDateTime horaVuelo = LocalDateTime.of(LocalDate.now(), v.getHora()); // Convierte LocalTime a LocalDateTime
 
-    if (v.getTipoVuelo() == TipoVuelo.LLEGADA) {
-        if (ahora.toLocalTime().isBefore(v.getHora())) {
-            v.cambiarEstado(EstadoVuelo.A_TIEMPO);
-        } else if (v.getEstado() != EstadoVuelo.ATERRIZAJE && ahora.toLocalTime().isAfter(v.getHora())) {
-            v.cambiarEstado(EstadoVuelo.RETRASADO);
-        }
-    } else if (v.getTipoVuelo() == TipoVuelo.SALIDA) {
-        long minutosRestantes = Duration.between(ahora, v.getHora()).toMinutes();
+		if (v.getTipoVuelo() == TipoVuelo.LLEGADA) {
+		    if (ahora.isBefore(horaVuelo)) {
+		        v.cambiarEstado(EstadoVuelo.A_TIEMPO);
+		    } else if (v.getEstado() != EstadoVuelo.ATERRIZAJE && ahora.isAfter(horaVuelo)) {
+		        v.cambiarEstado(EstadoVuelo.RETRASADO);
+		    }
+		} else if (v.getTipoVuelo() == TipoVuelo.SALIDA) {
+		    long minutosRestantes = Duration.between(ahora, horaVuelo).toMinutes(); // Ahora funciona correctamente
 
-        if (ahora.toLocalTime().isAfter(v.getHora())) {
-            v.cambiarEstado(EstadoVuelo.VUELO);
-        } else if ((v.getEstado() == EstadoVuelo.ESPERANDO_PISTA_DE_DESPEGUE
-                || v.getEstado() == EstadoVuelo.ESPERANDO_DESPEGUE)
-                && minutosRestantes < 45) {
-            v.cambiarEstado(EstadoVuelo.RETRASADO);
-        }
-    }
+		    if (ahora.isAfter(horaVuelo)) {
+		        v.cambiarEstado(EstadoVuelo.VUELO);
+		    } else if ((v.getEstado() == EstadoVuelo.ESPERANDO_PISTA_DE_DESPEGUE
+		            || v.getEstado() == EstadoVuelo.ESPERANDO_DESPEGUE)
+		            && minutosRestantes < 45) {
+		        v.cambiarEstado(EstadoVuelo.RETRASADO);
+		    }
+		}
 
     System.out.println("Estado de vuelo actualizado: " + v.getEstado());
 	}

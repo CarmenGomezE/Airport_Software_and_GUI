@@ -28,8 +28,6 @@ public abstract class Usuario implements Serializable {
     protected String contrasena;
     /** Notificaciones del usuario */
     protected List<Notificacion> notificaciones;
-    /** Vuelos del usuario */
-    protected List<Vuelo> vuelosQueControla;
     /** Aeropuerto en el que trabaja el usuario */
     protected AeropuertoPropio aeropuerto;
     /** Sistema */
@@ -48,7 +46,6 @@ public abstract class Usuario implements Serializable {
     public Usuario(String nombre, AeropuertoPropio aeropuerto, AirportManager sistema) {
         this.nombre = nombre;
         this.notificaciones = new ArrayList<>();
-        this.vuelosQueControla = new ArrayList<>();
         this.aeropuerto = aeropuerto;
         this.sistema = sistema;
     }
@@ -65,7 +62,6 @@ public abstract class Usuario implements Serializable {
         this.nombre = nombre;
         this.contrasena = contrasena;
         this.notificaciones = new ArrayList<>();
-        this.vuelosQueControla = new ArrayList<>();
         this.aeropuerto = aeropuerto;
         this.sistema = sistema;
     }
@@ -113,15 +109,6 @@ public abstract class Usuario implements Serializable {
      */
     public List<Notificacion> getNotificaciones() {
         return notificaciones;
-    }
-
-    /**
-     * Método para obtener los vuelos de un usuario.
-     * 
-     * @return Los vuelos del usuario.
-     */
-    public List<Vuelo> getVuelos() {
-        return vuelosQueControla;
     }
 
     /**
@@ -336,19 +323,6 @@ public abstract class Usuario implements Serializable {
         }
 
         notificaciones.add(notificacion);
-    }
-
-    /**
-     * Método para añadir un vuelo.
-     * 
-     * @param vuelo El vuelo que se añade.
-     */
-    public void addVuelo(Vuelo vuelo) {
-        if (vuelo == null) {
-            throw new IllegalArgumentException("El vuelo no puede ser null.");
-        }
-
-        vuelosQueControla.add(vuelo);
     }
 
     /**

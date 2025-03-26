@@ -108,7 +108,7 @@ public class Operador extends UsuarioConDni {
         }
         sistema.actualizarEstadoVueloAutomatico(vuelo);
 
-        if (getVuelos().contains(vuelo) == false) {
+        if (vuelo.getOperadorPrincipal()!=this) {
             throw new VueloNoDelUsuarioException("Este vuelo no está asignado a este usuario");
         }
 
@@ -139,7 +139,7 @@ public class Operador extends UsuarioConDni {
      * @param vuelo Vuelo al que se le cambia el estado.
      */
     private void cambiarEstadoEnPreparacionDespegar(Vuelo vuelo) {
-        if (vuelo.getEstado() == EstadoVuelo.OPERATIVO) {
+        if (vuelo.getEstado() == EstadoVuelo.OPERATIVO || vuelo.getEstado() == EstadoVuelo.A_TIEMPO || vuelo.getEstado() == EstadoVuelo.RETRASADO) {
             vuelo.cambiarEstado(EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR);
         }
     }
@@ -156,9 +156,9 @@ public class Operador extends UsuarioConDni {
         if (vuelo.getAvion() instanceof AvionMercancias) {
             AvionMercancias avion = (AvionMercancias) vuelo.getAvion();
             double capacidadCarga = avion.getCapacidadMaxCarga();
-            if (minutosDeDiferencia <= 30 && (capacidadCarga < 1000)
-                    || (minutosDeDiferencia <= 45 && capacidadCarga > 1000)) {
-                if (vuelo.getEstado() == EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR) {
+            if (minutosDeDiferencia <= 30 && (capacidadCarga < 10000)
+                    || (minutosDeDiferencia <= 45 && capacidadCarga > 10000)) {
+                if (vuelo.getEstado() == EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR || vuelo.getEstado() == EstadoVuelo.A_TIEMPO || vuelo.getEstado() == EstadoVuelo.RETRASADO) {
                     vuelo.cambiarEstado(EstadoVuelo.INICIO_DEL_EMBARQUE);
                 }
             }
@@ -167,7 +167,7 @@ public class Operador extends UsuarioConDni {
             int numeroPasajeros = avion.getCapacidadMaxPasajeros();
             if ((minutosDeDiferencia <= 30 && numeroPasajeros < 100)
                     || (minutosDeDiferencia <= 45 && numeroPasajeros > 100)) {
-                if (vuelo.getEstado() == EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR) {
+                if (vuelo.getEstado() == EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR || vuelo.getEstado() == EstadoVuelo.A_TIEMPO || vuelo.getEstado() == EstadoVuelo.RETRASADO) {
                     vuelo.cambiarEstado(EstadoVuelo.INICIO_DEL_EMBARQUE);
                 }
             }
@@ -180,7 +180,7 @@ public class Operador extends UsuarioConDni {
      * @param vuelo Vuelo al que se le cambia el estado.
      */
     private void cambiarEstadoFinEmbarque(Vuelo vuelo) {
-        if (vuelo.getEstado() == EstadoVuelo.INICIO_DEL_EMBARQUE) {
+        if (vuelo.getEstado() == EstadoVuelo.INICIO_DEL_EMBARQUE || vuelo.getEstado() == EstadoVuelo.A_TIEMPO || vuelo.getEstado() == EstadoVuelo.RETRASADO) {
             vuelo.cambiarEstado(EstadoVuelo.FIN_DEL_EMBARQUE);
         }
     }
@@ -191,7 +191,7 @@ public class Operador extends UsuarioConDni {
      * @param vuelo Vuelo al que se le cambia el estado.
      */
     private void cambiarEstadoInicioDesembarque(Vuelo vuelo) {
-        if (vuelo.getEstado() == EstadoVuelo.ATERRIZAJE) {
+        if (vuelo.getEstado() == EstadoVuelo.ATERRIZAJE || vuelo.getEstado() == EstadoVuelo.A_TIEMPO || vuelo.getEstado() == EstadoVuelo.RETRASADO) {
             vuelo.cambiarEstado(EstadoVuelo.INICIO_DEL_DESEMBARQUE);
         }
     }
@@ -202,7 +202,7 @@ public class Operador extends UsuarioConDni {
      * @param vuelo Vuelo al que se le cambia el estado.
      */
     private void cambiarEstadoFinDesembarque(Vuelo vuelo) {
-        if (vuelo.getEstado() == EstadoVuelo.INICIO_DEL_DESEMBARQUE) {
+        if (vuelo.getEstado() == EstadoVuelo.INICIO_DEL_DESEMBARQUE || vuelo.getEstado() == EstadoVuelo.A_TIEMPO || vuelo.getEstado() == EstadoVuelo.RETRASADO) {
             vuelo.cambiarEstado(EstadoVuelo.FIN_DEL_DESEMBARQUE);
         }
     }

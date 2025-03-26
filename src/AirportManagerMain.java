@@ -639,7 +639,7 @@ public class AirportManagerMain {
 		Operador operadorIberia= airportManager.getAeropuerto().getAerolineas().get(0).getOperador();
     	
     	operadorRyanair.darDeAltaAvionPasajeros("Boeing", "787", 12.5, 30.5, 40.0, 3500, 2020, new Date(), "FR_HGR", 180);
-    	operadorRyanair.darDeAltaAvionMercancias("Boeing", "737", 16.0, 45.0, 60.0, 8000, 2010, new Date(), "FR_HGS", 10000, true, true);
+    	operadorRyanair.darDeAltaAvionMercancias("Boeing", "737", 16.0, 45.0, 60.0, 8000, 2010, new Date(), "FR_HGS", 8000, true, true);
 
     	Avion avionFR_HGR= airportManager.getAeropuerto().getAerolineas().get(2).getAviones().get(0);
     	Avion avionFR_HGS= airportManager.getAeropuerto().getAerolineas().get(2).getAviones().get(1);
@@ -649,11 +649,11 @@ public class AirportManagerMain {
     	Aeropuerto aeMallorca= airportManager.getAeropuerto().getAeropuertosDestino().get(2);
     	
 		Vuelo vueloFRK2234= new Vuelo("FRK2234", LocalDate.now(), LocalDate.now(), LocalDate.now(),
-	            LocalTime.of(10, 0), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
+				LocalTime.now().plusMinutes(42), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
 	            Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionFR_HGR, aeTokio, aePropio, null, operadorRyanair);
 		Vuelo vueloFRK8103= new Vuelo("FRK8103", LocalDate.now(), LocalDate.now(), LocalDate.now(),
-	            LocalTime.of(10, 30), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.FINGER,
-	            Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionFR_HGR, aePropio, aeMallorca, null, operadorRyanair);
+	            LocalTime.now().plusMinutes(28), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.FINGER,
+	            Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionFR_HGS, aePropio, aeMallorca, null, operadorRyanair);
 		operadorIberia.solicitarCompartirVuelo(vueloFRK8103, operadorRyanair, 30);
 		
 		Terminal terminalT1= airportManager.getAeropuerto().getTerminales().get(0);
@@ -662,8 +662,8 @@ public class AirportManagerMain {
     	ControladorAereo controladorT1= terminalT1.getControladores().get(0);
     	ControladorAereo controladorT2= terminalT2.getControladores().get(0);
     	
-		airportManager.getGestor().aceptarVuelo(vueloFRK2234, terminalT1, terminalT1.getControladores().get(0) );
-		airportManager.getGestor().aceptarVuelo(vueloFRK8103, terminalT2, terminalT1.getControladores().get(0));
+		airportManager.getGestor().aceptarVuelo(vueloFRK2234, terminalT1, controladorT1);
+		airportManager.getGestor().aceptarVuelo(vueloFRK8103, terminalT2, controladorT2);
 		
 		System.out.println("\nLista de vuelos aceptados:");
     	for (VueloProgramado v : airportManager.getAeropuerto().getVuelosAceptados()) {
@@ -672,7 +672,7 @@ public class AirportManagerMain {
 	}
 
 	private static void cambiarEstadoVuelo() throws VueloNoDelUsuarioException, EstadoNoDelUsuarioException, IllegalArgumentException, EstadoEquivocadoException, NoPistasDisponiblesException, NoVueloEnMenosDe1HoraException, VueloEnMenosDe1HoraException, NoFingerMercanciasException, NoModosPuertasEmbarqueDisponiblesException, NoHangaresDisponiblesException, CargaAvionEquivocadaException {
-		Operador operadorAirFrance=(Operador)airportManager.getGestor().buscarUsuarioPorDni("87654321B");
+		Operador operadorRyanair=(Operador)airportManager.getGestor().buscarUsuarioPorDni("50738890L");
 		Terminal terminalT1= airportManager.getAeropuerto().getTerminales().get(0);
     	Terminal terminalT2=airportManager.getAeropuerto().getTerminales().get(1);
 		ControladorAereo controladorT1= terminalT1.getControladores().get(0);
@@ -681,17 +681,20 @@ public class AirportManagerMain {
     	Vuelo vueloFRK2234= airportManager.getAeropuerto().getVuelosAceptados().get(11);
 		Vuelo vueloFRK8103=airportManager.getAeropuerto().getVuelosAceptados().get(12);
 		
-		operadorAirFrance.cambiarEstadoVuelo(vueloFRK2234, EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR);
-		operadorAirFrance.cambiarEstadoVuelo(vueloFRK2234, EstadoVuelo.INICIO_DEL_EMBARQUE);
-		operadorAirFrance.cambiarEstadoVuelo(vueloFRK2234, EstadoVuelo.FIN_DEL_EMBARQUE);
-		
+		operadorRyanair.cambiarEstadoVuelo(vueloFRK2234, EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR);
+		operadorRyanair.cambiarEstadoVuelo(vueloFRK2234, EstadoVuelo.INICIO_DEL_EMBARQUE);
+		operadorRyanair.cambiarEstadoVuelo(vueloFRK2234, EstadoVuelo.FIN_DEL_EMBARQUE);
 		controladorT1.cambiarEstadoVuelo(vueloFRK2234, EstadoVuelo.ESPERANDO_PISTA_DE_DESPEGUE);
 		controladorT1.cambiarEstadoVuelo(vueloFRK2234, EstadoVuelo.ESPERANDO_DESPEGUE);
 		
+		controladorT2.cambiarEstadoVuelo(vueloFRK8103, EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE);
+		controladorT2.cambiarEstadoVuelo(vueloFRK8103, EstadoVuelo.ESPERANDO_ATERRIZAJE);
+		controladorT2.cambiarEstadoVuelo(vueloFRK8103, EstadoVuelo.ATERRIZAJE);
+		operadorRyanair.cambiarEstadoVuelo(vueloFRK8103, EstadoVuelo.INICIO_DEL_DESEMBARQUE);
+		operadorRyanair.cambiarEstadoVuelo(vueloFRK8103, EstadoVuelo.FIN_DEL_DESEMBARQUE);
+		controladorT2.cambiarEstadoVuelo(vueloFRK8103, EstadoVuelo.OPERATIVO);
+		controladorT2.cambiarEstadoVuelo(vueloFRK8103, EstadoVuelo.AVION_A_HANGAR);
 		
-	
-		operadorAirFrance.cambiarEstadoVuelo(vueloFRK8103, EstadoVuelo.INICIO_DEL_DESEMBARQUE);
-		operadorAirFrance.cambiarEstadoVuelo(vueloFRK8103, EstadoVuelo.FIN_DEL_DESEMBARQUE);
 		
 	}
 

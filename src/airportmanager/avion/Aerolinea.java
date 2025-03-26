@@ -103,7 +103,15 @@ public class Aerolinea implements Serializable {
      * @return Vuelos de la aerolinea.
      */
     public List<Vuelo> getVuelos() {
-        return this.operador.getVuelos();
+    	List<Vuelo> vuelos= new ArrayList<>();
+    	for(Vuelo vuelo: getOperador().getAeropuerto().getVuelosAceptados()) {
+    		for(Avion avion: getAviones()) {
+    			if(vuelo.getAvion()==avion) {
+    				vuelos.add(vuelo);
+    			}
+    		}
+    	}  
+    	return vuelos;
     }
 
     /**
