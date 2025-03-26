@@ -1,7 +1,7 @@
 package src;
 
 import java.util.*;
-
+import java.util.Map.Entry;
 
 import src.airportmanager.AirportManager;
 import src.airportmanager.avion.*;
@@ -681,43 +681,58 @@ public class AirportManagerMain {
     	Vuelo vueloFRK2234= airportManager.getAeropuerto().getVuelosAceptados().get(11);
 		Vuelo vueloFRK8103= airportManager.getAeropuerto().getVuelosAceptados().get(12);
 		
-		operadorRyanair.cambiarEstadoVuelo(vueloFRK2234, EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR);
+		System.out.println("\nIniciando el proceso de cambio de estados de vuelos.");
+		System.out.println("Comenzamos con los estados de un vuelo de salida:");
 		System.out.println("Vuelo FRK2234: Estado cambiado a EN_PREPARACION_PARA_DESPEGAR");
+		operadorRyanair.cambiarEstadoVuelo(vueloFRK2234, EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR);
 
+		System.out.println("\nVuelo FRK2234 se intenta cambiar a estado INICIO_DEL_EMBARQUE");
 		operadorRyanair.cambiarEstadoVuelo(vueloFRK2234, EstadoVuelo.INICIO_DEL_EMBARQUE);
-		System.out.println("Vuelo FRK2234: Estado cambiado a INICIO_DEL_EMBARQUE");
 
+		System.out.println("\nVuelo FRK2234 se intenta cambiar a estado FIN_DEL_EMBARQUE");
 		operadorRyanair.cambiarEstadoVuelo(vueloFRK2234, EstadoVuelo.FIN_DEL_EMBARQUE);
-		System.out.println("Vuelo FRK2234: Estado cambiado a FIN_DEL_EMBARQUE");
 
+		System.out.println("\nVuelo FRK2234 se intenta cambiar a estado ESPERANDO_PISTA_DE_DESPEGUE");
 		controladorT1.cambiarEstadoVuelo(vueloFRK2234, EstadoVuelo.ESPERANDO_PISTA_DE_DESPEGUE);
-		System.out.println("Vuelo FRK2234: Estado cambiado a ESPERANDO_PISTA_DE_DESPEGUE");
 
+		System.out.println("\nVuelo FRK2234 se intenta cambiar a estado ESPERANDO_DESPEGUE");
 		controladorT1.cambiarEstadoVuelo(vueloFRK2234, EstadoVuelo.ESPERANDO_DESPEGUE);
-		System.out.println("Vuelo FRK2234: Estado cambiado a ESPERANDO_DESPEGUE");
 
+		System.out.println("\nContinuamos con los estados de un vuelo de llegada:");
+
+		System.out.println("Vuelo FRK8103 se intenta cambiar a estado ESPERANDO_PISTA_DE_ATERRIZAJE");
 		controladorT2.cambiarEstadoVuelo(vueloFRK8103, EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE);
-		System.out.println("Vuelo FRK8103: Estado cambiado a ESPERANDO_PISTA_DE_ATERRIZAJE");
 
+		System.out.println("\nVuelo FRK8103 se intenta cambiar a estado ESPERANDO_ATERRIZAJE");
 		controladorT2.cambiarEstadoVuelo(vueloFRK8103, EstadoVuelo.ESPERANDO_ATERRIZAJE);
-		System.out.println("Vuelo FRK8103: Estado cambiado a ESPERANDO_ATERRIZAJE");
 
+		System.out.println("\nVuelo FRK8103 se intenta cambiar a estado ATERRIZAJE");
 		controladorT2.cambiarEstadoVuelo(vueloFRK8103, EstadoVuelo.ATERRIZAJE);
-		System.out.println("Vuelo FRK8103: Estado cambiado a ATERRIZAJE");
 
+		System.out.println("\nVuelo FRK8103 se intenta cambiar a estado INICIO_DEL_DESEMBARQUE");
 		operadorRyanair.cambiarEstadoVuelo(vueloFRK8103, EstadoVuelo.INICIO_DEL_DESEMBARQUE);
-		System.out.println("Vuelo FRK8103: Estado cambiado a INICIO_DEL_DESEMBARQUE");
 
+		System.out.println("\nVuelo FRK8103 se intenta cambiar a estado FIN_DEL_DESEMBARQUE");
 		operadorRyanair.cambiarEstadoVuelo(vueloFRK8103, EstadoVuelo.FIN_DEL_DESEMBARQUE);
-		System.out.println("Vuelo FRK8103: Estado cambiado a FIN_DEL_DESEMBARQUE");
 
+		System.out.println("\nVuelo FRK8103 se intenta cambiar a estado OPERATIVO");
 		controladorT2.cambiarEstadoVuelo(vueloFRK8103, EstadoVuelo.OPERATIVO);
-		System.out.println("Vuelo FRK8103: Estado cambiado a OPERATIVO");
-
+		
+		System.out.println("\nVuelo FRK8103 se intenta cambiar a estado AVION_A_HANGAR");
 		controladorT2.cambiarEstadoVuelo(vueloFRK8103, EstadoVuelo.AVION_A_HANGAR);
-		System.out.println("Vuelo FRK8103: Estado cambiado a AVION_A_HANGAR");
 		
-		
+		System.out.println("Vamos a imprimir el historial de estados de cada vuelo:");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+		System.out.println("Historial de vuelo FRK2234:");
+		for (Entry<LocalTime, EstadoVuelo> entry : vueloFRK2234.getHistorialEstadoVuelo().getHistorial().entrySet()) {
+		    System.out.println("  - " + entry.getKey().format(formatter) + " → " + entry.getValue());
+		}
+
+		System.out.println("\nHistorial de vuelo FRK8103:");
+		for (Entry<LocalTime, EstadoVuelo> entry : vueloFRK8103.getHistorialEstadoVuelo().getHistorial().entrySet()) {
+		    System.out.println("  - " + entry.getKey().format(formatter) + " → " + entry.getValue());
+		}
+		System.out.println("\nProcedimiento de cambio de estados de vuelos finalizado.");
 	}
 
 	private static void recibirNotificaciones() {

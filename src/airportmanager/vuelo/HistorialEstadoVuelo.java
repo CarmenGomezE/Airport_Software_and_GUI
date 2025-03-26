@@ -46,11 +46,15 @@ public class HistorialEstadoVuelo implements Serializable {
      * @return Último estado registrado o null si no hay registros.
      */
     public EstadoVuelo getUltimoEstado() {
-        if (historial.isEmpty())
+        if (historial.isEmpty()) {
             return null;
-        return historial.values().stream().reduce((_, second) -> second).orElse(null);
+        }
+        EstadoVuelo ultimoEstado = null;
+        for (EstadoVuelo estado : historial.values()) {
+            ultimoEstado = estado;
+        }
+        return ultimoEstado;
     }
-
     /**
      * Obtiene la hora exacta en la que se cambió a un estado específico.
      * 
