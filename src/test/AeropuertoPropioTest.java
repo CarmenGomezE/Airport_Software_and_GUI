@@ -58,8 +58,7 @@ class AeropuertoPropioTest {
 	void setUp() { 
 		aeropuertoPropio = new AeropuertoPropio("Barajas", "MAD", "Madrid", "España", 64.9, ZoneOffset.UTC, 2, DireccionRelativaCiudad.ESTE);
 		
-		puertas = new HashSet<>();
-		puertas2 = new HashSet<>();
+		
 		puertasList = new ArrayList<>();
 		puertasList2 = new ArrayList<>();
 		p1 = new PuertaEmbarque();
@@ -67,21 +66,12 @@ class AeropuertoPropioTest {
 		p3= new PuertaEmbarque();
 		p4= new PuertaEmbarque();
 				
-		puertas.add(p1);
-		puertas.add(p2);
-		puertas2.add(p3);
-		puertas2.add(p4);
+	
 		puertasList.add(p1);
 		puertasList.add(p3);
 		puertasList2.add(p2);
 		puertasList2.add(p4);
 		
-		
-		finger1 = new Finger(11.2,45.8, puertas);
-		finger2 = new Finger(13.7, 23.7, puertas2);
-		fingers = new ArrayList<>();
-		fingers.add(finger1);
-		fingers.add(finger2);
 		
 		hangar1 = new HangarPasajeros(20, 34.5, 54.8, 60.9, 4.7);
 		hangar2 = new HangarPasajeros(25, 54.5, 59.8, 90.9, 4.2);
