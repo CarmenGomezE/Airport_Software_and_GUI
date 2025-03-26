@@ -466,9 +466,7 @@ public class Gestor extends Usuario {
             throw new IllegalArgumentException("Un finger debe estar conectado a 1 o 2 puertas de embarque");
         }
 
-        HashSet<PuertaEmbarque> puertasSet = new HashSet<>(puertasEmbarque);
-
-        Finger finger = new Finger(costePorHora, dimAlto, puertasSet);
+        Finger finger = new Finger(costePorHora, dimAlto);
 
         for (PuertaEmbarque puerta : puertasEmbarque) {
             puerta.setFinger(finger);

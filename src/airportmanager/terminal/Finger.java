@@ -1,8 +1,5 @@
 package src.airportmanager.terminal;
 
-import java.util.*;
-
-
 import src.airportmanager.vuelo.Vuelo;
 
 /**
@@ -16,8 +13,6 @@ public class Finger extends ModoEmbarque {
 	private static final long serialVersionUID = 1L;
 	/** La dimensión de alto del finger. */
     private double dimAlto;
-    /** Las puertas de embarque a las que está conectado (solo puede ser 1 o 2) */
-    private Set<PuertaEmbarque> puertasEmbarque;
 
     /**
      * Constructor de la clase Finger
@@ -28,13 +23,9 @@ public class Finger extends ModoEmbarque {
      * @param puertasEmbarque Puertas de embarque a las que está conectado el
      *                        finger.
      */
-    public Finger( double costePorHora, double dimAlto, Set<PuertaEmbarque> puertasEmbarque) {
+    public Finger( double costePorHora, double dimAlto) {
         super( costePorHora);
-        if (puertasEmbarque.isEmpty() || puertasEmbarque.size() > 2) {
-            throw new IllegalArgumentException("Un finger debe estar conectado a una o dos puertas de embarque");
-        }
         this.dimAlto = dimAlto;
-        this.puertasEmbarque = puertasEmbarque;
     }
 
     /**
@@ -44,17 +35,7 @@ public class Finger extends ModoEmbarque {
      */
     public double getDimAlto() {
         return this.dimAlto;
-    }
-
-    /**
-     * Método que devuelve las puertas de embarque a las que está conectado el
-     * finger.
-     * 
-     * @return Puertas de embarque a las que está conectado el finger.
-     */
-    public Set<PuertaEmbarque> getPuertasEmbarque() {
-        return this.puertasEmbarque;
-    }
+    } 
 
     /**
      * Método para comprobar si un avion entra en el finger.
