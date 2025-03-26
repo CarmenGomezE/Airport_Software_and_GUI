@@ -170,14 +170,14 @@ public class ControladorAereo extends UsuarioConDni {
             // Intentamos asignarle modo de embarque al vuelo nuevo sin cambiarlo de puerta
             // de embarque.
             if (vueloNuevo.getTipoModoEmbarque() == TipoModoEmbarque.FINGER) {
-            	for(Finger finger: puerta.getFinger()) {
-            		if (finger.comprobarTamano(vueloNuevo) == true && finger.getVuelo() == null) {
-	                    liberarPuertaEmbarque(vuelo);
-	                    asignarPuertaEmbarque(puerta, vueloNuevo);
-	                    liberarModoEmbarque(vuelo);
-	                    asignarModoEmbarque(finger, vueloNuevo);
-            		}
-            	}
+        
+        		if (puerta.getFinger().comprobarTamano(vueloNuevo) == true && puerta.getFinger().getVuelo() == null) {
+                    liberarPuertaEmbarque(vuelo);
+                    asignarPuertaEmbarque(puerta, vueloNuevo);
+                    liberarModoEmbarque(vuelo);
+                    asignarModoEmbarque(puerta.getFinger(), vueloNuevo);
+        		}
+
                 
             } else {
                 for (ZonaAparcamiento z : puerta.getZonasAparcamiento()) {

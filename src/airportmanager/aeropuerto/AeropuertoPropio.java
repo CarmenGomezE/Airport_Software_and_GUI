@@ -294,9 +294,7 @@ public class AeropuertoPropio extends Aeropuerto {
 		List<Finger> fingers= new ArrayList<>();
 		for(Terminal terminal:getTerminales()) {
 			for(PuertaEmbarque puerta: terminal.getPuertasEmbarque()) {
-				for(Finger finger: puerta.getFinger()) {
-					fingers.add(finger);
-				}
+				fingers.add(puerta.getFinger());
 			}
 		}
 		return fingers;

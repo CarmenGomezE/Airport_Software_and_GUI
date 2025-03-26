@@ -52,9 +52,8 @@ public class EstadisticasGestor implements Serializable {
     private void cargarDatosEstadisticas() {
         for (Terminal terminal : gestor.getAeropuerto().getTerminales()) {
         	for (PuertaEmbarque puerta : terminal.getPuertasEmbarque()) {
-        		for (Finger finger : puerta.getFinger()) {
-        			horasUsoFinger.put(finger, finger.getHorasUso() / gestor.getAeropuerto().getHorasOperacion());
-        		}
+        		Finger finger = puerta.getFinger();
+    			horasUsoFinger.put(finger, finger.getHorasUso() / gestor.getAeropuerto().getHorasOperacion());
         	}
         }
 
@@ -120,10 +119,10 @@ public class EstadisticasGestor implements Serializable {
         System.out.println("Estadísticas de uso de los fingers:");
         for (Terminal terminal : gestor.getAeropuerto().getTerminales()) {
         	for (PuertaEmbarque puerta : terminal.getPuertasEmbarque()) {
-        		for (Finger finger : puerta.getFinger()) {
-        			 System.out.println("Finger:" + finger.getId() + " Tiempo de uso medio diario: "
-                    + getUsoMedioDiarioFinger(finger) + " horas.");
-        		}
+        		Finger finger = puerta.getFinger();
+        		if(finger!=null) {
+        			System.out.println("Finger:" + finger.getId() + " Tiempo de uso medio diario: "+ getUsoMedioDiarioFinger(finger) + " horas.");
+        		}	
         	}
         }
     }
@@ -136,8 +135,7 @@ public class EstadisticasGestor implements Serializable {
         System.out.println("Estadísticas de uso de las puertas de embarque:");
         for (Terminal terminal : gestor.getAeropuerto().getTerminales()) {
         	for(PuertaEmbarque puerta: terminal.getPuertasEmbarque())
-            System.out.println("Puerta de embarque:" + puerta.getId() + " Tiempo de uso medio diario: "
-                    + getUsoMedioDiarioPuertaEmbarque(puerta) + " horas.");
+            System.out.println("Puerta de embarque:" + puerta.getId() + " Tiempo de uso medio diario: " + getUsoMedioDiarioPuertaEmbarque(puerta) + " horas.");
         }
     }
 
@@ -148,8 +146,7 @@ public class EstadisticasGestor implements Serializable {
     public void imprimirUsoMedioZonasAparcamiento() {
         System.out.println("Estadísticas de uso de las zonas de aparcamiento:");
         for (ZonaAparcamiento zona : gestor.getAeropuerto().getZonasAparcamiento()) {
-            System.out.println("Zona de aparcamiento:" + zona.getId() + " Tiempo de uso medio diario: "
-                    + getUsoMedioDiarioZonaAparcamiento(zona) + " horas.");
+            System.out.println("Zona de aparcamiento:" + zona.getId() + " Tiempo de uso medio diario: " + getUsoMedioDiarioZonaAparcamiento(zona) + " horas.");
         }
     }
 
@@ -160,8 +157,7 @@ public class EstadisticasGestor implements Serializable {
     public void imprimirUsoMedioHangares() {
         System.out.println("Estadísticas de uso de los hangares:");
         for (Hangar hangar : gestor.getAeropuerto().getHangares()) {
-            System.out.println("Hangar:" + hangar.getId() + " Tiempo de uso medio diario: "
-                    + getUsoMedioDiarioHangar(hangar) + " horas.");
+            System.out.println("Hangar:" + hangar.getId() + " Tiempo de uso medio diario: "+ getUsoMedioDiarioHangar(hangar) + " horas.");
         }
     }
 }

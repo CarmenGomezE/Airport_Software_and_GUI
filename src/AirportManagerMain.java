@@ -84,7 +84,7 @@ public class AirportManagerMain {
         buscarVuelos();
         
         System.out.println("\n*********************************************************************************************************************");
-        System.out.println("\nPara lo que queda de simulación se van a añadir vuelos a mano.");
+        System.out.println("\nPara lo que queda de simulación se van a añadir vuelos, y otros datos a mano.");
         generarListaVuelosDia();
         
         System.out.println("\n*********************************************************************************************************************");
@@ -278,6 +278,14 @@ public class AirportManagerMain {
     	airportManager.getGestor().darDeAltaFinger(5.0, 200.0, puertasF2); 
     	airportManager.getGestor().darDeAltaFinger(5.0, 200.0, puertasF3);
     	System.out.println("Fingers dados de alta para las puertas de embarque T1.");
+    	
+    	for (Terminal terminal : airportManager.getAeropuerto().getTerminales()) {
+    	    for (PuertaEmbarque puerta : terminal.getPuertasEmbarque()) {
+    	        if (puerta.getFinger() == null) {
+    	            System.out.println("La puerta de embarque " + puerta.getId() + " no tiene asignado un Finger.");
+    	        }
+    	    }
+    	}
 
     	List<PuertaEmbarque> puertasZ1= new ArrayList<>();
     	puertasZ1.add(puerta1T1);
@@ -778,6 +786,7 @@ public class AirportManagerMain {
 	private static void verEstadisticas() {
 		Operador operadorIberia=(Operador)airportManager.getGestor().buscarUsuarioPorDni("12345678A");
     	Gestor gestorBarajas= airportManager.getGestor();
+    	
 		
     	System.out.println("\nIniciando visualización de estadísticas.");
     	System.out.println("Estadísticas del operador de Iberia.");
