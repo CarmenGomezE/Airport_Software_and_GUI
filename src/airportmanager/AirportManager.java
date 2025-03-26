@@ -1,6 +1,7 @@
 package src.airportmanager;
 
 import java.io.*;
+
 import java.util.*;
 
 import src.airportmanager.exceptions.ContrasenaInvalidaException;
@@ -177,7 +178,7 @@ public class AirportManager implements Serializable {
      * @param dni                           Dni del usuario.
      * @return true si el dni está registrado en el sistema o false si no.
      */
-    private boolean validarDni(String dni) {
+    public boolean validarDni(String dni) {
 
         return credenciales.containsKey(dni);
 
@@ -189,7 +190,7 @@ public class AirportManager implements Serializable {
      * @param contraseña                    Contraseña del usuario.
      * @return true si la contraseña está registrada en el sistema o false si no.
      */
-    private boolean validarContrasena(String dni, String contrasena) throws UsuarioNoEncontradoException {
+    public boolean validarContrasena(String dni, String contrasena) throws UsuarioNoEncontradoException {
         return credenciales.get(dni).equals(contrasena);
     }
 
@@ -234,7 +235,7 @@ public class AirportManager implements Serializable {
      * Método que ordena la cola de vuelos que están esperando despegue.
      * @return la cola de vuelos ordenada.
      */
-    private List<Vuelo> ordenarColaVuelos() {
+    public List<Vuelo> ordenarColaVuelos() {
 
         List<Vuelo> vuelosEnEspera = new ArrayList<>();
         int n, i, j;
@@ -269,7 +270,7 @@ public class AirportManager implements Serializable {
      * @param v2                            Segundo vuelo
      * @return un número positivo si el segundo vuelo tiene más prioridad o un número negativo si el primer vuelo tiene más prioridad.
      */
-    private int compararVuelos(Vuelo v1, Vuelo v2) {
+    public int compararVuelos(Vuelo v1, Vuelo v2) {
 
         Boolean esPasajero1, esPasajero2;
         int pasajeros1 = 0, pasajeros2 = 0;
@@ -314,6 +315,12 @@ public class AirportManager implements Serializable {
 		return this.gestor;
 	}
 
-
+	public List<Usuario> getUsuarios() {
+		return usuarios;
+	}
+	
+	public Map<String, String> getCredenciales() {
+		return credenciales;
+	}
 
 }
