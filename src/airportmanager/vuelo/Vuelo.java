@@ -273,7 +273,7 @@ public class Vuelo extends VueloProgramado {
      */
     public List<Operador> getOperadores() {
         List<Operador> operadores = new ArrayList<>();
-        if (this.operadorPrincipal != null) {
+        if (this.operadorPrincipal != null &&!this.cargaPorOperador.containsKey(this.operadorPrincipal)) {
             operadores.add(this.operadorPrincipal);
         }
         if (this.cargaPorOperador != null) {
@@ -290,16 +290,36 @@ public class Vuelo extends VueloProgramado {
     public int getTiempoEspera() {
         LocalTime horaCambio;
 
+        
         if (this.getEstado() != EstadoVuelo.ESPERANDO_DESPEGUE) {
+            System.out.println("Estado no es ESPERANDO_DESPEGUE, estado actual: " + this.getEstado());
             return 0;
         }
 
+        
         horaCambio = this.historialEstadoVuelo.getHoraCambio(EstadoVuelo.ESPERANDO_DESPEGUE);
 
+        
         if (horaCambio == null) {
+            System.out.println("No se encontró hora de cambio para ESPERANDO_DESPEGUE.");
             return 0;
         }
 
-        return (int) Duration.between(horaCambio, LocalTime.now()).toMinutes();
+        
+        System.out.println("Hora de cambio: " + horaCambio);
+
+        
+        long minutos = Duration.between(horaCambio, LocalTime.now()).toMinutes();
+
+        
+        if (minutos < 0) {
+            System.out.println("La duración calculada es negativa, horaCambio: " + horaCambio + ", ahora: " + LocalTime.now());
+            return 0;
+        }
+
+        
+        return (int) minutos;
     }
+
+
 }
