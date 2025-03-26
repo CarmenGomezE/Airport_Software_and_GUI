@@ -461,23 +461,18 @@ public class Gestor extends Usuario {
      * @param terminal        Terminal de la que es el finger.
      * 
      */
-    public void darDeAltaFinger( double dimAlto, double costePorHora,
-            List<PuertaEmbarque> puertasEmbarque) {
-        Finger finger;
-        HashSet<PuertaEmbarque> puertasSet;
-
-        if (puertasEmbarque.size() < 1 || puertasEmbarque.size() > 2) {
+    public void darDeAltaFinger( double dimAlto, double costePorHora, List<PuertaEmbarque> puertasEmbarque) {
+    	if (puertasEmbarque.isEmpty()|| puertasEmbarque.size() > 2) {
             throw new IllegalArgumentException("Un finger debe estar conectado a 1 o 2 puertas de embarque");
         }
 
-        puertasSet = new HashSet<>();
-        puertasSet.addAll(puertasEmbarque);
-        finger = new Finger( costePorHora, dimAlto, puertasSet);
-        
+        HashSet<PuertaEmbarque> puertasSet = new HashSet<>(puertasEmbarque);
+
+        Finger finger = new Finger(costePorHora, dimAlto, puertasSet);
+
         for (PuertaEmbarque puerta : puertasEmbarque) {
             puerta.setFinger(finger);
         }
-        aeropuerto.addFinger(finger);
     }
 
     /**

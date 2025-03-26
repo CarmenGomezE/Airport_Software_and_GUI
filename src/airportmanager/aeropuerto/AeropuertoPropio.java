@@ -6,7 +6,6 @@ import java.util.*;
 import src.airportmanager.avion.Aerolinea;
 import src.airportmanager.hangar.Hangar;
 import src.airportmanager.pista.Pista;
-import src.airportmanager.terminal.Finger;
 import src.airportmanager.terminal.PuertaEmbarque;
 import src.airportmanager.terminal.Terminal;
 import src.airportmanager.terminal.ZonaAparcamiento;
@@ -21,8 +20,6 @@ import src.airportmanager.vuelo.Vuelo;
 public class AeropuertoPropio extends Aeropuerto {
 	/** Número de versión de la clase */
     private static final long serialVersionUID = 1L;
-	/** Fingers del aeropuerto propio */
-    private List<Finger> fingers;
     /** Hangares del aeropuerto propio */
     private List<Hangar> hangares;
     /** Zonas de aparcamiento del aeropuerto propio */
@@ -58,7 +55,6 @@ public class AeropuertoPropio extends Aeropuerto {
             ZoneOffset diferenciaHoraria, int numTemporadas, DireccionRelativaCiudad direccionCiudad) {
         super(nombre, codigo, ciudad, pais, distanciaCiudad, diferenciaHoraria, numTemporadas, direccionCiudad);
         this.vuelosAceptados = new ArrayList<>();
-        this.fingers = new ArrayList<>();
         this.hangares = new ArrayList<>();
         this.zonasAparcamiento = new ArrayList<>();
         this.terminales = new ArrayList<>();
@@ -67,15 +63,6 @@ public class AeropuertoPropio extends Aeropuerto {
         this.aerolineas = new ArrayList<>();
         this.vuelosAceptados = new ArrayList<>();
         this.aeropuertosDestino = new ArrayList<>();
-    }
-
-    /**
-     * Método para obtener los fingers del aeropuerto propio.
-     * 
-     * @return Fingers del aeropuerto propio.
-     */
-    public List<Finger> getFingers() {
-        return fingers;
     }
 
     /**
@@ -163,19 +150,6 @@ public class AeropuertoPropio extends Aeropuerto {
         }
 
         return puertasEmbarque;
-    }
-
-    /**
-     * Método para añadir un finger al aeropuerto propio.
-     * 
-     * @param finger El finger que se añade.
-     */
-    public void addFinger(Finger finger) {
-        if (finger == null) {
-            throw new IllegalArgumentException("El finger no puede ser null");
-        }
-
-        fingers.add(finger);
     }
 
     /**

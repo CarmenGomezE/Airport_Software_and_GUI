@@ -19,7 +19,7 @@ public class PuertaEmbarque implements Serializable {
     /** Zonas de aparcamiento de la puerta de embarque */
     private List<ZonaAparcamiento> zonasAparcamiento;
     /** Finger conectados a la puerta de embarque */
-    private Finger finger;
+    private List<Finger> finger;
     /** Número de horas de uso de la puerta de embarque */
     private double horasUso;
     /** Vuelo que ocupa la puerta de embarque */
@@ -33,7 +33,7 @@ public class PuertaEmbarque implements Serializable {
         this.zonasAparcamiento = new ArrayList<>();
         this.horasUso = 0;
         this.vuelo = null;
-        this.finger=null;
+        this.finger=new ArrayList<>();
     }
 
     /**
@@ -59,7 +59,7 @@ public class PuertaEmbarque implements Serializable {
      * 
      * @return El finger conectado a la puerta de embarque.
      */
-    public Finger getFinger() {
+    public List<Finger> getFinger() {
         return finger;
     }
 
@@ -115,7 +115,7 @@ public class PuertaEmbarque implements Serializable {
             throw new IllegalArgumentException("El finger no puede ser null");
         }
 
-        this.finger = finger;
+        this.finger.add(finger);
     }
 
     /**

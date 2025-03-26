@@ -169,9 +169,13 @@ public class AirportManagerMain {
     	System.out.println("Creando puertas de embarque para la terminal T1 (Pasajeros) y T2 (Mercancías).");
     	List<PuertaEmbarque> puertasT1 = new ArrayList<>();
     	List<PuertaEmbarque> puertasT2 = new ArrayList<>();
-    	for (int i = 0; i < 4; i++) {  
+    	List<PuertaEmbarque> puertasNuevasT1 = new ArrayList<>();
+    	List<PuertaEmbarque> puertasNuevasT2 = new ArrayList<>();
+    	for (int i = 0; i < 2; i++) {  
     	    puertasT1.add(new PuertaEmbarque());
     	    puertasT2.add(new PuertaEmbarque());
+    	    puertasNuevasT1.add(new PuertaEmbarque());
+    	    puertasNuevasT2.add(new PuertaEmbarque());
     	}
     	System.out.println("Puertas de embarque para T1: " + puertasT1.size() + " y para T2: " + puertasT2.size());
 
@@ -183,10 +187,10 @@ public class AirportManagerMain {
     	System.out.println("Dadas de alta Terminal T1 (Pasajeros) y Terminal T2 (Mercancías).");
     	
     	System.out.println("Dando de alta las puertas de embarque en las terminales.");
-    	for (PuertaEmbarque puerta : puertasT1) {
+    	for (PuertaEmbarque puerta : puertasNuevasT1) {
     	    airportManager.getGestor().darDeAltaPuertaEmbarque(puerta, terminalT1);
     	}
-    	for (PuertaEmbarque puerta : puertasT2) {
+    	for (PuertaEmbarque puerta : puertasNuevasT2) {
     	    airportManager.getGestor().darDeAltaPuertaEmbarque(puerta, terminalT2);
     	}
     	System.out.println("Puertas de embarque dadas de alta en las terminales T1 y T2.");
@@ -206,12 +210,24 @@ public class AirportManagerMain {
     	airportManager.getGestor().darDeAltaHangar("Pasajeros", 6, 25.0, 15.0, 40.0, 1000.0, false);
     	airportManager.getGestor().darDeAltaHangar("Mercancías", 3, 28.0, 17.0, 43.0, 1000.0, true);
     	System.out.println("Hangar de Pasajeros y Hangar de Mercancías dados de alta.");
-
+    	
+    	PuertaEmbarque puerta1T1= airportManager.getAeropuerto().getTerminales().get(0).getPuertasEmbarque().get(0);
+    	PuertaEmbarque puerta2T1= airportManager.getAeropuerto().getTerminales().get(0).getPuertasEmbarque().get(1);
+    	PuertaEmbarque puerta3T1= airportManager.getAeropuerto().getTerminales().get(0).getPuertasEmbarque().get(2);
+    	
+    	List<PuertaEmbarque> puertasF1= new ArrayList<>();
+    	puertasF1.add(puerta1T1);
+    	List<PuertaEmbarque> puertasF2= new ArrayList<>();
+    	puertasF2.add(puerta2T1);
+    	List<PuertaEmbarque> puertasF3= new ArrayList<>();
+    	puertasF3.add(puerta1T1);
+    	puertasF3.add(puerta3T1);
+    	
     	/** Fingers */
     	System.out.println("Dando de alta los Finger para la Terminal T1.");
-    	airportManager.getGestor().darDeAltaFinger(5.0, 200.0, List.of(puertasT1.get(0)));
-    	airportManager.getGestor().darDeAltaFinger(5.0, 200.0, List.of(puertasT1.get(2))); 
-    	airportManager.getGestor().darDeAltaFinger(5.0, 200.0, List.of(puertasT1.get(0), puertasT1.get(1)));
+    	airportManager.getGestor().darDeAltaFinger(5.0, 200.0, puertasF1);
+    	airportManager.getGestor().darDeAltaFinger(5.0, 200.0, puertasF2); 
+    	airportManager.getGestor().darDeAltaFinger(5.0, 200.0, puertasF3);
     	System.out.println("Fingers dados de alta para las puertas de embarque T1.");
 
     	/** Zonas de aparcamiento */
