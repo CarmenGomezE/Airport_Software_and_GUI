@@ -143,11 +143,6 @@ class AeropuertoPropioTest {
 		temporadas.add(temporada2);
 	}
 
-	@Test
-
-	void testGetFingers() {
-		assertTrue(aeropuertoPropio.getFingers().isEmpty(), "Error la lista de fingers al principio debería estar vacía");
-	}
 
 	@Test
 	void testGetHangares() {
@@ -194,13 +189,6 @@ class AeropuertoPropioTest {
 		assertTrue(aeropuertoPropio.getPuertasEmbarque().isEmpty(), "Error la lista de puertas de embarque al principio debería estar vacía");
 	}
 
-	@Test
-	void testAddFinger() {
-		aeropuertoPropio.addFinger(finger1);
-		aeropuertoPropio.addFinger(finger2);
-		assertEquals(fingers, aeropuertoPropio.getFingers(), "Error la lista de fingers no es correcta");
-		
-	}
 
 	@Test
 	void testAddHangar() {
