@@ -6,6 +6,7 @@ import java.util.*;
 import src.airportmanager.avion.Aerolinea;
 import src.airportmanager.hangar.Hangar;
 import src.airportmanager.pista.Pista;
+import src.airportmanager.terminal.Finger;
 import src.airportmanager.terminal.PuertaEmbarque;
 import src.airportmanager.terminal.Terminal;
 import src.airportmanager.terminal.ZonaAparcamiento;
@@ -288,5 +289,17 @@ public class AeropuertoPropio extends Aeropuerto {
     public double calcularHorasEntre(LocalTime hora1, LocalTime hora2) {
         return (double) (hora2.toSecondOfDay() - hora1.toSecondOfDay()) / 3600;
     }
+
+	public List<Finger> getFingers() {
+		List<Finger> fingers= new ArrayList<>();
+		for(Terminal terminal:getTerminales()) {
+			for(PuertaEmbarque puerta: terminal.getPuertasEmbarque()) {
+				for(Finger finger: puerta.getFinger()) {
+					fingers.add(finger);
+				}
+			}
+		}
+		return fingers;
+	}
  
 }
