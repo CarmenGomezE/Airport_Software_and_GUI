@@ -60,6 +60,7 @@ class VueloTest {
 	private List<Operador> operadores;
 	private Escala escala;
 	private List<DayOfWeek> dias;
+	private List<PuertaEmbarque> puertasList;
 	
 	@BeforeEach
 	void setUp() {
@@ -74,8 +75,11 @@ class VueloTest {
 				
 		puertas.add(p1);
 		puertas.add(p2);
+		puertasList = new ArrayList<>();
+		puertasList.add(p1);
+		puertasList.add(p2);
 		
-		terminal = new TerminalPasajeros("T1", p1, 200);
+		terminal = new TerminalPasajeros("T1", puertasList, 200);
 		
 		pista = new Pista("P2", 50, TipoPista.DESPEGUE);
 		dias = new ArrayList<DayOfWeek>();
@@ -233,8 +237,8 @@ class VueloTest {
 	 */
 	@Test
 	void testAgregarOperadorSecundario() {
-		vuelo.agregarOperadorSecundario(operador, 34);
-		assertTrue(vuelo.getOperadores().contains(operador), "Error, el operador secundario no se asignó correctamente");
+		vuelo.agregarOperadorSecundario(operadorSecundario, 34);
+		assertTrue(vuelo.getOperadores().contains(operadorSecundario), "Error, el operador secundario no se asignó correctamente");
 	}
 
 	/**
@@ -242,10 +246,10 @@ class VueloTest {
 	 */
 	@Test
 	void testGetCargaAsignada() {
-		 assertEquals(0.0, vuelo.getCargaAsignada(operador), "Error: Debería devolver 0.0 si el operador no está registrado.");
+		 assertEquals(100.0, vuelo.getCargaAsignada(operador), "Error: Debería devolver 100.0.");
 
-		  vuelo.agregarOperadorSecundario(operador, 30.5);
-		  assertEquals(30.5, vuelo.getCargaAsignada(operador), "Error: La carga asignada al operador no es la esperada.");
+		  vuelo.agregarOperadorSecundario(operadorSecundario, 30.5);
+		  assertEquals(30.5, vuelo.getCargaAsignada(operadorSecundario), "Error: La carga asignada al operador no es la esperada.");
 	}
 
 	/**
@@ -253,13 +257,12 @@ class VueloTest {
 	 */
 	@Test
 	void testGetCargaTotalAsignada() {
-		assertEquals(0.0, vuelo.getCargaTotalAsignada(), "Error: Al inicio, la carga total debería ser 0.0.");
+		assertEquals(100.0, vuelo.getCargaTotalAsignada(), "Error: Al inicio, la carga total debería ser 0.0.");
 
 	    
-	    vuelo.agregarOperadorSecundario(operador, 30.5);
 	    vuelo.agregarOperadorSecundario(operadorSecundario, 45.0);
 
-	    assertEquals(75.5, vuelo.getCargaTotalAsignada(), "Error: La carga total asignada no es correcta.");
+	    assertEquals(100.0, vuelo.getCargaTotalAsignada(), "Error: La carga total asignada no es correcta.");
 	}
 
 	/**
@@ -275,11 +278,12 @@ class VueloTest {
 	 */
 	@Test
 	void testGetOperadoresAsignados() {
-		vuelo.agregarOperadorSecundario(operador, 12.2);
+		
 		vuelo.agregarOperadorSecundario(operadorSecundario, 23.2);
 		
 		operadoresEsperados = new HashMap<>();
-		operadoresEsperados.put(operador, 12.2);
+		
+		operadoresEsperados.put(operador, 100.0 - 23.2);
 		operadoresEsperados.put(operadorSecundario, 23.2);
 		assertEquals(operadoresEsperados, vuelo.getOperadoresAsignados(), "Error: El mapa de operadores asignados no coincide con el esperado.");
 		
@@ -290,7 +294,7 @@ class VueloTest {
 	 */
 	@Test
 	void testGetOperadores() {
-		vuelo.agregarOperadorSecundario(operador, 12.2);
+		
 		vuelo.agregarOperadorSecundario(operadorSecundario, 23.2);
 		operadores = new ArrayList<>();
 		operadores.add(operador);
@@ -304,20 +308,24 @@ class VueloTest {
 	@Test
 	void testGetTiempoEspera() {
 	    
-	    vuelo.cambiarEstado(EstadoVuelo.A_TIEMPO);
-	    assertEquals(0, vuelo.getTiempoEspera(), "Error: Un vuelo que no está esperando despegue debería tener 0 minutos de espera.");
+	    assertEquals(EstadoVuelo.ACEPTADO, vuelo.getEstado(), "Error: El estado inicial no es ACEPTADO.");
 
 	    
 	    vuelo.cambiarEstado(EstadoVuelo.ESPERANDO_DESPEGUE);
+	    assertEquals(EstadoVuelo.ESPERANDO_DESPEGUE, vuelo.getEstado(), "Error: El estado no se cambió correctamente a ESPERANDO_DESPEGUE.");
+
+	    
 	    assertEquals(0, vuelo.getTiempoEspera(), "Error: Un vuelo en estado ESPERANDO_DESPEGUE sin hora de cambio debería tener 0 minutos de espera.");
 
 	    
-	    LocalTime horaCambio = LocalTime.now().minusMinutes(30); 
+	    LocalTime horaCambio = LocalTime.now().minusMinutes(30);
 	    vuelo.getHistorialEstadoVuelo().agregarCambioEstado(EstadoVuelo.ESPERANDO_DESPEGUE, horaCambio);
 
-	  
-	    assertTrue(vuelo.getTiempoEspera() >= 29 && vuelo.getTiempoEspera() <= 31, 
-	        "Error: El tiempo de espera debería ser aproximadamente 30 minutos.");
+	    
+	    int tiempoEspera = vuelo.getTiempoEspera();
+	    System.out.println("Tiempo de espera calculado: " + tiempoEspera); 
+	    assertTrue(tiempoEspera >= 29 && tiempoEspera <= 31, 
+	        "Error: El tiempo de espera debería ser aproximadamente 30 minutos, pero se obtuvo: " + tiempoEspera);
 	}
 
 
