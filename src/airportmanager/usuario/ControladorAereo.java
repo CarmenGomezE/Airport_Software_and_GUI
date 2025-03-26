@@ -139,7 +139,7 @@ public class ControladorAereo extends UsuarioConDni {
      */
     private void cambiarEstadoOperativo(Vuelo vuelo) throws EstadoEquivocadoException, NoVueloEnMenosDe1HoraException,
             NoModosPuertasEmbarqueDisponiblesException, NoFingerMercanciasException {
-        if (vuelo.getEstado() != EstadoVuelo.FIN_DEL_DESEMBARQUE) {
+        if (vuelo.getEstado() != EstadoVuelo.FIN_DEL_DESEMBARQUE && vuelo.getEstado() != EstadoVuelo.A_TIEMPO && vuelo.getEstado() != EstadoVuelo.RETRASADO) {
             throw new EstadoEquivocadoException("El vuelo no está en el estado correcto para cambiar a este estado.");
         }
 
@@ -276,7 +276,7 @@ public class ControladorAereo extends UsuarioConDni {
      */
     private void cambiarEstadoAHangar(Vuelo vuelo)
             throws EstadoEquivocadoException, VueloEnMenosDe1HoraException, NoHangaresDisponiblesException, CargaAvionEquivocadaException {
-        if (vuelo.getEstado() != EstadoVuelo.FIN_DEL_DESEMBARQUE) {
+        if (vuelo.getEstado() != EstadoVuelo.FIN_DEL_DESEMBARQUE && vuelo.getEstado() != EstadoVuelo.A_TIEMPO && vuelo.getEstado() != EstadoVuelo.RETRASADO) {
             throw new EstadoEquivocadoException("El vuelo no está en el estado correcto para cambiar a este estado");
         }
 
@@ -331,7 +331,7 @@ public class ControladorAereo extends UsuarioConDni {
      * @throws EstadoEquivocadoException
      */
     private void cambiarEstadoAterrizaje(Vuelo vuelo) throws EstadoEquivocadoException {
-        if (vuelo.getEstado() != EstadoVuelo.ESPERANDO_ATERRIZAJE) {
+        if (vuelo.getEstado() != EstadoVuelo.ESPERANDO_ATERRIZAJE && vuelo.getEstado() != EstadoVuelo.A_TIEMPO && vuelo.getEstado() != EstadoVuelo.RETRASADO) {
             throw new EstadoEquivocadoException("El vuelo no está en el estado correcto para cambiar a este estado");
         }
 
@@ -353,7 +353,7 @@ public class ControladorAereo extends UsuarioConDni {
      */
     private void cambiarEstadoEsperandoAterrizaje(Vuelo vuelo)
             throws EstadoEquivocadoException, NoPistasDisponiblesException {
-        if (vuelo.getEstado() != EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE) {
+        if (vuelo.getEstado() != EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE && vuelo.getEstado() != EstadoVuelo.A_TIEMPO && vuelo.getEstado() != EstadoVuelo.RETRASADO) {
             throw new EstadoEquivocadoException("El vuelo no está en el estado correcto para cambiar a este estado");
         }
 
@@ -391,7 +391,7 @@ public class ControladorAereo extends UsuarioConDni {
     private void cambiarEstadoEsperandoPistaAterrizaje(Vuelo vuelo)
             throws EstadoEquivocadoException, NoPistasDisponiblesException,
             NoFingerMercanciasException, NoModosPuertasEmbarqueDisponiblesException {
-        if (vuelo.getEstado() != EstadoVuelo.VUELO) {
+        if (vuelo.getEstado() != EstadoVuelo.A_TIEMPO && vuelo.getEstado() != EstadoVuelo.RETRASADO) {
             throw new EstadoEquivocadoException("El vuelo no está en el estado correcto para cambiar a este estado");
         }
 
@@ -485,7 +485,7 @@ public class ControladorAereo extends UsuarioConDni {
      * @throws EstadoEquivocadoException
      */
     private void cambiarEstadoEsperandoPistaDespegue(Vuelo vuelo) throws EstadoEquivocadoException {
-        if (vuelo.getEstado() != EstadoVuelo.FIN_DEL_EMBARQUE) {
+        if (vuelo.getEstado() != EstadoVuelo.FIN_DEL_EMBARQUE && vuelo.getEstado() != EstadoVuelo.A_TIEMPO && vuelo.getEstado() != EstadoVuelo.RETRASADO) {
             throw new EstadoEquivocadoException("El vuelo no está en el estado correcto para cambiar a este estado");
         }
 
@@ -506,7 +506,7 @@ public class ControladorAereo extends UsuarioConDni {
      */
     private void cambiarEstadoEsperandoDespegue(Vuelo vuelo)
             throws EstadoEquivocadoException, NoPistasDisponiblesException {
-        if (vuelo.getEstado() != EstadoVuelo.ESPERANDO_PISTA_DE_DESPEGUE) {
+        if (vuelo.getEstado() != EstadoVuelo.ESPERANDO_PISTA_DE_DESPEGUE && vuelo.getEstado() != EstadoVuelo.A_TIEMPO && vuelo.getEstado() != EstadoVuelo.RETRASADO) {
             throw new EstadoEquivocadoException("El vuelo no está en el estado correcto para cambiar a este estado");
         }
 

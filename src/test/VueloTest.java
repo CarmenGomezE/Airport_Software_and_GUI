@@ -145,15 +145,20 @@ class VueloTest {
 	@Test
 	void testGetHistorialEstadoVuelo() {
 	    vuelo.cambiarEstado(EstadoVuelo.A_TIEMPO);
+	    
+	    System.out.println(vuelo.getHistorialEstadoVuelo().getHistorial());
+	    System.out.println(vuelo.getHistorialEstadoVuelo().getHoraCambio(EstadoVuelo.A_TIEMPO));
 	    vuelo.cambiarEstado(EstadoVuelo.ESPERANDO_DESPEGUE);
+	    
+	    System.out.println(vuelo.getHistorialEstadoVuelo().getHistorial());
 	    vuelo.cambiarEstado(EstadoVuelo.VUELO);
 
 	    System.out.println(vuelo.getHistorialEstadoVuelo().getHistorial());
 	    
 	    assertNotNull(vuelo.getHistorialEstadoVuelo(), "Error: El historial de estado del vuelo no debería ser nulo");
-	    assertEquals(LocalTime.now(), vuelo.getHistorialEstadoVuelo().getHoraCambio(EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR).getHour(), "Error: No se registró correctamente el estado EN_PREPARACION_PARA_DESPEGAR");
-	    assertEquals(LocalTime.now(), vuelo.getHistorialEstadoVuelo().getHoraCambio(EstadoVuelo.ESPERANDO_DESPEGUE).getHour(), "Error: No se registró correctamente el estado ESPERANDO_DESPEGUE");
-	    assertEquals(LocalTime.now(), vuelo.getHistorialEstadoVuelo().getHoraCambio(EstadoVuelo.VUELO).getHour(), "Error: No se registró correctamente el estado VUELO");
+	    assertEquals(LocalTime.now(), vuelo.getHistorialEstadoVuelo().getHoraCambio(EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR), "Error: No se registró correctamente el estado EN_PREPARACION_PARA_DESPEGAR");
+	    assertEquals(LocalTime.now(), vuelo.getHistorialEstadoVuelo().getHoraCambio(EstadoVuelo.ESPERANDO_DESPEGUE), "Error: No se registró correctamente el estado ESPERANDO_DESPEGUE");
+	    assertEquals(LocalTime.now(), vuelo.getHistorialEstadoVuelo().getHoraCambio(EstadoVuelo.VUELO), "Error: No se registró correctamente el estado VUELO");
 	}
 
 	/**
