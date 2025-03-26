@@ -1,6 +1,7 @@
 package src.airportmanager.usuario;
 
 import java.io.Serializable;
+import java.time.Duration;
 import java.time.LocalDate;
 
 import java.time.LocalTime;
@@ -146,18 +147,25 @@ public abstract class Usuario implements Serializable {
      */
     public void verListaVuelos() {
         LocalDate fecha = LocalDate.now();
-        System.out.printf("LISTA DE VUELOS DEL DÍA %s%n", fecha.format(formatoFecha)); // Cambio de %d a %s
-        System.out.println("+-----------------+----------------------+");
-        System.out.println("| Código de Vuelo | Estado del Vuelo     |");
-        System.out.println("+-----------------+----------------------+");
+        System.out.printf("LISTA DE VUELOS DEL DÍA %s%n", fecha.format(formatoFecha)); 
+        System.out.println("+----------------------+----------------------+");
+        System.out.println("| Código de Vuelo      | Estado del Vuelo     |");
+        System.out.println("+----------------------+----------------------+");
 
         for (Vuelo v : getAeropuerto().getVuelosAceptados()) {
-            if (v.getFecha().equals(fecha)) { // Usar equals() en vez de ==
-                System.out.printf("| %-15s | %-20s |\n", v.getCodigo(), v.getEstado());
+            if (v.getFecha().equals(fecha)) {
+            	if(v.getEstado().equals(EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE)) {
+            		Duration tiempo = Duration.between(v.getHistorialEstadoVuelo().getHoraCambio(EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE), LocalTime.now());
+            		if (tiempo.toMinutes() >= 10) {
+                        System.out.printf("| %-20s | %-20s |Esperando pista durante más de 10min\n", v.getCodigo(), v.getEstado());
+            		}
+            	}
+            } else {
+                System.out.printf("| %-20s | %-20s |\n", v.getCodigo(), v.getEstado());
             }
         }
 
-        System.out.println("+-----------------+----------------------+");
+        System.out.println("+----------------------+----------------------+");
     }
     
     /**
