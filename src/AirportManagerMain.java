@@ -258,6 +258,11 @@ public class AirportManagerMain {
     	PuertaEmbarque puerta1T1= airportManager.getAeropuerto().getTerminales().get(0).getPuertasEmbarque().get(0);
     	PuertaEmbarque puerta2T1= airportManager.getAeropuerto().getTerminales().get(0).getPuertasEmbarque().get(1);
     	PuertaEmbarque puerta3T1= airportManager.getAeropuerto().getTerminales().get(0).getPuertasEmbarque().get(2);
+    	PuertaEmbarque puerta4T1= airportManager.getAeropuerto().getTerminales().get(0).getPuertasEmbarque().get(3);
+    	PuertaEmbarque puerta1T2= airportManager.getAeropuerto().getTerminales().get(1).getPuertasEmbarque().get(0);
+    	PuertaEmbarque puerta2T2= airportManager.getAeropuerto().getTerminales().get(1).getPuertasEmbarque().get(1);
+    	PuertaEmbarque puerta3T2= airportManager.getAeropuerto().getTerminales().get(1).getPuertasEmbarque().get(2);
+    	PuertaEmbarque puerta4T2= airportManager.getAeropuerto().getTerminales().get(1).getPuertasEmbarque().get(3);
     	
     	List<PuertaEmbarque> puertasF1= new ArrayList<>();
     	puertasF1.add(puerta1T1);
@@ -274,10 +279,21 @@ public class AirportManagerMain {
     	airportManager.getGestor().darDeAltaFinger(5.0, 200.0, puertasF3);
     	System.out.println("Fingers dados de alta para las puertas de embarque T1.");
 
+    	List<PuertaEmbarque> puertasZ1= new ArrayList<>();
+    	puertasZ1.add(puerta1T1);
+    	puertasZ1.add(puerta2T1);
+    	puertasZ1.add(puerta3T1);
+    	puertasZ1.add(puerta4T1);
+    	List<PuertaEmbarque> puertasZ2= new ArrayList<>();
+    	puertasZ2.add(puerta1T2);
+    	puertasZ2.add(puerta2T2);
+    	puertasZ2.add(puerta3T2);
+    	puertasZ2.add(puerta4T2);
+    	
     	/** Zonas de aparcamiento */
     	System.out.println("Dando de alta zonas de aparcamiento en el aeropuerto.");
-    	airportManager.getGestor().darDeAltaZonaAparcamiento(2.5, 5.0, 5.0);
-    	airportManager.getGestor().darDeAltaZonaAparcamiento(3.0, 6.0, 6.0);
+    	airportManager.getGestor().darDeAltaZonaAparcamiento(2.5, 5.0, 5.0, puertasZ1);
+    	airportManager.getGestor().darDeAltaZonaAparcamiento(3.0, 6.0, 6.0, puertasZ2);
     	System.out.println("Zonas de aparcamiento dadas de alta.");
 
     	/** Pistas */

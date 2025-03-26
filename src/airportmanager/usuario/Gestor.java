@@ -484,9 +484,13 @@ public class Gestor extends Usuario {
      * @param dimPlazaLargo dimensión de largo de la zona de aparcamiento..
      * 
      */
-    public void darDeAltaZonaAparcamiento(double dimPlazaAncho, double costePorHora,
-            double dimPlazaLargo) {
-        aeropuerto.addZonaAparcamiento(new ZonaAparcamiento(dimPlazaAncho, costePorHora, dimPlazaLargo));
+    public void darDeAltaZonaAparcamiento(double dimPlazaAncho, double costePorHora, double dimPlazaLargo, List<PuertaEmbarque> puertasEmbarque) {
+    	ZonaAparcamiento zonaAp= new ZonaAparcamiento(dimPlazaAncho, costePorHora, dimPlazaLargo);
+        aeropuerto.addZonaAparcamiento(zonaAp);
+        
+       for(PuertaEmbarque puerta: puertasEmbarque) {
+    	   puerta.addZonaAparcamiento(zonaAp);
+       }
     }
 
     /**
