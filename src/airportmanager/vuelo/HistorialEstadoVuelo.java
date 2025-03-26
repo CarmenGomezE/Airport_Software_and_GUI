@@ -59,11 +59,12 @@ public class HistorialEstadoVuelo implements Serializable {
      *         encontró.
      */
     public LocalTime getHoraCambio(EstadoVuelo estado) {
+    	LocalTime ultimaHora = null;
         for (Map.Entry<LocalTime, EstadoVuelo> entry : historial.entrySet()) {
             if (entry.getValue() == estado) {
-                return entry.getKey();
+                ultimaHora = entry.getKey(); 
             }
         }
-        return null;
+        return ultimaHora;
     }
 }
