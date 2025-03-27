@@ -28,7 +28,9 @@ import src.airportmanager.exceptions.EstadoEquivocadoException;
 import src.airportmanager.exceptions.OperacionInvalidaException;
 import src.airportmanager.exceptions.TemporadasSolapadasException;
 
-
+/**
+ * OperadorTest
+ */
 class OperadorTest {
 
 	private AeropuertoPropio aeropuertoPropio;
@@ -60,6 +62,10 @@ class OperadorTest {
 	private List<Notificacion> notificaciones;
 	private AvionPasajeros avionPasajeros;
 	private AvionMercancias avionMercancias;
+	
+	/**
+     * CreaObjetos
+     */
 	@BeforeEach
 	void setUp() { 
 		aeropuertoPropio = new AeropuertoPropio("Barajas", "MAD", "Madrid", "España", 64.9, ZoneOffset.UTC, 2, DireccionRelativaCiudad.ESTE);
@@ -145,17 +151,27 @@ class OperadorTest {
 		avionMercancias = new AvionMercancias("AIRBUS", "AIR7", 87.0, 67.9, 54.2, 900000, 2021, new Date(), "PSJWU78", 250.60, false, true);
 	}
 
+	/**
+	 * RecibirNotificacion
+	 */
 	@Test
 	void testRecibirNotificacion() {
 		operador.recibirNotificacion(notificacion);
 		assertTrue(operador.getNotificaciones().contains(notificacion), "Error la notificación no se recibió correctamente");
 	}
 
+	/**
+	 * GetGestor
+	 */
 	@Test
 	void testGetGestor() {
 		assertEquals(gestor, operador.getGestor(), "Error el gestor no es correcto");
 	}
 
+	
+	/**
+	 * CambiarEstadoVuelo
+	 */
 	@Test
 	void testCambiarEstadoVuelo() {
 		avion.setAerolinea(aerolinea1);
@@ -167,10 +183,18 @@ class OperadorTest {
 	    
 	}
 
+	
+	/**
+	 * GetAerolinea
+	 */
 	@Test
 	void testGetAerolinea() {
 		assertEquals(aerolinea1, operador.getAerolinea(), "Error la aerolinea no es correcta");
 	}
+	
+	/**
+	 * DarDeAltaAvionPasajeros
+	 */
 	@Test
 	void testDarDeAltaAvionPasajeros() {
 	    operador.darDeAltaAvionPasajeros("AIRBUS", "AIR7", 87.0, 67.9, 54.2, 900000, 2021, new Date(), "PSJWU78", 150);
@@ -184,7 +208,9 @@ class OperadorTest {
 	    assertNotNull(avionRegistrado, "Error: no se ha dado de alta correctamente el avión");
 	}
 
-
+	/**
+	 * DarDeAltaAvionMercancias
+	 */
 	@Test
 	void testDarDeAltaAvionMercancias() {
 		operador.darDeAltaAvionMercancias("AIRBUS", "AIR7", 87.0, 67.9, 54.2, 900000, 2021, new Date(), "PSJWU78", 250.60, false, true);
@@ -196,6 +222,9 @@ class OperadorTest {
 		  assertNotNull(avionRegistrado, "Error: no se ha dado de alta correctamente el avión");
 	}
 
+	/**
+	 * ProponerVuelo
+	 */
 	@Test
 	void testProponerVuelo() {
 	    LocalDate fechaFutura = LocalDate.now().plusDays(60);
@@ -215,6 +244,9 @@ class OperadorTest {
 	}
 
 
+	/**
+	 * RecibirAlternativas
+	 */
 	@Test
 	void testRecibirAlternativas() {
 	    
@@ -246,7 +278,9 @@ class OperadorTest {
 	        "El tipo de notificación debería ser OPCIONES_REPROGRAMAR_VUELO");   
 	}
 
-
+	/**
+	 * AceptarVuelo
+	 */
 	@Test
 	void testAceptarVuelo() {
 	    
@@ -278,6 +312,10 @@ class OperadorTest {
 	    assertTrue(operador.getDecisionTomada(), "La decisión debería seguir marcada como tomada");
 	    
 	}
+	
+	/**
+	 * SolicitarCompartirVuelo
+	 */
 	@Test
 	void testSolicitarCompartirVuelo() {
 	    
@@ -306,7 +344,9 @@ class OperadorTest {
 	    assertEquals("No puedes solicitar compartir un vuelo en el que ya participas.", ex.getMessage());
 	}
 
-
+	/**
+	 * RecibirSolicitud
+	 */
 	@Test
 	void testRecibirSolicitud() {
 	    Operador operadorReceptor = new Operador("Receptor", "11223344B", aerolinea1, aeropuertoPropio, gestor, sistema);
@@ -322,6 +362,9 @@ class OperadorTest {
 	        "Precondición: No debería haber solicitudes recibidas inicialmente");
 	}
 
+	/**
+	 * AceptarSolicitud
+	 */
 	@Test
 	void testAceptarSolicitud() {
 		
@@ -343,6 +386,9 @@ class OperadorTest {
 	    }, "No debería lanzar excepción al aceptar solicitud válida");
 	}
 
+	/**
+	 * RechazarSolicitud
+	 */
 	@Test
 	void testRechazarSolicitud() {
 	    Operador operadorPrincipal = this.operadorPrincipal;
@@ -358,7 +404,9 @@ class OperadorTest {
 	    assertEquals(1, operadorPrincipal.getSolicitudesRecibidas().size(), "Debería haber una solicitud recibida");
 	}
 
-
+	/**
+	 * GetDni
+	 */
 	@Test
 	void testGetDni() {
 		assertEquals("56098976M", operador.getDni(), "Error el DNI no es correcto");
