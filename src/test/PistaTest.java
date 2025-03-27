@@ -1,39 +1,64 @@
+/**
+ * 
+ */
 package src.test;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneOffset;
+import java.util.Calendar;
+import java.util.Date;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import src.airportmanager.*;
-import src.airportmanager.avion.*;
-import src.airportmanager.aeropuerto.*;
-import src.airportmanager.pista.*;
-import src.airportmanager.usuario.*;
-import src.airportmanager.vuelo.*;
+import src.airportmanager.AirportManager;
+import src.airportmanager.aeropuerto.AeropuertoDestino;
+import src.airportmanager.aeropuerto.AeropuertoPropio;
+import src.airportmanager.aeropuerto.DireccionRelativaCiudad;
+import src.airportmanager.avion.Aerolinea;
+import src.airportmanager.avion.Avion;
+import src.airportmanager.avion.AvionPasajeros;
+import src.airportmanager.pista.Pista;
+import src.airportmanager.pista.TipoPista;
+import src.airportmanager.usuario.Gestor;
+import src.airportmanager.usuario.Operador;
+import src.airportmanager.vuelo.Escala;
+import src.airportmanager.vuelo.Periodicidad;
+import src.airportmanager.vuelo.TipoCarga;
+import src.airportmanager.vuelo.TipoModoEmbarque;
+import src.airportmanager.vuelo.TipoVuelo;
+import src.airportmanager.vuelo.Vuelo;
 
-import java.time.*;
-import java.util.*;
-
+/**
+ * PistaTest
+ */
 class PistaTest {
+	
+	private Pista pista1, pista2;
+    private Vuelo vuelo1, vuelo2;
+    private LocalDate fecha, fecha2;
+    private LocalTime hora, h;
+    private Date revision;
+    private Calendar calendar;
+    private Avion avion;
+    private AeropuertoDestino aeropuertoDestino;
+    private AeropuertoPropio aeropuertoPropio;
+    private ZoneOffset zone, zone2;
+    private Escala escala;
+    private Operador operador;
+    private Aerolinea aerolinea;
+    private Gestor gestor;
+    private AirportManager sistema;
 
-    Pista pista1, pista2;
-    Vuelo vuelo1, vuelo2;
-    LocalDate fecha, fecha2;
-    LocalTime hora, h;
-    Date revision;
-    Calendar calendar;
-    Avion avion;
-    AeropuertoDestino aeropuertoDestino;
-    AeropuertoPropio aeropuertoPropio;
-    ZoneOffset zone, zone2;
-    Escala escala;
-    Operador operador;
-    Aerolinea aerolinea;
-    Gestor gestor;
-    AirportManager sistema;
-
-    @BeforeEach
-    void setUp() {
+	/**
+	 * Crea objetos necesarios
+	 */
+	@BeforeEach
+	void setUp() {
+		
 
         pista1 = new Pista("P123", 3500.0, TipoPista.DESPEGUE);
         pista2 = new Pista("P132", 3400.0, TipoPista.ATERRIZAJE);
@@ -65,29 +90,41 @@ class PistaTest {
         vuelo2 = new Vuelo("V456", fecha2, null, null, h, null, 
             TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER, Periodicidad.PUNTUAL, TipoVuelo.SALIDA, 
             avion, aeropuertoDestino, aeropuertoPropio, escala, operador);
-    }
+	}
 
-    @Test
-    void testGetCodigo() {
-        assertEquals("P123", pista1.getCodigo(), "Error. El código de la pista no es el esperado");
+	/**
+	 * Test method for {@link src.airportmanager.pista.Pista#getCodigo()}.
+	 */
+	@Test
+	void testGetCodigo() {
+		assertEquals("P123", pista1.getCodigo(), "Error. El código de la pista no es el esperado");
         assertEquals("P132", pista2.getCodigo(), "Error. El código de la pista no es el esperado");
-    }
+	}
 
-    @Test
-    void testGetLongitud() {
-        assertEquals(3500.0, pista1.getLongitud(), "Error. La longitud de la pista no es la esperada");
+	/**
+	 * Test method for {@link src.airportmanager.pista.Pista#getLongitud()}.
+	 */
+	@Test
+	void testGetLongitud() {
+		assertEquals(3500.0, pista1.getLongitud(), "Error. La longitud de la pista no es la esperada");
         assertEquals(3400.0, pista2.getLongitud(), "Error. La longitud de la pista no es la esperada");
-    }
+	}
 
-    @Test
-    void testGetTipoPista() {
-        assertEquals(TipoPista.DESPEGUE, pista1.getTipoPista(), "Error. El tipo de pista no coincide.");
-        assertEquals(TipoPista.ATERRIZAJE, pista2.getTipoPista(), "Error. El tipo de pista no coincide.");
-    }
+	/**
+	 * Test method for {@link src.airportmanager.pista.Pista#getTipoPista()}.
+	 */
+	@Test
+	void testGetTipoPista() {
+		 assertEquals(TipoPista.DESPEGUE, pista1.getTipoPista(), "Error. El tipo de pista no coincide.");
+	     assertEquals(TipoPista.ATERRIZAJE, pista2.getTipoPista(), "Error. El tipo de pista no coincide.");
+	}
 
-    @Test
-    void testGetVuelos() {
-    
+	/**
+	 * Test method for {@link src.airportmanager.pista.Pista#getVuelos()}.
+	 */
+	@Test
+	void testGetVuelos() {
+
         assertTrue(pista1.getVuelos().isEmpty(), "Error. La pista debería empezar sin vuelos.");
 
         pista1.addVuelo(vuelo1);
@@ -101,12 +138,6 @@ class PistaTest {
         pista1.removeVuelo(vuelo1);
         assertEquals(1, pista1.getVuelos().size(), "Error. Debería haber 1 vuelo después de eliminar uno.");
         assertFalse(pista1.getVuelos().contains(vuelo1), "Error. El vuelo eliminado sigue en la pista.");
-    }
+	}
+
 }
-
-
-
-
-
-
-

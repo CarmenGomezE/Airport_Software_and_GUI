@@ -17,7 +17,9 @@ import src.airportmanager.terminal.PuertaEmbarque;
 import src.airportmanager.terminal.TerminalPasajeros;
 import src.airportmanager.usuario.*;
 import src.airportmanager.vuelo.*;
-
+/**
+ * GestorTest
+ */
 public class GestorTest {
 
     private Gestor gestor;
@@ -33,6 +35,10 @@ public class GestorTest {
     private List<PuertaEmbarque> puertas;
     private Vuelo vuelo;
 
+    /**
+     * CreaObjetos
+     * @throws TemporadasSolapadasException
+     */
     @BeforeEach
     void setUp() throws TemporadasSolapadasException {
         sistema = new AirportManager();
@@ -58,6 +64,9 @@ public class GestorTest {
             Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avion, null, aeropuerto, null);
     }
 
+    /**
+     * EmitirFactura
+     */
     @Test
     void testEmitirFactura() {
     	vuelo = new Vuelo("VY123", LocalDate.now(), null, null, 
@@ -70,6 +79,9 @@ public class GestorTest {
         assertFalse(aerolinea.getOperador().getNotificaciones().isEmpty());
     }
 
+    /**
+     * VerEstadoFactyra
+     */
     @Test
     void testVerEstadoFactura() {
         Factura factura = new Factura(aerolinea, LocalDate.now(), 1000.0, 0, null, null, EstadoFactura.PENDIENTE);
@@ -77,6 +89,9 @@ public class GestorTest {
         assertEquals(EstadoFactura.PENDIENTE, estado);
     }
 
+    /**
+     * BuscarUsuarioPorDNI
+     */
     @Test
     void testBuscarUsuarioPorDni() {
         aeropuerto.addUsuario(operador);
@@ -86,6 +101,9 @@ public class GestorTest {
         assertNull(gestor.buscarUsuarioPorDni("DNI_INEXISTENTE"));
     }
 
+    /**
+     * NotificarPorblemaContraseña
+     */
     @Test
     void testNotificarProblemaContrasena() {
         aeropuerto.addUsuario(operador);
@@ -94,12 +112,19 @@ public class GestorTest {
         assertEquals(1, operador.getNotificaciones().size());
     }
 
+    /**
+     * DarDeAltaAerolinea
+     */
+    
     @Test
     void testDarDeAltaAerolinea() {
         gestor.darDeAltaAerolinea("Vueling", "VY");
         assertEquals(1, aeropuerto.getAerolineas().size());
     }
 
+   /**
+    * DarDeAltaControlador
+    */
     @Test
     void testDarDeAltaControlador() {
         gestor.darDeAltaControlador("Controlador2", "11111111A", terminal);
@@ -107,6 +132,9 @@ public class GestorTest {
         assertTrue(sistema.getCredenciales().containsKey("11111111A"));
     }
 
+    /**
+     * DarDeAltaOperador
+     */
     @Test
     void testDarDeAltaOperador() {
         gestor.darDeAltaOperador("Operador2", "22222222B", aerolinea);
@@ -114,6 +142,11 @@ public class GestorTest {
         assertTrue(sistema.getCredenciales().containsKey("22222222B"));
     }
 
+    /**
+     * DarDeAltaAeropuertodestino
+     * @throws IOException
+     * @throws TemporadasSolapadasException
+     */
     @Test
     void testDarDeAltaAeropuertoDestino() throws IOException, TemporadasSolapadasException {
         File tempFile = File.createTempFile("aeropuertos", ".txt");
@@ -127,6 +160,9 @@ public class GestorTest {
         tempFile.delete();
     }
 
+    /**
+     * ConfigurarAeropuertoPropio
+     */
     @Test
     void testConfigurarAeropuertoPropio() {
         gestor.configurarAeropuertoPropioNombre("Nuevo Barajas");
@@ -138,6 +174,9 @@ public class GestorTest {
         assertThrows(IllegalArgumentException.class, () -> gestor.configurarAeropuertoPropioNombre(null));
     }
 
+    /**
+     * DarDeAltaHangar
+     */
     @Test
     void testDarDeAltaHangar() {
         gestor.darDeAltaHangar("Pasajeros", 5, 50.0, 20.0, 60.0, 100.0, false);
@@ -150,6 +189,9 @@ public class GestorTest {
             gestor.darDeAltaHangar("TipoInvalido", 1, 1, 1, 1, 1, false));
     }
 
+    /**
+     * DarDeAltaTerminal
+     */
     @Test
     void testDarDeAltaTerminal() {
         List<PuertaEmbarque> puertas = new ArrayList<>();
@@ -162,6 +204,9 @@ public class GestorTest {
             gestor.darDeAltaTerminal("T2", "TipoInvalido", 100, puertas));
     }
 
+    /**
+     * RecibirPrporsicionVuelo
+     */
     @Test
     void testRecibirProposicionVuelo() {
         List<VueloProgramado> propuestas = new ArrayList<>();
@@ -179,6 +224,10 @@ public class GestorTest {
         assertThrows(AntelacionInvalidaException.class, () -> gestor.recibirProposicionVuelo(propuestas));
     }
 
+    /**
+     * GestionarVuelos
+     * @throws AntelacionInvalidaException
+     */
     @Test
     void testGestionarVuelos() throws AntelacionInvalidaException {
         List<VueloProgramado> propuestas = new ArrayList<>();
@@ -194,6 +243,11 @@ public class GestorTest {
         assertNull(gestor.getVuelosPropuestos());
     }
 
+    /**
+     * Modicarususarios
+     * @throws UsuarioNoEncontradoException
+     * @throws ContrasenaInvalidaException
+     */
     @Test
     void testModificarUsuario() throws UsuarioNoEncontradoException, ContrasenaInvalidaException {
         aeropuerto.addUsuario(operador);
@@ -202,6 +256,9 @@ public class GestorTest {
         assertNotNull(operador.getContrasena());
     }
 
+    /**
+     * ConfigurarNotificaciones
+     */
     @Test
     void testConfigurarNotificaciones() {
         List<TipoNotificacion> nuevosTipos = Arrays.asList(TipoNotificacion.OLVIDO_CONTRASENA);
@@ -209,6 +266,9 @@ public class GestorTest {
         assertEquals(1, gestor.getTiposPermitidosNotificaciones().size());
     }
 
+    /**
+     * recibirNotificacion
+     */
     @Test
     void testRecibirNotificacion() {
         Notificacion notificacion = new Notificacion("Mensaje", TipoNotificacion.OLVIDO_CONTRASENA);
@@ -220,6 +280,9 @@ public class GestorTest {
         assertEquals(1, gestor.getNotificaciones().size()); 
     }
 
+    /**
+     * SetCostos
+     */
     @Test
     void testSetCostos() {
         gestor.setCosteBaseVueloSalida(200.0);

@@ -14,7 +14,9 @@ import java.time.*;
 import java.util.*;
 
 
-
+/**
+ * FingerTest
+ */
 class FingerTest{
 
     Finger finger, otroFinger;
@@ -35,11 +37,17 @@ class FingerTest{
 
     }
 
+    /**
+     * GetDimAlto
+     */
     @Test
     void testGetDimAlto() {
         assertEquals(70.0, finger.getDimAlto(), "Error, el método getDimAlto() no devuelve el valor esperado.");
     }
 
+    /**
+     * GetId
+     */
     @Test
     void testGetId() {
         otroFinger = new Finger(40.0, 4.0);
@@ -47,6 +55,9 @@ class FingerTest{
     }
 
  
+    /**
+     * ComprobarTamano
+     */
    @Test
     void testComprobarTamano() {
 

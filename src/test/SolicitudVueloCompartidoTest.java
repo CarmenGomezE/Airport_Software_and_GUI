@@ -14,6 +14,9 @@ import src.airportmanager.exceptions.SolicitudInvalidaExcepcion;
 import src.airportmanager.usuario.Operador;
 import src.airportmanager.vuelo.*;
 
+/**
+ * SolicitudVueloCompartidoTest
+ */
 public class SolicitudVueloCompartidoTest {
 
     private Vuelo vuelo;
@@ -23,6 +26,9 @@ public class SolicitudVueloCompartidoTest {
     private AirportManager sistema;
     private Aerolinea aerolinea1, aerolinea2;
 
+    /**
+     * Crea objetos
+     */
     @BeforeEach
     void setUp() {
     	sistema = new AirportManager();
@@ -42,6 +48,9 @@ public class SolicitudVueloCompartidoTest {
         solicitud = new SolicitudVueloCompartido(vuelo, operadorSolicitante, operadorPrincipal, 30.0);
     }
 
+    /**
+     * Constructor
+     */
     @Test
     void testConstructor() {
         assertEquals(vuelo, solicitud.getVueloOriginal());
@@ -51,6 +60,11 @@ public class SolicitudVueloCompartidoTest {
         assertEquals(EstadoSolicitud.PENDIENTE, solicitud.getEstadoSolicitud());
     }
 
+    /**
+     * AceptarSolicitudalida
+     * @throws SolicitudInvalidaExcepcion
+     */
+    
     @Test
     void testAceptarSolicitudValida() throws SolicitudInvalidaExcepcion {
         solicitud.aceptar();
@@ -58,6 +72,9 @@ public class SolicitudVueloCompartidoTest {
         assertTrue(vuelo.getOperadores().contains(operadorSolicitante));
     }
 
+    /**
+     * AceptarSolicitudValidaPorcentajeExcedido
+     */
     @Test
     void testAceptarSolicitudInvalidaPorcentajeExcedido() {
         SolicitudVueloCompartido solicitudInvalida = new SolicitudVueloCompartido(
@@ -67,6 +84,10 @@ public class SolicitudVueloCompartidoTest {
         assertEquals(EstadoSolicitud.RECHAZADA, solicitudInvalida.getEstadoSolicitud());
     }
 
+    
+    /**
+     * AceptarSolicitudInvaldiaPorcentajeMiniko
+     */
     @Test
     void testAceptarSolicitudInvalidaPorcentajeMinimo() {
         SolicitudVueloCompartido solicitudInvalida = new SolicitudVueloCompartido(
@@ -76,6 +97,9 @@ public class SolicitudVueloCompartidoTest {
         assertEquals(EstadoSolicitud.RECHAZADA, solicitudInvalida.getEstadoSolicitud());
     }
 
+    /**
+     * Rechazra
+     */
     @Test
     void testRechazar() {
         solicitud.rechazar();
@@ -83,6 +107,10 @@ public class SolicitudVueloCompartidoTest {
         assertFalse(vuelo.getOperadores().contains(operadorSolicitante));
     }
 
+    /**
+     * EsSolicitudValida
+     * @throws SolicitudInvalidaExcepcion
+     */
     @Test
     void testEsSolicitudValida() throws SolicitudInvalidaExcepcion {
         assertTrue(solicitud.esSolicitudValida());
@@ -93,26 +121,41 @@ public class SolicitudVueloCompartidoTest {
         assertThrows(SolicitudInvalidaExcepcion.class, () -> solicitudInvalida.esSolicitudValida());
     }
 
+    /**
+     * GetVueloOriginal
+     */
     @Test
     void testGetVueloOriginal() {
         assertEquals(vuelo, solicitud.getVueloOriginal());
     }
 
+    /**
+     * GetPorcentaje
+     */
     @Test
     void testGetPorcentaje() {
         assertEquals(30.0, solicitud.getPorcentaje(), 0.001);
     }
 
+    /**
+     * GetOperadorSolicitante
+     */
     @Test
     void testGetOperadorSolicitante() {
         assertEquals(operadorSolicitante, solicitud.getOperadorSolicitante());
     }
 
+    /**
+     * GetOperadorReceptor
+     */
     @Test
     void testGetOperadorReceptor() {
         assertEquals(operadorPrincipal, solicitud.getOperadorReceptor());
     }
 
+    /**
+     * GetEstadoSolicitud
+     */
     @Test
     void testGetEstadoSolicitud() {
         assertEquals(EstadoSolicitud.PENDIENTE, solicitud.getEstadoSolicitud());

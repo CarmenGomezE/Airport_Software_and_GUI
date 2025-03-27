@@ -9,11 +9,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import src.airportmanager.aeropuerto.Temporada;
-
+/**
+ * TemporadaTest
+ */
 class TemporadaTest {
 	
 	Temporada temporada, temporada2, temporada3;
 
+	/**
+	 * Crea objetos
+	 */
 	@BeforeEach
 	void setUp() {
 		
@@ -22,32 +27,50 @@ class TemporadaTest {
 		temporada3 = new Temporada("07/01", "09:00", "14:00", "30/10");
 	}
 
+	/**
+	 * Fecha inicio
+	 */
 	@Test
 	void testGetFechaInicio() {
 		assertEquals(LocalDate.of(2025, 6, 1), temporada.getFechaInicio(), "Error la fecha de inicio no es correcta");
 	}
 
+	/**
+	 * GetFechaFin
+	 */
 	@Test
 	void testGetFechaFin() {
 		assertEquals(LocalDate.of(2025, 9, 30), temporada.getFechaFin(), "Error la fecha de fin no es correcta");
 	}
 
+	/**
+	 * GethorarioApertura
+	 */
 	@Test
 	void testGetHorarioApertura() {
 		assertEquals(LocalTime.of(8, 0), temporada.getHorarioApertura(), "Error el horario apertura no es correcto");
 	}
 
+	/**
+	 * GetHorarioCierre
+	 */
 	@Test
 	void testGetHorarioCierre() {
 		assertEquals(LocalTime.of(22, 0), temporada.getHorarioCierre(), "Error el horario cierre no es correcto");
 	}
 
+	/**
+	 *ComprobarTemporada
+	 */
 	@Test
 	void testComprobarTemporada() {
 		assertFalse(temporada.comprobarTemporada(temporada2), "Error, las temporadas no deberían solaparse");
 		assertTrue(temporada.comprobarTemporada(temporada3), "Error las temporadas deberían solaparse");
 	}
 
+	/**
+	 * EstaEnTemporada
+	 */
 	@Test
 	void testEstaEnTemporada() {
 		assertTrue(temporada.estaEnTemporada(LocalDate.of(2025, 7, 2)), "Error, esa fecha debería estar en temporada");

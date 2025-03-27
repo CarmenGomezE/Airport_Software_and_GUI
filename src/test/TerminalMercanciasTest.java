@@ -14,6 +14,9 @@ import src.airportmanager.aeropuerto.DireccionRelativaCiudad;
 import src.airportmanager.terminal.*;
 import src.airportmanager.usuario.*;
 
+/**
+ * TerminalMercancias Test
+ */
 public class TerminalMercanciasTest {
 
     TerminalMercancias terminal;
@@ -25,6 +28,9 @@ public class TerminalMercanciasTest {
     ZoneOffset zone;
     Gestor gestor;
 
+    /**
+     * Crea objetos
+     */
     @BeforeEach
     void setUp() {
 
@@ -41,16 +47,25 @@ public class TerminalMercanciasTest {
         aeropuertoPropio.getUsuarios().add(controlador);
     }
 
+    /**
+     * GetCodigo
+     */
     @Test 
     void testGetCodigo() {
         assertEquals("T1", terminal.getCodigo(), "Error el código de la terminal no es correcto");
     }
 
+    /**
+     * GetPuertasEmbarque
+     */
     @Test
     void testGetPuertasEmbarque() {
         assertTrue(terminal.getPuertasEmbarque().contains(puerta), "Error, la terminal debería contener la puerta de embarque asignada.");
     }
 
+    /**
+     * AddPuertasEmbarque
+     */
     @Test
     void testAddPuertasEmbarque() {
 
@@ -63,11 +78,17 @@ public class TerminalMercanciasTest {
         assertTrue(terminal.getPuertasEmbarque().containsAll(puertas), "Error, la terminal debería contener ambas puertas de embarque.");
     }
 
+    /**
+     * getControladores
+     */
     @Test
     void testGetControladores() {
         assertTrue(terminal.getControladores().isEmpty(), "Error: al principio la lista de controladores debería estar vacía.");
     }
-    
+   
+    /**
+     * AddControladres
+     */
     @Test
     void testAddControladores() {
 

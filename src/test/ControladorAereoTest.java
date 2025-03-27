@@ -59,7 +59,9 @@ import src.airportmanager.vuelo.TipoCarga;
 import src.airportmanager.vuelo.TipoModoEmbarque;
 import src.airportmanager.vuelo.TipoVuelo;
 import src.airportmanager.vuelo.Vuelo;
-
+/**
+ * ControladorAereoTets
+ */
 class ControladorAereoTest {
 	
 	private AeropuertoPropio aeropuertoPropio;
@@ -91,6 +93,10 @@ class ControladorAereoTest {
 	private List<Notificacion> notificaciones;
     private ByteArrayOutputStream salidaConsola;
 
+    /**
+     * CreaObjetos
+     * @throws Exception
+     */
 	@BeforeEach
 	void setUp() throws Exception {
 		
@@ -177,12 +183,17 @@ class ControladorAereoTest {
 		
 	}
 
+	/**
+	 *RecibirNotificaicon
+	 */
 	@Test
 	void testRecibirNotificacion() {
 		controlador.recibirNotificacion(notificacion);
 		assertTrue(controlador.getNotificaciones().contains(notificacion), "Error la notificación no se recibió correctamente");
 	}
-
+	/**
+	 * CambiarEstadoVuelo
+	 */
 	@Test
 	void testCambiarEstadoVuelo() {
 	  
@@ -221,6 +232,9 @@ class ControladorAereoTest {
 	    System.out.println("Estado resultante: " + vueloPrueba.getEstado());
 	}
 	
+	/**
+	 * recibirNotifcacionCambioEstado
+	 */
 	@Test
 	void testRecibirNotificacionCambioEstado() {
 	   
@@ -272,42 +286,65 @@ class ControladorAereoTest {
 	                "El tipo de notificación no coincide");
 	}
 
+	/**
+	 * GetTerminal
+	 */
 	@Test
 	void testGetTerminal() {
 		assertEquals(terminal1, controlador.getTerminal(), "Error, la terminal no es correcta");
 	}
-
+	/**
+	 * GetDni
+	 */
 	@Test
 	void testGetDni() {
 		assertEquals("56872372J", controlador.getDni(), "Error, el dni no coincide");
 	}
 
+	/**
+	 * GetGestor
+	 */
 	@Test
 	void testGetGestor() {
 		assertEquals(gestor, controlador.getGestor(), "Error el gestor no coincide");
 	}
 
+	/**
+	 * GetAeropuerto
+	 */
 	@Test
 	void testGetAeropuerto() {
 		assertEquals(aeropuertoPropio, controlador.getAeropuerto(), "Error el aeropuerto no es correcto");
 	}
 
+	/**
+	 * GetSistema
+	 */
 	@Test
 	void testGetSistema() {
 		assertEquals(sistema, controlador.getSistema(), "Error el sistema no coincide");
 	}
 
+	/**
+	 * GetNombre
+	 */
 	@Test
 	void testGetNombre() {
 		assertEquals("Juan Pedro", controlador.getNombre(), "Error, el nombre no es correcto");
 	}
 
+	/**
+	 * GetContrasena
+	 */
 	@Test
 	void testGetContrasena() {
 		assertEquals("Juanpe44", controlador.getContrasena(), "Error la contraseña no es correcta");
 	
 	}
 
+	/**
+	 * GetNotificacones
+	 */
 	@Test
 	void testGetNotificaciones() {
 	   
@@ -341,18 +378,27 @@ class ControladorAereoTest {
 	    assertTrue(mensajesRecibidos.containsAll(mensajesEsperados),
 	                "Falta alguno de los mensajes esperados");
 	}
+	/**
+	 * SetNombre
+	 */
 	@Test
 	void testSetNombre() {
 		controlador.setNombre("Raúl");
 		assertEquals("Raúl", controlador.getNombre(), "Error, el nombre no se asignó correctamente");
 	}
 
+	/**
+	 * SetContrasema
+	 */
 	@Test
 	void testSetContrasena() {
 		controlador.setContrasena("NGFCG2U48XS");
 		assertEquals("NGFCG2U48XS", controlador.getContrasena(), "Error la contraseña no se asignó correctamente");
 	}
 
+	/**
+	 * VerListaVuelos
+	 */
 	@Test
 	void testVerListaVuelos() {
 	   
@@ -381,6 +427,9 @@ class ControladorAereoTest {
 	    System.setOut(System.out);
 	}
 
+	/**
+	 * BuscarVuelo
+	 */
 	@Test
 	void testBuscarVuelo() {
 
@@ -402,6 +451,9 @@ class ControladorAereoTest {
 	    System.setOut(System.out);
 	}
 
+	/**
+	 * CerrarSesion
+	 */
 	@Test
 	void testCerrarSesion() {
 	 

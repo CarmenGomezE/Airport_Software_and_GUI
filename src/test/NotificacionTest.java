@@ -8,13 +8,18 @@ import org.junit.jupiter.api.Test;
 import src.airportmanager.notificacion.*;
 import java.time.*;
 
-
+/**
+ * NotificacionTest
+ */
 class NotificacionTest{
 
     Notificacion noti1, noti2;
     Exception excepcionVacio, excepcionNull;
     LocalDateTime ahora;
 
+    /**
+     * CreaObjetos
+     */
     @BeforeEach
     void setUp() {
         noti1 = new Notificacion("Contraseña incorrecta", TipoNotificacion.OLVIDO_CONTRASENA);
@@ -22,6 +27,9 @@ class NotificacionTest{
 
     }
 
+    /**
+     * GetMensaje
+     */
     @Test
     void testGetMensaje() {
         assertEquals("Contraseña incorrecta", noti1.getMensaje(), "Error, el mensaje que se muestra no es el esperado.");
@@ -29,7 +37,9 @@ class NotificacionTest{
     }
 
  
-
+   /**
+    * GetFecha
+    */
    @Test
     void testGetFecha() {
         ahora = LocalDateTime.now();
@@ -37,6 +47,9 @@ class NotificacionTest{
         assertTrue(Duration.between(noti2.getFecha(), ahora).getSeconds() < 2, "Error, la fecha de la notificación no es la esperada.");
     }
 
+   /**
+    * GetTipoNotificacion
+    */
     @Test 
     void testGetTipoNotificacion() {
         assertEquals(TipoNotificacion.OLVIDO_CONTRASENA, noti1.getTipoNotificacion(), "Error el tipo de notificación no es correcto");

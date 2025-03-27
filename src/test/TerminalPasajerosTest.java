@@ -14,7 +14,9 @@ import src.airportmanager.aeropuerto.AeropuertoPropio;
 import src.airportmanager.aeropuerto.DireccionRelativaCiudad;
 import src.airportmanager.terminal.*;
 import src.airportmanager.usuario.*;
-
+/**
+ * TerminalPasajerosTests
+ */
 public class TerminalPasajerosTest {
 
     TerminalPasajeros terminal;
@@ -27,6 +29,9 @@ public class TerminalPasajerosTest {
     Gestor gestor;
     AirportManager sistema;
 
+   /**
+    * Crea objetos necesarios
+    */
     @BeforeEach
     void setUp() {
 
@@ -41,21 +46,34 @@ public class TerminalPasajerosTest {
         controlador = new ControladorAereo("Juan", "5638746T", "juanito87", aeropuertoPropio, gestor, terminal, sistema);
     }
 
-    @Test 
+    
+    /**
+     * GetNumeroMaxAviones
+     */
+    @Test
     void testGetNumeroMaxAviones() {
         assertEquals(100, terminal.getNumeroMaxAviones(), "Error, el número máximo de pasajeros no es correcto");
     }
 
+    /**
+     * GetCodgo
+     */
     @Test 
     void testGetCodigo() {
         assertEquals("T1", terminal.getCodigo(), "Error el código de la terminal no es correcto");
     }
-
+    
+    /**
+     * GetPuertasEmbarque
+     */
     @Test
     void testGetPuertasEmbarque() {
         assertTrue(terminal.getPuertasEmbarque().contains(puerta), "Error, la terminal debería contener la puerta de embarque asignada.");
     }
 
+    /**
+     * AddPuertasEmbarque
+     */
     @Test
     void testAddPuertasEmbarque() {
 
@@ -68,11 +86,17 @@ public class TerminalPasajerosTest {
         assertTrue(terminal.getPuertasEmbarque().containsAll(puertas), "Error, la terminal debería contener ambas puertas de embarque.");
     }
 
+    /**
+     * GetControladores
+     */
     @Test
     void testGetControladores() {
         assertTrue(terminal.getControladores().isEmpty(), "Error: al principio la lista de controladores debería estar vacía.");
     }
     
+    /**
+     * AddControladores
+     */
     @Test
     void testAddControladores() {
 

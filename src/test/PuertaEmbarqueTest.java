@@ -27,6 +27,9 @@ import src.airportmanager.vuelo.TipoModoEmbarque;
 import src.airportmanager.vuelo.TipoVuelo;
 import src.airportmanager.vuelo.Vuelo;
 
+/**
+ * PuertaEmbarqueTest
+ */
 public class PuertaEmbarqueTest {
     PuertaEmbarque puerta1, puerta2;
     ZonaAparcamiento zona1, zona2;
@@ -49,6 +52,9 @@ public class PuertaEmbarqueTest {
     Gestor gestor;
     AirportManager sistema;
 
+    /**
+     * Crea objetos
+     */
     @BeforeEach
     void setUp() {
         puerta1 = new PuertaEmbarque();
@@ -64,16 +70,25 @@ public class PuertaEmbarqueTest {
 
     }
 
+    /**
+     * GetId
+     */
     @Test
     void testGetId() {
         assertNotEquals(puerta1.getId(), puerta2.getId(), "Error, los id de las puertas de embarque deberían ser diferentes");
     }
 
+    /**
+     * GetZonaAparcamiento
+     */
     @Test
     void testGetZonaAparcamiento() {
         assertTrue(puerta1.getZonasAparcamiento().isEmpty(), "Error, la lista de zonas de aparcamiento al principio debería estar vacía");
     }
 
+    /**
+     * AddZonaAparcamiento
+     */
     @Test
     void testAddZonaAparcamiento() {
 
@@ -86,11 +101,17 @@ public class PuertaEmbarqueTest {
         assertTrue(puerta1.getZonasAparcamiento().containsAll(zonas), "Error, la puerta de embarque debería tener dos zonas de aparcamiento");
     }
 
+    /**
+     * GetFinger
+     */
     @Test 
     void testGetFinger() {
         assertEquals(null, puerta1.getFinger(), "Error al principio puerta de embarque no tiene finger");
     }
 
+    /**
+     * SetFinger
+     */
     @Test
     void testSetFinger() {
         puerta1.setFinger(finger);
@@ -98,17 +119,26 @@ public class PuertaEmbarqueTest {
 
     }
 
+    /**
+     * GetHorasUso
+     */
     @Test
     void testGetHorasUso() {
         assertEquals(0.0, puerta1.getHorasUso(), "Error, al principio la puerta de embarque debería tener 0 horas de uso");
     }
 
+    /**
+     * AddHorasUso
+     */
     @Test
     void testAddHorasUso() {
         puerta1.addHorasUso(6);
         assertEquals(6, puerta1.getHorasUso(), "Error, la puerta de embarque debería tener 6 horas de uso");
     }
 
+    /**
+     * AddHorasUsoNegativo
+     */
     @Test
     void testAddHorasUsoNegativo() {
         excepcion = assertThrows(IllegalArgumentException.class, ()->{
@@ -118,6 +148,9 @@ public class PuertaEmbarqueTest {
         assertEquals("Las horas deben ser un número positivo", excepcion.getMessage(), "Error, no se lanzó la excepción esperada");
     }
 
+    /**
+     * ResetHorasUso
+     */
     @Test
     void testResetHorasUso() {
         puerta1.addHorasUso(4);
@@ -125,6 +158,9 @@ public class PuertaEmbarqueTest {
         assertEquals(0.0, puerta1.getHorasUso(), "Error las horas de uso de la puerta de embarque no se resetearon correctamente");
     }
 
+    /**
+     * ContieneZonaAparcamiento
+     */
     @Test
     void testContieneZonaAparcamiento() {
         puerta1.addZonaAparcamiento(zona1);
@@ -132,11 +168,17 @@ public class PuertaEmbarqueTest {
         assertFalse(puerta2.contieneZonaAparcamiento(zona1), "La puerta de embarque no debería contener la zona de aparcamiento");
     }
 
+    /**
+     * GetVuelo
+     */
     @Test
     void testGetVuelo() {
         assertEquals(null, puerta1.getVuelo(), "Error, la puerta de embarque al principio no debería tener vuelos");
     }
 
+    /**
+     * SetVuelo
+     */
     @Test
     void testSetVuelo() {
         fecha = LocalDate.of(2024, 03, 22);

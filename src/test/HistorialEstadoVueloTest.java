@@ -6,7 +6,9 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalTime;
 import java.util.Map;
 import src.airportmanager.vuelo.*;
-
+/**
+ * HistorialEstadoVueloTest
+ */
 public class HistorialEstadoVueloTest {
 
     private HistorialEstadoVuelo historial;
@@ -14,11 +16,17 @@ public class HistorialEstadoVueloTest {
     private final LocalTime hora2 = LocalTime.of(11, 30);
     private final LocalTime hora3 = LocalTime.of(12, 45);
 
+    /**
+     * Crea objetos
+     */
     @BeforeEach
     void setUp() {
         historial = new HistorialEstadoVuelo();
     }
 
+    /**
+     * AgregarCambioEstado
+     */
     @Test
     void testAgregarCambioEstado() {
         historial.agregarCambioEstado(EstadoVuelo.ACEPTADO, hora1);
@@ -30,6 +38,9 @@ public class HistorialEstadoVueloTest {
         assertEquals(EstadoVuelo.A_TIEMPO, map.get(hora2));
     }
 
+    /**
+     * GetUltimoEstado
+     */
     @Test
     void testGetUltimoEstado() {
         assertNull(historial.getUltimoEstado());
@@ -44,6 +55,9 @@ public class HistorialEstadoVueloTest {
         assertEquals(EstadoVuelo.VUELO, historial.getUltimoEstado());
     }
 
+    /**
+     * GetHoraCambio
+     */
     @Test
     void testGetHoraCambio() {
         historial.agregarCambioEstado(EstadoVuelo.ACEPTADO, hora1);
@@ -56,6 +70,9 @@ public class HistorialEstadoVueloTest {
         assertNull(historial.getHoraCambio(EstadoVuelo.RETRASADO)); 
     }
 
+    /**
+     * GetHoraCambioConMultiplesCambios
+     */
     @Test
     void testGetHoraCambioConMultiplesCambios() {
         LocalTime horaExtra = LocalTime.of(13, 15);
@@ -67,6 +84,10 @@ public class HistorialEstadoVueloTest {
         assertEquals(hora3, historial.getHoraCambio(EstadoVuelo.ACEPTADO));
     }
 
+    
+    /**
+     * OrdenDelHistorial
+     */
     @Test
     void testOrdenDelHistorial() {
         historial.agregarCambioEstado(EstadoVuelo.ACEPTADO, hora1);

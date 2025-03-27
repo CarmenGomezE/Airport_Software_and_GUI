@@ -13,7 +13,9 @@ import src.airportmanager.usuario.*;
 import src.airportmanager.hangar.*;
 import java.time.*;
 import java.util.*;
-
+/**
+ * HnagarPasajerosTest
+ */
 class HangarMercanciasTest{
 
     private HangarMercancias hangar, hangar2;
@@ -34,6 +36,9 @@ class HangarMercanciasTest{
     private AirportManager sistema;
     private Vuelo vueloConMercaPeligrosa, vueloSinMercaPeligrosa;
 
+    /**
+     * Crea Objetos
+     */
     @BeforeEach
     void setUp() {
         calendar = Calendar.getInstance();
@@ -46,11 +51,18 @@ class HangarMercanciasTest{
 
     }
 
+    /**
+     * GetAviones
+     */
     @Test
     void testGetAviones() {
         assertTrue(hangar.getAviones().isEmpty(), "Error, la lista de aviones del hangar al principio debería estar vacía");
     }
 
+    /**
+     * AddAvion
+     * @throws CargaAvionEquivocadaException
+     */
     @Test
     void testAddAvion() throws CargaAvionEquivocadaException {
         hangar.addAvion(avion);
@@ -64,6 +76,10 @@ class HangarMercanciasTest{
         }
     }
 
+    /**
+     * SacarAvion
+     * @throws CargaAvionEquivocadaException
+     */
     @Test
     void testSacarAvion() throws CargaAvionEquivocadaException {
 
@@ -73,6 +89,10 @@ class HangarMercanciasTest{
 
     }
 
+    /**
+     * ComprobarAvionHangar
+     * @throws CargaAvionEquivocadaException
+     */
     @Test
     void testComprobarAvionHangar() throws CargaAvionEquivocadaException {
 
@@ -81,6 +101,10 @@ class HangarMercanciasTest{
         assertFalse(hangar.comprobarAvionEnHangar(avion2), "Error, el avión no debería estar en el hangar");
     }
 
+    /**
+     * HayEspacioHangar
+     * @throws CargaAvionEquivocadaException
+     */
     @Test
     void testHayEspacioEnHangar() throws CargaAvionEquivocadaException {
 
@@ -90,47 +114,71 @@ class HangarMercanciasTest{
         assertFalse(hangar.hayEspacioEnHangar(), "Error, no debería haber espacion para más aviones en el hangar.");
     }
 
+    /**
+     * GetId
+     */
     @Test
     void testGetId() {
         assertNotEquals(hangar.getId(), hangar2.getId(), "Error, los id debería ser distintos");
     }
 
+    /**
+     * GetnumeroMaxAviones
+     */
     @Test
     void testGetNumeroMaxAviones() {
         assertEquals(2, hangar.getNumeroMaxAviones(), "Error el número máximo de aviones no coincide");
 
     }
 
+    /**
+     * GetDimPlazaAncho
+     */
     @Test
     void testGetDimPlazaAncho() {
         assertEquals(45.5, hangar.getDimPlazaAncho(), "Error la dimensión de ancho de la plaza no es correcta");
 
     }
 
+    /**
+     * GetDimPlazaAlto
+     */
     @Test
     void testGetDimPlazaAlto() {
         assertEquals(34.5, hangar.getDimPlazaAlto(), "Error la dimensión de alto de la plaza no es correcta");
         
     }
 
+    /**
+     * GetDimPlazaLargo
+     */
     @Test
     void testGetDimPlazaLargo() {
         assertEquals(40.8, hangar.getDimPlazaLargo(), "Error la dimensión de largo de la plaza no es correcta");
         
     }
 
+    /**
+     * CostePorHora
+     */
     @Test
     void testGetCostePorHora() {
         assertEquals(5.0, hangar.getCostePorHora(), "Error el coste por hora del hangar no es correcto");
         
     }
 
+    /**
+     * GetHorasUso
+     */
     @Test
     void testGetHorasUso() {
         assertEquals(0, hangar.getHorasUso(), "Error al principio las horas de uso del hangar deberían estar a 0");
         
     }
 
+    /**
+     * AddHorasUso
+     */
     @Test
     void testAddHorasUso() {
         hangar.addHorasUso(5);
@@ -138,7 +186,9 @@ class HangarMercanciasTest{
   
     }
 
-    
+    /**
+     * ResetHorasUso
+     */
     @Test
     void testReserHorasUso() {
         hangar.addHorasUso(5);
@@ -147,6 +197,9 @@ class HangarMercanciasTest{
   
     }
 
+    /**
+     * ComprobarTamano
+     */
     @Test
     void testComprobarTamano() {
    
@@ -174,6 +227,9 @@ class HangarMercanciasTest{
     
     }
     
+    /**
+     * ComprobarMercanciaPeligrosa
+     */
     @Test
     void testComprobarMercaPeligrosa() {
     	vueloConMercaPeligrosa = new Vuelo("VM123", LocalDate.now(), null, null, 

@@ -15,7 +15,9 @@ import src.airportmanager.estadisticas.*;
 import src.airportmanager.exceptions.TemporadasSolapadasException;
 import src.airportmanager.usuario.*;
 import src.airportmanager.vuelo.*;
-
+/**
+ * EstadisticasOperadorTest
+ */
 public class EstadisticasOperadorTest {
 
     private EstadisticasOperador estadisticas;
@@ -26,6 +28,10 @@ public class EstadisticasOperadorTest {
     private Vuelo vuelo1, vuelo2, vuelo3;
     private AirportManager sistema;
 
+    /**
+     * Crea objetos
+     * @throws TemporadasSolapadasException
+     */
     @BeforeEach
     void setUp() throws TemporadasSolapadasException {
     	sistema = new AirportManager();
@@ -79,6 +85,9 @@ public class EstadisticasOperadorTest {
         estadisticas = new EstadisticasOperador(operador);
     }
     
+    /**
+     * CalcularMedia
+     */
     @Test
     void testCalcularMedia() {
         assertEquals(0.0, estadisticas.calcularMedia(Collections.emptyList()));
@@ -87,6 +96,9 @@ public class EstadisticasOperadorTest {
         assertEquals(20.0, estadisticas.calcularMedia(List.of(10.0, 20.0, 30.0)));
     }
 
+    /**
+     * CargarDatosEstadisticasSinVuelos
+     */
     @Test
     void testCargarDatosEstadisticasSinVuelos() {
     	sistema.getGestor().getAeropuerto().getVuelosAceptados().clear();
@@ -100,6 +112,9 @@ public class EstadisticasOperadorTest {
         assertEquals(0.0, estadisticas.getTiempoMedioRetrasoPorVuelo(vuelo1));
     }
 
+    /**
+     * CargarDatosEstadisticasConVuelos
+     */
     @Test
     void testCargarDatosEstadisticasConVuelos() {
         estadisticas.cargarDatosEstadisticasTiempoMedio();
@@ -112,6 +127,9 @@ public class EstadisticasOperadorTest {
         assertEquals(0.0, estadisticas.getTiempoMedioRetrasoPorMes(Month.FEBRUARY), 0.001);
     }
     
+    /**
+     * Impresionestadisticas
+     */
     @Test
     void testImpresionEstadisticas() {
         estadisticas.cargarDatosEstadisticasTiempoMedio();

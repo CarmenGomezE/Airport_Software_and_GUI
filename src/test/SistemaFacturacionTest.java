@@ -23,7 +23,9 @@ import src.airportmanager.usuario.ControladorAereo;
 import src.airportmanager.usuario.Gestor;
 import src.airportmanager.usuario.Operador;
 import src.airportmanager.vuelo.*;
-
+/**
+ * SistemaFacturacionTest
+ */
 class SistemaFacturacionTest {
 
     private SistemaFacturacion sistemaFacturacion;
@@ -40,6 +42,9 @@ class SistemaFacturacionTest {
     private PuertaEmbarque p1, p2;
     private List<PuertaEmbarque> puertasList;
 
+    /**
+     * Crea objetos
+     */
     @BeforeEach
     void setUp() {
         
@@ -65,6 +70,9 @@ class SistemaFacturacionTest {
        
     }
 
+    /**
+     * GenerarFactura
+     */
     @Test
     void testGenerarFactura() {
        
@@ -102,6 +110,9 @@ class SistemaFacturacionTest {
         
     }
 
+    /**
+     * GenerarCodigoFactura
+     */
     @Test
     void testGenerarCodigoFactura() {
         

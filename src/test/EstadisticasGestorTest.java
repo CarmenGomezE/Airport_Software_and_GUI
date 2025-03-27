@@ -13,7 +13,9 @@ import src.airportmanager.exceptions.TemporadasSolapadasException;
 import src.airportmanager.hangar.*;
 import src.airportmanager.terminal.*;
 import src.airportmanager.usuario.*;
-
+/**
+ * EstadisticasgestorTest
+ */
 public class EstadisticasGestorTest {
 
     private EstadisticasGestor estadisticas;
@@ -27,6 +29,10 @@ public class EstadisticasGestorTest {
     private Temporada temporada;
     private List<PuertaEmbarque> puertas;
 
+    /**
+     * Crea objetos
+     * @throws TemporadasSolapadasException
+     */
     @BeforeEach
     void setUp() throws TemporadasSolapadasException {
         aeropuerto = new AeropuertoPropio("Test Airport", "TST", "Test City", 
@@ -60,6 +66,9 @@ public class EstadisticasGestorTest {
         estadisticas = gestor.getEstadisticasAeropuerto();
     }
 
+    /**
+     * UsoMedioDiarioFinfer
+     */
     @Test
     void testGetUsoMedioDiarioFinger() {
         // 10 horas de uso / 12 horas de operación = 0.833...
@@ -67,24 +76,36 @@ public class EstadisticasGestorTest {
         assertEquals(expected, estadisticas.getUsoMedioDiarioFinger(finger), 0.001);
     }
 
+    /**
+     * UsoMedoDiairoPuertaEmbarque
+     */
     @Test
     void testGetUsoMedioDiarioPuertaEmbarque() {
         double expected = 10.0 / 12.0;
         assertEquals(expected, estadisticas.getUsoMedioDiarioPuertaEmbarque(puerta), 0.001);
     }
 
+    /**
+     * UsoMedioDiarioZonaAparcamiento
+     */
     @Test
     void testGetUsoMedioDiarioZonaAparcamiento() {
         double expected = 10.0 / 12.0;
         assertEquals(expected, estadisticas.getUsoMedioDiarioZonaAparcamiento(zona), 0.001);
     }
 
+    /**
+     * UsoMedioDiarioHangar
+     */
     @Test
     void testGetUsoMedioDiarioHangar() {
         double expected = 10.0 / 12.0;
         assertEquals(expected, estadisticas.getUsoMedioDiarioHangar(hangar), 0.001);
     }
-
+    
+    /**
+     * ConHorasOperacioncero
+     */
     @Test
     void testConHorasOperacionCero() {
         // Configurar aeropuerto sin horas de operación
@@ -96,6 +117,9 @@ public class EstadisticasGestorTest {
         assertEquals(0.0, stats.getUsoMedioDiarioFinger(new Finger(1, 1)), 0.001);
     }
 
+    /**
+     * ImprimirEstadisticas
+     */
     @Test
     void testImprimirEstadisticas() {
         assertDoesNotThrow(() -> {
@@ -106,6 +130,9 @@ public class EstadisticasGestorTest {
         });
     }
 
+    /**
+     * ConComponentesNUlos
+     */
     @Test
     void testConComponentesNulos() {
         assertEquals(0.0, estadisticas.getUsoMedioDiarioFinger(new Finger(1, 1)), 0.001);
