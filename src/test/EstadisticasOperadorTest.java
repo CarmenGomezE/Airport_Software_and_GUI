@@ -35,7 +35,7 @@ public class EstadisticasOperadorTest {
             "Test Country", 10.0, ZoneOffset.UTC, 1, DireccionRelativaCiudad.NORTE);
         
         aerolinea = new Aerolinea("TestAir", "TA");
-        operador = new Operador("op1", "12345678A", aerolinea, aeropuertoPropio, null, sistema);
+        operador = new Operador("op1", "12345678A", aerolinea, aeropuertoPropio, sistema.getGestor(), sistema);
         aerolinea.setOperador(operador);
         
         avion1 = new AvionPasajeros("Boeing", "737", 10.0, 20.0, 30.0, 
@@ -59,24 +59,22 @@ public class EstadisticasOperadorTest {
             null, null, LocalTime.of(10, 0), null, TipoCarga.PASAJEROS, 
             TipoModoEmbarque.FINGER, Periodicidad.PUNTUAL, TipoVuelo.SALIDA, 
             avion1, madrid, aeropuertoPropio, null, operador);
-        vuelo1.addRetraso(15);
+        vuelo1.setRetraso(15);
         
         vuelo2 = new Vuelo("V002", LocalDate.of(2023, Month.JANUARY, 15), 
             null, null, LocalTime.of(12, 0), null, TipoCarga.PASAJEROS, 
             TipoModoEmbarque.FINGER, Periodicidad.PUNTUAL, TipoVuelo.SALIDA, 
             avion1, ny, aeropuertoPropio, null, operador);
-        vuelo2.addRetraso(30); 
+        vuelo2.setRetraso(30); 
         
         vuelo3 = new Vuelo("V003", LocalDate.of(2023, Month.FEBRUARY, 1), 
             null, null, LocalTime.of(14, 0), null, TipoCarga.MERCANCIAS, 
             TipoModoEmbarque.ZONA_DE_APARCAMIENTO, Periodicidad.PUNTUAL, TipoVuelo.SALIDA, 
             avion2, paris, aeropuertoPropio, null, operador);
        
-        
-        
-        aeropuertoPropio.getVuelosAceptados().add(vuelo1);
-        aeropuertoPropio.getVuelosAceptados().add(vuelo2);
-        aeropuertoPropio.getVuelosAceptados().add(vuelo3);
+        sistema.getGestor().getAeropuerto().getVuelosAceptados().add(vuelo1);
+        sistema.getGestor().getAeropuerto().getVuelosAceptados().add(vuelo2);
+        sistema.getGestor().getAeropuerto().getVuelosAceptados().add(vuelo3);
         
         estadisticas = new EstadisticasOperador(operador);
     }
@@ -84,14 +82,14 @@ public class EstadisticasOperadorTest {
     @Test
     void testCalcularMedia() {
         assertEquals(0.0, estadisticas.calcularMedia(Collections.emptyList()));
-        assertEquals(10.0, estadisticas.calcularMedia(List.of(10)));
-        assertEquals(15.0, estadisticas.calcularMedia(List.of(10, 20)));
-        assertEquals(20.0, estadisticas.calcularMedia(List.of(10, 20, 30)));
+        assertEquals(10.0, estadisticas.calcularMedia(List.of(10.0)));
+        assertEquals(15.0, estadisticas.calcularMedia(List.of(10.0, 20.0)));
+        assertEquals(20.0, estadisticas.calcularMedia(List.of(10.0, 20.0, 30.0)));
     }
 
     @Test
     void testCargarDatosEstadisticasSinVuelos() {
-        aeropuertoPropio.getVuelosAceptados().clear();
+    	sistema.getGestor().getAeropuerto().getVuelosAceptados().clear();
         
         estadisticas.cargarDatosEstadisticasTiempoMedio();
         
