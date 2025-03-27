@@ -111,14 +111,17 @@ public class Gestor extends Usuario {
         }
 
         try {
-            File directorio = new File("./facturas/");
+        	String facturaDir = "/Users/carmen/git/padsoft/facturas/";
+            File directorio = new File(facturaDir);
             if (!directorio.exists() && !directorio.mkdirs()) {
                 System.err.println("Error: No se pudo crear el directorio de facturas.");
                 return;
             }
 
-            String filePath = "./facturas/Factura_" + factura.getInvoiceIdentifier() + ".pdf";
+            // Ruta absoluta para evitar confusión
+            String filePath = facturaDir + "Factura_" + factura.getInvoiceIdentifier() + ".pdf";
             InvoiceSystem.createInvoice(factura, filePath);
+            System.out.println("Factura generada en: " + new File(filePath).getAbsolutePath());
 
             System.out.println("Factura generada correctamente: " + filePath);
         } catch (NonExistentFileException e) {

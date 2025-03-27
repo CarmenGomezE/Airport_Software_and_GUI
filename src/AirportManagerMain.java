@@ -586,7 +586,6 @@ public class AirportManagerMain {
 
 		System.out.println("Obteniendo la primera factura de Iberia...");
 		Factura facturaIberia = Ryanair.getFacturas().get(0);
-		System.out.println("Factura obtenida: " + facturaIberia);
 
 		String numeroTarjeta = "1234567891234567";
 		System.out.println("Iniciando pago de la factura " + facturaIberia.getInvoiceIdentifier() + " con tarjeta de crédito: " + numeroTarjeta);
