@@ -17,6 +17,7 @@ import src.airportmanager.aeropuerto.AeropuertoPropio;
 import src.airportmanager.aeropuerto.DireccionRelativaCiudad;
 import src.airportmanager.avion.Aerolinea;
 import src.airportmanager.avion.Avion;
+import src.airportmanager.avion.AvionPasajeros;
 import src.airportmanager.terminal.*;
 import src.airportmanager.usuario.*;
 import src.airportmanager.vuelo.Escala;
@@ -154,14 +155,10 @@ public class PuertaEmbarqueTest {
         operador = new Operador("Jesus", "5648274K", aerolinea, aeropuertoPropio, gestor, sistema);
         aeropuertoDestino = new AeropuertoDestino("Fuimicino", "FCO", "Roma", "Italia", 30.0, zone, 2, DireccionRelativaCiudad.NORTE);
         escala = new Escala(aeropuertoPropio, aeropuertoDestino, hora, h);
-        avion = new Avion("AIRBUS", "C42", 50.00, 50.0, 50.0, 60.000, 2020, revision, "JLN2000");
+        avion = new AvionPasajeros("AIRBUS", "C42", 50.00, 50.0, 50.0, 60.000, 2020, revision, "JLN2000", 0);
         vuelo = new Vuelo("V123", fecha, null, null, hora, null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER, Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avion, aeropuertoDestino, aeropuertoPropio, escala, operador);
 
         puerta1.setVuelo(vuelo);
         assertEquals(vuelo, puerta1.getVuelo(), "Error, el vuelo no coincide");
     }
-
-    
-
-
 }
