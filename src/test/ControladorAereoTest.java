@@ -25,6 +25,7 @@ import src.airportmanager.aeropuerto.DireccionRelativaCiudad;
 import src.airportmanager.aeropuerto.Temporada;
 import src.airportmanager.avion.Aerolinea;
 import src.airportmanager.avion.Avion;
+import src.airportmanager.avion.AvionPasajeros;
 import src.airportmanager.exceptions.CargaAvionEquivocadaException;
 import src.airportmanager.exceptions.ContrasenaInvalidaException;
 import src.airportmanager.exceptions.EstadoEquivocadoException;
@@ -143,7 +144,7 @@ class ControladorAereoTest {
 		usuarios.add(operador);
 		usuarios.add(controlador);
 		
-		avion = new Avion("AIRBUS", "AIR7", 87.0, 67.9, 54.2, 900000, 2021, new Date(), "PSJWU78");
+		avion = new AvionPasajeros("AIRBUS", "AIR7", 87.0, 67.9, 54.2, 900000, 2021, new Date(), "PSJWU78", 0);
 		vuelo1 = new Vuelo("V123", LocalDate.of(2023, 5, 12), null, null, LocalTime.of(7, 30), null, TipoCarga.PASAJEROS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO, Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avion, aeropuertoDestino1, aeropuertoPropio, null, operador);
 		vuelo2 = new Vuelo("V132", LocalDate.of(2024, 5, 12), null, null, LocalTime.of(10, 30), null, TipoCarga.PASAJEROS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO, Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avion, aeropuertoDestino1, aeropuertoPropio, null, operador);
 		vuelos = new ArrayList<>();
@@ -357,7 +358,7 @@ class ControladorAereoTest {
 	   
 	    vuelo1.setTerminal(terminal1);  
 	    vuelo1.cambiarEstado(EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE);
-	    vuelo1.addRetraso(15);  
+	    vuelo1.setRetraso(15);  
 	    
 
 	    aeropuertoPropio.addVueloAceptado(vuelo1);

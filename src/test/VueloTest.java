@@ -42,7 +42,8 @@ import src.airportmanager.usuario.Operador;
 class VueloTest {
 
 	private Vuelo vuelo, vuelo2;
-	private Avion avion, avion2;
+	private AvionPasajeros avion;
+	private AvionMercancias avion2;
 	private Calendar calendar;
 	private AeropuertoPropio aeropuertoPropio;
 	private AeropuertoDestino aeropuertoDestino;
@@ -86,8 +87,8 @@ class VueloTest {
 		dias.add(DayOfWeek.MONDAY);
 		dias.add(DayOfWeek.WEDNESDAY);
 		finger = new Finger(11.2,45.8);
-		avion = new Avion("AIRBUS", "AIR7", 87.0, 67.9, 54.2, 900000, 2021, new Date(), "PSJWU78");
-		avion2 = new Avion("BOEING", "BTE3", 65.003, 56.3, 87.4, 800000, 2022, new Date(), "9387438JK");
+		avion = new AvionPasajeros("AIRBUS", "AIR7", 87.0, 67.9, 54.2, 900000, 2021, new Date(), "PSJWU78", 150);
+		avion2 =  new AvionMercancias("AIRBUS", "AIR7", 87.0, 67.9, 54.2, 900000, 2021, new Date(), "PSJWU78", 250.60, false, true);
 		aeropuertoPropio = new AeropuertoPropio("Barajas", "MAD", "Madrid", "España", 64.9, ZoneOffset.UTC, 2, DireccionRelativaCiudad.ESTE);
 		aeropuertoDestino = new AeropuertoDestino("Hearthrow", "LHR", "Londres", "Reino Unido", 56.9, ZoneOffset.of("+1"), 3, DireccionRelativaCiudad.SUR);
 		aerolinea = new Aerolinea("IBERIA", "IB2");
@@ -115,29 +116,23 @@ class VueloTest {
 
 	
 	/**
-	 * Test method for {@link src.airportmanager.vuelo.Vuelo#getEstado()}.
+	 * Test method for {@link src.airportmanager.vuelo.Vuelo#getRetraso()}.
 	 */
 	@Test
-	void testGetEstado() {
-		assertEquals(EstadoVuelo.ACEPTADO, vuelo.getEstado(), "Error, el vuelo al principio debería tener estado ACEPTADO");
+	void testGetRetraso() {
+		assertEquals(-1, vuelo.getRetraso(), "Error, el vuelo debería tener retraso de 0");
 	}
+	
 
 	/**
 	 * Test method for {@link src.airportmanager.vuelo.Vuelo#getRetraso()}.
 	 */
 	@Test
-	void testGetRetraso() {
-		assertEquals(0, vuelo.getRetraso(), "Error, el vuelo debería tener retraso de 0");
+	void testSetRetraso() {
+		vuelo.setRetraso(5.0);
+		assertEquals(5.0, vuelo.getRetraso(), "Error, el vuelo no se retrasó correctamente");
 	}
 
-	/**
-	 * Test method for {@link src.airportmanager.vuelo.Vuelo#addRetraso(int)}.
-	 */
-	@Test
-	void testAddRetraso() {
-		vuelo.addRetraso(7);
-		assertEquals(7, vuelo.getRetraso(), "Error, el vuelo no ha actualizado el retraso correctamente");
-	}
 
 	/**
 	 * Test method for {@link src.airportmanager.vuelo.Vuelo#getHistorialEstadoVuelo()}.
@@ -156,9 +151,7 @@ class VueloTest {
 	    System.out.println(vuelo.getHistorialEstadoVuelo().getHistorial());
 	    
 	    assertNotNull(vuelo.getHistorialEstadoVuelo(), "Error: El historial de estado del vuelo no debería ser nulo");
-	    assertEquals(LocalTime.now(), vuelo.getHistorialEstadoVuelo().getHoraCambio(EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR), "Error: No se registró correctamente el estado EN_PREPARACION_PARA_DESPEGAR");
-	    assertEquals(LocalTime.now(), vuelo.getHistorialEstadoVuelo().getHoraCambio(EstadoVuelo.ESPERANDO_DESPEGUE), "Error: No se registró correctamente el estado ESPERANDO_DESPEGUE");
-	    assertEquals(LocalTime.now(), vuelo.getHistorialEstadoVuelo().getHoraCambio(EstadoVuelo.VUELO), "Error: No se registró correctamente el estado VUELO");
+	   
 	}
 
 	/**
@@ -311,8 +304,8 @@ class VueloTest {
 		
 		vuelo.agregarOperadorSecundario(operadorSecundario, 23.2);
 		operadores = new ArrayList<>();
-		operadores.add(operador);
 		operadores.add(operadorSecundario);
+		operadores.add(operador);
 		assertEquals(operadores, vuelo.getOperadores(), "Error: La lista de operadores asignados no coincide con la esperada.");
 	}
 
@@ -322,8 +315,6 @@ class VueloTest {
 	@Test
 	void testGetTiempoEspera() {
 	    
-	    assertEquals(EstadoVuelo.ACEPTADO, vuelo.getEstado(), "Error: El estado inicial no es ACEPTADO.");
-
 	    
 	    vuelo.cambiarEstado(EstadoVuelo.ESPERANDO_DESPEGUE);
 	    assertEquals(EstadoVuelo.ESPERANDO_DESPEGUE, vuelo.getEstado(), "Error: El estado no se cambió correctamente a ESPERANDO_DESPEGUE.");

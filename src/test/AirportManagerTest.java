@@ -168,13 +168,13 @@ public class AirportManagerTest {
             LocalTime.now(), null, TipoCarga.PASAJEROS, 
             TipoModoEmbarque.FINGER, Periodicidad.PUNTUAL, TipoVuelo.SALIDA, 
             avionPasajeros, null, airportManager.getAeropuerto(), null, null);
-        vuelo1.addRetraso(30);
+        vuelo1.setRetraso(30);
         
         Vuelo vuelo2 = new Vuelo("IB456", LocalDate.now(), null, null, 
             LocalTime.now(), null, TipoCarga.PASAJEROS, 
             TipoModoEmbarque.FINGER, Periodicidad.PUNTUAL, TipoVuelo.SALIDA, 
             avionPasajeros, null, airportManager.getAeropuerto(), null, null);
-        vuelo2.addRetraso(15);
+        vuelo2.setRetraso(15);
         
         airportManager.getAeropuerto().getVuelosAceptados().add(vuelo1);
         airportManager.getAeropuerto().getVuelosAceptados().add(vuelo2);
@@ -192,13 +192,13 @@ public class AirportManagerTest {
             LocalTime.now(), null, TipoCarga.PASAJEROS, 
             TipoModoEmbarque.FINGER, Periodicidad.PUNTUAL, TipoVuelo.SALIDA, 
             avionPasajeros, null, airportManager.getAeropuerto(), null, null);
-        vuelo1.addRetraso(30);
+        vuelo1.setRetraso(30);
         
         Vuelo vuelo2 = new Vuelo("IB456", LocalDate.now(), null, null, 
             LocalTime.now(), null, TipoCarga.PASAJEROS, 
             TipoModoEmbarque.FINGER, Periodicidad.PUNTUAL, TipoVuelo.SALIDA, 
             avionPasajeros, null, airportManager.getAeropuerto(), null, null);
-        vuelo2.addRetraso(15);
+        vuelo2.setRetraso(15);
         
         assertTrue(airportManager.compararVuelos(vuelo1, vuelo2) < 0);
     }

@@ -167,7 +167,7 @@ class HangarMercanciasTest{
         operador = new Operador("Jesus", "5648274K", aerolinea, aeropuertoPropio, gestor, sistema);
         aeropuertoDestino = new AeropuertoDestino("Fuimicino", "FCO", "Roma", "Italia", 30.0, zone, 2, DireccionRelativaCiudad.NORTE);
         escala = new Escala(aeropuertoPropio, aeropuertoDestino, hora, h);
-        avion = new Avion("AIRBUS", "C42", 30.00, 30.0, 30.0, 60.000, 2020, revision, "JLN2000");
+        avion = new AvionPasajeros("AIRBUS", "C42", 30.00, 30.0, 30.0, 60.000, 2020, revision, "JLN2000", 0);
         vueloPequeno = new Vuelo("V123", fecha, null, null, hora, null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO, Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avion, aeropuertoDestino, aeropuertoPropio, escala, operador);
 
         assertTrue(hangar.comprobarTamano(vueloPequeno), "Error. El avion debería caber");
