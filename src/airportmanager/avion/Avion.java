@@ -14,7 +14,7 @@ import src.airportmanager.vuelo.Vuelo;
  * 
  * @author Carmen Gómez, María Pozo, Claudia Municio.
  */
-public class Avion implements Serializable {
+public abstract class Avion implements Serializable {
 
 	/** Número de versión de la clase */
 	private static final long serialVersionUID = 1L;
