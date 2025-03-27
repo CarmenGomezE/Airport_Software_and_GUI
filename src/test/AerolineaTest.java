@@ -59,10 +59,16 @@ public class AerolineaTest {
         operador = new Operador("Pedro", "57487643T", aerolinea, aeropuerto, gestor, sistema);
         aerolinea.setOperador(operador);
         gestor.establecerSistemaFacturacion();
-        factura = gestor.getSistemaFacturacion().generarFactura(aerolinea);
+        facturas = gestor.getSistemaFacturacion().generarFactura(aerolinea);
         avion = new Avion("AIRBUS", "A3", 5.0, 5.5, 5.5, 600.000, 2020, null, null);
+        avion.setAerolinea(aerolinea);
+        aerolinea.agregarAvion(avion);
         vuelo = new Vuelo("V123", LocalDate.of(2025, 2, 10), null, null, LocalTime.of(9,30,0), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER, Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avion, aeropuertoDestino, aeropuerto, null, operador);
-        operador.addVuelo(vuelo);
+        avion.agregarVuelo(vuelo);
+        operador.recibirAlternativas(List.of(vuelo));
+        operador.aceptarVuelo(vuelo);
+        aeropuerto.addVueloAceptado(vuelo);
+        aeropuerto.addUsuario(operador);
         
     }
 
@@ -115,7 +121,7 @@ public class AerolineaTest {
 
     @Test
     void testGetAviones() {
-        assertTrue(aerolinea.getAviones().isEmpty(), "Error, al principio la lista de aviones de la aerolínea debería estar vacía");
+        assertTrue(aerolinea.getAviones().contains(avion), "Error, al principio la lista de aviones de la aerolínea debería estar vacía");
     }
 
     @Test
