@@ -16,6 +16,9 @@ import src.airportmanager.vuelo.*;
 import src.airportmanager.AirportManager;
 import src.airportmanager.avion.*;
 
+/**
+ * AirporManagerTest
+ */
 public class AirportManagerTest {
 
     private AirportManager airportManager;
@@ -27,6 +30,10 @@ public class AirportManagerTest {
     private Operador operador;
     private Aerolinea aerolinea;
 
+    /**
+     * CreaObjetis
+     * @throws TemporadasSolapadasException
+     */
     @BeforeEach
     void setUp() throws TemporadasSolapadasException {
     	airportManager = new AirportManager();
@@ -54,6 +61,9 @@ public class AirportManagerTest {
     	vueloLlegada.setTerminal(terminal);
     }
 
+    /**
+     * IniciarAplicacion
+     */
     @Test
     void testIniciarAplicacion() {
         airportManager.iniciarAplicacion();
@@ -63,6 +73,9 @@ public class AirportManagerTest {
         assertEquals(1, airportManager.getUsuarios().size());
     }   
 
+    /**
+     * GuardarYCargarEstado
+     */
     @Test
     void testGuardarYCargarEstado() {
         String tempDir = System.getProperty("java.io.tmpdir");
@@ -85,6 +98,9 @@ public class AirportManagerTest {
         }
     }
 
+    /**
+     * GnerarContrasena
+     */
     @Test
     void testGenerarContrasena() {
         String contrasena = airportManager.generarContrasena();
@@ -92,6 +108,9 @@ public class AirportManagerTest {
         assertEquals(12, contrasena.length());
     }
 
+    /**
+     * ActualizarEstadoVueloAutomatico
+     */
     @Test
     void testActualizarEstadoVueloAutomatico() {
     	airportManager.iniciarAplicacion();
@@ -110,18 +129,30 @@ public class AirportManagerTest {
                  vueloLlegada.getEstado() == EstadoVuelo.RETRASADO);
     }
 
+    /**
+     * AsignarContrasena
+     * @throws UsuarioNoEncontradoException
+     * @throws ContrasenaInvalidaException
+     */
     @Test
     void testAsignarContrasena() throws UsuarioNoEncontradoException, ContrasenaInvalidaException {
         airportManager.asignarContrasena("87654321B", "nuevaContrasena");
         assertTrue(airportManager.getCredenciales().containsKey("87654321B"));
     }
 
+    /**
+     * ValidarDNI
+     */
     @Test
     void testValidarDni() {
     	airportManager.iniciarAplicacion();
         assertFalse(airportManager.validarDni("12345678A"));
     }
 
+    /**
+     * ValidarContrasena
+     * @throws UsuarioNoEncontradoException
+     */
     @Test
     void testValidarContrasena() throws UsuarioNoEncontradoException {
     	airportManager.iniciarAplicacion();
@@ -129,6 +160,9 @@ public class AirportManagerTest {
         assertFalse(airportManager.validarContrasena("Gestor", "contrasenaIncorrecta"));
     }
 
+    /**
+     * ValidarUsuario
+     */
     @Test
     void testValidarUsuario() {
     	airportManager.iniciarAplicacion();
@@ -153,6 +187,9 @@ public class AirportManagerTest {
     	}
     }
 
+    /**
+     * AddCREDENCIAL
+     */
     @Test
     void testAddCredencial() {
         airportManager.addCredencial("11111111A", "test123");
@@ -161,6 +198,9 @@ public class AirportManagerTest {
         assertEquals("test123", credenciales.get("11111111A"));
     }
 
+    /**
+     * OrdenarColaVuelos
+     */
     @Test
     void testOrdenarColaVuelos() {
     	airportManager.iniciarAplicacion();
@@ -186,6 +226,9 @@ public class AirportManagerTest {
         assertEquals(vuelo1, vueloOrdenado);
     }
 
+    /**
+     * CompararVuelos
+     */
     @Test
     void testCompararVuelos() {
         Vuelo vuelo1 = new Vuelo("IB123", LocalDate.now(), null, null, 
@@ -203,16 +246,25 @@ public class AirportManagerTest {
         assertTrue(airportManager.compararVuelos(vuelo1, vuelo2) < 0);
     }
 
+    /**
+     * GetAeropuerto
+     */
     @Test
     void testGetAeropuerto() {
         assertNull(airportManager.getAeropuerto());
     }
 
+    /**
+     * GetGESTOR
+     */
     @Test
     void testGetGestor() {
         assertNull(airportManager.getGestor());
     }
     
+    /**
+     * GetCredenciales
+     */
     @Test
     void testGetCredenciales() {
     	airportManager.iniciarAplicacion();
