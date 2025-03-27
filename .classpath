@@ -3,7 +3,11 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry excluding="aeropuerto/src/carmen/test/" kind="src" path=""/>
 	<classpathentry kind="src" path="aeropuerto/src/carmen/test"/>
-	<classpathentry kind="lib" path="resources/invoiceSystem.jar"/>
+	<classpathentry kind="lib" path="resources/invoiceSystem.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/Users/carmen/git/padsoft/resources/invoicesystem_doc_09d9bcf78beaa0ccda59cfe1572f7ece%204.zip!/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="resources/TeleChargeAndPaySystem8.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-23">
 		<attributes>
