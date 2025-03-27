@@ -1,0 +1,364 @@
+package src.test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneOffset;
+import java.util.*;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import src.airportmanager.AirportManager;
+import src.airportmanager.aeropuerto.*;
+import src.airportmanager.terminal.*;
+import src.airportmanager.hangar.*;
+import src.airportmanager.notificacion.Notificacion;
+import src.airportmanager.notificacion.TipoNotificacion;
+import src.airportmanager.pista.Pista;
+import src.airportmanager.pista.TipoPista;
+import src.airportmanager.usuario.*;
+import src.airportmanager.vuelo.*;
+import src.airportmanager.avion.*;
+import src.airportmanager.exceptions.EstadoEquivocadoException;
+import src.airportmanager.exceptions.OperacionInvalidaException;
+import src.airportmanager.exceptions.TemporadasSolapadasException;
+
+
+class OperadorTest {
+
+	private AeropuertoPropio aeropuertoPropio;
+	private HangarPasajeros hangar1, hangar2;
+	private ControladorAereo controlador;
+	private Operador operador, operadorPrincipal;
+	private Gestor gestor;
+	private TerminalPasajeros terminal1, terminal2;
+	private Aerolinea aerolinea1, aerolinea2;
+	private Vuelo vuelo1, vuelo2;
+	private AeropuertoDestino aeropuertoDestino1, aeropuertoDestino2;
+	private PuertaEmbarque p1, p2, p3, p4;
+	private List<Hangar> hangares;
+	private ZonaAparcamiento zona1, zona2;
+	private List<ZonaAparcamiento> zonas;
+	private List<Terminal> terminales;
+	private AirportManager sistema;
+	private List<Aerolinea> aerolineas;
+	private List<Usuario> usuarios;
+	private Avion avion;
+	private List<Vuelo> vuelos;
+	private List<AeropuertoDestino> aeropuertosDestino;
+	private Pista pista1, pista2;
+	private List<Pista> pistas;
+	private List<PuertaEmbarque> puertasList, puertasList2;
+	private Temporada temporada1, temporada2;
+	private List<Temporada> temporadas;
+	private Notificacion notificacion;
+	private List<Notificacion> notificaciones;
+	private AvionPasajeros avionPasajeros;
+	private AvionMercancias avionMercancias;
+	@BeforeEach
+	void setUp() { 
+		aeropuertoPropio = new AeropuertoPropio("Barajas", "MAD", "Madrid", "España", 64.9, ZoneOffset.UTC, 2, DireccionRelativaCiudad.ESTE);
+		
+		
+		puertasList = new ArrayList<>();
+		puertasList2 = new ArrayList<>();
+		p1 = new PuertaEmbarque();
+		p2 = new PuertaEmbarque();
+		p3= new PuertaEmbarque();
+		p4= new PuertaEmbarque();
+				
+	
+		puertasList.add(p1);
+		puertasList.add(p3);
+		puertasList2.add(p2);
+		puertasList2.add(p4);
+		
+		
+		hangar1 = new HangarPasajeros(20, 34.5, 54.8, 60.9, 4.7);
+		hangar2 = new HangarPasajeros(25, 54.5, 59.8, 90.9, 4.2);
+		hangares = new ArrayList<>();
+		hangares.add(hangar1);
+		hangares.add(hangar2);
+		
+		zona1 = new ZonaAparcamiento(2.5, 7.9, 6.5);
+		zona2 = new ZonaAparcamiento(3.5, 6.9, 8.5);
+		zonas = new ArrayList<>();
+		zonas.add(zona1);
+		zonas.add(zona2);
+		
+		terminal1 = new TerminalPasajeros("T1", puertasList, 100);
+		terminal2 = new TerminalPasajeros("T2", puertasList2, 150);
+		terminales = new ArrayList<>();
+		terminales.add(terminal1);
+		terminales.add(terminal2);
+		
+		aerolinea1 = new Aerolinea("IBERIA", "IBE1");
+		aerolinea2 = new Aerolinea("RYANAIR", "RYN1");
+		aerolineas = new ArrayList<>();
+		aerolineas.add(aerolinea1);
+		aerolineas.add(aerolinea2);
+		
+		sistema = new AirportManager();
+		gestor = new Gestor("Lorena", "Lore76", aeropuertoPropio, sistema);
+		controlador = new ControladorAereo("Juan Pedro", "56872372J", "Juanpe44", aeropuertoPropio, gestor, terminal1, sistema);
+		operador = new Operador("Miguel", "56098976M", aerolinea1, aeropuertoPropio, gestor, sistema);
+		operadorPrincipal = new Operador("Principal", "12345678A", aerolinea1, aeropuertoPropio, gestor, sistema);
+		usuarios = new ArrayList<>();
+		usuarios.add(gestor);
+		usuarios.add(operador);
+		usuarios.add(controlador);
+		
+		avion = new Avion("AIRBUS", "AIR7", 87.0, 67.9, 54.2, 900000, 2021, new Date(), "PSJWU78");
+		vuelo1 = new Vuelo("V123", LocalDate.of(2023, 5, 12), null, null, LocalTime.of(7, 30), null, TipoCarga.PASAJEROS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO, Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avion, aeropuertoDestino1, aeropuertoPropio, null, operadorPrincipal);
+		vuelo2 = new Vuelo("V132", LocalDate.of(2024, 5, 12), null, null, LocalTime.of(10, 30), null, TipoCarga.PASAJEROS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO, Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avion, aeropuertoDestino1, aeropuertoPropio, null, operador);
+		vuelos = new ArrayList<>();
+		vuelos.add(vuelo1);
+		vuelos.add(vuelo2);
+		
+		aeropuertoDestino1 = new AeropuertoDestino("Hearthrow", "LHR", "Londres", "Reino Unido", 56.9, ZoneOffset.of("+1"), 3, DireccionRelativaCiudad.SUR);
+		aeropuertoDestino2 = new AeropuertoDestino("Fuiminio", "FMR", "Roma", "Italia", 56.9, ZoneOffset.of("+1"), 3, DireccionRelativaCiudad.OESTE);
+		aeropuertosDestino = new ArrayList<>();
+		aeropuertosDestino.add(aeropuertoDestino1);
+		aeropuertosDestino.add(aeropuertoDestino2);
+		
+		pista1 = new Pista("P2", 10, TipoPista.ATERRIZAJE);
+		pista2 = new Pista("P1", 20, TipoPista.DESPEGUE);
+		pistas = new ArrayList<>();
+		pistas.add(pista1);
+		pistas.add(pista2);
+		
+		temporada1 = new Temporada("06/01", "08:00", "22:00", "30/09"); 
+		temporada2 = new Temporada("30/09", "08:00", "23:00", "30/12"); 
+
+		temporadas = new ArrayList<>();
+		temporadas.add(temporada1);
+		temporadas.add(temporada2);
+		notificacion = new Notificacion("Cambio estado de vuelo", TipoNotificacion.CAMBIO_ESTADO_VUELO);
+		notificaciones = new ArrayList<>();
+		avionPasajeros = new AvionPasajeros("AIRBUS", "AIR7", 87.0, 67.9, 54.2, 900000, 2021, new Date(), "PSJWU78", 150);
+		avionMercancias = new AvionMercancias("AIRBUS", "AIR7", 87.0, 67.9, 54.2, 900000, 2021, new Date(), "PSJWU78", 250.60, false, true);
+	}
+
+	@Test
+	void testRecibirNotificacion() {
+		operador.recibirNotificacion(notificacion);
+		assertTrue(operador.getNotificaciones().contains(notificacion), "Error la notificación no se recibió correctamente");
+	}
+
+	@Test
+	void testGetGestor() {
+		assertEquals(gestor, operador.getGestor(), "Error el gestor no es correcto");
+	}
+
+	@Test
+	void testCambiarEstadoVuelo() {
+		avion.setAerolinea(aerolinea1);
+		vuelo1.setTerminal(terminal1);
+		vuelo1.cambiarEstado(EstadoVuelo.OPERATIVO);
+		assertDoesNotThrow(() -> operadorPrincipal.cambiarEstadoVuelo(vuelo1, EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR));
+	    assertEquals(EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR, vuelo1.getEstado());
+	    
+	    
+	}
+
+	@Test
+	void testGetAerolinea() {
+		assertEquals(aerolinea1, operador.getAerolinea(), "Error la aerolinea no es correcta");
+	}
+	@Test
+	void testDarDeAltaAvionPasajeros() {
+	    operador.darDeAltaAvionPasajeros("AIRBUS", "AIR7", 87.0, 67.9, 54.2, 900000, 2021, new Date(), "PSJWU78", 150);
+
+	    Avion avionRegistrado = aerolinea1.getAviones()
+	                                      .stream()
+	                                      .filter(a -> a.getMatricula().equals("PSJWU78"))
+	                                      .findFirst()
+	                                      .orElse(null);
+
+	    assertNotNull(avionRegistrado, "Error: no se ha dado de alta correctamente el avión");
+	}
+
+
+	@Test
+	void testDarDeAltaAvionMercancias() {
+		operador.darDeAltaAvionMercancias("AIRBUS", "AIR7", 87.0, 67.9, 54.2, 900000, 2021, new Date(), "PSJWU78", 250.60, false, true);
+		  Avion avionRegistrado = aerolinea1.getAviones()
+                  .stream()
+                  .filter(a -> a.getMatricula().equals("PSJWU78"))
+                  .findFirst()
+                  .orElse(null);
+		  assertNotNull(avionRegistrado, "Error: no se ha dado de alta correctamente el avión");
+	}
+
+	@Test
+	void testProponerVuelo() {
+	    
+	    int minAntelacion = 60; 
+	    LocalDate fechaFutura = LocalDate.now().plusDays(minAntelacion);
+
+	    AvionPasajeros avionDisponible = new AvionPasajeros("BOEING", "B737", 80.0, 70.0, 50.0, 
+	        800000, 2020, new Date(), "ABCD123", 180);
+
+	    assertDoesNotThrow(() -> {
+	        operador.proponerVuelo("V456", fechaFutura, null, null, 
+	            LocalTime.of(12, 30), null, TipoCarga.PASAJEROS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO, 
+	            Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionDisponible, aeropuertoDestino1, 
+	            aeropuertoPropio, null);
+	    }, "No debería lanzar excepción para un vuelo de salida válido con antelación suficiente.");
+	}
+
+
+	@Test
+	void testRecibirAlternativas() {
+	    
+	    List<Vuelo> alternativas = new ArrayList<>();
+	    alternativas.add(vuelo1);
+	    alternativas.add(vuelo2);
+
+	    assertTrue(operador.getAlternativas().isEmpty(), "Inicialmente, la lista de alternativas debería estar vacía");
+
+	    long notificacionesPrevias = operador.getNotificaciones().stream()
+	        .filter(n -> n.getTipoNotificacion() == TipoNotificacion.OPCIONES_REPROGRAMAR_VUELO)
+	        .count();
+
+	    
+	    operador.recibirAlternativas(alternativas);
+
+	  
+	    long notificacionesPosteriores = operador.getNotificaciones().stream()
+	        .filter(n -> n.getTipoNotificacion() == TipoNotificacion.OPCIONES_REPROGRAMAR_VUELO)
+	        .count();
+	    assertEquals(notificacionesPrevias + 1, notificacionesPosteriores, 
+	        "Debería haberse agregado exactamente una notificación de opciones de reprogramación");
+
+	  
+	    Notificacion ultimaNotificacion = operador.getNotificaciones().get(operador.getNotificaciones().size() - 1);
+	    assertEquals("Nueva alternativa recibida", ultimaNotificacion.getMensaje(), 
+	        "El mensaje de la notificación debería ser 'Nueva alternativa recibida'");
+	    assertEquals(TipoNotificacion.OPCIONES_REPROGRAMAR_VUELO, ultimaNotificacion.getTipoNotificacion(), 
+	        "El tipo de notificación debería ser OPCIONES_REPROGRAMAR_VUELO");   
+	}
+
+
+	@Test
+	void testAceptarVuelo() {
+	    
+	    Terminal terminal = terminal1; 
+	    
+	    avion.setAerolinea(aerolinea1);  
+	    vuelo1.setTerminal(terminal);
+	    vuelo1.setControlador(controlador);
+	    
+	    assertFalse(operador.getDecisionTomada(), "No debería haberse tomado decisión inicialmente");
+	    
+	  
+	    assertDoesNotThrow(() -> {
+	        operador.aceptarVuelo(vuelo1);
+	    }, "No debería lanzar excepción al aceptar vuelo");
+	    
+	   
+	    assertTrue(operador.getDecisionTomada(), "Debería haberse marcado la decisión como tomada");
+	    
+	 
+	    vuelo2.setTerminal(terminal);
+	    vuelo2.setControlador(controlador);
+	    
+	
+	    operador.aceptarVuelo(vuelo2); 
+	    
+
+	    assertTrue(operador.getDecisionTomada(), "La decisión debería seguir marcada como tomada");
+	    
+	}
+	@Test
+	void testSolicitarCompartirVuelo() {
+	    
+	    Operador operadorReceptor = operadorPrincipal; 
+	    Operador operadorSolicitante = this.operador; 
+	    
+	   
+	    vuelo1.getOperadoresAsignados().clear(); 
+	    
+	    assertDoesNotThrow(() -> {
+	        operadorSolicitante.solicitarCompartirVuelo(vuelo1, operadorReceptor, 30.0);
+	    }, "No debería lanzar excepción con parámetros válidos");
+	  
+
+	    assertEquals(1, operadorReceptor.getSolicitudesRecibidas().size(), 
+	        "El operador receptor debería tener una solicitud recibida");
+
+	   
+	    vuelo1.getOperadoresAsignados().put(operadorSolicitante, 0.0); 
+	    
+	   
+	    Exception ex = assertThrows(OperacionInvalidaException.class, () -> {
+	        operadorSolicitante.solicitarCompartirVuelo(vuelo1, operadorReceptor, 30.0);
+	    });
+
+	    assertEquals("No puedes solicitar compartir un vuelo en el que ya participas.", ex.getMessage());
+	}
+
+
+	@Test
+	void testRecibirSolicitud() {
+	    Operador operadorReceptor = new Operador("Receptor", "11223344B", aerolinea1, aeropuertoPropio, gestor, sistema);
+	   
+	    
+	    
+	    
+	    ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+	    System.setOut(new PrintStream(outContent));
+	    
+	 
+	    assertTrue(operadorReceptor.getSolicitudesRecibidas().isEmpty(), 
+	        "Precondición: No debería haber solicitudes recibidas inicialmente");
+	}
+
+	@Test
+	void testAceptarSolicitud() {
+		
+	    Operador operadorPrincipal = this.operadorPrincipal;
+	    Operador operadorSolicitante = this.operador;
+	    
+	    SolicitudVueloCompartido solicitud = new SolicitudVueloCompartido(vuelo1, operadorSolicitante, operadorPrincipal, 30.0);
+	    
+	    assertTrue(operadorPrincipal.getSolicitudesRecibidas().isEmpty(), "No debería haber solicitudes inicialmente");
+	    assertEquals(operadorPrincipal, vuelo1.getOperadorPrincipal(), "El operador principal debe ser el dueño del vuelo");
+	    
+	
+	    operadorPrincipal.recibirSolicitud(solicitud);
+	    
+	    assertEquals(1, operadorPrincipal.getSolicitudesRecibidas().size(), "Debería haber una solicitud recibida");
+
+	    assertDoesNotThrow(() -> {
+	        operadorPrincipal.aceptarSolicitud(solicitud);
+	    }, "No debería lanzar excepción al aceptar solicitud válida");
+	}
+
+	@Test
+	void testRechazarSolicitud() {
+	    Operador operadorPrincipal = this.operadorPrincipal;
+	    Operador operadorSolicitante = this.operador;
+
+	    SolicitudVueloCompartido solicitud = new SolicitudVueloCompartido(vuelo1, operadorSolicitante, operadorPrincipal, 30.0);
+	    
+	    assertTrue(operadorPrincipal.getSolicitudesRecibidas().isEmpty(), "No debería haber solicitudes inicialmente");
+	    assertEquals(EstadoSolicitud.PENDIENTE, solicitud.getEstadoSolicitud(), "La solicitud debería estar en estado PENDIENTE inicialmente");
+	    
+	    operadorPrincipal.recibirSolicitud(solicitud);
+
+	    assertEquals(1, operadorPrincipal.getSolicitudesRecibidas().size(), "Debería haber una solicitud recibida");
+	}
+
+
+	@Test
+	void testGetDni() {
+		assertEquals("56098976M", operador.getDni(), "Error el DNI no es correcto");
+	}
+
+}
