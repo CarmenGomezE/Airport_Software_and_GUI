@@ -18,6 +18,7 @@ import src.airportmanager.aeropuerto.AeropuertoPropio;
 import src.airportmanager.aeropuerto.DireccionRelativaCiudad;
 import src.airportmanager.avion.Aerolinea;
 import src.airportmanager.avion.Avion;
+import src.airportmanager.avion.AvionPasajeros;
 import src.airportmanager.usuario.*;
 import src.airportmanager.vuelo.Periodicidad;
 import src.airportmanager.vuelo.TipoCarga;
@@ -60,7 +61,7 @@ public class AerolineaTest {
         aerolinea.setOperador(operador);
         gestor.establecerSistemaFacturacion();
         facturas = gestor.getSistemaFacturacion().generarFactura(aerolinea);
-        avion = new Avion("AIRBUS", "A3", 5.0, 5.5, 5.5, 600.000, 2020, null, null);
+        avion = new AvionPasajeros("AIRBUS", "A3", 5.0, 5.5, 5.5, 600.000, 2020, null, null, 0);
         avion.setAerolinea(aerolinea);
         aerolinea.agregarAvion(avion);
         vuelo = new Vuelo("V123", LocalDate.of(2025, 2, 10), null, null, LocalTime.of(9,30,0), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER, Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avion, aeropuertoDestino, aeropuerto, null, operador);
