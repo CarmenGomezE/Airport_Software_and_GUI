@@ -588,7 +588,7 @@ public class AirportManagerMain {
 		System.out.println("Iniciando pago de la factura " + facturaIberia.getInvoiceIdentifier() + " con tarjeta de crédito: " + numeroTarjeta);
 		operadorRyanair.pagarFactura(facturaIberia, numeroTarjeta);
 		System.out.println("Pago de la factura realizado con éxito.");
-		gestorBarajas.verEstadoFactura(facturaIberia);
+		gestorBarajas.verFacturas();
 		
 		System.out.println("Proceso de creación de facturas finalizado.");
 	}

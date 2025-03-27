@@ -124,6 +124,7 @@ public class Gestor extends Usuario {
 	            System.err.println("Error inesperado al generar la factura: " + e.getMessage());
 	        } 
 	        aerolinea.getOperador().recibirNotificacionFacturaEmitida(factura);
+	        aerolinea.addFactura(factura);
         }
     }
 
