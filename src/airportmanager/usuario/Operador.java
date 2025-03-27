@@ -615,6 +615,24 @@ public class Operador extends UsuarioConDni {
 	public List<SolicitudVueloCompartido> getSolicitudesRecibidas() {
 		return this.solicitudesRecibidas;
 	}
+
+	
+	/**
+	 * Método que devuelve la decisión tomada.
+	 * @return decisión tomada.
+	 */
+	public boolean getDecisionTomada() {
+		return this.decisionTomada;
+	}
+	
+	/**
+	 * Método que asigna una decision tomada.
+	 * @param nuevaDecision				Nueva decision a tomar.
+	 */
+	public void setDecisionTomada(boolean nuevaDecision) {
+		decisionTomada = nuevaDecision;
+	}
+	
 	
 	@Override
     public void recibirNotificacion(Notificacion notificacion) {
