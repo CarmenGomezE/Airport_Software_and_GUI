@@ -10,7 +10,7 @@ import es.uam.eps.padsof.invoices.IResourceUsageInfo;
  * 
  * @author Carmen Gómez, María Pozo, Claudia Municio.
  */
-class UsoRecursos implements IResourceUsageInfo, Serializable {
+public class UsoRecursos implements IResourceUsageInfo, Serializable {
 
 	/** Número de versión de la clase */
 	private static final long serialVersionUID = 1L;
