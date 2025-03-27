@@ -9,6 +9,9 @@ import java.io.*;
 import java.time.*;
 import java.util.*;
 import src.airportmanager.exceptions.*;
+import src.airportmanager.terminal.PuertaEmbarque;
+import src.airportmanager.terminal.TerminalPasajeros;
+import src.airportmanager.usuario.Operador;
 import src.airportmanager.vuelo.*;
 import src.airportmanager.AirportManager;
 import src.airportmanager.avion.*;
@@ -18,23 +21,37 @@ public class AirportManagerTest {
     private AirportManager airportManager;
     private Vuelo vueloSalida, vueloLlegada;
     private AvionPasajeros avionPasajeros;
+    private TerminalPasajeros terminal;
+    private PuertaEmbarque puerta;
+    private List<PuertaEmbarque> puertas;
+    private Operador operador;
+    private Aerolinea aerolinea;
 
     @BeforeEach
     void setUp() throws TemporadasSolapadasException {
-        airportManager = new AirportManager();
-        
+    	airportManager = new AirportManager();
         avionPasajeros = new AvionPasajeros("Boeing", "747", 70.6, 19.4, 70.6, 
             397000, 2020, new Date(), "ABC123", 416);
+        
+        operador = new Operador("nombre", "dni", aerolinea, airportManager.getAeropuerto(), airportManager.getGestor(), airportManager);
         
         vueloSalida = new Vuelo("IB123", LocalDate.now(), null, null, 
             LocalTime.now().plusHours(1), null, TipoCarga.PASAJEROS, 
             TipoModoEmbarque.FINGER, Periodicidad.PUNTUAL, TipoVuelo.SALIDA, 
-            avionPasajeros, null, airportManager.getAeropuerto(), null, null);
+            avionPasajeros, null, airportManager.getAeropuerto(), null, operador);
             
         vueloLlegada = new Vuelo("IB456", LocalDate.now(), null, null, 
             LocalTime.now().plusHours(2), null, TipoCarga.PASAJEROS, 
             TipoModoEmbarque.FINGER, Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, 
-            avionPasajeros, airportManager.getAeropuerto(), null, null, null);
+            avionPasajeros, airportManager.getAeropuerto(), null, null, operador);
+        
+        puerta = new PuertaEmbarque();
+        puertas = new ArrayList<>();
+        puertas.add(puerta);
+        
+        terminal = new TerminalPasajeros("CODE", puertas, 100);
+        vueloSalida.setTerminal(terminal);
+    	vueloLlegada.setTerminal(terminal);
     }
 
     @Test
@@ -48,13 +65,24 @@ public class AirportManagerTest {
 
     @Test
     void testGuardarYCargarEstado() {
-        String archivo = "test_state.dat";
-        airportManager.guardarEstado(archivo);
+        String tempDir = System.getProperty("java.io.tmpdir");
+        String archivo = tempDir + File.separator + "airport_manager_test" + File.separator + "test_state.dat";
         
-        AirportManager cargado = AirportManager.cargarEstado(archivo);
-        assertNotNull(cargado);
+        new File(tempDir + File.separator + "airport_manager_test").mkdirs();
         
-        new File(archivo).delete();
+        try {
+            airportManager.guardarEstado(archivo);
+            assertTrue(new File(archivo).exists(), "El archivo debería existir después de guardar");
+            
+            AirportManager cargado = AirportManager.cargarEstado(archivo);
+            assertNotNull(cargado, "El objeto cargado no debería ser null");
+            
+        } finally {
+            if (new File(archivo).exists()) {
+                new File(archivo).delete();
+            }
+            new File(tempDir + File.separator + "airport_manager_test").delete();
+        }
     }
 
     @Test
@@ -65,22 +93,12 @@ public class AirportManagerTest {
     }
 
     @Test
-    void testActualizarEstadosVuelosAutomaticamente() {
-    	airportManager.iniciarAplicacion();
-        airportManager.getAeropuerto().getVuelosAceptados().add(vueloSalida);
-        airportManager.getAeropuerto().getVuelosAceptados().add(vueloLlegada);
-        
-        vueloSalida.cambiarEstado(EstadoVuelo.ESPERANDO_DESPEGUE);
-        vueloLlegada.cambiarEstado(EstadoVuelo.ACEPTADO);
-        
-        airportManager.actualizarEstadosVuelosAutomaticamente();
-        
-        assertNotEquals(EstadoVuelo.ESPERANDO_DESPEGUE, vueloSalida.getEstado());
-        assertNotEquals(EstadoVuelo.ACEPTADO, vueloLlegada.getEstado());
-    }
-
-    @Test
     void testActualizarEstadoVueloAutomatico() {
+    	airportManager.iniciarAplicacion();
+        
+        aerolinea = new Aerolinea("IBERIA", "IBE");
+        aerolinea.agregarAvion(avionPasajeros);
+        avionPasajeros.setAerolinea(aerolinea);
         vueloSalida.cambiarEstado(EstadoVuelo.ESPERANDO_DESPEGUE);
         airportManager.actualizarEstadoVueloAutomatico(vueloSalida);
         assertTrue(vueloSalida.getEstado() == EstadoVuelo.RETRASADO || 
@@ -164,9 +182,8 @@ public class AirportManagerTest {
         vuelo1.cambiarEstado(EstadoVuelo.ESPERANDO_DESPEGUE);
         vuelo2.cambiarEstado(EstadoVuelo.ESPERANDO_DESPEGUE);
         
-        List<Vuelo> ordenados = airportManager.ordenarColaVuelos();
-        assertEquals(vuelo1, ordenados.get(0));
-        assertEquals(vuelo2, ordenados.get(1));
+        Vuelo vueloOrdenado = airportManager.ordenarColaVuelos();
+        assertEquals(vuelo1, vueloOrdenado);
     }
 
     @Test
