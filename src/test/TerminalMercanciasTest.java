@@ -1,0 +1,80 @@
+package src.test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.time.ZoneOffset;
+import java.util.*;
+
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import src.airportmanager.aeropuerto.AeropuertoPropio;
+import src.airportmanager.aeropuerto.DireccionRelativaCiudad;
+import src.airportmanager.terminal.*;
+import src.airportmanager.usuario.*;
+
+public class TerminalMercanciasTest {
+
+    TerminalMercancias terminal;
+    PuertaEmbarque puerta, puerta2;
+    List<PuertaEmbarque> puertas;
+    List<ControladorAereo> controladores;
+    ControladorAereo controlador;
+    AeropuertoPropio aeropuertoPropio;
+    ZoneOffset zone;
+    Gestor gestor;
+
+    @BeforeEach
+    void setUp() {
+
+        zone = ZoneOffset.ofHours((+1));
+        puerta = new PuertaEmbarque();
+        puertas = new ArrayList<>();
+        puertas.add(puerta);
+        terminal = new TerminalMercancias("T1", puertas);
+        aeropuertoPropio = new AeropuertoPropio("Barajas", "MAD", "Madrid", "España", 35.0, zone, 3, DireccionRelativaCiudad.ESTE);
+        gestor = new Gestor("Pedro", "Pedrito10", aeropuertoPropio, null);
+        controlador = new ControladorAereo("Juan", "5638746T", "juanito87", aeropuertoPropio, gestor, terminal, null);
+        aeropuertoPropio.addTerminal(terminal);
+        aeropuertoPropio.getUsuarios().add(gestor);
+        aeropuertoPropio.getUsuarios().add(controlador);
+    }
+
+    @Test 
+    void testGetCodigo() {
+        assertEquals("T1", terminal.getCodigo(), "Error el código de la terminal no es correcto");
+    }
+
+    @Test
+    void testGetPuertasEmbarque() {
+        assertTrue(terminal.getPuertasEmbarque().contains(puerta), "Error, la terminal debería contener la puerta de embarque asignada.");
+    }
+
+    @Test
+    void testAddPuertasEmbarque() {
+
+        puerta2 = new PuertaEmbarque();
+        terminal.addPuertaEmbarque(puerta2);
+        puertas = new ArrayList<>();
+        puertas.add(puerta);
+        puertas.add(puerta2);
+
+        assertTrue(terminal.getPuertasEmbarque().containsAll(puertas), "Error, la terminal debería contener ambas puertas de embarque.");
+    }
+
+    @Test
+    void testGetControladores() {
+        assertTrue(terminal.getControladores().isEmpty(), "Error: al principio la lista de controladores debería estar vacía.");
+    }
+    
+    @Test
+    void testAddControladores() {
+
+        terminal.agregarControlador(controlador);
+        controladores = new ArrayList<>();
+        controladores.add(controlador);
+        assertTrue(terminal.getControladores().contains(controlador), "Error, la terminal debería contener al controlador agregado.");
+        
+    }
+}
