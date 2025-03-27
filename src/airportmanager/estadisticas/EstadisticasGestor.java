@@ -34,7 +34,7 @@ public class EstadisticasGestor implements Serializable {
     /**
      * Constructor de la clase EstadisticasGestor.
      * 
-     * @param getsor Gestor que recibe las estadísticas.
+     * @param gestor Gestor que recibe las estadísticas.
      */
     public EstadisticasGestor(Gestor gestor) {
         this.gestor = gestor;

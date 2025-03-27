@@ -73,7 +73,7 @@ public class HangarPasajeros extends Hangar {
      * @param avion Avión a comprobar.
      * 
      * @return true si está, false si no.
-     * @throws CargaAvionEquivocadaException
+     * @throws CargaAvionEquivocadaException carga no válida.
      */
     @Override
     public boolean comprobarAvionEnHangar(Avion avion) throws CargaAvionEquivocadaException {

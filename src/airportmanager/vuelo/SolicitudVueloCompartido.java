@@ -84,7 +84,7 @@ public class SolicitudVueloCompartido implements Serializable {
 
     /**
      * Método que acepta una solicitud.
-     * @throws SolicitudInvalidaExcepcion 
+     * @throws SolicitudInvalidaExcepcion solicitud inválida.
      */
     public void aceptar() throws SolicitudInvalidaExcepcion {
     	 if (!esSolicitudValida()) {

@@ -26,8 +26,8 @@ public class Escala implements Serializable {
     /**
      * Constructor de la clase Escala.
      * 
-     * @param origen      Origen de la escala.
-     * @param destino     Destino de la escala.
+     * @param aeropuertoOrigen      Origen de la escala.
+     * @param aeropuertoDestino     Destino de la escala.
      * @param horaSalida  Hora de salida de la escala.
      * @param horaLlegada Hora de llegada de la escala.
      */

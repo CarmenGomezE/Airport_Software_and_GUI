@@ -65,6 +65,7 @@ public class VueloProgramado implements Serializable {
      * @param aeropuertoDestino Aeropuerto de destino del vueloProgramado.
      * @param aeropuertoSalida  Aeropuerto de salida del vueloProgramado.
      * @param escala            Escala del vueloProgramado.
+     * @param periodicidad      Periodicidad.
      */
     public VueloProgramado(String codigo, LocalDate fecha, LocalDate fechaInicio, LocalDate fechaFinal,
             LocalTime hora, List<DayOfWeek> diasRecurrente, TipoCarga tipoCarga, TipoModoEmbarque tipoModoEmbarque,

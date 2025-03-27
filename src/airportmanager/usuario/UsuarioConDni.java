@@ -42,8 +42,7 @@ public abstract class UsuarioConDni extends Usuario {
      * @param gestor     Gestor del usuario con dni.
      * @param sistema    Sistema.
      */
-    public UsuarioConDni(String nombre, String dni, AeropuertoPropio aeropuerto, Gestor gestor,
-            AirportManager sistema) {
+    public UsuarioConDni(String nombre, String dni, AeropuertoPropio aeropuerto, Gestor gestor, AirportManager sistema) {
         super(nombre, aeropuerto, sistema);
         this.dni = dni;
         this.gestor = gestor;
@@ -53,9 +52,11 @@ public abstract class UsuarioConDni extends Usuario {
      * Constructor con contraseña de la clase UsuarioConDni.
      * 
      * @param nombre     Nombre del usuario con dni.
-     * @param contraseña Contraseña del usuario con dni.
+     * @param contrasena Contraseña del usuario con dni.
      * @param dni        Dni del usuario con dni.
      * @param aeropuerto Aeropuerto en el que trabaja el usuario con dni.
+     *  @param gestor     Gestor del usuario con dni.
+     * @param sistema    Sistema.
      */
     public UsuarioConDni(String nombre, String contrasena, String dni, AeropuertoPropio aeropuerto, Gestor gestor, AirportManager sistema) {
         super(nombre, contrasena, aeropuerto, sistema);
@@ -86,18 +87,18 @@ public abstract class UsuarioConDni extends Usuario {
      * 
      * @param vuelo  Vuelo al que se le cambia el estado.
      * @param estado Nuevo estado del vuelo.
-     * @throws VueloNoDelUsuarioException
-     * @throws EstadoNoDelUsuarioException
-     * @throws EstadoEquivocadoException
-     * @throws NoModosEmbarqueDisponiblesException
-     * @throws NoPistasDisponiblesException
-     * @throws NoHangaresDisponiblesException
-     * @throws NoModosPuertasEmbarqueDisponiblesException
-     * @throws NoFingerMercanciasException
-     * @throws VueloEnMenosDe1HoraException
-     * @throws NoVueloEnMenosDe1HoraException
-     * @throws IllegalArgumentException
-     * @throws CargaAvionEquivocadaException 
+     * @throws VueloNoDelUsuarioException vuelo no del usuario.
+     * @throws EstadoNoDelUsuarioException estado no del usuario.
+     * @throws EstadoEquivocadoException estado equivocado.
+     * @throws NoModosEmbarqueDisponiblesException no modos de embarque disponibles.
+     * @throws NoPistasDisponiblesException no pistas disponibles.
+     * @throws NoHangaresDisponiblesException no hangares disponibles.
+     * @throws NoModosPuertasEmbarqueDisponiblesException no puertas con modos de embarque disponibles.
+     * @throws NoFingerMercanciasException no finger a los de mercancias.
+     * @throws VueloEnMenosDe1HoraException vuelo en menos de 1 hora.
+     * @throws NoVueloEnMenosDe1HoraException no vuelo en menos de 1 hora.
+     * @throws IllegalArgumentException argumento no válido.
+     * @throws CargaAvionEquivocadaException carga no válida.
      */
     public abstract void cambiarEstadoVuelo(Vuelo vuelo, EstadoVuelo estado)
             throws VueloNoDelUsuarioException, EstadoNoDelUsuarioException, EstadoEquivocadoException,
@@ -121,7 +122,7 @@ public abstract class UsuarioConDni extends Usuario {
      * Método para iniciar sesión.
      * 
      * @param dni         Dni del usuario con dni.
-     * @param constrasena Contraseña del usuario con dni.
+     * @param contrasena  Contraseña del usuario con dni.
      * @throws ContrasenaInvalidaException  Si el usuario existe, pero la contraseña
      *                                      es incorrecta.
      * @throws UsuarioNoEncontradoException Si el usuario no existe.
@@ -134,8 +135,6 @@ public abstract class UsuarioConDni extends Usuario {
     /**
      * Método para iniciar sesión.
      * 
-     * @param dni         Dni del usuario con dni.
-     * @param constrasena Contraseña del usuario con dni.
      * @throws ContrasenaInvalidaException  Si el usuario existe, pero la contraseña
      *                                      es incorrecta.
      * @throws UsuarioNoEncontradoException Si el usuario no existe.

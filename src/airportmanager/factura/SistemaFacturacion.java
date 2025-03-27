@@ -8,6 +8,11 @@ import src.airportmanager.avion.Aerolinea;
 import src.airportmanager.usuario.Operador;
 import src.airportmanager.vuelo.*;
 
+/**
+ * Clase que implementa el sistema de facturación.
+ * 
+ * @author Cramen Gómez, María Pozo, Claudia Municio
+ */
 public class SistemaFacturacion implements Serializable {
 
 	/** Número de versión de la clase */

@@ -17,11 +17,8 @@ public class Finger extends ModoEmbarque {
     /**
      * Constructor de la clase Finger
      * 
-     * @param id              Código del finger.
      * @param costePorHora    Coste por hora del finger.
      * @param dimAlto         Dimensión de alto del finger.
-     * @param puertasEmbarque Puertas de embarque a las que está conectado el
-     *                        finger.
      */
     public Finger( double costePorHora, double dimAlto) {
         super( costePorHora);

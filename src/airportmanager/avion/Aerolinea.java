@@ -35,7 +35,6 @@ public class Aerolinea implements Serializable {
      * 
      * @param nombre   Nombre de la aerolinea.
      * @param codigo   Código de la aerolinea.
-     * @param operador Operador de la aerolinea.
      */
     public Aerolinea(String nombre, String codigo) {
         this.nombre = nombre;
@@ -135,7 +134,7 @@ public class Aerolinea implements Serializable {
     /**
      * Método que devuelve el nombre de la aerolinea.
      * 
-     * @return Nombre de la aerolinea.
+     * @param avion 	Avion
      */
     public void agregarAvion(Avion avion) {
         avion.setAerolinea(this);

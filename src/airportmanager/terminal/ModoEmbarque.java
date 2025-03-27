@@ -30,7 +30,6 @@ public abstract class ModoEmbarque implements Serializable {
     /**
      * Constructor de la clase ModoEmbarque
      * 
-     * @param id       Código del modo de embarque.
      * @param costePorHora Coste por hora del modo de embarque.
      */
     public ModoEmbarque(double costePorHora) {

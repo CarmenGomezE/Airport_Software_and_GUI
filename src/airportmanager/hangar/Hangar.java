@@ -155,6 +155,7 @@ public abstract class Hangar implements Serializable {
     /**
      * Método que comprueba si hay espacio en el hangar.
      * 
+     * @return True si hay, false si no.
      */
     public abstract boolean hayEspacioEnHangar();
 
@@ -162,7 +163,7 @@ public abstract class Hangar implements Serializable {
      * Método para añadir un avion al hangar.
      * 
      * @param avion Avion que se añade al hangar.
-     * @throws CargaAvionEquivocadaException 
+     * @throws CargaAvionEquivocadaException carga no válida. 
      */
     public abstract void addAvion(Avion avion) throws CargaAvionEquivocadaException;
 
@@ -172,7 +173,7 @@ public abstract class Hangar implements Serializable {
      * @param avion Avión a comprobar.
      * 
      * @return true si está, false si no.
-     * @throws CargaAvionEquivocadaException 
+     * @throws CargaAvionEquivocadaException carga no válida. 
      */
     public abstract boolean comprobarAvionEnHangar(Avion avion) throws CargaAvionEquivocadaException;
 
@@ -180,7 +181,7 @@ public abstract class Hangar implements Serializable {
      * Método para sacar un avión del hangar.
      * 
      * @param avion Avión que sale del hangar.
-     * @throws CargaAvionEquivocadaException 
+     * @throws CargaAvionEquivocadaException  carga no válida. 
      */
     public abstract void sacarAvion(Avion avion) throws CargaAvionEquivocadaException;
 }

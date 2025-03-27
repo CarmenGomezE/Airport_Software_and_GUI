@@ -26,13 +26,22 @@ public class AirportManager implements Serializable {
 
 	/** Número de versión de la clase */
 	private static final long serialVersionUID = 1L;
+	/** Lista de usuarios */
 	private List<Usuario> usuarios;
+	/** Gestor */
     private Gestor gestor;
+    /** Credenciales de los usuarios*/
     private Map<String, String> credenciales;
+    /** Aeropuerto*/
     private AeropuertoPropio aeropuerto;
+    /** Caracteres para generar contraseñas */
     private static final String CARACTERES = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{}|;:,.<>?/";
+    /** Para generar contraseñas */
     private static SecureRandom random = new SecureRandom();
 
+    /**
+     * Constructor de AirportManager.
+     */
     public AirportManager() {
     	this.usuarios = new ArrayList<>();
         this.aeropuerto = null;
@@ -40,6 +49,9 @@ public class AirportManager implements Serializable {
         this.credenciales = new HashMap<>();
     }
     
+    /**
+     * Método que inicia la aplicación.
+     */
     public void iniciarAplicacion() {
     	if (aeropuerto == null) {
             System.out.println("Configurando nuevo sistema.");
@@ -71,6 +83,11 @@ public class AirportManager implements Serializable {
         }
     }
     
+    /**
+     * Método que guarda el estado al archivo
+     * 
+     * @param archivo	Archivo.
+     */
     public void guardarEstado(String archivo) {
         try {
             File file = new File(archivo);
@@ -88,6 +105,12 @@ public class AirportManager implements Serializable {
         }
     }
 
+    /**
+     * Método que carga el estado al archivo
+     * 
+     * @param archivo Archivo.
+     * @return la aplicación.
+     */
     public static AirportManager cargarEstado(String archivo) {
     	if (archivo == null || !new File(archivo).exists()) {
             System.out.println("El archivo no existe o es null. Creando un nuevo archivo...");
@@ -106,6 +129,11 @@ public class AirportManager implements Serializable {
         }
     }
 
+    /**
+     * Método que genera contraseñas.
+     * 
+     * @return contraseña nueva.
+     */
     public String generarContrasena( ) {
         StringBuilder contrasena = new StringBuilder(12);
         
@@ -173,6 +201,10 @@ public class AirportManager implements Serializable {
 		}	
 	}
 	
+	/**
+     * Método que actualiza los estados automáticos cada 5 min.
+     * @param v Vuelo al que actualizar sus estados.
+     */
 	public void iniciarActualizacionCada5Min(Vuelo v) {
         Timer timer = new Timer();
 
@@ -194,6 +226,8 @@ public class AirportManager implements Serializable {
      * Método que asigna una contraseña a un usuario a partir de su dni.
      * @param dni                           Dni del usuario.
      * @param contrasena                    Contraseña del usuario.
+     * @throws UsuarioNoEncontradoException no existe usuario.
+     * @throws ContrasenaInvalidaException contraseña inválida
      * 
      */
     public void asignarContrasena(String dni, String contrasena)
@@ -209,16 +243,15 @@ public class AirportManager implements Serializable {
      * @return true si el dni está registrado en el sistema o false si no.
      */
     public boolean validarDni(String dni) {
-
         return credenciales.containsKey(dni);
-
     }
 
     /**
      * Método que valida la contraseña de un usuario.
      * @param dni                           Dni del usuario.
-     * @param contraseña                    Contraseña del usuario.
+     * @param contrasena                    Contraseña del usuario.
      * @return true si la contraseña está registrada en el sistema o false si no.
+     * @throws UsuarioNoEncontradoException no existe usuario.
      */
     public boolean validarContrasena(String dni, String contrasena) throws UsuarioNoEncontradoException {
         return credenciales.get(dni).equals(contrasena);
@@ -263,7 +296,7 @@ public class AirportManager implements Serializable {
     
      /**
      * Método que ordena la cola de vuelos que están esperando despegue.
-     * @return la cola de vuelos ordenada.
+     * @return el vuelo que sale de la cola.
      */
     public Vuelo ordenarColaVuelos() {
 
@@ -298,10 +331,10 @@ public class AirportManager implements Serializable {
         return null;
     }
     
-      /**
+    /**
      * Método que compara dos vuelos según su prioridad.
-     * @param v1                            Primer vuelo
-     * @param v2                            Segundo vuelo
+     * @param v1     Primer vuelo
+     * @param v2     Segundo vuelo
      * @return un número positivo si el segundo vuelo tiene más prioridad o un número negativo si el primer vuelo tiene más prioridad.
      */
     public double compararVuelos(Vuelo v1, Vuelo v2) {
@@ -339,18 +372,32 @@ public class AirportManager implements Serializable {
         return pasajeros2 - pasajeros1;
     }
 
+    /**
+    * Método devuelve el aeropuerto.
+    * @return Aeropuerto.
+    */
 	public AeropuertoPropio getAeropuerto() {
 		return this.aeropuerto;
 	}
 	
+	/**
+    * Método devuelve el gestor.
+    * @return Getsor.
+    */
 	public Gestor getGestor() {
 		return this.gestor;
 	}
-
+	/**
+    * Método devuelve los usuarios.
+    * @return Lista usuarios.
+    */
 	public List<Usuario> getUsuarios() {
 		return usuarios;
 	}
-	
+	/**
+    * Método devuelve los credenciales.
+    * @return Mapa credenciales.
+    */
 	public Map<String, String> getCredenciales() {
 		return credenciales;
 	}

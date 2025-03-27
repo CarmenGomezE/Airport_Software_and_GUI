@@ -145,7 +145,7 @@ public abstract class Aeropuerto implements Serializable {
     /**
      * Método para modificar la distancia a la ciudad más cercana de un aeropuerto.
      * 
-     * @param distancia La distancia a la ciudad más cercana del aeropuerto.
+     * @param distanciaCiudad La distancia a la ciudad más cercana del aeropuerto.
      */
     public void setDistanciaCiudad(double distanciaCiudad) {
         this.distanciaCiudad = distanciaCiudad;
@@ -200,7 +200,7 @@ public abstract class Aeropuerto implements Serializable {
     /**
      * Método para modificar la dirección relativa a la ciudad más cercana de un aeropuerto.
      * 
-     * @param pais La dirección relativa a la ciudad más cercana del aeropuerto.
+     * @param direccionCiudad La dirección relativa a la ciudad más cercana del aeropuerto.
      */
     public void setDireccionCiudad(DireccionRelativaCiudad direccionCiudad) {
         this.direccionCiudad = direccionCiudad;
@@ -228,7 +228,7 @@ public abstract class Aeropuerto implements Serializable {
      * Método para añadir una temporada al aeropuerto.
      * 
      * @param nuevaTemporada Nueva temporada del aeropuerto.
-     * @throws TemporadasSolapadasException
+     * @throws TemporadasSolapadasException temporadas se solapan.
      */
     public void agregarTemporada(Temporada nuevaTemporada) throws TemporadasSolapadasException {
     	if (nuevaTemporada == null) {

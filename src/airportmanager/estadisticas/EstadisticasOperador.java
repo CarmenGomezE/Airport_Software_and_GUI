@@ -190,6 +190,7 @@ public class EstadisticasOperador implements Serializable {
 
     /**
      * Método que imprime el tiempo medio para un mes.
+     * @param mes Mes
      * 
      */
     public void imprimirTiempoMedioRetraso(Month mes) {
@@ -198,6 +199,7 @@ public class EstadisticasOperador implements Serializable {
 
     /**
      * Método que imprime el tiempo medio para una franja horaria.
+     * @param franjaHoraria	Franja horaria.
      * 
      */
     public void imprimirTiempoMedioRetraso(ZoneId franjaHoraria) {
@@ -207,6 +209,7 @@ public class EstadisticasOperador implements Serializable {
     /**
      * Método que imprime el tiempo medio para un vuelo.
      * 
+     * @param vuelo Vuelo.
      */
     public void imprimirTiempoMedioRetraso(Vuelo vuelo) {
         System.out.println("Tiempo medio de retraso:" + getTiempoMedioRetrasoPorVuelo(vuelo) + " minutos.");

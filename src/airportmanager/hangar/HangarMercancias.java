@@ -73,7 +73,7 @@ public class HangarMercancias extends Hangar {
      * @param avion Avión a comprobar.
      * 
      * @return true si está, false si no.
-     * @throws CargaAvionEquivocadaException 
+     * @throws CargaAvionEquivocadaException carga inválida
      */
     @Override
     public boolean comprobarAvionEnHangar(Avion avion) throws CargaAvionEquivocadaException {
@@ -105,6 +105,7 @@ public class HangarMercancias extends Hangar {
      * hangar.
      * 
      * @param vuelo Vuelo que tiene el avión que entra a hangar.
+     * @return True si es, false si no.
      */
     public boolean comprobarMercaPeligrosa(Vuelo vuelo) {
         if (vuelo.getAvion() instanceof AvionMercancias) {

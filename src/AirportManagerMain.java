@@ -21,7 +21,7 @@ import java.time.format.DateTimeFormatter;
 /**
  * Clase que implementa un demostrador básico de la aplicación.
  * 
- * @autor Carmen Gómez, Claudia Municio, María Pozo.
+ * @author Carmen Gómez, Claudia Municio, María Pozo.
  */
 public class AirportManagerMain {
 	
@@ -29,25 +29,32 @@ public class AirportManagerMain {
     private static final String ARCHIVO_ESTADO = "resources/estado_airport_manager.dat";
     private static final String ARCHIVO_AEDESTINO = "resources/aeropuerto_destino.txt";
     private static AirportManager airportManager;
+    
+    /**
+     * Constructor
+     */
+    private AirportManagerMain() {
+    	/** Constructor vacío*/
+    }
     /**
      * Método principal
      * 
      * @param args		Argumentos recibidos.
-     * @throws ContrasenaInvalidaException 
-     * @throws UsuarioNoEncontradoException 
-     * @throws OperacionInvalidaException 
-     * @throws SolicitudInvalidaExcepcion 
-     * @throws CargaAvionEquivocadaException 
-     * @throws NoHangaresDisponiblesException 
-     * @throws NoModosPuertasEmbarqueDisponiblesException 
-     * @throws NoFingerMercanciasException 
-     * @throws VueloEnMenosDe1HoraException 
-     * @throws NoVueloEnMenosDe1HoraException 
-     * @throws NoPistasDisponiblesException 
-     * @throws EstadoEquivocadoException 
-     * @throws EstadoNoDelUsuarioException 
-     * @throws VueloNoDelUsuarioException 
-     * @throws IllegalArgumentException 
+     * @throws ContrasenaInvalidaException  contraseña inválida.
+     * @throws UsuarioNoEncontradoException usuario no encontrado.
+     * @throws OperacionInvalidaException operación inválida.
+     * @throws SolicitudInvalidaExcepcion  solicitud inválida.
+     * @throws CargaAvionEquivocadaException carga no válida.
+     * @throws NoHangaresDisponiblesException  no hnagar disponibles.
+     * @throws NoModosPuertasEmbarqueDisponiblesException  no puerta con modo disponible.
+     * @throws NoFingerMercanciasException finger mercancias no.
+     * @throws VueloEnMenosDe1HoraException  vuelo menos de 1 hora.
+     * @throws NoVueloEnMenosDe1HoraException no vuelo menos de 1 hora.
+     * @throws NoPistasDisponiblesException no pistas disponibles.
+     * @throws EstadoEquivocadoException estado equivocado.
+     * @throws EstadoNoDelUsuarioException  estado no del usuario.
+     * @throws VueloNoDelUsuarioException  vuelo no del usuario.
+     * @throws IllegalArgumentException argumento inválido.
      */
     public static void main(String[] args) throws UsuarioNoEncontradoException, ContrasenaInvalidaException, SolicitudInvalidaExcepcion, OperacionInvalidaException, IllegalArgumentException, VueloNoDelUsuarioException, EstadoNoDelUsuarioException, EstadoEquivocadoException, NoPistasDisponiblesException, NoVueloEnMenosDe1HoraException, VueloEnMenosDe1HoraException, NoFingerMercanciasException, NoModosPuertasEmbarqueDisponiblesException, NoHangaresDisponiblesException, CargaAvionEquivocadaException {
     	/** Inicialización del estado*/
@@ -120,7 +127,11 @@ public class AirportManagerMain {
         System.out.println("\n*********************************************************************************************************************");
         System.out.println("\nFinalizando simulación...");
     }
-
+    
+    /**
+     * Método que vacia el archivo.
+     * @param archivo	Archivo.
+     */
 	public static void vaciarArchivo(String archivo) {
         try {
             File file = new File(archivo);
@@ -137,6 +148,10 @@ public class AirportManagerMain {
             e.printStackTrace();
         }
     }
+	
+	/**
+     * Método que prueba dar de alta.
+     */
     public static void darDeAlta() {
     	System.out.println("\nIniciando el proceso de alta de aerolíneas y operadores.");
     	/** Aerolinea y operador*/
@@ -290,6 +305,9 @@ public class AirportManagerMain {
     	System.out.println("Proceso de alta de aeropuertos de destino completado.");
     }
     
+    /**
+     * Método que prueba programar vuelos.
+     */
     private static void programarVuelos() {
     	Operador operadorIberia=(Operador)airportManager.getGestor().buscarUsuarioPorDni("12345678A");
     	Operador operadorAirFrance=(Operador)airportManager.getGestor().buscarUsuarioPorDni("87654321B");
@@ -483,6 +501,9 @@ public class AirportManagerMain {
     	System.out.println("Proceso de propuesta de vuelos finalizado.");
 	}
 
+    /**
+     * Método que prueba compartir vuelos.
+     */
 	private static void compartirVuelosProgramados() {
 		Operador operadorIberia=(Operador)airportManager.getGestor().buscarUsuarioPorDni("12345678A");
     	Operador operadorAirFrance=(Operador)airportManager.getGestor().buscarUsuarioPorDni("87654321B");
@@ -564,7 +585,9 @@ public class AirportManagerMain {
     	System.out.println("Proceso de compartir vuelos finalizado.");
 	}
 	
-
+	/**
+     * Método que prueba la emisión de facturas.
+     */
 	private static void emisionYpagoFacturas() {
 		Gestor gestorBarajas=airportManager.getGestor();
 		Aerolinea Ryanair=airportManager.getAeropuerto().getAerolineas().get(2);
@@ -593,6 +616,9 @@ public class AirportManagerMain {
 		System.out.println("Proceso de creación de facturas finalizado.");
 	}
 
+	/**
+     * Método que configura datos del aeropuerto.
+     */
 	private static void configurarDatosAeropuertoPropio() {
 		System.out.println("\nIniciando configuración del aeropuerto: "+airportManager.getAeropuerto().getNombre());
 
@@ -637,6 +663,9 @@ public class AirportManagerMain {
 		System.out.println("Procedimiento de configuración del aeropuerto finalizado.");
 	}
 	
+	/**
+     * Método que reestablece la configuración del aeropuerto.
+     */
 	private static void resetearDatosAeropuertoPropio() {
 		airportManager.getGestor().configurarAeropuertoPropioNombre("Aeropuerto Adolfo Suarez Madrid-Barajas");
         airportManager.getGestor().configurarAeropuertoPropioCodigo("MAD");
@@ -648,6 +677,9 @@ public class AirportManagerMain {
         airportManager.getGestor().configurarAeropuertoPropioDireccionCiudad( DireccionRelativaCiudad.ESTE);
 	}
 
+	/**
+     * Método que genera la lista de vuelos del día.
+     */
 	private static void generarListaVuelosDia() throws SolicitudInvalidaExcepcion, OperacionInvalidaException {
 		Operador operadorRyanair=(Operador)airportManager.getGestor().buscarUsuarioPorDni("50738890L");
 		Operador operadorIberia= airportManager.getAeropuerto().getAerolineas().get(0).getOperador();
@@ -685,6 +717,9 @@ public class AirportManagerMain {
     	}
 	}
 
+	/**
+     * Método que cambia de estados.
+     */
 	private static void cambiarEstadoVuelo() throws VueloNoDelUsuarioException, EstadoNoDelUsuarioException, IllegalArgumentException, EstadoEquivocadoException, NoPistasDisponiblesException, NoVueloEnMenosDe1HoraException, VueloEnMenosDe1HoraException, NoFingerMercanciasException, NoModosPuertasEmbarqueDisponiblesException, NoHangaresDisponiblesException, CargaAvionEquivocadaException {
 		Operador operadorRyanair=(Operador)airportManager.getGestor().buscarUsuarioPorDni("50738890L");
 		Terminal terminalT1= airportManager.getAeropuerto().getTerminales().get(0);
@@ -749,6 +784,9 @@ public class AirportManagerMain {
 		System.out.println("\nProcedimiento de cambio de estados de vuelos finalizado.");
 	}
 
+	/**
+     * Método que recibe notificaciones.
+     */
 	private static void recibirNotificaciones() {
 		Operador operadorAirFrance=(Operador)airportManager.getGestor().buscarUsuarioPorDni("87654321B");
     	ControladorAereo controladorT2=(ControladorAereo)airportManager.getGestor().buscarUsuarioPorDni("123126789K");
@@ -814,12 +852,18 @@ public class AirportManagerMain {
     	System.out.println("\nProceso de recepción de notificaciones finalizado.");
 	}
 
+	/**
+     * Método que ve la lista de vuelos del dia.
+     */
 	private static void verListaVuelosDia() {
 		System.out.println("\nIniciando ver la lista de vuelos del día.");
 		airportManager.getGestor().verListaVuelos();
 		System.out.println("\nProceso de visualización de la lista dle vuelos del día finalizado.");
 	}
 
+	/**
+     * Método que busca vuelos por criterios
+     */
 	private static void buscarVuelos() {
 		Operador operadorAirFrance=(Operador)airportManager.getGestor().buscarUsuarioPorDni("87654321B");
     	ControladorAereo controladorT2=(ControladorAereo)airportManager.getGestor().buscarUsuarioPorDni("123126789K");
@@ -854,6 +898,9 @@ public class AirportManagerMain {
 
 	}
 
+	/**
+     * Método que ve estadísticas.
+     */
 	private static void verEstadisticas() {
 		Operador operadorIberia=(Operador)airportManager.getGestor().buscarUsuarioPorDni("12345678A");
     	Gestor gestorBarajas= airportManager.getGestor();
@@ -876,6 +923,9 @@ public class AirportManagerMain {
     	 System.out.println("Procesos de visualización de estadísticas finalizados.");
 	}
 
+	/**
+     * Método que cierra sesión.
+     */
 	private static void cierreSesion() {
 		Operador operadorIberia=(Operador)airportManager.getGestor().buscarUsuarioPorDni("12345678A");
     	ControladorAereo controladorT1=(ControladorAereo)airportManager.getGestor().buscarUsuarioPorDni("123356789C");
@@ -894,6 +944,9 @@ public class AirportManagerMain {
 		
 	}
 
+	/**
+     * Método que inicia sesión.
+     */
 	private static void inicioSesion() throws UsuarioNoEncontradoException, ContrasenaInvalidaException {
 		Operador operadorIberia=(Operador)airportManager.getGestor().buscarUsuarioPorDni("12345678A");
     	ControladorAereo controladorT1=(ControladorAereo)airportManager.getGestor().buscarUsuarioPorDni("123356789C");

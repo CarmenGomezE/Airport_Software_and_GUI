@@ -12,6 +12,7 @@ public class HistorialEstadoVuelo implements Serializable {
 
 	/** Número de versión de la clase */
 	private static final long serialVersionUID = 1L;
+	/** Historial de vuelo */
     private Map<LocalTime, EstadoVuelo> historial;
 
     /**

@@ -102,9 +102,9 @@ public class Operador extends UsuarioConDni {
      * 
      * @param vuelo  Vuelo al que se le cambia el estado.
      * @param estado Nuevo estado del vuelo.
-     * @throws VueloNoDelUsuarioException
-     * @throws EstadoNoDelUsuarioException
-     * @throws EstadoEquivocadoException 
+     * @throws VueloNoDelUsuarioException no es del usuario.
+     * @throws EstadoNoDelUsuarioException estado que el usuario no puede cambiar.
+     * @throws EstadoEquivocadoException  estado no correcto al que cambiar.
      */
     @Override
     public void cambiarEstadoVuelo(Vuelo vuelo, EstadoVuelo estado)
@@ -142,7 +142,7 @@ public class Operador extends UsuarioConDni {
      * Método para cambiar el estado de un vuelo a en preparación para despegar.
      * 
      * @param vuelo Vuelo al que se le cambia el estado.
-     * @throws EstadoEquivocadoException 
+     * @throws EstadoEquivocadoException estado no correcto al que cambiar.
      */
     private void cambiarEstadoEnPreparacionDespegar(Vuelo vuelo) throws EstadoEquivocadoException {
         if (vuelo.getEstado() != EstadoVuelo.OPERATIVO && vuelo.getEstado() != EstadoVuelo.A_TIEMPO && vuelo.getEstado() != EstadoVuelo.RETRASADO 
@@ -168,7 +168,7 @@ public class Operador extends UsuarioConDni {
      * Método para cambiar el estado de un vuelo a inicio de embarque.
      * 
      * @param vuelo Vuelo al que se le cambia el estado.
-     * @throws EstadoEquivocadoException 
+     * @throws EstadoEquivocadoException estado no correcto al que cambiar.
      */
     private void cambiarEstadoInicioEmbarque(Vuelo vuelo) throws EstadoEquivocadoException {
         LocalTime horaActual = LocalTime.now();
@@ -214,7 +214,7 @@ public class Operador extends UsuarioConDni {
      * Método para cambiar el estado de un vuelo a fin de embarque.
      * 
      * @param vuelo Vuelo al que se le cambia el estado.
-     * @throws EstadoEquivocadoException 
+     * @throws EstadoEquivocadoException estado no correcto al que cambiar.
      */
     private void cambiarEstadoFinEmbarque(Vuelo vuelo) throws EstadoEquivocadoException {
         if (vuelo.getEstado() != EstadoVuelo.INICIO_DEL_EMBARQUE && vuelo.getEstado() != EstadoVuelo.A_TIEMPO && vuelo.getEstado() != EstadoVuelo.RETRASADO) {
@@ -238,7 +238,7 @@ public class Operador extends UsuarioConDni {
      * Método para cambiar el estado de un vuelo a inicio de desembarque.
      * 
      * @param vuelo Vuelo al que se le cambia el estado.
-     * @throws EstadoEquivocadoException 
+     * @throws EstadoEquivocadoException estado no correcto al que cambiar.
      */
     private void cambiarEstadoInicioDesembarque(Vuelo vuelo) throws EstadoEquivocadoException {
         if (vuelo.getEstado() != EstadoVuelo.ATERRIZAJE && vuelo.getEstado() != EstadoVuelo.A_TIEMPO && vuelo.getEstado() != EstadoVuelo.RETRASADO) {
@@ -262,7 +262,7 @@ public class Operador extends UsuarioConDni {
      * Método para cambiar el estado de un vuelo a fin de desembarque.
      * 
      * @param vuelo Vuelo al que se le cambia el estado.
-     * @throws EstadoEquivocadoException 
+     * @throws EstadoEquivocadoException estado no correcto al que cambiar.
      */
     private void cambiarEstadoFinDesembarque(Vuelo vuelo) throws EstadoEquivocadoException {
         if (vuelo.getEstado() != EstadoVuelo.INICIO_DEL_DESEMBARQUE && vuelo.getEstado() != EstadoVuelo.A_TIEMPO && vuelo.getEstado() != EstadoVuelo.RETRASADO) {
@@ -339,6 +339,28 @@ public class Operador extends UsuarioConDni {
     }
    
   
+    /**
+     * Método para dar de alta aviones en la aerolinea.
+     * 
+     * @param codigo           Código del vuelo.
+     * @param fecha            Fecha del vuelo.
+     * @param fechaInicio      Fecha de inicio del vuelo.
+     * @param fechaFinal       Fecha de fin del vuelo.
+     * @param hora             Hora del vuelo.
+     * @param diasRecurrente   Días en los que es recurrente el vuelo.
+     * @param tipoCarga        Tipo de carga del vuelo.
+     * @param tipoModoEmbarque Modo de embarque del vuelo.
+     * @param periodicidad     Periodicidad del vuelo.
+     * @param tipoVuelo        Tipo de vuelo.
+     * @param avion            Avion del vuelo.
+     * @param aeropuertoDestino        Aeropuerto de destino.
+     * @param aeropuertoSalida 			Aeropuerto de origen.
+     * @param escala     				Escala en el aeropuerto.
+     * @throws AvionNoDisponibleException avión no disponible.
+     * @throws AvionNoValidoException avión no no de la aerolinea.
+     * @throws EscalaInvalidaException escala no válida.
+     * @throws AntelacionInvalidaException antelación inferior a la permitida.
+     */
     public void proponerVuelo(String codigo, LocalDate fecha, LocalDate fechaInicio, LocalDate fechaFinal,
             LocalTime hora, List<DayOfWeek> diasRecurrente, TipoCarga tipoCarga, TipoModoEmbarque tipoModoEmbarque,
             Periodicidad periodicidad, TipoVuelo tipoVuelo, Avion avion, Aeropuerto aeropuertoDestino,
@@ -421,12 +443,20 @@ public class Operador extends UsuarioConDni {
         System.out.println("Vuelo propuesto exitosamente.");
     }
     
+    /**
+     * Método para recibir alternativas.
+     * 
+     * @param alternativas Alternativas al vuelo.
+     */
     public void recibirAlternativas(List<Vuelo> alternativas) {
     	recibirNotificacion(new Notificacion("Nueva alternativa recibida", TipoNotificacion.OPCIONES_REPROGRAMAR_VUELO));
     	iniciarTemporizador();
     	this.vuelosAlternativas=alternativas;
     }
   
+    /**
+     * Método dpara iniciar el temporizador.
+     */
     private void iniciarTemporizador() {
         timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -439,6 +469,11 @@ public class Operador extends UsuarioConDni {
         }, Gestor.getTiempoAceptarPropuesta() * 1000);
     }
     
+    /**
+     * Método para aceptar vuelos.
+     * 
+     * @param alternativa La que se acepta
+     */
     public void aceptarVuelo(Vuelo alternativa) {
         if (!decisionTomada) {
         	this.getGestor().aceptarVuelo(alternativa, alternativa.getTerminal(), alternativa.getControlador());
@@ -448,6 +483,9 @@ public class Operador extends UsuarioConDni {
         }
     }
 
+    /**
+     * Método para rechazar vuelos.
+     */
     public void rechazarVuelo() {
 		if (!decisionTomada) {
             decisionTomada = true;
@@ -457,6 +495,11 @@ public class Operador extends UsuarioConDni {
         }
     }
 
+    /**
+     * Método devuelve el gestor del Operador.
+     * 
+     * @return Gestor del Operador.
+     */
     public Gestor getGestor() {
         return gestor;
     }
@@ -500,7 +543,8 @@ public class Operador extends UsuarioConDni {
      * @param vuelo            Vuelo que se solicita compartir.
      * @param operadorReceptor Aerolinea que ha realizado la solicitud.
      * @param porcentajeCarga       Aerolinea que ha recibido la solicitud.
-     * @throws OperacionInvalidaException
+     * @throws OperacionInvalidaException operacion inválida
+     * @throws SolicitudInvalidaExcepcion solicitud inválida
      */
     public void solicitarCompartirVuelo(Vuelo vuelo, Operador operadorReceptor, double porcentajeCarga)
             throws SolicitudInvalidaExcepcion, OperacionInvalidaException {
@@ -605,10 +649,20 @@ public class Operador extends UsuarioConDni {
         recibirNotificacion(new Notificacion("Solicitud para compartir el vuelo con código " + vuelo.getCodigo() + ".", TipoNotificacion.SOLICITUD_COMPARTIR_VUELO));
     }
     
+    /**
+     * Método para establecer su contraseña.
+     * 
+     * @return Contraseña
+     */
     private String establecerContrasena() {
     	return sistema.generarContrasena();
     }
 
+    /**
+     * Método que devuelve las alternativas del Operador.
+     * 
+     * @return Lista de alternativas.
+     */
 	public List<Vuelo> getAlternativas() {
 		if(this.vuelosAlternativas.isEmpty()) {
 			System.out.println("No hay aternativas propuestas.");
@@ -617,6 +671,11 @@ public class Operador extends UsuarioConDni {
 		
 	}
 
+	/**
+     * Método que devuelve las solicitudes de vuelo recibidas del Operador.
+     * 
+     * @return Lista de solicitudes de vuelo recibidas.
+     */
 	public List<SolicitudVueloCompartido> getSolicitudesRecibidas() {
 		return this.solicitudesRecibidas;
 	}
@@ -638,7 +697,11 @@ public class Operador extends UsuarioConDni {
 		decisionTomada = nuevaDecision;
 	}
 	
-	
+	/**
+     * Método para recibir notificaciones.
+     * 
+     * @param notificacion 	Notificacion que se recibe.
+     */
 	@Override
     public void recibirNotificacion(Notificacion notificacion) {
     	

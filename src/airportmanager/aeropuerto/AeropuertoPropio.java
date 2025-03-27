@@ -289,7 +289,11 @@ public class AeropuertoPropio extends Aeropuerto {
     public double calcularHorasEntre(LocalTime hora1, LocalTime hora2) {
         return (double) (hora2.toSecondOfDay() - hora1.toSecondOfDay()) / 3600;
     }
-
+    
+    /**
+     * Método que devuelve los fingers.
+     * @return Lista de finger.
+     */
 	public List<Finger> getFingers() {
 		List<Finger> fingers= new ArrayList<>();
 		for(Terminal terminal:getTerminales()) {

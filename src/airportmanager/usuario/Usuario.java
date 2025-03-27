@@ -54,7 +54,7 @@ public abstract class Usuario implements Serializable {
      * Constructor con contraseña de la clase Usuario.
      * 
      * @param nombre     Nombre del usuario.
-     * @param contraseña Contraseña del usuario.
+     * @param contrasena Contraseña del usuario.
      * @param aeropuerto Aeropuerto en el que trabaja el usuario.
      * @param sistema    Sistema.
      */

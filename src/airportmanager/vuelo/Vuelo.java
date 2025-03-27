@@ -44,6 +44,8 @@ public class Vuelo extends VueloProgramado {
      * 
      * @param codigo           Código del vuelo.
      * @param fecha            Fecha del vuelo.
+     * @param fechaInicio      Fecha inicio del vuelo.
+     * @param fechaFinal       Fecha final del vuelo.
      * @param hora             Hora del vuelo.
      * @param diasRecurrente   Días en los que es recurrente el vuelo.
      * @param tipoCarga        Tipo de carga del vuelo.
@@ -51,7 +53,10 @@ public class Vuelo extends VueloProgramado {
      * @param periodicidad     Periodicidad del vuelo.
      * @param tipoVuelo        Tipo de vuelo.
      * @param avion            Avion del vuelo.
-     * @param estado           Estado del vuelo.
+     * @param aeropuertoDestino        Aeropuerto de destino.
+     * @param aeropuertoSalida 			Aeropuerto de origen.
+     * @param escala     				Escala en el aeropuerto.
+     * @param operadorPrincipal        Operador principal.
      */
     public Vuelo(String codigo, LocalDate fecha, LocalDate fechaInicio, LocalDate fechaFinal, LocalTime hora,
             List<DayOfWeek> diasRecurrente, TipoCarga tipoCarga,

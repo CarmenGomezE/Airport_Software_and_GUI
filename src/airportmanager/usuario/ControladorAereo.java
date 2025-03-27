@@ -11,6 +11,7 @@ import src.airportmanager.exceptions.EstadoEquivocadoException;
 import src.airportmanager.exceptions.EstadoNoDelUsuarioException;
 import src.airportmanager.exceptions.NoFingerMercanciasException;
 import src.airportmanager.exceptions.NoHangaresDisponiblesException;
+import src.airportmanager.exceptions.NoModosEmbarqueDisponiblesException;
 import src.airportmanager.exceptions.NoModosPuertasEmbarqueDisponiblesException;
 import src.airportmanager.exceptions.NoPistasDisponiblesException;
 import src.airportmanager.exceptions.NoVueloEnMenosDe1HoraException;
@@ -48,9 +49,11 @@ public class ControladorAereo extends UsuarioConDni {
      * 
      * @param nombre     Nombre del controlador aéreo.
      * @param dni        Dni del controlador aéreo.
-     * @param contraseña Contraseña del controlador aéreo.
+     * @param contrasena Contraseña del controlador aéreo.
      * @param gestor     Gestor del controlador aéreo.
      * @param terminal   Terminal del controlador aéreo.
+     * @param aeropuerto   Aeropuerto.
+     * @param sistema   Sistema.
      */
     public ControladorAereo(String nombre, String dni, String contrasena, AeropuertoPropio aeropuerto, Gestor gestor,
             Terminal terminal, AirportManager sistema) {
@@ -72,17 +75,7 @@ public class ControladorAereo extends UsuarioConDni {
      * 
      * @param vuelo  Vuelo al que se le cambia el estado.
      * @param estado Nuevo estado del vuelo.
-     * @throws VueloNoDelUsuarioException
-     * @throws EstadoNoDelUsuarioException
-     * @throws EstadoEquivocadoException
-     * @throws NoPistasDisponiblesException
-     * @throws IllegalArgumentException
-     * @throws NoVueloEnMenosDe1HoraException
-     * @throws VueloEnMenosDe1HoraException
-     * @throws NoFingerMercanciasException
-     * @throws NoModosPuertasEmbarqueDisponiblesException
-     * @throws NoHangaresDisponiblesException
-     * @throws CargaAvionEquivocadaException 
+     * @throws IllegalArgumentException argumento no válido.
      */
     @Override
     public void cambiarEstadoVuelo(Vuelo vuelo, EstadoVuelo estado) {
@@ -151,13 +144,13 @@ public class ControladorAereo extends UsuarioConDni {
      * 
      * @param vuelo El vuelo al que se le intenta cambiar el estado.
      * 
-     * @throws EstadoEquivocadoException
-     * @throws NoVueloEnMenosDe1HoraException
-     * @throws NoModosPuertasEmbarqueDisponiblesException
-     * @throws NoFingerMercanciasException
-     * @throws CargaAvionEquivocadaException 
-     * @throws NoHangaresDisponiblesException 
-     * @throws VueloEnMenosDe1HoraException 
+     * @throws EstadoEquivocadoException estado equivocado.
+     * @throws NoVueloEnMenosDe1HoraException no vuelo menos 1 hora.
+     * @throws NoModosPuertasEmbarqueDisponiblesException no modos en puerta.
+     * @throws NoFingerMercanciasException no finger para mercancías.
+     * @throws CargaAvionEquivocadaException carga no válida.
+     * @throws NoHangaresDisponiblesException hangares no disponibles.
+     * @throws VueloEnMenosDe1HoraException vuelo en menos de 1 hora.
      */
     private void cambiarEstadoOperativo(Vuelo vuelo) throws EstadoEquivocadoException, NoVueloEnMenosDe1HoraException,
             NoModosPuertasEmbarqueDisponiblesException, NoFingerMercanciasException, VueloEnMenosDe1HoraException, NoHangaresDisponiblesException, CargaAvionEquivocadaException {
@@ -194,8 +187,6 @@ public class ControladorAereo extends UsuarioConDni {
             liberarModoEmbarque(vuelo);
             asignarModoEmbarque(modoActual, vueloNuevo);
         } else {
-            // Intentamos asignarle modo de embarque al vuelo nuevo sin cambiarlo de puerta
-            // de embarque.
             if (vueloNuevo.getTipoModoEmbarque() == TipoModoEmbarque.FINGER) {
         
         		if (puerta.getFinger().comprobarTamano(vueloNuevo) == true && puerta.getFinger().getVuelo() == null) {
@@ -295,10 +286,10 @@ public class ControladorAereo extends UsuarioConDni {
      * 
      * @param vuelo El vuelo al que se le intenta cambiar el estado.
      * 
-     * @throws EstadoEquivocadoException
-     * @throws VueloEnMenosDe1HoraException
-     * @throws NoHangaresDisponiblesException
-     * @throws CargaAvionEquivocadaException 
+     * @throws EstadoEquivocadoException estado equivocado.
+     * @throws VueloEnMenosDe1HoraException vuelo en menos de 1 hora.
+     * @throws NoHangaresDisponiblesException no hnagares disponibles.
+     * @throws CargaAvionEquivocadaException carga no válida.
      */
     private void cambiarEstadoAHangar(Vuelo vuelo)
             throws EstadoEquivocadoException, VueloEnMenosDe1HoraException, NoHangaresDisponiblesException, CargaAvionEquivocadaException {
@@ -359,7 +350,7 @@ public class ControladorAereo extends UsuarioConDni {
      * 
      * @param vuelo El vuelo al que se le intenta cambiar el estado.
      * 
-     * @throws EstadoEquivocadoException
+     * @throws EstadoEquivocadoException estado equivocado.
      */
     private void cambiarEstadoAterrizaje(Vuelo vuelo) throws EstadoEquivocadoException {
         if (vuelo.getEstado() != EstadoVuelo.ESPERANDO_ATERRIZAJE && vuelo.getEstado() != EstadoVuelo.A_TIEMPO && vuelo.getEstado() != EstadoVuelo.RETRASADO) {
@@ -384,8 +375,8 @@ public class ControladorAereo extends UsuarioConDni {
      * 
      * @param vuelo El vuelo al que se le intenta cambiar el estado.
      * 
-     * @throws EstadoEquivocadoException
-     * @throws NoPistasDisponiblesException
+     * @throws EstadoEquivocadoException estado equivocado.
+     * @throws NoPistasDisponiblesException no pista disponible.
      */
     private void cambiarEstadoEsperandoAterrizaje(Vuelo vuelo)
             throws EstadoEquivocadoException, NoPistasDisponiblesException {
@@ -424,10 +415,10 @@ public class ControladorAereo extends UsuarioConDni {
      * 
      * @param vuelo El vuelo al que se le intenta cambiar el estado.
      * 
-     * @throws EstadoEquivocadoException
-     * @throws NoPistasDisponiblesException
-     * @throws NoFingerMercanciasException
-     * @throws NoModosPuertasEmbarqueDisponiblesException
+     * @throws EstadoEquivocadoException estado equivocado.
+     * @throws NoPistasDisponiblesException no pista disponible.
+     * @throws NoFingerMercanciasException no finger para mercancias.
+     * @throws NoModosPuertasEmbarqueDisponiblesException no modos en puerta.
      */
     private void cambiarEstadoEsperandoPistaAterrizaje(Vuelo vuelo) throws EstadoEquivocadoException, NoPistasDisponiblesException,
             NoFingerMercanciasException, NoModosPuertasEmbarqueDisponiblesException {
@@ -525,7 +516,7 @@ public class ControladorAereo extends UsuarioConDni {
      * 
      * @param vuelo El vuelo al que se le intenta cambiar el estado.
      * 
-     * @throws EstadoEquivocadoException
+     * @throws EstadoEquivocadoException estado equivocado.
      */
     private void cambiarEstadoEsperandoPistaDespegue(Vuelo vuelo) throws EstadoEquivocadoException {
         if (vuelo.getEstado() != EstadoVuelo.FIN_DEL_EMBARQUE && vuelo.getEstado() != EstadoVuelo.A_TIEMPO && vuelo.getEstado() != EstadoVuelo.RETRASADO) {
@@ -549,8 +540,8 @@ public class ControladorAereo extends UsuarioConDni {
      * 
      * @param vuelo El vuelo al que se le intenta cambiar el estado.
      * 
-     * @throws EstadoEquivocadoException
-     * @throws NoPistasDisponiblesException
+     * @throws EstadoEquivocadoException estado equivocado.
+     * @throws NoPistasDisponiblesException no pista.
      */
     private void cambiarEstadoEsperandoDespegue(Vuelo vuelo) throws EstadoEquivocadoException, NoPistasDisponiblesException {
         if (vuelo.getEstado() != EstadoVuelo.ESPERANDO_PISTA_DE_DESPEGUE && vuelo.getEstado()!= EstadoVuelo.A_TIEMPO && vuelo.getEstado() != EstadoVuelo.RETRASADO) {
