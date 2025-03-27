@@ -25,7 +25,6 @@ import src.airportmanager.exceptions.TemporadasSolapadasException;
 class AeropuertoPropioTest {
 
 	private AeropuertoPropio aeropuertoPropio;
-	private Finger finger1, finger2;
 	private HangarPasajeros hangar1, hangar2;
 	private ControladorAereo controlador;
 	private Operador operador;
@@ -34,9 +33,7 @@ class AeropuertoPropioTest {
 	private Aerolinea aerolinea1, aerolinea2;
 	private Vuelo vuelo1, vuelo2;
 	private AeropuertoDestino aeropuertoDestino1, aeropuertoDestino2;
-	private Set<PuertaEmbarque> puertas, puertas2;
 	private PuertaEmbarque p1, p2, p3, p4;
-	private List<Finger> fingers;
 	private List<Hangar> hangares;
 	private ZonaAparcamiento zona1, zona2;
 	private List<ZonaAparcamiento> zonas;
@@ -52,7 +49,6 @@ class AeropuertoPropioTest {
 	private List<PuertaEmbarque> puertasList, puertasList2;
 	private Temporada temporada1, temporada2;
 	private List<Temporada> temporadas;
-	private Exception excepcion;
 	
 	@BeforeEach
 	void setUp() { 
