@@ -52,7 +52,6 @@ public class Vuelo extends VueloProgramado {
      * @param tipoVuelo        Tipo de vuelo.
      * @param avion            Avion del vuelo.
      * @param estado           Estado del vuelo.
-     * @param tiempoRetraso    El tiempo de retraso del vuelo.
      */
     public Vuelo(String codigo, LocalDate fecha, LocalDate fechaInicio, LocalDate fechaFinal, LocalTime hora,
             List<DayOfWeek> diasRecurrente, TipoCarga tipoCarga,
@@ -76,7 +75,7 @@ public class Vuelo extends VueloProgramado {
     /**
      * Método que cambia el estado de un vuelo.
      * 
-     * @param estado El nuevo estado del vuelo
+     * @param nuevoEstado El nuevo estado del vuelo
      */
     public void cambiarEstado(EstadoVuelo nuevoEstado) {
         this.historialEstadoVuelo.agregarCambioEstado(nuevoEstado, LocalTime.now());
@@ -104,7 +103,7 @@ public class Vuelo extends VueloProgramado {
     /**
      * Método que devuelve el tiempo de retraso del vuelo.
      * 
-     * @return Tiempo de retraso del vuelo.
+     * @param retraso	 Tiempo de retraso del vuelo.
      */
     public void setRetraso(double retraso) {
         this.tiempoRetraso = retraso;
@@ -203,7 +202,7 @@ public class Vuelo extends VueloProgramado {
     /**
      * Método que asigna una pista al vuelo.
      * 
-     * @rparam pista Pista.
+     * @param pista Pista.
      */
     public void setPista(Pista pista) {
         this.pista = pista;

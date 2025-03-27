@@ -25,14 +25,14 @@ public abstract class Terminal implements Serializable {
      * Constructor de la clase Terminal.
      * 
      * @param codigo         Código de la terminal.
-     * @param puertaEmbarque Una de las puertas de embarque de la terminal.
+     * @param puertasEmbarque 	Una de las puertas de embarque de la terminal.
      */
     public Terminal(String codigo, List<PuertaEmbarque> puertasEmbarque) {
         if (puertasEmbarque == null || puertasEmbarque.isEmpty()) {
             throw new IllegalArgumentException("La terminal debe tener al menos una puerta de embarque.");
         }
         this.codigo = codigo;
-        this.puertasEmbarque = new ArrayList<>(puertasEmbarque);  // Agrega todas las puertas
+        this.puertasEmbarque = new ArrayList<>(puertasEmbarque); 
         this.controladores = new ArrayList<>();
     }
     /**
@@ -74,7 +74,7 @@ public abstract class Terminal implements Serializable {
     /**
      * Método para añadir un controlador a la terminal.
      * 
-     * @param puertaEmbarque Nueva controlador.
+     * @param controlador Nuevo controlador.
      */
     public void agregarControlador(ControladorAereo controlador) {
         this.controladores.add(controlador);

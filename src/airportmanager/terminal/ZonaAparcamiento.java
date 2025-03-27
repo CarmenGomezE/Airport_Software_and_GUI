@@ -19,7 +19,6 @@ public class ZonaAparcamiento extends ModoEmbarque {
     /**
      * Constructor de la clase ZonaAparcamiento
      * 
-     * @param id            Código de la zona de aparcamiento.
      * @param costePorHora  Coste por hora de la zona de aparcamiento.
      * @param dimPlazaAncho Dimensión de ancho de la zona de aparcamiento.
      * @param dimPlazaLargo dimensión de largo de la zona de aparcamiento.

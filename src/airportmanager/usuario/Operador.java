@@ -52,17 +52,20 @@ public class Operador extends UsuarioConDni {
     private EstadisticasOperador estadisticas;
     /** Alternativas que le propone el gestor a sus propuestas de vuelo */
     private List<Vuelo> vuelosAlternativas;
+    /** Bandera para la decision tomada*/
 	private boolean decisionTomada;
+	/** Timer para el tiempo en contestar a las alternativas */
 	private transient Timer timer;
 
     /**
      * Constructor de la clase SolicitudVueloCompartido.
      * 
-     * @param vuelosPorgramados Vuelos programados asignados al operador.
+     * @param nombre			Nombre del operador.
      * @param aerolinea         Aerolinea a la que pertenece.
-     * @param estadisticas      Estadísticas sobre vuelos.
+     * @param dni			    Dni del operador.
      * @param aeropuerto        Aeropuerto propio del operador.
      * @param gestor            Gestor del operador.
+     * @param sistema           Sistema.
      */
     public Operador(String nombre, String dni, Aerolinea aerolinea, AeropuertoPropio aeropuerto, Gestor gestor, AirportManager sistema) {
         super(nombre, dni, aeropuerto, gestor, sistema);
@@ -317,7 +320,9 @@ public class Operador extends UsuarioConDni {
      * @param anoCompra             Año de compra del avión.
      * @param fechaUltimaRevision   Fecha de la última revisión del avión.
      * @param matricula             Matrícula del avión.
-     * @param capacidadMaxPasajeros Capacidad máxima del avión.
+     * @param capacidadMaxCarga 	Capacidad máxima del avión.
+     * @param mercaPeligrosa 		Si es mercancias peligrosas.
+     * @param controlTemperatura 	Si necesita control de temperatura.
      */
     public void darDeAltaAvionMercancias(String marca, String modelo, double dimAlto, double dimAncho, double dimLargo,
             double autonomia, int anoCompra, Date fechaUltimaRevision, String matricula,
@@ -494,7 +499,7 @@ public class Operador extends UsuarioConDni {
      * 
      * @param vuelo            Vuelo que se solicita compartir.
      * @param operadorReceptor Aerolinea que ha realizado la solicitud.
-     * @param porcentaje       Aerolinea que ha recibido la solicitud.
+     * @param porcentajeCarga       Aerolinea que ha recibido la solicitud.
      * @throws OperacionInvalidaException
      */
     public void solicitarCompartirVuelo(Vuelo vuelo, Operador operadorReceptor, double porcentajeCarga)

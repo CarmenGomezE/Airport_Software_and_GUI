@@ -27,8 +27,8 @@ public class Notificacion implements Serializable {
     /**
      * Constructor de la clase Notificacion.
      * 
-     * @param mensaje          Mensaje de la notificación.
-     * @param fecha            Fecha de la notificación.
+     * @param mensaje          	Mensaje de la notificación.
+     * @param tipoNotificacion  Fecha de la notificación.
      * @param tipoNotificacion Tipo de la notificación.
      */
     public Notificacion(String mensaje, TipoNotificacion tipoNotificacion) {

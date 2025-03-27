@@ -49,6 +49,7 @@ public class Gestor extends Usuario {
     private EstadisticasGestor estadisticas;
     /** Sistema de facturación que utiliza el gestor. */
     private SistemaFacturacion sistemaFacturacion;
+    /** Vuelos propuestos por el Operador. */
     private List<VueloProgramado> vuelosPropuestos;
     
     /** Dias de anticipación mínima para una propuesta de Vuelo. */
@@ -69,12 +70,8 @@ public class Gestor extends Usuario {
     /**
      * Constructor de la clase Gestor.
      * 
-     * @param nombre     Nombre del controlador aéreo.
-     * @param dni        Dni del controlador aéreo.
-     * @param contraseña Contraseña del controlador aéreo.
      * @param nombre     Nombre del gestor.
-     * @param dni        Dni del gestor.
-     * @param contraseña Contraseña del gestor.
+     * @param contrasena Contraseña del gestor.
      * @param aeropuerto Aeropuerto del gestor.
      * @param sistema    Sistema.
      */
@@ -89,8 +86,6 @@ public class Gestor extends Usuario {
 
     /**
      * Método para establecer el sistema de facturación.
-     * 
-     * @return Sistema de facturación.
      */
     public void establecerSistemaFacturacion() {
         this.sistemaFacturacion= new SistemaFacturacion(recargoAvionMercancias, costeBaseVueloSalida, costeBaseVueloLlegada);
@@ -100,7 +95,7 @@ public class Gestor extends Usuario {
     /**
      * Método para emitir una nueva factura.
      * 
-     * @param Aerolinea Aerolinea a la que se le emite una nueva factura.
+     * @param aerolinea Aerolinea a la que se le emite una nueva factura.
      */
     public void emitirFactura(Aerolinea aerolinea) {
         List<Factura> facturas = this.sistemaFacturacion.generarFactura(aerolinea);
@@ -117,8 +112,7 @@ public class Gestor extends Usuario {
 	                System.err.println("Error: No se pudo crear el directorio de facturas.");
 	                return;
 	            }
-	
-	            // Ruta absoluta para evitar confusión
+
 	            String filePath = facturaDir + "Factura_" + factura.getInvoiceIdentifier() + ".pdf";
 	            InvoiceSystem.createInvoice(factura, filePath);
 	            System.out.println("Factura generada en: " + new File(filePath).getAbsolutePath());
@@ -189,7 +183,6 @@ public class Gestor extends Usuario {
      * 
      * @param nombre   Nombre de la nueva aerolinea.
      * @param codigo   Codigo de la nueva aerolinea.
-     * @param operador Operador de la nueva aerolinea.
      */
     public void darDeAltaAerolinea(String nombre, String codigo) {
         Aerolinea aerolinea;
@@ -202,7 +195,6 @@ public class Gestor extends Usuario {
      * 
      * @param nombre     Nombre del nuevo controlador.
      * @param dni        Dni del nuevo controlador.
-     * @param contrasena Contraseña del nuevo controlador.
      * @param terminal   Terminal del nuevo controlador.
      */
     public void darDeAltaControlador(String nombre, String dni, Terminal terminal) {
@@ -217,6 +209,7 @@ public class Gestor extends Usuario {
      * 
      * @param nombre Nombre del nuevo controlador.
      * @param dni    Dni del nuevo controlador.
+     * @param aerolinea	Aerolinea.
      */
     public void darDeAltaOperador(String nombre, String dni, Aerolinea aerolinea) {
         Operador operador = new Operador(nombre, dni, aerolinea, aeropuerto, this, sistema);
@@ -230,17 +223,16 @@ public class Gestor extends Usuario {
      * 
      * @param nombreFichero Nombre del fichero con la informacion del nuevo
      *                      aeropuerto de destino.
-     * @throws TemporadasSolapadasException
+     * @throws TemporadasSolapadasException si las temporadas se solpan.
+     * @throws IOException si hay errores con el fichero.
      */
     public void darDeAltaAeropuertoDestino(String nombreFichero) throws IOException, TemporadasSolapadasException {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(nombreFichero)))) {
             String linea;
 
-            // Leer cada línea del archivo
             while ((linea = reader.readLine()) != null) {
                 String[] campos = linea.split(";");
 
-                // Asegurarse de que la línea tiene suficientes campos
                 if (campos.length >= 9) {
                     String nombre = campos[0];
                     String codigo = campos[1];
@@ -251,36 +243,29 @@ public class Gestor extends Usuario {
                     ZoneOffset diferenciaHoraria = ZoneOffset.ofHours(Integer.parseInt(campos[6]));
                     int numeroTemporadas = Integer.parseInt(campos[7]);
 
-                    // Lista para almacenar las temporadas
                     List<Temporada> temporadas = new ArrayList<>();
                     int i = 8;
 
-                    // Leer cada temporada y procesarla
                     while (i < campos.length) {
                         String fechaInicio = campos[i];
-                        // Dividir el horario en apertura y cierre
-                        String[] horarios = campos[i + 1].split("-"); // Se divide el horario por '-'
+                        String[] horarios = campos[i + 1].split("-"); 
                         String horarioApertura = horarios[0];
                         String horarioCierre = horarios[1];
                         String fechaFin = campos[i + 2];
 
-                        // Crear objeto Temporada
                         Temporada temporada = new Temporada(fechaInicio, horarioApertura, horarioCierre, fechaFin);
                         temporadas.add(temporada);
 
-                        i += 3; // Avanzar al siguiente conjunto de temporada
+                        i += 3; 
                     }
 
-                    // Crear y poblar el objeto AeropuertoDestino
                     AeropuertoDestino aeropuertoDestino = new AeropuertoDestino(nombre, codigo, ciudadMasCercana, pais,
                             distanciaCiudad, diferenciaHoraria, numeroTemporadas, direccionRespectoCiudad);
 
-                    // Añadir todas las temporadas al objeto AeropuertoDestino
                     for (Temporada temporada : temporadas) {
                         aeropuertoDestino.agregarTemporada(temporada);
                     }
 
-                    // Añadir el AeropuertoDestino al aeropuerto
                     this.aeropuerto.addAeropuertoDestino(aeropuertoDestino);
                     System.out.println("Aeropuerto " + nombre + " dado de alta correctamente.");
                 } else {
@@ -394,14 +379,13 @@ public class Gestor extends Usuario {
     /**
      * Método para dar de alta hangares.
      * 
-     * @param tipo             Mercancias o pasajeros.
-     * @param numeroMaxAviones Número máximo de aviones del hangar.
-     * @param dimPlazaAncho    Ancho de cada plaza del hangar.
-     * @param dimPlazaAlto     Alto de cada plaza del hangar.
-     * @param dimPlazaLargo    Largo de cada plaza del hangar.
-     * @param costePorHora     Coste por hora del hangar.
-     * @param mercaPeligrosa   Bandera si el hangar acepta aviones de mercancias
-     *                         peligrosas.
+     * @param tipo             		Mercancias o pasajeros.
+     * @param numeroMaximoAviones 	Número máximo de aviones del hangar.
+     * @param dimPlazaAncho    		Ancho de cada plaza del hangar.
+     * @param dimPlazaAlto     		Alto de cada plaza del hangar.
+     * @param dimPlazaLargo    		Largo de cada plaza del hangar.
+     * @param costePorHora     		Coste por hora del hangar.
+     * @param mercaPeligrosa   		Bandera si el hangar acepta aviones de mercancias peligrosas.
      */
     public void darDeAltaHangar(String tipo, int numeroMaximoAviones, double dimPlazaAncho, double dimPlazaAlto,
             double dimPlazaLargo, double costePorHora, boolean mercaPeligrosa) {
@@ -455,11 +439,9 @@ public class Gestor extends Usuario {
     /**
      * Método para dar de alta fingers.
      * 
-     * @param codigo          Código del finger.
      * @param dimAlto         Dimension de alto del finger.
      * @param costePorHora    Coste por hora del finger.
      * @param puertasEmbarque Puertas de embarque del finger.
-     * @param terminal        Terminal de la que es el finger.
      * 
      */
     public void darDeAltaFinger( double dimAlto, double costePorHora, List<PuertaEmbarque> puertasEmbarque) {
@@ -477,10 +459,10 @@ public class Gestor extends Usuario {
     /**
      * Método para dar de alta zonas de aparcamiento.
      * 
-     * @param codigo        Código de la zona de aparcamiento.
-     * @param costePorHora  Coste por hora de la zona de aparcamiento.
-     * @param dimPlazaAncho Dimensión de ancho de la zona de aparcamiento.
-     * @param dimPlazaLargo dimensión de largo de la zona de aparcamiento..
+     * @param puertasEmbarque       Puertas a las que da servicio.
+     * @param costePorHora  		Coste por hora de la zona de aparcamiento.
+     * @param dimPlazaAncho 		Dimensión de ancho de la zona de aparcamiento.
+     * @param dimPlazaLargo 		dimensión de largo de la zona de aparcamiento..
      * 
      */
     public void darDeAltaZonaAparcamiento(double dimPlazaAncho, double costePorHora, double dimPlazaLargo, List<PuertaEmbarque> puertasEmbarque) {
@@ -496,6 +478,7 @@ public class Gestor extends Usuario {
      * Método para dar de una puerta de embarque de una terminal.
      * 
      * @param terminal Terminal en la que se da de alta la puerta de embarque.
+     * @param puerta Puerta a dar de alta en la terminal.
      * 
      */
     public void darDeAltaPuertaEmbarque(PuertaEmbarque puerta, Terminal terminal) {
@@ -530,6 +513,13 @@ public class Gestor extends Usuario {
         aeropuerto.addPista(pista);
     }
     
+    /**
+     * Método para recibir proposiciones de vuelo.
+     * 
+     * @param vuelosPropuestosOperador    Vuelos que le propone el Operador.
+     * @throws AntelacionInvalidaException si la antelación es menor a la que debería.
+     * 
+     */
     public void recibirProposicionVuelo(List<VueloProgramado> vuelosPropuestosOperador) throws AntelacionInvalidaException {
         
         recibirNotificacion(new Notificacion("Nuevo vuelo propuesto", TipoNotificacion.SOLICITUD_VUELO_PROGRAMADO));
@@ -549,26 +539,30 @@ public class Gestor extends Usuario {
         }
     }
     
+    /**
+     * Método para gestionar vuelos.
+     * 
+     * @param vuelosGestionar    Vuelos que le propone el Operador.
+     * 
+     */
     public void gestionarVuelos(List<VueloProgramado> vuelosGestionar) {
 	  Iterator<VueloProgramado> iterator = vuelosGestionar.iterator();
 
-	    // Si no hay vuelos aceptados, aceptar el primero disponible
 	    if (getAeropuerto().getVuelosAceptados().isEmpty() && iterator.hasNext()) {
 	        VueloProgramado vuelo = iterator.next();
 	        for (Terminal terminal : aeropuerto.getTerminales()) {
 	            if ((vuelo.getTipoCarga() == TipoCarga.MERCANCIAS && terminal instanceof TerminalMercancias) ||
 	                (vuelo.getTipoCarga() == TipoCarga.PASAJEROS && terminal instanceof TerminalPasajeros)) {
 	                
-	                ControladorAereo controladorDisponible = terminal.getControladores().get(0); // Controlador disponible
+	                ControladorAereo controladorDisponible = terminal.getControladores().get(0);
 	                aceptarVuelo(vuelo, terminal, controladorDisponible);
-	                iterator.remove(); // Evitar ConcurrentModificationException
+	                iterator.remove(); 
 	                break;
 	            }
 	        }
 	    }
 
-	    // Revisar cada vuelo programado
-	    for (VueloProgramado vuelo : new ArrayList<>(vuelosGestionar)) { // Copia para evitar ConcurrentModificationException
+	    for (VueloProgramado vuelo : new ArrayList<>(vuelosGestionar)) { 
 	        boolean gestionado = false;
 	        Terminal terminalAsignada = null;
 	        ControladorAereo controladorAsignado = null;
@@ -602,8 +596,6 @@ public class Gestor extends Usuario {
 	            }
 	            if (gestionado) break;
 	        }
-
-	        // Si el vuelo no tuvo conflictos, lo aceptamos con el último terminal/controlador evaluado
 	        if (!gestionado) {
 	            for (Terminal terminal : aeropuerto.getTerminales()) {
 	                if ((vuelo.getTipoCarga() == TipoCarga.MERCANCIAS && terminal instanceof TerminalMercancias) ||
@@ -612,7 +604,7 @@ public class Gestor extends Usuario {
 	                    for (ControladorAereo controlador : terminal.getControladores()) {
 	                        terminalAsignada = terminal;
 	                        controladorAsignado = controlador;
-	                        break; // Guardamos el primer controlador evaluado y salimos
+	                        break; 
 	                    }
 
 	                    if (terminalAsignada != null && controladorAsignado != null) {
@@ -624,10 +616,18 @@ public class Gestor extends Usuario {
 	            }
 	        }
 	    }
-
 	    this.vuelosPropuestos = null;
 	}
    
+    /**
+     * Método para ver si se pueden mover vuelos.
+     * 
+     * @param vuelo    		Vuelo a comprobar.
+     * @param terminal    	Terminal.
+     * @param controlador   Controlador.
+     * @return True si se puede, false si no.
+     * 
+     */
     private boolean sePuedeMover(VueloProgramado vuelo, Terminal terminal, ControladorAereo controlador) {
     	LocalDateTime fechaHoraOriginal = LocalDateTime.of(vuelo.getFecha(), vuelo.getHora());
         LocalDateTime nuevaFechaHoraSumada = fechaHoraOriginal.plusMinutes(Gestor.rangoMinutosMaximoCambioVuelo);
@@ -644,6 +644,15 @@ public class Gestor extends Usuario {
         return false; 
     }
     
+    /**
+     * Método para mover vuelos.
+     * 
+     * @param vuelo    			Vuelo a comprobar.
+     * @param terminal    		Terminal.
+     * @param controlador   	Controlador.
+     * @param nuevaFechaHora 	Nueva fecha y hora.
+     * 
+     */
     private void moverVuelo(VueloProgramado vuelo, LocalDateTime nuevaFechaHora, Terminal terminal, ControladorAereo controlador) {
         vuelo.setHora(nuevaFechaHora.toLocalTime());
         vuelo.setFecha(nuevaFechaHora.toLocalDate());
@@ -651,6 +660,14 @@ public class Gestor extends Usuario {
         System.out.println("Vuelo " + vuelo.getCodigo() + " ha sido movido a la nueva hora: " + nuevaFechaHora);
     }
 
+    /**
+     * Método para verificar si un vuelo está libre.
+     * 
+     * @param vuelo    			Vuelo a comprobar.
+     * @param nuevaFechaHora 	Nueva fecha y hora.
+     * @return True si esta libre, false si no.
+     * 
+     */
     private boolean esHoraLibre(VueloProgramado vuelo, LocalDateTime nuevaFechaHora) {
  
         VueloProgramado vueloAlternativo = new VueloProgramado(vuelo.getCodigo(),nuevaFechaHora.toLocalDate(),vuelo.getFechaInicio(),vuelo.getFechaFinal(),
@@ -677,13 +694,23 @@ public class Gestor extends Usuario {
 
         return true; 
     }
+    
+    /**
+     * Método para generar alternativas.
+     * 
+     * @param vueloMover   		Vuelo a proponer alternativas.
+     * @param terminal    		Terminal.
+     * @param controlador   	Controlador.
+     * @return Lista de alternativas.
+     * 
+     */
 	public List<Vuelo> generarAlternativas(VueloProgramado vueloMover, Terminal terminal, ControladorAereo controlador) {
     	LocalDateTime fechaHoraOriginal = LocalDateTime.of(vueloMover.getFecha(), vueloMover.getHora());
         LocalDateTime fechaHoraLimite = fechaHoraOriginal.plusHours(Gestor.horasMaximasReprogramacion);
         List<Vuelo> alternativas = new ArrayList<>();
         int alternativasEncontradas = 0;
 
-        /**Buscamos 5 alternativas máximo en periodos de 30 minutos*/
+        /**Buscamos 5 alternativas máximo en periodos de 5 minutos*/
         for (LocalDateTime nuevaFechaHora = fechaHoraOriginal.plusMinutes(30); nuevaFechaHora.isBefore(fechaHoraLimite) && alternativasEncontradas < 5; 
         nuevaFechaHora = nuevaFechaHora.plusMinutes(30)) {
         	
@@ -703,6 +730,14 @@ public class Gestor extends Usuario {
         }
     }
     
+	/**
+     * Método para crear una alternativa a un vuelo.
+     * 
+     * @param vueloMover    	Vuelo a proponer alternativa.
+     * @param nuevaFechaHora 	Nueva fecha y hora.
+     * @return Vuelo alternativo.
+     * 
+     */
     private Vuelo crearVueloAlternativo(VueloProgramado vueloMover, LocalDateTime nuevaFechaHora) {
         return new Vuelo( vueloMover.getCodigo(),nuevaFechaHora.toLocalDate(),vueloMover.getFechaInicio(),
                 vueloMover.getFechaFinal(),nuevaFechaHora.toLocalTime(),vueloMover.getDiasRecurrente(),vueloMover.getTipoCarga(),
@@ -710,6 +745,13 @@ public class Gestor extends Usuario {
                 vueloMover.getAeropuertoDestino(), vueloMover.getAeropuertoSalida(),vueloMover.getEscala(), vueloMover.getAvion().getAerolinea().getOperador());
     }
 
+    /**
+     * Método para verificar si es una alternativa válida a un vuelo.
+     * 
+     * @param vueloAlternativo    	Vuelo alternativa. 
+     * @return True si es una alternativa, false si no.
+     * 
+     */
     private boolean esAlternativaValida(VueloProgramado vueloAlternativo) {
         for (Vuelo vueloAceptado : getAeropuerto().getVuelosAceptados()) {
             for (Terminal terminal : aeropuerto.getTerminales()) {
@@ -730,6 +772,14 @@ public class Gestor extends Usuario {
         return true; 
     }
     
+    /**
+     * Método para aceptar un vuelo.
+     * 
+     * @param vueloAceptar    	Vuelo a proponer alternativas.
+     * @param terminal    		Terminal.
+     * @param controlador   	Controlador.
+     * 
+     */
     public void aceptarVuelo(VueloProgramado vueloAceptar, Terminal terminal, ControladorAereo controlador) {
     	Vuelo nuevoVuelo= new Vuelo(vueloAceptar.getCodigo(), vueloAceptar.getFecha(), vueloAceptar.getFechaInicio(), vueloAceptar.getFechaFinal(),
     			vueloAceptar.getHora(), vueloAceptar.getDiasRecurrente(), vueloAceptar.getTipoCarga(), vueloAceptar.getTipoModoEmbarque(), vueloAceptar.getPeriodicidad()
@@ -826,14 +876,12 @@ public class Gestor extends Usuario {
      * Método que modifica la contraseña de un usuario con dni que la ha olvidado.
      * 
      * @param nombre     Nombre.
-     * @param contrasena Contraseña nueva.
      * @param usuario    UsuarioConDni que ha olvidado la contraseña.
-     * @throws ContrasenaInvalidaException 
-     * @throws UsuarioNoEncontradoException 
+     * @throws ContrasenaInvalidaException si la contraseña es inválida
+     * @throws UsuarioNoEncontradoException si no existe el usuario.
      * 
      */
     public void modificarUsuario(String nombre, UsuarioConDni usuario) throws UsuarioNoEncontradoException, ContrasenaInvalidaException {
-
         if (usuario != null) {
             usuario.setNombre(nombre);
             String nuevaContrasena=sistema.generarContrasena();
@@ -846,6 +894,13 @@ public class Gestor extends Usuario {
             System.out.println("Error. El usuario no existe");
         }
     }
+    
+    /**
+     * Método que devuelve los vuelos propuestos por el operador.
+     * 
+     * @return Lista de vuelos propuestos por el operador
+     * 
+     */
     public List<VueloProgramado> getVuelosPropuestos() {
 		if(this.vuelosPropuestos==null) {
 			System.out.println("No hay aternativas propuestas.");
@@ -940,24 +995,46 @@ public class Gestor extends Usuario {
         tiempoAceptarPropuesta = nuevoTiempo;
     }
 
+    /**
+     * Método para reestablecer la contraseña.
+     * 
+     * @throws UsuarioNoEncontradoException si no existe el usuario.
+     * @throws ContrasenaInvalidaException si la contraseña no es válida.
+     */
 	public void heOlvidadoContrasena() throws UsuarioNoEncontradoException, ContrasenaInvalidaException {
 		String nuevaContrasena=sistema.generarContrasena();
 		sistema.asignarContrasena(this.getNombre(), nuevaContrasena);
 		
 	}
 
+	/**
+     * Método para establecer el rango en el que se puede mover un vuelo.
+     * 
+     * @param i Tiempo.
+     * 
+     */
 	public static void setRangoMinutosMaximoCambioVuelo(int i) {
 		rangoMinutosMaximoCambioVuelo=i;
-		
 	}
 
+	/**
+     * Método que devuelve el sistema de facturación.
+     * 
+     * @return Sistema de Facturaicón
+     * 
+     */
 	public SistemaFacturacion getSistemaFacturacion() {
 		return sistemaFacturacion;
 	}
 
+	/**
+     * Método para establecer la antelación mínima de propuesta de días.
+     * 
+     * @param i 	Nueva antelación.
+     * 
+     */
 	public static void setAntelacionMinimaDias(int i) {
 		diasAnticipacionMinima=i;
-		
 	}
 
 }
