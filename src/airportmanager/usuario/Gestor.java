@@ -58,13 +58,13 @@ public class Gestor extends Usuario {
     /** Horas máximas que se puede mover la reprogramación de una propuesta de Vuelo.*/
     private static int horasMaximasReprogramacion = 48;
     /** Recargo de un avión de mercancías. */
-    private static double recargoAvionMercancias = 105.9;
+    private static double recargoAvionMercancias = 40.5;
     /** Coste base de un vuelo de salida. */
-    private static double costeBaseVueloSalida = 105.9;
+    private static double costeBaseVueloSalida = 99.9;
     /** Coste base de un vuelo de llegada. */
-    private static double costeBaseVueloLlegada = 105.9;
+    private static double costeBaseVueloLlegada = 105.3;
     /** Tiempo que tiene el Operador para aceptar una propuesta de Vuelo. */
-    private static int tiempoAceptarPropuesta = 60;
+    private static int tiempoAceptarPropuesta = 1;
 
     /**
      * Constructor de la clase Gestor.
@@ -103,36 +103,34 @@ public class Gestor extends Usuario {
      * @param Aerolinea Aerolinea a la que se le emite una nueva factura.
      */
     public void emitirFactura(Aerolinea aerolinea) {
-        Factura factura = this.sistemaFacturacion.generarFactura(aerolinea);
-
-        if (factura == null) {
-            System.out.println("No se generaron vuelos para la factura.");
-            return;
+        List<Factura> facturas = this.sistemaFacturacion.generarFactura(aerolinea);
+        for(Factura factura: facturas) {
+	        if (factura == null) {
+	            System.out.println("No se generaron vuelos para la factura.");
+	            return;
+	        }
+	
+	        try {
+	        	String facturaDir = "/Users/carmen/git/padsoft/facturas/";
+	            File directorio = new File(facturaDir);
+	            if (!directorio.exists() && !directorio.mkdirs()) {
+	                System.err.println("Error: No se pudo crear el directorio de facturas.");
+	                return;
+	            }
+	
+	            // Ruta absoluta para evitar confusión
+	            String filePath = facturaDir + "Factura_" + factura.getInvoiceIdentifier() + ".pdf";
+	            InvoiceSystem.createInvoice(factura, filePath);
+	            System.out.println("Factura generada en: " + new File(filePath).getAbsolutePath());
+	        } catch (NonExistentFileException e) {
+	            System.err.println("Error: El archivo o directorio no existe. " + e.getMessage());
+	        } catch (UnsupportedImageTypeException e) {
+	            System.err.println("Error: Tipo de imagen no soportado en la factura. " + e.getMessage());
+	        } catch (Exception e) {
+	            System.err.println("Error inesperado al generar la factura: " + e.getMessage());
+	        } 
+	        aerolinea.getOperador().recibirNotificacionFacturaEmitida(factura);
         }
-
-        try {
-        	String facturaDir = "/Users/carmen/git/padsoft/facturas/";
-            File directorio = new File(facturaDir);
-            if (!directorio.exists() && !directorio.mkdirs()) {
-                System.err.println("Error: No se pudo crear el directorio de facturas.");
-                return;
-            }
-
-            // Ruta absoluta para evitar confusión
-            String filePath = facturaDir + "Factura_" + factura.getInvoiceIdentifier() + ".pdf";
-            InvoiceSystem.createInvoice(factura, filePath);
-            System.out.println("Factura generada en: " + new File(filePath).getAbsolutePath());
-
-            System.out.println("Factura generada correctamente: " + filePath);
-        } catch (NonExistentFileException e) {
-            System.err.println("Error: El archivo o directorio no existe. " + e.getMessage());
-        } catch (UnsupportedImageTypeException e) {
-            System.err.println("Error: Tipo de imagen no soportado en la factura. " + e.getMessage());
-        } catch (Exception e) {
-            System.err.println("Error inesperado al generar la factura: " + e.getMessage());
-        } 
-
-        aerolinea.getOperador().recibirNotificacionFacturaEmitida(factura);
     }
 
     /**

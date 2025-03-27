@@ -53,6 +53,7 @@ public class Operador extends UsuarioConDni {
     /** Alternativas que le propone el gestor a sus propuestas de vuelo */
     private List<Vuelo> vuelosAlternativas;
 	private boolean decisionTomada;
+	private transient Timer timer;
 
     /**
      * Constructor de la clase SolicitudVueloCompartido.
@@ -422,7 +423,7 @@ public class Operador extends UsuarioConDni {
     }
   
     private void iniciarTemporizador() {
-        Timer timer = new Timer();
+        timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -430,13 +431,14 @@ public class Operador extends UsuarioConDni {
                     rechazarVuelo();
                 }
             }
-        }, Gestor.getTiempoAceptarPropuesta() * 60 * 1000);
+        }, Gestor.getTiempoAceptarPropuesta() * 1000);
     }
     
     public void aceptarVuelo(Vuelo alternativa) {
         if (!decisionTomada) {
         	this.getGestor().aceptarVuelo(alternativa, alternativa.getTerminal(), alternativa.getControlador());
             decisionTomada = true;
+            timer.cancel();
             System.out.println("Vuelo aceptado.");
         }
     }
@@ -444,6 +446,7 @@ public class Operador extends UsuarioConDni {
     public void rechazarVuelo() {
 		if (!decisionTomada) {
             decisionTomada = true;
+            timer.cancel();
             System.out.println("Vuelo rechazado.");
             this.vuelosAlternativas=null;
         }
