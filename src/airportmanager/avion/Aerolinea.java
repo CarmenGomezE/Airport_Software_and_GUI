@@ -106,7 +106,7 @@ public class Aerolinea implements Serializable {
     	List<Vuelo> vuelos= new ArrayList<>();
     	for(Vuelo vuelo: getOperador().getAeropuerto().getVuelosAceptados()) {
     		for(Avion avion: getAviones()) {
-    			if(vuelo.getAvion()==avion) {
+    			if(vuelo.getAvion().equals(avion)) {
     				vuelos.add(vuelo);
     			}
     		}

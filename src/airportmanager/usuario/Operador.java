@@ -359,7 +359,7 @@ public class Operador extends UsuarioConDni {
         if ((avion instanceof AvionMercancias && tipoCarga == TipoCarga.PASAJEROS) || (avion instanceof AvionPasajeros && tipoCarga == TipoCarga.MERCANCIAS)) {
             throw new AvionNoValidoException("El avión seleccionado no concuerda con la carga que transporta.");
         }
-        if (!avion.estaDisponible(fecha, hora)) {
+        if (!avion.estaDisponible(fecha, hora) || avion.getAerolinea().getOperador()!=this) {
             throw new AvionNoDisponibleException("El avión seleccionado no está disponible.");
         }
         if(escala!=null) {

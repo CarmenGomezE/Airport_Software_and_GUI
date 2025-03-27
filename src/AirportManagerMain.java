@@ -112,8 +112,7 @@ public class AirportManagerMain {
         
         System.out.println("\n*********************************************************************************************************************");
         System.out.println("\n10.- Emisión y pago de facturas.");
-        emisionFacturas();
-        pagoFacturas();
+        emisionYpagoFacturas();
         
         System.out.println("\n*********************************************************************************************************************");
 
@@ -328,7 +327,7 @@ public class AirportManagerMain {
 
     	try {
     	    System.out.println("Proponiendo vuelo IBE8246...");
-    	    operadorAirFrance.proponerVuelo("IBE8246", LocalDate.now().plusDays(31), LocalDate.now(), LocalDate.now().plusDays(2),
+    	    operadorIberia.proponerVuelo("IBE8246", LocalDate.now().plusDays(31), LocalDate.now(), LocalDate.now().plusDays(2),
     	            LocalTime.of(10, 0), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
     	            Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionEC_HGS, aeCairo, aePropio, null);
     	    System.out.println("Vuelo IBE8246 propuesto correctamente.");
@@ -348,7 +347,7 @@ public class AirportManagerMain {
 
     	try {
     	    System.out.println("Proponiendo vuelo IBE5017...");
-    	    operadorAirFrance.proponerVuelo("IBE5017", LocalDate.now().plusDays(31), LocalDate.now().plusDays(31), LocalDate.now().plusDays(33),
+    	    operadorIberia.proponerVuelo("IBE5017", LocalDate.now().plusDays(31), LocalDate.now().plusDays(31), LocalDate.now().plusDays(33),
     	            LocalTime.of(10, 0), Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.SATURDAY), TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
     	            Periodicidad.RECURRENTE, TipoVuelo.LLEGADA, avionEC_KBX, aePropio, aeMallorca, null);
     	    System.out.println("Vuelo IBE5017 propuesto correctamente.");
@@ -494,7 +493,7 @@ public class AirportManagerMain {
     	airportManager.getGestor().darDeAltaOperador("Eustaquio Hernandez", "50738890L", airportManager.getAeropuerto().getAerolineas().get(2));
     	Operador operadorRyanair=airportManager.getAeropuerto().getAerolineas().get(2).getOperador();   
     	Vuelo vueloAFR2270= airportManager.getAeropuerto().getVuelosAceptados().get(6);
-    	Vuelo vueloAFR7107=  airportManager.getAeropuerto().getVuelosAceptados().get(10);
+    	Vuelo vueloAFR7107=  airportManager.getAeropuerto().getVuelosAceptados().get(9);
     	
     	System.out.println("\nIniciando las solicitudes de compartir vuelo.");
     	System.out.println("Realizando una solicitud del Operador de Iberia de compartir vuelo al Operador de AirFrance.");
@@ -569,14 +568,32 @@ public class AirportManagerMain {
 	}
 	
 
-	private static void pagoFacturas() {
-		// TODO Auto-generated method stub
+	private static void emisionYpagoFacturas() {
+		Gestor gestorBarajas=airportManager.getGestor();
+		Aerolinea Ryanair=airportManager.getAeropuerto().getAerolineas().get(2);
+		Operador operadorRyanair=(Operador)airportManager.getGestor().buscarUsuarioPorDni("50738890L");
+ 
+    	
+    	System.out.println("\nLista de vuelos aceptados:");
+    	for (VueloProgramado v : airportManager.getAeropuerto().getVuelosAceptados()) {
+    	    System.out.println("Vuelo: " + v.getCodigo() + " - Fecha: " + v.getFecha() + " - Hora: " + v.getHora());
+    	}
 		
-	}
+		System.out.println("\nIniciando el proceso de creación de facturas.");
+		System.out.println("Generando factura para la aerolínea Iberia...");
+		gestorBarajas.emitirFactura(Ryanair);
+		System.out.println("Factura generada para Iberia.");
 
-	private static void emisionFacturas() {
-		// TODO Auto-generated method stub
+		System.out.println("Obteniendo la primera factura de Iberia...");
+		Factura facturaIberia = Ryanair.getFacturas().get(0);
+		System.out.println("Factura obtenida: " + facturaIberia);
+
+		String numeroTarjeta = "1234567891234567";
+		System.out.println("Iniciando pago de la factura " + facturaIberia.getInvoiceIdentifier() + " con tarjeta de crédito: " + numeroTarjeta);
+		operadorRyanair.pagarFactura(facturaIberia, numeroTarjeta);
+		System.out.println("Pago de la factura realizado con éxito.");
 		
+		System.out.println("Proceso de creación de facturas finalizado.");
 	}
 
 	private static void configurarDatosAeropuertoPropio() {
@@ -678,8 +695,8 @@ public class AirportManagerMain {
 		ControladorAereo controladorT1= terminalT1.getControladores().get(0);
     	ControladorAereo controladorT2= terminalT2.getControladores().get(0);
     	
-    	Vuelo vueloFRK2234= airportManager.getAeropuerto().getVuelosAceptados().get(11);
-		Vuelo vueloFRK8103= airportManager.getAeropuerto().getVuelosAceptados().get(12);
+    	Vuelo vueloFRK2234= airportManager.getAeropuerto().getVuelosAceptados().get(10);
+		Vuelo vueloFRK8103= airportManager.getAeropuerto().getVuelosAceptados().get(11);
 		
 		System.out.println("\nIniciando el proceso de cambio de estados de vuelos.");
 		System.out.println("Comenzamos con los estados de un vuelo de salida:");

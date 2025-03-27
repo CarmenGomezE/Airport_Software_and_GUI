@@ -954,4 +954,9 @@ public class Gestor extends Usuario {
 		return sistemaFacturacion;
 	}
 
+	public static void setAntelacionMinimaDias(int i) {
+		diasAnticipacionMinima=i;
+		
+	}
+
 }
