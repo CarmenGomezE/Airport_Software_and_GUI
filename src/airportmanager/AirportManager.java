@@ -130,7 +130,8 @@ public class AirportManager implements Serializable {
 		        v.cambiarEstado(EstadoVuelo.A_TIEMPO);
 		    } else if (v.getEstado() != EstadoVuelo.ATERRIZAJE || v.getEstado() != EstadoVuelo.OPERATIVO || v.getEstado() != EstadoVuelo.AVION_A_HANGAR
 		    		|| v.getEstado() != EstadoVuelo.RETRASADO || v.getEstado() == EstadoVuelo.A_TIEMPO){
-		    	
+		    	double minutosRetraso = (double) Duration.between(horaVuelo, ahora).toMinutes();
+		        v.setRetraso(minutosRetraso);
 		        v.cambiarEstado(EstadoVuelo.RETRASADO);
 				for(ControladorAereo controlador: v.getTerminal().getControladores()) {
 		        	controlador.recibirNotificacionCambioEstado(v);
@@ -144,6 +145,7 @@ public class AirportManager implements Serializable {
 		    long minutosRestantes = Duration.between(ahora, horaVuelo).toMinutes(); 
 		    if ((v.getEstado() == EstadoVuelo.OPERATIVO || v.getEstado() == EstadoVuelo.ATERRIZAJE || v.getEstado() == EstadoVuelo.ACEPTADO|| 
 		    		v.getEstado() == EstadoVuelo.A_TIEMPO || v.getEstado() == EstadoVuelo.RETRASADO) && minutosRestantes > 45) {
+		    	v.setRetraso(0);
 		        v.cambiarEstado(EstadoVuelo.A_TIEMPO);
 		    } else{
 		        v.cambiarEstado(EstadoVuelo.RETRASADO);
@@ -174,17 +176,18 @@ public class AirportManager implements Serializable {
 	public void iniciarActualizacionCada5Min(Vuelo v) {
         Timer timer = new Timer();
 
-        timer.scheduleAtFixedRate(new TimerTask() {
+        TimerTask tarea = new TimerTask(){
             @Override
             public void run() {
-                if (LocalTime.now().isAfter(v.getHora().minusMinutes(42))) {
+                if (LocalTime.now().isAfter(v.getHora().minus(Duration.ofMinutes(41).minusSeconds(58)))) {
                     timer.cancel();
                     System.out.println("El vuelo ha alcanzado el estado VUELO o ATERRIZAJE, deteniendo las actualizaciones.");
                     return;
                 }
                 actualizarEstadoVueloAutomatico(v);
             }
-        }, 0,1 * 60 * 1000); 
+        };
+        timer.scheduleAtFixedRate(tarea, 0, 5 * 60 * 1000);
     }
 
      /**
@@ -301,7 +304,7 @@ public class AirportManager implements Serializable {
      * @param v2                            Segundo vuelo
      * @return un número positivo si el segundo vuelo tiene más prioridad o un número negativo si el primer vuelo tiene más prioridad.
      */
-    public int compararVuelos(Vuelo v1, Vuelo v2) {
+    public double compararVuelos(Vuelo v1, Vuelo v2) {
 
         Boolean esPasajero1, esPasajero2;
         int pasajeros1 = 0, pasajeros2 = 0;

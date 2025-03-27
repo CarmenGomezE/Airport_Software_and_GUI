@@ -185,7 +185,7 @@ public class ControladorAereo extends UsuarioConDni {
             System.out.println("Advertencia: " + e.getMessage());
             return;
         }
-        
+       
         PuertaEmbarque puerta = vuelo.getPuertaEmbarque();
 
         if (vueloNuevo.getTipoModoEmbarque() == vuelo.getTipoModoEmbarque()) {
@@ -341,6 +341,7 @@ public class ControladorAereo extends UsuarioConDni {
 
         liberarModoEmbarque(vuelo);
         hangar.addAvion(vuelo.getAvion());
+        hangar.addHorasUso(1);
         liberarAvion(vuelo);
         vuelo.cambiarEstado(EstadoVuelo.AVION_A_HANGAR);
         
@@ -597,6 +598,7 @@ public class ControladorAereo extends UsuarioConDni {
 
         modo.setVuelo(vuelo);
         vuelo.setModoEmbarque(modo);
+        modo.addHorasUso(1);
     }
 
     /**
@@ -682,6 +684,7 @@ public class ControladorAereo extends UsuarioConDni {
 
         puerta.setVuelo(vuelo);
         vuelo.setPuertaEmbarque(puerta);
+        puerta.addHorasUso(1);
     }
 
     /**

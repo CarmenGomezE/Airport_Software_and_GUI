@@ -23,7 +23,7 @@ public class Vuelo extends VueloProgramado {
     /** El historial de estados del vuelo */
     private HistorialEstadoVuelo historialEstadoVuelo;
     /** El tiempo de retraso del vuelo */
-    private int tiempoRetraso;
+    private double tiempoRetraso;
     /** El modo de embarque del vuelo */
     private ModoEmbarque modoEmbarque;
     /** La puerta de embarque del vuelo */
@@ -62,7 +62,7 @@ public class Vuelo extends VueloProgramado {
         super(codigo, fecha, fechaInicio, fechaFinal, hora, diasRecurrente, tipoCarga, tipoModoEmbarque, periodicidad,
                 tipoVuelo, avion, aeropuertoDestino, aeropuertoSalida, escala);
         this.historialEstadoVuelo = new HistorialEstadoVuelo();
-        this.tiempoRetraso = 0;
+        this.tiempoRetraso = -1;
         this.puertaEmbarque = null;
         this.terminal = null;
         this.controladorAereo = null;
@@ -97,7 +97,7 @@ public class Vuelo extends VueloProgramado {
      * 
      * @return Tiempo de retraso del vuelo.
      */
-    public int getRetraso() {
+    public double getRetraso() {
         return this.tiempoRetraso;
     }
 
@@ -106,8 +106,8 @@ public class Vuelo extends VueloProgramado {
      * 
      * @return Tiempo de retraso del vuelo.
      */
-    public void addRetraso(int retraso) {
-        this.tiempoRetraso += retraso;
+    public void setRetraso(double retraso) {
+        this.tiempoRetraso = retraso;
     }
 
     /**

@@ -45,55 +45,68 @@ public class EstadisticasOperador implements Serializable {
      * 
      */
     public void cargarDatosEstadisticasTiempoMedio() {
-        Map<Month, List<Integer>> retrasosPorMes = new HashMap<>();
-        Map<ZoneId, List<Integer>> retrasosPorFranjaHoraria = new HashMap<>();
-        Map<Vuelo, List<Integer>> retrasosPorVuelo = new HashMap<>();
+        Map<Month, List<Double>> retrasosPorMes = new HashMap<>();
+        Map<ZoneId, List<Double>> retrasosPorFranjaHoraria = new HashMap<>();
+        Map<Vuelo, List<Double>> retrasosPorVuelo = new HashMap<>();
 
-        for (Vuelo vuelo : operador.getAerolinea().getVuelos()) {
+        for (Vuelo vuelo : operador.getGestor().getAeropuerto().getVuelosAceptados()) {
             Month mes = vuelo.getFecha().getMonth();
             ZoneId franjaHoraria = vuelo.getAeropuertoDestino().getDiferenciaHoraria();
-            int retraso = vuelo.getRetraso();
+            double retraso = vuelo.getRetraso();
+            
+            if (retraso >= 0) {
+                if (!retrasosPorMes.containsKey(mes)) {
+                    retrasosPorMes.put(mes, new ArrayList<>());
+                }
+                retrasosPorMes.get(mes).add(retraso);
 
-            retrasosPorMes.putIfAbsent(mes, new ArrayList<>());
-            retrasosPorMes.get(mes).add(retraso);
+                if (!retrasosPorFranjaHoraria.containsKey(franjaHoraria)) {
+                    retrasosPorFranjaHoraria.put(franjaHoraria, new ArrayList<>());
+                }
+                retrasosPorFranjaHoraria.get(franjaHoraria).add(retraso);
 
-            retrasosPorFranjaHoraria.putIfAbsent(franjaHoraria, new ArrayList<>());
-            retrasosPorFranjaHoraria.get(franjaHoraria).add(retraso);
-
-            retrasosPorVuelo.putIfAbsent(vuelo, new ArrayList<>());
-            retrasosPorVuelo.get(vuelo).add(retraso);
+                if (!retrasosPorVuelo.containsKey(vuelo)) {
+                    retrasosPorVuelo.put(vuelo, new ArrayList<>());
+                }
+                retrasosPorVuelo.get(vuelo).add(retraso);
+            }
         }
 
-        for (Month mes : retrasosPorMes.keySet()) {
-            tiempoMedioRetrasoPorMes.put(mes, calcularMedia(retrasosPorMes.get(mes)));
+        if (!retrasosPorMes.isEmpty()) {
+            for (Month mes : retrasosPorMes.keySet()) {
+                tiempoMedioRetrasoPorMes.put(mes, calcularMedia(retrasosPorMes.get(mes)));
+            }
         }
 
-        for (ZoneId franja : retrasosPorFranjaHoraria.keySet()) {
-            tiempoMedioRetrasoPorFranjaHoraria.put(franja, calcularMedia(retrasosPorFranjaHoraria.get(franja)));
+        if (!retrasosPorFranjaHoraria.isEmpty()) {
+            for (ZoneId franja : retrasosPorFranjaHoraria.keySet()) {
+                tiempoMedioRetrasoPorFranjaHoraria.put(franja, calcularMedia(retrasosPorFranjaHoraria.get(franja)));
+            }
         }
 
-        for (Vuelo vuelo : retrasosPorVuelo.keySet()) {
-            tiempoMedioRetrasoPorVuelo.put(vuelo, calcularMedia(retrasosPorVuelo.get(vuelo)));
+        if (!retrasosPorVuelo.isEmpty()) {
+            for (Vuelo vuelo : retrasosPorVuelo.keySet()) {
+                tiempoMedioRetrasoPorVuelo.put(vuelo, calcularMedia(retrasosPorVuelo.get(vuelo)));
+            }
         }
-
     }
 
     /**
      * Método que genera los datos de tiempos medios.
      * 
-     * @param retrasos Lista de todos los retrasos registrados.
+     * @param list Lista de todos los retrasos registrados.
      * @return La media de retraso.
      */
-    public double calcularMedia(List<Integer> retrasos) {
-        if (retrasos.isEmpty()) {
+    public double calcularMedia(List<Double> list) {
+        if (list.isEmpty()) {
             return 0;
         }
 
         double suma = 0;
-        for (int retraso : retrasos) {
+        for (double retraso : list) {
             suma += retraso;
         }
-        return suma / retrasos.size();
+        return (double) suma / list.size();
     }
 
     /**
@@ -172,7 +185,7 @@ public class EstadisticasOperador implements Serializable {
      * 
      */
     public void imprimirNumeroVuelosRetrasados() {
-        System.out.println("Número de vuelos en hora: " + numeroVuelosRetrasados());
+        System.out.println("Número de vuelos retrasados: " + numeroVuelosRetrasados());
     }
 
     /**
@@ -188,8 +201,7 @@ public class EstadisticasOperador implements Serializable {
      * 
      */
     public void imprimirTiempoMedioRetraso(ZoneId franjaHoraria) {
-        System.out
-                .println("Tiempo medio de retraso: " + getTiempoMedioRetrasoPorFranjaHoraria(franjaHoraria) + " minutos.");
+        System.out.println("Tiempo medio de retraso: " + getTiempoMedioRetrasoPorFranjaHoraria(franjaHoraria) + " minutos.");
     }
 
     /**

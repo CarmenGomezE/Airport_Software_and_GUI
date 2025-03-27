@@ -103,12 +103,12 @@ public class AirportManagerMain {
         verListaVuelosDia();
         
         System.out.println("\n*********************************************************************************************************************");
-        System.out.println("\n8.- Ver estadísticas.");
-        verEstadisticas();
+        System.out.println("\n8.- Cambiar el estado de los vuelos.");
+        cambiarEstadoVuelo();
         
         System.out.println("\n*********************************************************************************************************************");
-        System.out.println("\n9.- Cambiar el estado de los vuelos.");
-        cambiarEstadoVuelo();
+        System.out.println("\n9.- Ver estadísticas.");
+        verEstadisticas();
         
         System.out.println("\n*********************************************************************************************************************");
         System.out.println("\n10.- Emisión y pago de facturas.");
@@ -591,6 +591,7 @@ public class AirportManagerMain {
 		System.out.println("Iniciando pago de la factura " + facturaIberia.getInvoiceIdentifier() + " con tarjeta de crédito: " + numeroTarjeta);
 		operadorRyanair.pagarFactura(facturaIberia, numeroTarjeta);
 		System.out.println("Pago de la factura realizado con éxito.");
+		gestorBarajas.verEstadoFactura(facturaIberia);
 		
 		System.out.println("Proceso de creación de facturas finalizado.");
 	}
@@ -865,9 +866,9 @@ public class AirportManagerMain {
     	System.out.println("Estadísticas del operador de Iberia.");
     	operadorIberia.getEstadisticasOperador().imprimirNumeroVuelosEnHora();
     	operadorIberia.getEstadisticasOperador().imprimirNumeroVuelosRetrasados();
-    	operadorIberia.getEstadisticasOperador().imprimirTiempoMedioRetraso(Month.APRIL);
+    	operadorIberia.getEstadisticasOperador().imprimirTiempoMedioRetraso(Month.MARCH);
     	operadorIberia.getEstadisticasOperador().imprimirTiempoMedioRetraso(ZoneId.of("Europe/Madrid"));
-    	operadorIberia.getEstadisticasOperador().imprimirTiempoMedioRetraso(airportManager.getAeropuerto().getVuelosAceptados().get(2));
+    	operadorIberia.getEstadisticasOperador().imprimirTiempoMedioRetraso(airportManager.getAeropuerto().getVuelosAceptados().get(6));
     	
     	System.out.println("\nEstadísticas del gestor de Barajas.");
     	gestorBarajas.getEstadisticasAeropuerto().imprimirUsoMedioFingers();
