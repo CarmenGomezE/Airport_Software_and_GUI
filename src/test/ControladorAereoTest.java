@@ -232,6 +232,7 @@ class ControladorAereoTest {
 	   
 	    controlador.getNotificaciones().clear();
 	    
+	    vuelo1.cambiarEstado(EstadoVuelo.A_TIEMPO);
 	    
 	    assertDoesNotThrow(() -> {
 	        controlador.cambiarEstadoVuelo(vuelo1, EstadoVuelo.ESPERANDO_PISTA_DE_DESPEGUE);
