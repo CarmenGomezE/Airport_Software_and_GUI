@@ -27,8 +27,11 @@ import src.airportmanager.vuelo.TipoVuelo;
 import src.airportmanager.vuelo.Vuelo;
 import src.airportmanager.factura.*;;
 
+/**
+ * Clase de test de aerolinea.
+ */
 public class AerolineaTest {
-
+	
     Aerolinea aerolinea;
     Operador operador;
     AeropuertoPropio aeropuerto;
@@ -44,6 +47,12 @@ public class AerolineaTest {
     Date fechaAvion;
     Calendar calendar;
 
+    /**
+	 * Constructor
+	 */
+	public AerolineaTest() {
+		
+	}
 
     @BeforeEach
     void setUp() {

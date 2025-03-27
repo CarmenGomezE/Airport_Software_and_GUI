@@ -27,7 +27,13 @@ public class TerminalMercanciasTest {
     AeropuertoPropio aeropuertoPropio;
     ZoneOffset zone;
     Gestor gestor;
-
+    /**
+	 * Constructor
+	 */
+	public TerminalMercanciasTest() {
+		
+	}
+	
     /**
      * Crea objetos
      */

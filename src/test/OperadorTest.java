@@ -64,6 +64,13 @@ class OperadorTest {
 	private AvionMercancias avionMercancias;
 	
 	/**
+	 * Constructor
+	 */
+	public OperadorTest() {
+		
+	}
+	
+	/**
      * CreaObjetos
      */
 	@BeforeEach

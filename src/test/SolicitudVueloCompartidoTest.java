@@ -25,7 +25,14 @@ public class SolicitudVueloCompartidoTest {
     private SolicitudVueloCompartido solicitud;
     private AirportManager sistema;
     private Aerolinea aerolinea1, aerolinea2;
-
+    
+    /**
+	 * Constructor
+	 */
+	public SolicitudVueloCompartidoTest() {
+		
+	}
+	
     /**
      * Crea objetos
      */

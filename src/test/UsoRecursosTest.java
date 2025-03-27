@@ -7,10 +7,18 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import src.airportmanager.factura.*;
-
+/**
+ * Clase de test de uso de resursos.
+ */
 class UsoRecursosTest {
 	private UsoRecursos uso;
-
+	/**
+	 * Constructor
+	 */
+	public UsoRecursosTest() {
+		
+	}
+	
 	@BeforeEach
 	void setUp()  {
 		

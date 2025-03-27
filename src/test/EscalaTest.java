@@ -26,6 +26,12 @@ class EscalaTest {
 	 AeropuertoDestino aeropuertoDestino;
 	 ZoneOffset zone;
 
+	 /**
+	 * Constructor
+	 */
+	public EscalaTest() {
+		
+	}
 	/**
 	 *Crea objetos necesarios
 	 */

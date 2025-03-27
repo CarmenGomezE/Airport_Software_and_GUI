@@ -17,6 +17,13 @@ class TemporadaTest {
 	Temporada temporada, temporada2, temporada3;
 
 	/**
+	 * Constructor
+	 */
+	public TemporadaTest() {
+		
+	}
+	
+	/**
 	 * Crea objetos
 	 */
 	@BeforeEach

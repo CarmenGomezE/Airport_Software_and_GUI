@@ -30,6 +30,13 @@ public class EstadisticasGestorTest {
     private List<PuertaEmbarque> puertas;
 
     /**
+	 * Constructor
+	 */
+	public EstadisticasGestorTest() {
+		
+	}
+	
+    /**
      * Crea objetos
      * @throws TemporadasSolapadasException
      */

@@ -31,6 +31,13 @@ public class AirportManagerTest {
     private Aerolinea aerolinea;
 
     /**
+	 * Constructor
+	 */
+	public AirportManagerTest() {
+		
+	}
+	
+    /**
      * CreaObjetis
      * @throws TemporadasSolapadasException
      */

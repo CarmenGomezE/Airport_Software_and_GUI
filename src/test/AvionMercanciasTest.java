@@ -8,10 +8,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import src.airportmanager.avion.AvionMercancias;
-
+/**
+ * Clase de test de avion de mercancias.
+ */
 class AvionMercanciasTest {
 	
 	private AvionMercancias avionMercancias;
+	
+	/**
+	 * Constructor
+	 */
+	public AvionMercanciasTest() {
+		
+	}
 
 	@BeforeEach
 	void setUp(){

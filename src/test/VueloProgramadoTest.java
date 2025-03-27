@@ -28,6 +28,12 @@ class VueloProgramadoTest {
 	private VueloProgramado vuelo1, vuelo2;
 	private List<DayOfWeek> diasRecurrentes;
 	private Escala escala;
+	/**
+	 * Constructor
+	 */
+	public VueloProgramadoTest() {
+		
+	}
 	
 	/**
 	 * Crea objetos necesarios

@@ -31,6 +31,12 @@ import src.airportmanager.vuelo.Vuelo;
  * PuertaEmbarqueTest
  */
 public class PuertaEmbarqueTest {
+	/**
+	 * Constructor
+	 */
+	public PuertaEmbarqueTest() {
+		
+	}
     PuertaEmbarque puerta1, puerta2;
     ZonaAparcamiento zona1, zona2;
     List<ZonaAparcamiento> zonas;

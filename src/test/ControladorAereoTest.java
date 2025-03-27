@@ -94,6 +94,13 @@ class ControladorAereoTest {
     private ByteArrayOutputStream salidaConsola;
 
     /**
+	 * Constructor
+	 */
+	public ControladorAereoTest() {
+		
+	}
+	
+    /**
      * CreaObjetos
      * @throws Exception
      */

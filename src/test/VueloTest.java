@@ -37,7 +37,7 @@ import src.airportmanager.usuario.Operador;
 
 
 /**
- * 
+ * Vuelo
  */
 class VueloTest {
 
@@ -62,6 +62,12 @@ class VueloTest {
 	private Escala escala;
 	private List<DayOfWeek> dias;
 	private List<PuertaEmbarque> puertasList;
+	/**
+	 * Constructor
+	 */
+	public VueloTest() {
+		
+	}
 	
 	@BeforeEach
 	void setUp() {

@@ -34,7 +34,13 @@ class HangarPasajerosTest{
     private Aerolinea aerolinea;
     private Gestor gestor;
     private AirportManager sistema;
-
+    
+    /**
+	 * Constructor
+	 */
+	public HangarPasajerosTest() {
+		
+	}
     /**
      * CreaObjetos
      */

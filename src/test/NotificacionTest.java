@@ -18,6 +18,13 @@ class NotificacionTest{
     LocalDateTime ahora;
 
     /**
+	 * Constructor
+	 */
+	public NotificacionTest() {
+		
+	}
+	
+    /**
      * CreaObjetos
      */
     @BeforeEach

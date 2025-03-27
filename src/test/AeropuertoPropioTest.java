@@ -53,6 +53,12 @@ class AeropuertoPropioTest {
 	private List<Temporada> temporadas;
 	
 	/**
+	 * Constructor
+	 */
+	public AeropuertoPropioTest() {
+		
+	}
+	/**
 	 * Crea objetos
 	 */
 	@BeforeEach

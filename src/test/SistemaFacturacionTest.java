@@ -43,6 +43,12 @@ class SistemaFacturacionTest {
     private List<PuertaEmbarque> puertasList;
 
     /**
+	 * Constructor
+	 */
+	public SistemaFacturacionTest() {
+		
+	}
+    /**
      * Crea objetos
      */
     @BeforeEach

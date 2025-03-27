@@ -36,6 +36,13 @@ public class GestorTest {
     private Vuelo vuelo;
 
     /**
+	 * Constructor
+	 */
+	public GestorTest() {
+		
+	}
+	
+    /**
      * CreaObjetos
      * @throws TemporadasSolapadasException
      */

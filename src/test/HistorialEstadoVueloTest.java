@@ -15,7 +15,13 @@ public class HistorialEstadoVueloTest {
     private final LocalTime hora1 = LocalTime.of(10, 0);
     private final LocalTime hora2 = LocalTime.of(11, 30);
     private final LocalTime hora3 = LocalTime.of(12, 45);
-
+    /**
+	 * Constructor
+	 */
+	public HistorialEstadoVueloTest() {
+		
+	}
+	
     /**
      * Crea objetos
      */

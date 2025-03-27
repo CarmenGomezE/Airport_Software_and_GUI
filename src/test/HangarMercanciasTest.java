@@ -35,7 +35,14 @@ class HangarMercanciasTest{
     private Gestor gestor;
     private AirportManager sistema;
     private Vuelo vueloConMercaPeligrosa, vueloSinMercaPeligrosa;
-
+    
+    /**
+	 * Constructor
+	 */
+	public HangarMercanciasTest() {
+		
+	}
+	
     /**
      * Crea Objetos
      */

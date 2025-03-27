@@ -23,6 +23,13 @@ class FingerTest{
     PuertaEmbarque puerta1, puerta2, p1, p2;
     Set<PuertaEmbarque> puertas, puertasEsperadas, p;
 
+    /**
+	 * Constructor
+	 */
+	public FingerTest() {
+		
+	}
+	
     @BeforeEach
     void setUp() {
         

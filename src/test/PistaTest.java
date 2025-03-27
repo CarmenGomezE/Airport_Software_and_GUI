@@ -52,7 +52,13 @@ class PistaTest {
     private Aerolinea aerolinea;
     private Gestor gestor;
     private AirportManager sistema;
-
+    
+    /**
+	 * Constructor
+	 */
+	public PistaTest() {
+		
+	}
 	/**
 	 * Crea objetos necesarios
 	 */

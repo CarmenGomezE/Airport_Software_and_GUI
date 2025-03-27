@@ -36,7 +36,12 @@ class ZonaAparcamientoTest{
     Aerolinea aerolinea;
     Gestor gestor;
     AirportManager sistema;
-
+    /**
+	 * Constructor
+	 */
+	public ZonaAparcamientoTest() {
+		
+	}
     /**
      * Crea objetos necesarios
      */

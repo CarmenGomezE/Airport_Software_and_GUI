@@ -29,6 +29,13 @@ public class EstadisticasOperadorTest {
     private AirportManager sistema;
 
     /**
+	 * Constructor
+	 */
+	public EstadisticasOperadorTest() {
+		
+	}
+	
+    /**
      * Crea objetos
      * @throws TemporadasSolapadasException
      */

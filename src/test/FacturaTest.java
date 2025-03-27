@@ -28,6 +28,13 @@ class FacturaTest{
 	private UsoRecursos recurso1, recurso2;
 	
 	/**
+	 * Constructor
+	 */
+	public FacturaTest() {
+		
+	}
+	
+	/**
 	 * Crea los objetos necesarios
 	 */
 	@BeforeEach

@@ -28,7 +28,13 @@ public class TerminalPasajerosTest {
     ZoneOffset zone;
     Gestor gestor;
     AirportManager sistema;
-
+    /**
+	 * Constructor
+	 */
+	public TerminalPasajerosTest() {
+		
+	}
+	
    /**
     * Crea objetos necesarios
     */

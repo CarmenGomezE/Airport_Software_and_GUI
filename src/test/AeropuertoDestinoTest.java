@@ -23,6 +23,12 @@ class AeropuertoDestinoTest {
 	private List<Temporada> temporadas;
 	
 	/**
+	 * Constructor
+	 */
+	public AeropuertoDestinoTest() {
+		
+	}
+	/**
 	 * Crea objetos
 	 */
 	@BeforeEach
