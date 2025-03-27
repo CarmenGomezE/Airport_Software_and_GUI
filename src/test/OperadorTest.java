@@ -107,13 +107,14 @@ class OperadorTest {
 		gestor = new Gestor("Lorena", "Lore76", aeropuertoPropio, sistema);
 		controlador = new ControladorAereo("Juan Pedro", "56872372J", "Juanpe44", aeropuertoPropio, gestor, terminal1, sistema);
 		operador = new Operador("Miguel", "56098976M", aerolinea1, aeropuertoPropio, gestor, sistema);
+		aerolinea1.setOperador(operador);
 		operadorPrincipal = new Operador("Principal", "12345678A", aerolinea1, aeropuertoPropio, gestor, sistema);
 		usuarios = new ArrayList<>();
 		usuarios.add(gestor);
 		usuarios.add(operador);
 		usuarios.add(controlador);
 		
-		avion = new Avion("AIRBUS", "AIR7", 87.0, 67.9, 54.2, 900000, 2021, new Date(), "PSJWU78");
+		avion = new AvionPasajeros("AIRBUS", "AIR7", 87.0, 67.9, 54.2, 900000, 2021, new Date(), "PSJWU78", 0);
 		vuelo1 = new Vuelo("V123", LocalDate.of(2023, 5, 12), null, null, LocalTime.of(7, 30), null, TipoCarga.PASAJEROS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO, Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avion, aeropuertoDestino1, aeropuertoPropio, null, operadorPrincipal);
 		vuelo2 = new Vuelo("V132", LocalDate.of(2024, 5, 12), null, null, LocalTime.of(10, 30), null, TipoCarga.PASAJEROS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO, Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avion, aeropuertoDestino1, aeropuertoPropio, null, operador);
 		vuelos = new ArrayList<>();
@@ -197,19 +198,20 @@ class OperadorTest {
 
 	@Test
 	void testProponerVuelo() {
-	    
-	    int minAntelacion = 60; 
-	    LocalDate fechaFutura = LocalDate.now().plusDays(minAntelacion);
+	    LocalDate fechaFutura = LocalDate.now().plusDays(60);
+	    LocalTime hora = LocalTime.of(12, 30);
 
-	    AvionPasajeros avionDisponible = new AvionPasajeros("BOEING", "B737", 80.0, 70.0, 50.0, 
-	        800000, 2020, new Date(), "ABCD123", 180);
+	    Avion avionLibre = avionPasajeros; 
+	    avionLibre.setAerolinea(aerolinea1);
 
 	    assertDoesNotThrow(() -> {
-	        operador.proponerVuelo("V456", fechaFutura, null, null, 
-	            LocalTime.of(12, 30), null, TipoCarga.PASAJEROS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO, 
-	            Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionDisponible, aeropuertoDestino1, 
-	            aeropuertoPropio, null);
-	    }, "No debería lanzar excepción para un vuelo de salida válido con antelación suficiente.");
+	        operador.proponerVuelo(
+	            "V456", fechaFutura, null, null, hora, 
+	            null, TipoCarga.PASAJEROS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO, 
+	            Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionLibre, 
+	            aeropuertoDestino1, aeropuertoPropio, null
+	        );
+	    });
 	}
 
 
@@ -256,7 +258,8 @@ class OperadorTest {
 	    
 	    assertFalse(operador.getDecisionTomada(), "No debería haberse tomado decisión inicialmente");
 	    
-	  
+	    operador.recibirAlternativas(List.of(vuelo1));
+	    
 	    assertDoesNotThrow(() -> {
 	        operador.aceptarVuelo(vuelo1);
 	    }, "No debería lanzar excepción al aceptar vuelo");
@@ -268,7 +271,7 @@ class OperadorTest {
 	    vuelo2.setTerminal(terminal);
 	    vuelo2.setControlador(controlador);
 	    
-	
+	    operador.recibirAlternativas(List.of(vuelo2));
 	    operador.aceptarVuelo(vuelo2); 
 	    
 
