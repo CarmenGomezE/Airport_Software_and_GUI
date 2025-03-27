@@ -243,9 +243,14 @@ class AeropuertoPropioTest {
 
 	@Test
 	void testCalcularHorasEntre() {
-		fail("Not yet implemented");
+		LocalTime horaInicio = LocalTime.of(8, 0); 
+        LocalTime horaFin = LocalTime.of(20, 0);   
+        
+        double horasCalculadas = aeropuertoPropio.calcularHorasEntre(horaInicio, horaFin);
+        
+        assertEquals(12.0, horasCalculadas, 0.001, "Deberían ser 12 horas exactas");
 	}
-
+	
 	@Test
 	void testGetNombre() {
 		assertEquals("Barajas", aeropuertoPropio.getNombre(), "Error el nombre no es correcto");
