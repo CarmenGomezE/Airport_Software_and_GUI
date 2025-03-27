@@ -110,4 +110,58 @@ public class SistemaFacturacion implements Serializable {
     public String generarCodigoFactura(Aerolinea aerolinea) {
         return aerolinea.getCodigo() + String.format("%06d", contadorFactura++);
     }
+    
+    /**
+     * Método para obtener el coste base de un vuelo de salida.
+     * 
+     * @return El coste base de un vuelo de salida.
+     */
+    public double getCosteBaseVueloSalida() {
+    	return costeBaseVueloSalida;
+    }
+    
+    /**
+     * Método para obtener el coste base de un vuelo de llegada.
+     * 
+     * @return El coste base de un vuelo de llegada.
+     */
+    public double getCosteBaseVueloLlegada() {
+    	return costeBaseVueloLlegada;
+    }
+    
+    /**
+     * Método para obtener el recargo de un avión de mercancías.
+     * 
+     * @return El recargo de un avión de mercancías.
+     */
+    public double getRecargoAvionMercancias() {
+    	return recargoAvionMercancias;
+    }
+    
+    /**
+     * Método para modificar el coste base de un vuelo de salida..
+     * 
+     * @param costeBaseVueloSalida El coste base de un vuelo de salida.
+     */
+    public void setCosteBaseVueloSalida(double costeBaseVueloSalida) {
+        this.costeBaseVueloSalida = costeBaseVueloSalida;
+    }
+
+    /**
+     * Método para modificar el coste base de un vuelo de llegada..
+     * 
+     * @param costeBaseVueloLlegada El coste base de un vuelo de llegada.
+     */
+    public void setCosteBaseVueloLlegada(double costeBaseVueloLlegada) {
+        this.costeBaseVueloLlegada = costeBaseVueloLlegada;
+    }
+
+    /**
+     * Método para modificar el recargo de un avión de mercancías.
+     * 
+     * @param recargoAvionMercancias El recargo de un avión de mercancías.
+     */
+    public void setRecargoAvionMercancias(double recargoAvionMercancias) {
+        this.recargoAvionMercancias = recargoAvionMercancias;
+    }
 }

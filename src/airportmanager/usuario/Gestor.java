@@ -175,7 +175,7 @@ public class Gestor extends Usuario {
 
         if (usuario != null) {
             notificacion = new Notificacion("Problema con la contraseña. Contacta con el gestor", TipoNotificacion.OLVIDO_CONTRASENA);
-            notificaciones.add(notificacion);
+            usuario.recibirNotificacion(notificacion);
         }
 
         else {
@@ -863,8 +863,11 @@ public class Gestor extends Usuario {
      * @param nuevocosteBaseVueloSalida El nuevo coste base para los vuelos de
      *                                  salida.
      */
-    public static void setCosteBaseVueloSalida(double nuevocosteBaseVueloSalida) {
-        costeBaseVueloSalida = nuevocosteBaseVueloSalida;
+    public  void setCosteBaseVueloSalida(double nuevocosteBaseVueloSalida) {
+    	costeBaseVueloSalida = nuevocosteBaseVueloSalida;
+        if (sistemaFacturacion != null) {
+            sistemaFacturacion.setCosteBaseVueloSalida(nuevocosteBaseVueloSalida);
+        }
     }
 
     /**
@@ -873,8 +876,11 @@ public class Gestor extends Usuario {
      * @param nuevocosteBaseVueloLlegada El nuevo coste base para los vuelos de
      *                                   llegada.
      */
-    public static void setCosteBaseVueloLlegada(double nuevocosteBaseVueloLlegada) {
-        costeBaseVueloLlegada = nuevocosteBaseVueloLlegada;
+    public void setCosteBaseVueloLlegada(double nuevocosteBaseVueloLlegada) {
+    	costeBaseVueloLlegada = nuevocosteBaseVueloLlegada;
+        if (sistemaFacturacion != null) {
+            sistemaFacturacion.setCosteBaseVueloLlegada(nuevocosteBaseVueloLlegada);
+        }
     }
 
     /**
@@ -884,8 +890,11 @@ public class Gestor extends Usuario {
      * @param nuevorecargoAvionMercancias El nuevo recargo que se aplicará a los
      *                                    vuelos de aviones de mercancías.
      */
-    public static void setRecargoAvionMercancias(double nuevorecargoAvionMercancias) {
-        recargoAvionMercancias = nuevorecargoAvionMercancias;
+    public void setRecargoAvionMercancias(double nuevorecargoAvionMercancias) {
+    	recargoAvionMercancias = nuevorecargoAvionMercancias;
+        if (sistemaFacturacion != null) {
+            sistemaFacturacion.setRecargoAvionMercancias(nuevorecargoAvionMercancias);
+        }
     }
 
     /**
