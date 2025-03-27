@@ -108,7 +108,6 @@ public class Operador extends UsuarioConDni {
         if (vuelo == null || estado == null) {
             throw new IllegalArgumentException("El vuelo y el nuevo estado no pueden ser null");
         }
-        sistema.actualizarEstadoVueloAutomatico(vuelo);
 
         if (vuelo.getOperadorPrincipal()!=this) {
             throw new VueloNoDelUsuarioException("Este vuelo no está asignado a este usuario");
@@ -116,23 +115,18 @@ public class Operador extends UsuarioConDni {
 
         switch (estado) {
             case EN_PREPARACION_PARA_DESPEGAR:
-            	System.out.println("He entrado en preparacion.");
                 this.cambiarEstadoEnPreparacionDespegar(vuelo);
                 break;
             case INICIO_DEL_EMBARQUE:
-            	System.out.println("He entrado en embarque.");
                 this.cambiarEstadoInicioEmbarque(vuelo);
                 break;
             case FIN_DEL_EMBARQUE:
-            	System.out.println("He entrado en fin embarque.");
                 this.cambiarEstadoFinEmbarque(vuelo);
                 break;
             case INICIO_DEL_DESEMBARQUE:
-            	System.out.println("He entrado en desembarque.");
                 this.cambiarEstadoInicioDesembarque(vuelo);
                 break;
             case FIN_DEL_DESEMBARQUE:
-            	System.out.println("He entrado en fin desembarque.");
                 this.cambiarEstadoFinDesembarque(vuelo);
                 break;
             default:
@@ -147,12 +141,23 @@ public class Operador extends UsuarioConDni {
      * @throws EstadoEquivocadoException 
      */
     private void cambiarEstadoEnPreparacionDespegar(Vuelo vuelo) throws EstadoEquivocadoException {
-        if (vuelo.getEstado() != EstadoVuelo.OPERATIVO && vuelo.getEstado() != EstadoVuelo.A_TIEMPO && vuelo.getEstado() != EstadoVuelo.RETRASADO) {
+        if (vuelo.getEstado() != EstadoVuelo.OPERATIVO && vuelo.getEstado() != EstadoVuelo.A_TIEMPO && vuelo.getEstado() != EstadoVuelo.RETRASADO 
+        		&& vuelo.getEstado() != EstadoVuelo.ACEPTADO) {
         	  throw new EstadoEquivocadoException("El vuelo no está en el estado correcto para cambiar a este estado");
         }
         else {
             vuelo.cambiarEstado(EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR);
+            sistema.iniciarActualizacionCada5Min(vuelo);
         }
+        for(ControladorAereo controlador: vuelo.getTerminal().getControladores()) {
+        	controlador.recibirNotificacionCambioEstado(vuelo);
+        }
+        
+        for (Operador o : vuelo.getOperadores()) {
+            o.recibirNotificacionCambioEstado(vuelo);
+        }
+        gestor.recibirNotificacion(new Notificacion("El vuelo " + vuelo.getCodigo() + " ha cambiado su estado a " + vuelo.getEstado() + ".", TipoNotificacion.CAMBIO_ESTADO_VUELO));
+
     }
 
     /**
@@ -190,6 +195,15 @@ public class Operador extends UsuarioConDni {
                 }
             }
         }
+        for(ControladorAereo controlador: vuelo.getTerminal().getControladores()) {
+        	controlador.recibirNotificacionCambioEstado(vuelo);
+        }
+        
+        for (Operador o : vuelo.getOperadores()) {
+            o.recibirNotificacionCambioEstado(vuelo);
+        }
+        gestor.recibirNotificacion(new Notificacion("El vuelo " + vuelo.getCodigo() + " ha cambiado su estado a " + vuelo.getEstado() + ".", TipoNotificacion.CAMBIO_ESTADO_VUELO));
+
     }
 
     /**
@@ -205,6 +219,15 @@ public class Operador extends UsuarioConDni {
         else {
             vuelo.cambiarEstado(EstadoVuelo.FIN_DEL_EMBARQUE);
         }
+        for(ControladorAereo controlador: vuelo.getTerminal().getControladores()) {
+        	controlador.recibirNotificacionCambioEstado(vuelo);
+        }
+        
+        for (Operador o : vuelo.getOperadores()) {
+            o.recibirNotificacionCambioEstado(vuelo);
+        }
+        gestor.recibirNotificacion(new Notificacion("El vuelo " + vuelo.getCodigo() + " ha cambiado su estado a " + vuelo.getEstado() + ".", TipoNotificacion.CAMBIO_ESTADO_VUELO));
+
     }
 
     /**
@@ -220,6 +243,15 @@ public class Operador extends UsuarioConDni {
         else {
             vuelo.cambiarEstado(EstadoVuelo.INICIO_DEL_DESEMBARQUE);
         }
+        for(ControladorAereo controlador: vuelo.getTerminal().getControladores()) {
+        	controlador.recibirNotificacionCambioEstado(vuelo);
+        }
+        
+        for (Operador o : vuelo.getOperadores()) {
+            o.recibirNotificacionCambioEstado(vuelo);
+        }
+        gestor.recibirNotificacion(new Notificacion("El vuelo " + vuelo.getCodigo() + " ha cambiado su estado a " + vuelo.getEstado() + ".", TipoNotificacion.CAMBIO_ESTADO_VUELO));
+
     }
 
     /**
@@ -235,6 +267,15 @@ public class Operador extends UsuarioConDni {
         else {
             vuelo.cambiarEstado(EstadoVuelo.FIN_DEL_DESEMBARQUE);
         }
+        for(ControladorAereo controlador: vuelo.getTerminal().getControladores()) {
+        	controlador.recibirNotificacionCambioEstado(vuelo);
+        }
+        
+        for (Operador o : vuelo.getOperadores()) {
+            o.recibirNotificacionCambioEstado(vuelo);
+        }
+        gestor.recibirNotificacion(new Notificacion("El vuelo " + vuelo.getCodigo() + " ha cambiado su estado a " + vuelo.getEstado() + ".", TipoNotificacion.CAMBIO_ESTADO_VUELO));
+
     }
 
     /**

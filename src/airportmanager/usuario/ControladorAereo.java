@@ -92,39 +92,30 @@ public class ControladorAereo extends UsuarioConDni {
         }
 
         try {
-            sistema.actualizarEstadoVueloAutomatico(vuelo);
-
             if (vuelo.getControlador() != this) {
                 throw new VueloNoDelUsuarioException("Este vuelo no está asignado a este usuario.");
             }
 
             switch (estado) {
                 case ESPERANDO_DESPEGUE:
-                    System.out.println("He entrado en esperando despegue.");
                     cambiarEstadoEsperandoDespegue(vuelo);
                     break;
                 case ESPERANDO_PISTA_DE_DESPEGUE:
-                    System.out.println("He entrado en esperando pista despegue.");
                     cambiarEstadoEsperandoPistaDespegue(vuelo);
                     break;
                 case ESPERANDO_PISTA_DE_ATERRIZAJE:
-                    System.out.println("He entrado en pista de aterrizaje.");
                     cambiarEstadoEsperandoPistaAterrizaje(vuelo);
                     break;
                 case ESPERANDO_ATERRIZAJE:
-                    System.out.println("He entrado en esperando aterrizaje.");
                     cambiarEstadoEsperandoAterrizaje(vuelo);
                     break;
                 case ATERRIZAJE:
-                    System.out.println("He entrado en aterrizaje.");
                     cambiarEstadoAterrizaje(vuelo);
                     break;
                 case AVION_A_HANGAR:
-                    System.out.println("He entrado en avion a hangar.");
                     cambiarEstadoAHangar(vuelo);
                     break;
                 case OPERATIVO:
-                    System.out.println("He entrado en operativo.");
                     cambiarEstadoOperativo(vuelo);
                     break;
                 default:
@@ -440,7 +431,7 @@ public class ControladorAereo extends UsuarioConDni {
     private void cambiarEstadoEsperandoPistaAterrizaje(Vuelo vuelo) throws EstadoEquivocadoException, NoPistasDisponiblesException,
             NoFingerMercanciasException, NoModosPuertasEmbarqueDisponiblesException {
         
-    	if (vuelo.getEstado() != EstadoVuelo.A_TIEMPO && vuelo.getEstado() != EstadoVuelo.RETRASADO) {
+    	if (vuelo.getEstado() != EstadoVuelo.A_TIEMPO && vuelo.getEstado() != EstadoVuelo.RETRASADO && vuelo.getEstado() != EstadoVuelo.ACEPTADO) {
             throw new EstadoEquivocadoException("El vuelo no está en el estado correcto para cambiar a este estado");
         }
         
@@ -515,6 +506,7 @@ public class ControladorAereo extends UsuarioConDni {
         }
 
         vuelo.cambiarEstado(EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE);
+        sistema.iniciarActualizacionCada5Min(vuelo);
         for(ControladorAereo controlador: vuelo.getTerminal().getControladores()) {
         	controlador.recibirNotificacionCambioEstado(vuelo);
         }

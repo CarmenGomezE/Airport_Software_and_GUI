@@ -7,6 +7,8 @@ import java.util.*;
 import src.airportmanager.exceptions.ContrasenaInvalidaException;
 import src.airportmanager.exceptions.TemporadasSolapadasException;
 import src.airportmanager.exceptions.UsuarioNoEncontradoException;
+import src.airportmanager.notificacion.Notificacion;
+import src.airportmanager.notificacion.TipoNotificacion;
 import src.airportmanager.usuario.*;
 import src.airportmanager.vuelo.*;
 import src.airportmanager.aeropuerto.*;
@@ -114,23 +116,8 @@ public class AirportManager implements Serializable {
         
         return contrasena.toString();
     }
-    
-  /** Llama sobre los vuelos del aeropuerto propio */
-    public void actualizarEstadosVuelosAutomaticamente() {
-        List<Vuelo> vuelosOrdenados = ordenarColaVuelos(); 
-    
-        LocalTime horaSalidaBase = LocalTime.now(); 
-        for (int i = 0; i < vuelosOrdenados.size(); i++) {
-            Vuelo vuelo = vuelosOrdenados.get(i);
-            
-            LocalTime nuevaHoraSalida = horaSalidaBase.plusMinutes(i * 5);
-            vuelo.setHora(nuevaHoraSalida);
 
-            actualizarEstadoVueloAutomatico(vuelo);
-        }
-    }    
-
- /**
+    /**
      * Método que actualiza los estados automáticos de los vuelos (A_TIEMPO, RETRASADO, VUELO) teniendo en cuenta la cola de los vuelos en esperando despegue.
      * @param v                             Vuelo al que actualizar sus estados.
      */
@@ -142,19 +129,46 @@ public class AirportManager implements Serializable {
 		    if (ahora.isBefore(horaVuelo)) {
 		        v.cambiarEstado(EstadoVuelo.A_TIEMPO);
 		    } else if (v.getEstado() != EstadoVuelo.ATERRIZAJE || v.getEstado() != EstadoVuelo.OPERATIVO || v.getEstado() != EstadoVuelo.AVION_A_HANGAR
-		    		|| v.getEstado() != EstadoVuelo.RETRASADO){
+		    		|| v.getEstado() != EstadoVuelo.RETRASADO || v.getEstado() == EstadoVuelo.A_TIEMPO){
 		    	
 		        v.cambiarEstado(EstadoVuelo.RETRASADO);
+				for(ControladorAereo controlador: v.getTerminal().getControladores()) {
+		        	controlador.recibirNotificacionCambioEstado(v);
+		        } 
+		        for (Operador o : v.getOperadores()) {
+		            o.recibirNotificacionCambioEstado(v);
+		        }
+		        gestor.recibirNotificacion(new Notificacion("El vuelo " + v.getCodigo() + " ha cambiado su estado a " + v.getEstado() + ".", TipoNotificacion.CAMBIO_ESTADO_VUELO));
 		    }
 		} else if (v.getTipoVuelo() == TipoVuelo.SALIDA) {
 		    long minutosRestantes = Duration.between(ahora, horaVuelo).toMinutes(); 
-		    if ((v.getEstado() == EstadoVuelo.OPERATIVO || v.getEstado() == EstadoVuelo.ATERRIZAJE || v.getEstado() == EstadoVuelo.ACEPTADO) && minutosRestantes > 45) {
+		    if ((v.getEstado() == EstadoVuelo.OPERATIVO || v.getEstado() == EstadoVuelo.ATERRIZAJE || v.getEstado() == EstadoVuelo.ACEPTADO|| 
+		    		v.getEstado() == EstadoVuelo.A_TIEMPO || v.getEstado() == EstadoVuelo.RETRASADO) && minutosRestantes > 45) {
 		        v.cambiarEstado(EstadoVuelo.A_TIEMPO);
 		    } else{
 		        v.cambiarEstado(EstadoVuelo.RETRASADO);
+				for(ControladorAereo controlador: v.getTerminal().getControladores()) {
+		        	controlador.recibirNotificacionCambioEstado(v);
+		        } 
+		        for (Operador o : v.getOperadores()) {
+		            o.recibirNotificacionCambioEstado(v);
+		        }
+		        gestor.recibirNotificacion(new Notificacion("El vuelo " + v.getCodigo() + " ha cambiado su estado a " + v.getEstado() + ".", TipoNotificacion.CAMBIO_ESTADO_VUELO));
 		    }
 		}
-    System.out.println("Estado de vuelo actualizado: " + v.getEstado());
+		if(ordenarColaVuelos()!=null) {
+			Vuelo vueloVuela=ordenarColaVuelos();
+			vueloVuela.cambiarEstado(EstadoVuelo.VUELO);
+			
+			for(ControladorAereo controlador: vueloVuela.getTerminal().getControladores()) {
+	        	controlador.recibirNotificacionCambioEstado(vueloVuela);
+	        }
+	        
+	        for (Operador o : vueloVuela.getOperadores()) {
+	            o.recibirNotificacionCambioEstado(vueloVuela);
+	        }
+	        gestor.recibirNotificacion(new Notificacion("El vuelo " + vueloVuela.getCodigo() + " ha cambiado su estado a " + vueloVuela.getEstado() + ".", TipoNotificacion.CAMBIO_ESTADO_VUELO));
+		}	
 	}
 	
 	public void iniciarActualizacionCada5Min(Vuelo v) {
@@ -163,16 +177,15 @@ public class AirportManager implements Serializable {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                actualizarEstadoVueloAutomatico(v);
-           
-                if (LocalTime.now().isAfter(v.getHora())) {
+                if (LocalTime.now().isAfter(v.getHora().minusMinutes(42))) {
                     timer.cancel();
-                    System.out.println("La hora de salida ha pasado, deteniendo las actualizaciones.");
+                    System.out.println("El vuelo ha alcanzado el estado VUELO o ATERRIZAJE, deteniendo las actualizaciones.");
+                    return;
                 }
+                actualizarEstadoVueloAutomatico(v);
             }
-        }, 0, 5 * 60 * 1000); 
+        }, 0,1 * 60 * 1000); 
     }
-
 
      /**
      * Método que asigna una contraseña a un usuario a partir de su dni.
@@ -249,7 +262,7 @@ public class AirportManager implements Serializable {
      * Método que ordena la cola de vuelos que están esperando despegue.
      * @return la cola de vuelos ordenada.
      */
-    public List<Vuelo> ordenarColaVuelos() {
+    public Vuelo ordenarColaVuelos() {
 
         List<Vuelo> vuelosEnEspera = new ArrayList<>();
         int n, i, j;
@@ -262,6 +275,7 @@ public class AirportManager implements Serializable {
         }
 
         n = vuelosEnEspera.size();
+
         for (i = 0; i < n; i++) {
             for (j = 0; j < n - i - 1; j++) {
                 v1 = vuelosEnEspera.get(j);
@@ -273,9 +287,12 @@ public class AirportManager implements Serializable {
                 }
             }
         }
-
-        return vuelosEnEspera;
-
+        if(!vuelosEnEspera.isEmpty()) {
+        	Vuelo vueloReturn= vuelosEnEspera.get(0);
+        	vuelosEnEspera.remove(0);
+        	return vueloReturn;
+        } 
+        return null;
     }
     
       /**
@@ -299,22 +316,20 @@ public class AirportManager implements Serializable {
 
         esPasajero1 = v1.getAvion() instanceof AvionPasajeros;
         esPasajero2 = v2.getAvion() instanceof AvionPasajeros;
-
+        
         if (esPasajero1 != esPasajero2) {
-            if (esPasajero1 == true) {
+            if (esPasajero1) {
                 return -1;
-            }
-
-            else {
-                return 1;
+            } else {
+                return 1; 
             }
         }
 
-        if (esPasajero1 == true) {
+        if (esPasajero1) {
             pasajeros1 = ((AvionPasajeros) v1.getAvion()).getCapacidadMaxPasajeros();
         }
 
-        if (esPasajero2 == true) {
+        if (esPasajero2) {
             pasajeros2 = ((AvionPasajeros) v2.getAvion()).getCapacidadMaxPasajeros();
         }
 
