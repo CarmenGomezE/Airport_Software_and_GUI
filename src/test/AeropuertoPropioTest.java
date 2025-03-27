@@ -21,7 +21,9 @@ import src.airportmanager.vuelo.*;
 import src.airportmanager.avion.*;
 import src.airportmanager.exceptions.TemporadasSolapadasException;
 
-
+/**
+ * AeropuertoPropioTest
+ */
 class AeropuertoPropioTest {
 
 	private AeropuertoPropio aeropuertoPropio;
@@ -50,6 +52,9 @@ class AeropuertoPropioTest {
 	private Temporada temporada1, temporada2;
 	private List<Temporada> temporadas;
 	
+	/**
+	 * Crea objetos
+	 */
 	@BeforeEach
 	void setUp() { 
 		aeropuertoPropio = new AeropuertoPropio("Barajas", "MAD", "Madrid", "España", 64.9, ZoneOffset.UTC, 2, DireccionRelativaCiudad.ESTE);
@@ -129,53 +134,82 @@ class AeropuertoPropioTest {
 		temporadas.add(temporada2);
 	}
 
-
+	/**
+	 * GetHangares
+	 */
 	@Test
 	void testGetHangares() {
 		assertTrue(aeropuertoPropio.getHangares().isEmpty(), "Error la lista de hangares al principio debería estar vacía");
 	}
 
+	/**
+	 * GetZonasAparcamiento
+	 */
 	@Test
 	void testGetZonasAparcamiento() {
 		assertTrue(aeropuertoPropio.getZonasAparcamiento().isEmpty(), "Error la lista de zonas de aparcamiento al principio debería estar vacía");
 	}
 
+	/**
+	 * getTerminales
+	 */
 	@Test
 	void testGetTerminales() {
 		assertTrue(aeropuertoPropio.getTerminales().isEmpty(), "Error la lista de terminales al principio debería estar vacía");
 	}
 
+	/**
+	 * getUsuarios
+	 */
 	@Test
 	void testGetUsuarios() {
 		assertTrue(aeropuertoPropio.getUsuarios().isEmpty(), "Error la lista de usuarios al principio debería estar vacía");
 	}
 
+	/**
+	 * GetPistas
+	 */
 	@Test
 	void testGetPistas() {
 		assertTrue(aeropuertoPropio.getPistas().isEmpty(), "Error la lista de pistas al principio debería estar vacía");
 	}
 
+	/**
+	 * GetAerolineas
+	 */
 	@Test
 	void testGetAerolineas() {
 		assertTrue(aeropuertoPropio.getAerolineas().isEmpty(), "Error la lista de aerolineas al principio debería estar vacía");
 	}
 
+	/**
+	 * GetVuelosAceptados
+	 */
 	@Test
 	void testGetVuelosAceptados() {
 		assertTrue(aeropuertoPropio.getVuelosAceptados().isEmpty(), "Error la lista de vuelos aceptados al principio debería estar vacía");
 	}
-
+	
+	/**
+	 * GetAeropuertosDestino
+	 */
 	@Test
 	void testGetAeropuertosDestino() {
 		assertTrue(aeropuertoPropio.getAeropuertosDestino().isEmpty(), "Error la lista de aeropuertos de destino al principio debería estar vacía");
 	}
 
+	/**
+	 * GetPuertasEmbarque
+	 */
 	@Test
 	void testGetPuertasEmbarque() {
 		assertTrue(aeropuertoPropio.getPuertasEmbarque().isEmpty(), "Error la lista de puertas de embarque al principio debería estar vacía");
 	}
 
 
+	/**
+	 * AddHangar
+	 */
 	@Test
 	void testAddHangar() {
 		aeropuertoPropio.addHangar(hangar1);
@@ -183,6 +217,9 @@ class AeropuertoPropioTest {
 		assertEquals(hangares, aeropuertoPropio.getHangares(), "Error la lista de hangares no es correcta");
 	}
 
+	/**
+	 * AddZonaAparcamiento
+	 */
 	@Test
 	void testAddZonaAparcamiento() {
 		aeropuertoPropio.addZonaAparcamiento(zona1);
@@ -190,6 +227,9 @@ class AeropuertoPropioTest {
 		assertEquals(zonas, aeropuertoPropio.getZonasAparcamiento(), "Error la lista de zonas de aparcamiento no es correcta");
 	}
 
+	/**
+	 * AddTerminal
+	 */
 	@Test
 	void testAddTerminal() {
 		aeropuertoPropio.addTerminal(terminal1);
@@ -197,6 +237,9 @@ class AeropuertoPropioTest {
 		assertEquals(terminales, aeropuertoPropio.getTerminales(), "Error la lista de terminales no es correcta");
 	}
 
+	/**
+	 * AddUsuario
+	 */
 	@Test
 	void testAddUsuario() {
 		aeropuertoPropio.addUsuario(gestor);
@@ -205,6 +248,9 @@ class AeropuertoPropioTest {
 		assertEquals(usuarios, aeropuertoPropio.getUsuarios(), "Error la lista de usuarios no es correcta");
 	}
 
+	/**
+	 * AddPista
+	 */
 	@Test
 	void testAddPista() {
 		aeropuertoPropio.addPista(pista1);
@@ -212,6 +258,9 @@ class AeropuertoPropioTest {
 		assertEquals(pistas, aeropuertoPropio.getPistas(), "Error la lista de pistas no es correcta");
 	}
 
+	/**
+	 * AddAerolinea
+	 */
 	@Test
 	void testAddAerolinea() {
 		aeropuertoPropio.addAerolinea(aerolinea1);
@@ -219,6 +268,9 @@ class AeropuertoPropioTest {
 		assertEquals(aerolineas, aeropuertoPropio.getAerolineas(), "Error la lista de aerolineas no es correcta");
 	}
 
+	/**
+	 * AddVueloAceptado
+	 */
 	@Test
 	void testAddVueloAceptado() {
 		aeropuertoPropio.addVueloAceptado(vuelo1);
@@ -226,6 +278,9 @@ class AeropuertoPropioTest {
 		assertEquals(vuelos, aeropuertoPropio.getVuelosAceptados(), "Error la lista de vuelos no es correcta");
 	}
 
+	/**
+	 * AddAeropuertoDestino
+	 */
 	@Test
 	void testAddAeropuertoDestino() {
 		aeropuertoPropio.addAeropuertoDestino(aeropuertoDestino1);
@@ -233,10 +288,9 @@ class AeropuertoPropioTest {
 		assertEquals(aeropuertosDestino, aeropuertoPropio.getAeropuertosDestino(), "Error la lista de aeropuertos de destino no es correcta");
 	}
 
-	@Test
-	void testGetHorasOperacion() {
-	}
-
+	/**
+	 * CalcularHorasEntre
+	 */
 	@Test
 	void testCalcularHorasEntre() {
 		LocalTime horaInicio = LocalTime.of(8, 0); 
@@ -247,105 +301,163 @@ class AeropuertoPropioTest {
         assertEquals(12.0, horasCalculadas, 0.001, "Deberían ser 12 horas exactas");
 	}
 	
+	/**
+	 * GetNombre
+	 */
 	@Test
 	void testGetNombre() {
 		assertEquals("Barajas", aeropuertoPropio.getNombre(), "Error el nombre no es correcto");
 	}
 
+	/**
+	 * SetNombre
+	 */
 	@Test
 	void testSetNombre() {
 		aeropuertoPropio.setNombre("Holaquetal");
 		assertEquals("Holaquetal", aeropuertoPropio.getNombre(), "Error el nombre no se asignó correctamente");
 	}
 
+	/**
+	 * GetCodigo
+	 */
 	@Test
 	void testGetCodigo() {
 		assertEquals("MAD", aeropuertoPropio.getCodigo(), "Error el código no es correcto");
 	}
 
+	/**
+	 * SetCodigo
+	 */
 	@Test
 	void testSetCodigo() {
 		aeropuertoPropio.setCodigo("PTR");
 		assertEquals("PTR", aeropuertoPropio.getCodigo(), "Error el código no se asignó correctamente");
 	}
 
+	/**
+	 * GetCiudad
+	 */
 	@Test
 	void testGetCiudad() {
 		assertEquals("Madrid", aeropuertoPropio.getCiudad(), "Error la ciudad no es correcta");
 	}
 
+	/**
+	 * SetCiudad
+	 */
 	@Test
 	void testSetCiudad() {
 		aeropuertoPropio.setCiudad("París");
 		assertEquals("París", aeropuertoPropio.getCiudad(), "Error la ciudad no se asignó correctamente");
 	}
 
+	/**
+	 * GetPais
+	 */
 	@Test
 	void testGetPais() {
 		assertEquals("España", aeropuertoPropio.getPais(), "Error el país no es correcta");
 	}
 
+	/**
+	 * SetPais
+	 */
 	@Test
 	void testSetPais() {
 		aeropuertoPropio.setPais("Francia");
 		assertEquals("Francia", aeropuertoPropio.getPais(), "Error el país no se asignó correctamente");
 	}
 
+	/**
+	 * GetDistanciaCIUDAD
+	 */
 	@Test
 	void testGetDistanciaCiudad() {
 		assertEquals(64.9, aeropuertoPropio.getDistanciaCiudad(), "Error la distancia a la ciudad no es correcta");
 	}
 
+	/**
+	 * SetDistanciaCiudad
+	 */
 	@Test
 	void testSetDistanciaCiudad() {
 		aeropuertoPropio.setDistanciaCiudad(25.9);
 		assertEquals(25.9, aeropuertoPropio.getDistanciaCiudad(), "Error la distancia a la ciudad no se asignó correctamente");
 	}
 
+	/**
+	 * GetDiferenciaHoraria
+	 */
 	@Test
 	void testGetDiferenciaHoraria() {
 		assertEquals(ZoneOffset.UTC, aeropuertoPropio.getDiferenciaHoraria(), "Error la diferencia horaria no es correcta");
 	}
 
+	/**
+	 * SetDiferenciaHoraria
+	 */
 	@Test
 	void testSetDiferenciaHoraria() {
 		aeropuertoPropio.setDiferenciaHoraria(ZoneOffset.of("+1"));
 		assertEquals(ZoneOffset.of("+1"), aeropuertoPropio.getDiferenciaHoraria(), "Error la diferencia horaria no se asignó correctamente");
 	}
 
+	/**
+	 * GetNumtempordas
+	 */
 	@Test
 	void testGetNumTemporadas() {
 		assertEquals(2, aeropuertoPropio.getNumTemporadas(), "Error el número de temporadas no es correcto");
 	}
 
+	/**
+	 * SetNumTemporadas
+	 */
 	@Test
 	void testSetNumTemporadas() {
 		aeropuertoPropio.setNumTemporadas(3);
 		assertEquals(3, aeropuertoPropio.getNumTemporadas(), "Error el número de temporadas no se asignó correctamente");
 	}
 
+	/**
+	 * getDireccionCiudad
+	 */
 	@Test
 	void testGetDireccionCiudad() {
 		assertEquals(DireccionRelativaCiudad.ESTE, aeropuertoPropio.getDireccionCiudad(), "Error la direccion hacia la ciudad no es correcta");
 	}
 
+	/**
+	 * SetDireccionCiudad
+	 */
 	@Test
 	void testSetDireccionCiudad() {
 		aeropuertoPropio.setDireccionCiudad(DireccionRelativaCiudad.SUR);
 		assertEquals(DireccionRelativaCiudad.SUR, aeropuertoPropio.getDireccionCiudad(), "Error la dirección hacia la ciudad no se asignó correctamente");
 	}
 
+	/**
+	 * GetTemporadas
+	 */
 	@Test
 	void testGetTemporadas() {
 		assertTrue(aeropuertoPropio.getTemporadas().isEmpty(), "Error, al principio la lista de temporadas debería estar vacía");
 	}
 
+	/**
+	 * Settemporadas
+	 */
 	@Test
 	void testSetTemporadas() {
 		aeropuertoPropio.setTemporadas(temporadas);
 		assertEquals(temporadas, aeropuertoPropio.getTemporadas(), "Error, la lista de temporadas no coincide");
 	}
 
+	/**
+	 * AgregarTemporada
+	 * @throws TemporadasSolapadasException
+	 */
 	@Test
 	void testAgregarTemporada() throws TemporadasSolapadasException {
 	    
