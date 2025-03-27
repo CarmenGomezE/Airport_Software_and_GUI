@@ -2,6 +2,8 @@ package src.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneOffset;
@@ -20,6 +22,7 @@ import src.airportmanager.aeropuerto.Temporada;
 import src.airportmanager.avion.Aerolinea;
 import src.airportmanager.avion.Avion;
 import src.airportmanager.exceptions.CargaAvionEquivocadaException;
+import src.airportmanager.exceptions.ContrasenaInvalidaException;
 import src.airportmanager.exceptions.EstadoEquivocadoException;
 import src.airportmanager.exceptions.EstadoNoDelUsuarioException;
 import src.airportmanager.exceptions.NoFingerMercanciasException;
@@ -27,6 +30,7 @@ import src.airportmanager.exceptions.NoHangaresDisponiblesException;
 import src.airportmanager.exceptions.NoModosPuertasEmbarqueDisponiblesException;
 import src.airportmanager.exceptions.NoPistasDisponiblesException;
 import src.airportmanager.exceptions.NoVueloEnMenosDe1HoraException;
+import src.airportmanager.exceptions.UsuarioNoEncontradoException;
 import src.airportmanager.exceptions.VueloEnMenosDe1HoraException;
 import src.airportmanager.exceptions.VueloNoDelUsuarioException;
 import src.airportmanager.hangar.Hangar;
@@ -77,7 +81,9 @@ class ControladorAereoTest {
 	private List<PuertaEmbarque> puertasList, puertasList2;
 	private Temporada temporada1, temporada2;
 	private List<Temporada> temporadas;
-	private Notificacion notificacion;
+	private Notificacion notificacion, notificacion2;
+	private List<Notificacion> notificaciones;
+    private ByteArrayOutputStream salidaConsola;
 
 	@BeforeEach
 	void setUp() throws Exception {
@@ -159,6 +165,8 @@ class ControladorAereoTest {
 		temporadas.add(temporada2);
 		
 		notificacion = new Notificacion("Cambio estado de vuelo", TipoNotificacion.CAMBIO_ESTADO_VUELO);
+		notificaciones = new ArrayList<>();
+		
 	}
 
 	@Test
@@ -169,13 +177,46 @@ class ControladorAereoTest {
 
 	@Test
 	void testCambiarEstadoVuelo() throws IllegalArgumentException, VueloNoDelUsuarioException, EstadoNoDelUsuarioException, EstadoEquivocadoException, NoPistasDisponiblesException, NoVueloEnMenosDe1HoraException, VueloEnMenosDe1HoraException, NoFingerMercanciasException, NoModosPuertasEmbarqueDisponiblesException, NoHangaresDisponiblesException, CargaAvionEquivocadaException {
-		controlador.cambiarEstadoVuelo(vuelo1, EstadoVuelo.ESPERANDO_DESPEGUE);
+		vuelo1.cambiarEstado(EstadoVuelo.ESPERANDO_PISTA_DE_DESPEGUE);  
+		 controlador.cambiarEstadoVuelo(vuelo1, EstadoVuelo.ESPERANDO_DESPEGUE);
+
+		 assertEquals(EstadoVuelo.ESPERANDO_DESPEGUE, vuelo1.getEstado(), 
+		        "Error: El estado del vuelo no cambió correctamente a ESPERANDO_DESPEGUE.");
+		 vuelo1.cambiarEstado(EstadoVuelo.ESPERANDO_DESPEGUE); // Estado inválido para cambiar
+
+		 Exception excepcion = assertThrows(EstadoEquivocadoException.class, () -> {
+		 controlador.cambiarEstadoVuelo(vuelo1, EstadoVuelo.OPERATIVO);
+		        });
+
+		assertEquals("El vuelo no está en el estado correcto para cambiar a este estado", excepcion.getMessage(),
+		            "Error: No se lanzó la excepción correcta cuando el estado es incorrecto.");
+		
+		 vuelo1.cambiarEstado(EstadoVuelo.A_TIEMPO);
+
+		   Exception excepcion2 = assertThrows(NoPistasDisponiblesException.class, () -> {
+		        controlador.cambiarEstadoVuelo(vuelo1, EstadoVuelo.ESPERANDO_ATERRIZAJE);
+		    });
+
+		    assertEquals("No hay pistas disponibles", excepcion2.getMessage(),
+		        "Error: No se lanzó la excepción esperada cuando no hay pistas disponibles.");
+		    
+		    Exception excepcion3 = assertThrows(IllegalArgumentException.class, () -> {
+		        controlador.cambiarEstadoVuelo(null, EstadoVuelo.OPERATIVO);
+		    });
+
+		    assertEquals("El vuelo y el nuevo estado no pueden ser null.", excepcion3.getMessage(),
+		        "Error: No se lanzó la excepción esperada cuando el vuelo es null.");
 		
 	}
 
 	@Test
-	void testRecibirNotificacionCambioEstado() {
-		fail("Not yet implemented");
+	void testRecibirNotificacionCambioEstado() throws IllegalArgumentException, VueloNoDelUsuarioException, EstadoNoDelUsuarioException, EstadoEquivocadoException, NoPistasDisponiblesException, NoVueloEnMenosDe1HoraException, VueloEnMenosDe1HoraException, NoFingerMercanciasException, NoModosPuertasEmbarqueDisponiblesException, NoHangaresDisponiblesException, CargaAvionEquivocadaException {
+		controlador.cambiarEstadoVuelo(vuelo1, EstadoVuelo.ESPERANDO_PISTA_DE_DESPEGUE);
+		controlador.recibirNotificacionCambioEstado(vuelo1);
+		notificacion2 = new Notificacion("El vuelo " + vuelo1.getCodigo() + " ha cambiado su estado a " + vuelo1.getEstado() + ".", TipoNotificacion.CAMBIO_ESTADO_VUELO);
+		notificaciones.add(notificacion2);
+		assertEquals(notificaciones, controlador.getNotificaciones(), "Error, no se recibió la notificación correctamente");
+		
 	}
 
 
@@ -196,12 +237,10 @@ class ControladorAereoTest {
 
 	@Test
 	void testIniciarSesion() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testHeOlvidadoContrasena() {
-		fail("Not yet implemented");
+		assertDoesNotThrow(()->controlador.iniciarSesion("56872372J", "Juanpe44"), "Error, no debería lanzar una excpeción");
+		assertThrows(ContrasenaInvalidaException.class, ()->controlador.iniciarSesion("56872372J", "NoContra"), "Error debería lanzar excepción de contraseña inválida");
+		assertThrows(UsuarioNoEncontradoException.class, ()->controlador.iniciarSesion("56086572J", "NoContra"), "Error debería lanzar excepción de usuario no encontrado");
+		
 	}
 
 	@Test
@@ -227,12 +266,11 @@ class ControladorAereoTest {
 
 	@Test
 	void testGetNotificaciones() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testGetVuelos() {
-		fail("Not yet implemented");
+		controlador.recibirNotificacion(notificacion);
+		controlador.recibirNotificacion(notificacion2);
+		notificaciones.add(notificacion);
+		notificaciones.add(notificacion2);
+		assertEquals(notificaciones, controlador.getNotificaciones(), "Error la lista de notificaciones no coincide");
 	}
 
 	@Test
@@ -249,32 +287,49 @@ class ControladorAereoTest {
 
 	@Test
 	void testVerListaVuelos() {
-		fail("Not yet implemented");
-	}
+		aeropuertoPropio.addVueloAceptado(vuelo1);
+		aeropuertoPropio.addVueloAceptado(vuelo2);
+		
+		controlador.verListaVuelos();
+		salidaConsola = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(salidaConsola));
+        String salidaEsperada = """
+        LISTA DE VUELOS DEL DÍA %s
+        +----------------------+----------------------+
+        | Código de Vuelo      | Estado del Vuelo     |
+        +----------------------+----------------------+
+        | V132                 | ESPERANDO_PISTA_DE_ATERRIZAJE |Esperando pista durante más de 10min
+        +----------------------+----------------------+
+        """.formatted(LocalDate.now());
 
-	@Test
-	void testRecargarListaVuelos() {
-		fail("Not yet implemented");
+        assertEquals(salidaEsperada.strip(), salidaConsola.toString().strip(), "Error: La salida de la consola no coincide con la esperada.");
 	}
 
 	@Test
 	void testBuscarVuelo() {
-		fail("Not yet implemented");
+		aeropuertoPropio.addVueloAceptado(vuelo1);
+		aeropuertoPropio.addVueloAceptado(vuelo2);
+		System.setOut(System.out); 
+        
+        String salidaEsperada =
+                "BÚSQUEDA DE VUELOS SEGÚN EL CRITERIO CODIGO\n" +
+                "+---------------------+------------------+\n" +
+                "| Código de Vuelo     | Estado del Vuelo |\n" +
+                "+---------------------+------------------+\n" +
+                "| V123               | ACEPTADO          |\n" +
+                "+---------------------+------------------+\n" +
+                "+---------------------+------------------+";
+
+        assertEquals(salidaEsperada.trim(), salidaConsola.toString().trim(), "Error: La salida de la búsqueda por código no es correcta.");
 	}
 
-	@Test
-	void testAddVuelo() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testVerNotificaciones() {
-		fail("Not yet implemented");
-	}
 
 	@Test
 	void testCerrarSesion() {
-		fail("Not yet implemented");
+		controlador.cerrarSesion();
+		System.setOut(System.out);
+		assertEquals("El usuario ha cerrado sesión", salidaConsola.toString().trim(), 
+                "Error: El mensaje de cerrar sesión no coincide con lo esperado.");
 	}
 
 }

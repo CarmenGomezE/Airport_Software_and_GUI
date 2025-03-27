@@ -617,7 +617,8 @@ public class Operador extends UsuarioConDni {
     public void recibirNotificacion(Notificacion notificacion) {
     	
 		if(notificacion.getTipoNotificacion()==TipoNotificacion.CAMBIO_ESTADO_VUELO || notificacion.getTipoNotificacion()==TipoNotificacion.FACTURA_EMITIDA 
-				|| notificacion.getTipoNotificacion()==TipoNotificacion.OPCIONES_REPROGRAMAR_VUELO || notificacion.getTipoNotificacion()==TipoNotificacion.SOLICITUD_COMPARTIR_VUELO) {
+				|| notificacion.getTipoNotificacion()==TipoNotificacion.OPCIONES_REPROGRAMAR_VUELO || notificacion.getTipoNotificacion()==TipoNotificacion.SOLICITUD_COMPARTIR_VUELO 
+				|| notificacion.getTipoNotificacion()==TipoNotificacion.OLVIDO_CONTRASENA) {
 			 notificaciones.add(notificacion);
 			 System.out.println("Nueva notificación: " + notificacion.getMensaje());
 		}
