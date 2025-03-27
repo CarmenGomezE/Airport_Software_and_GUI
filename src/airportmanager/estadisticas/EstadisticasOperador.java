@@ -84,7 +84,7 @@ public class EstadisticasOperador implements Serializable {
      * @param retrasos Lista de todos los retrasos registrados.
      * @return La media de retraso.
      */
-    private double calcularMedia(List<Integer> retrasos) {
+    public double calcularMedia(List<Integer> retrasos) {
         if (retrasos.isEmpty()) {
             return 0;
         }
