@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
-	<classpathentry excluding="aeropuerto/src/carmen/test/" kind="src" path=""/>
-	<classpathentry kind="src" path="aeropuerto/src/carmen/test"/>
-	<classpathentry kind="lib" path="resources/invoiceSystem.jar">
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
+	<classpathentry kind="src" path=""/>
+	<classpathentry exported="true" kind="lib" path="resources/invoiceSystem.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/padsoft/resources/invoicesystem_doc_09d9bcf78beaa0ccda59cfe1572f7ece%204.zip!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/airportmanager/resources/invoicesystem_doc_09d9bcf78beaa0ccda59cfe1572f7ece%204.zip!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="resources/TeleChargeAndPaySystem8.jar">
+	<classpathentry exported="true" kind="lib" path="resources/TeleChargeAndPaySystem8.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/padsoft/resources/TeleChargeAndPaySystem8_doc_4be13a536685bc76dc5c3c2179d07baf.zip!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/airportmanager/resources/TeleChargeAndPaySystem8_doc_4be13a536685bc76dc5c3c2179d07baf.zip!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-23">
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-23">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
