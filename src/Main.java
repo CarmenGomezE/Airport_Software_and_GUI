@@ -15,6 +15,7 @@ public class Main {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 new AirportManagerGUI(manager).setVisible(true);
+                new OperadorGUI(manager).setVisible(true);
             }
         });
     }

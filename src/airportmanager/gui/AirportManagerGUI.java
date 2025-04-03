@@ -19,7 +19,7 @@ public class AirportManagerGUI extends JFrame {
         ConfiguracionUI.applyLookAndFeel(); 
 
         setTitle("Airport Manager");
-        setSize(500, 300);
+        setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
@@ -31,9 +31,6 @@ public class AirportManagerGUI extends JFrame {
         JLabel etiqueta = new JLabel("Airport Manager");
         etiqueta.setFont(ConfiguracionUI.FUENTE_TITULO);
         etiqueta.setForeground(Color.BLACK);
-        Box leftBox = Box.createHorizontalBox();
-        leftBox.add(Box.createHorizontalStrut(50)); 
-        leftBox.add(etiqueta);
         panel.add(etiqueta, BorderLayout.WEST);
 
         JPanel panelDerecho = new JPanel();
@@ -81,6 +78,7 @@ public class AirportManagerGUI extends JFrame {
         boton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+            	
             }
         });
 

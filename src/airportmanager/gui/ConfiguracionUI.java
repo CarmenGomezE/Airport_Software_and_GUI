@@ -5,6 +5,7 @@ import javax.swing.*;
 import javax.swing.border.*;
 
 public class ConfiguracionUI {
+	
     // Color de fondo azul clarito y azul oscuro para el botón
     public static final Color COLOR_FONDO = new Color(135, 206, 235); // Azul clarito
     public static final Color COLOR_PANEL = new Color(173, 216, 230); // Azul clarito
@@ -13,7 +14,7 @@ public class ConfiguracionUI {
     public static final Color COLOR_DESPLEGABLE = Color.LIGHT_GRAY;
     public static final Color COLOR_BOTON_LOGIN = new Color(70, 130, 180); // Azul más oscuro para el botón
 
-    public static final Font FUENTE_TITULO = new Font("Arial", Font.BOLD, 60);
+    public static final Font FUENTE_TITULO = new Font("Arial", Font.BOLD, 80);
     public static final Font FUENTE_SUBTITULO = new Font("Arial", Font.BOLD, 22);
     public static final Font FUENTE_TEXTO = new Font("Verdana", Font.PLAIN, 16);
     public static final Font FUENTE_BOTON = new Font("Tahoma", Font.BOLD, 20);
