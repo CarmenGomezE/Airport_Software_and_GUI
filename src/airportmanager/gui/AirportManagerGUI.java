@@ -5,9 +5,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import src.airportmanager.AirportManager;
-import src.airportmanager.exceptions.*;
-import src.airportmanager.usuario.Gestor;
-import src.airportmanager.usuario.UsuarioConDni;
 
 public class AirportManagerGUI extends JFrame {
     private static final long serialVersionUID = 1L;
@@ -19,6 +16,7 @@ public class AirportManagerGUI extends JFrame {
 
     public AirportManagerGUI(AirportManager manager) {
         this.airportManager = manager;
+        ConfiguracionUI.applyLookAndFeel(); 
 
         setTitle("Airport Manager");
         setSize(500, 300);
@@ -26,13 +24,18 @@ public class AirportManagerGUI extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.setBackground(new Color(30, 144, 255)); // Azul
+        getContentPane().setBackground(ConfiguracionUI.COLOR_FONDO); 
+
+        JPanel panel = ConfiguracionUI.crearPanel();
+        panel.setBackground(ConfiguracionUI.COLOR_PANEL);
         panel.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
 
-        JLabel etiqueta = new JLabel("Airport Manager");
-        etiqueta.setFont(new Font("Arial", Font.BOLD, 40));
-        etiqueta.setForeground(Color.BLACK); // Texto negro
+        JLabel etiqueta = ConfiguracionUI.crearEtiqueta("Airport Manager");
+        etiqueta.setFont(ConfiguracionUI.FUENTE_TITULO);
+        etiqueta.setForeground(Color.BLACK);
+        Box leftBox = Box.createHorizontalBox();
+        leftBox.add(Box.createHorizontalStrut(50)); 
+        leftBox.add(etiqueta);
         panel.add(etiqueta, BorderLayout.WEST);
 
         JPanel panelDerecho = new JPanel();
@@ -44,15 +47,13 @@ public class AirportManagerGUI extends JFrame {
         gbc.gridy = 0;
 
         String[] roles = {"Gestor del aeropuerto", "Controlador aéreo", "Operador de aerolínea"};
-        comboBox = new JComboBox<>(roles);
+        comboBox = ConfiguracionUI.crearComboBox(roles);
         comboBox.setPreferredSize(new Dimension(400, 60));
-        comboBox.setFont(new Font("Arial", Font.PLAIN, 24));
         panelDerecho.add(comboBox, gbc);
 
         gbc.gridy++;
-        usuarioField = new JTextField();
+        usuarioField = ConfiguracionUI.crearCampoTexto(20);
         usuarioField.setPreferredSize(new Dimension(400, 40));
-        usuarioField.setFont(new Font("Arial", Font.PLAIN, 20));
         usuarioField.setVisible(false);
         panelDerecho.add(usuarioField, gbc);
 
@@ -63,16 +64,17 @@ public class AirportManagerGUI extends JFrame {
         panelDerecho.add(passwordField, gbc);
 
         gbc.gridy++;
-        boton = new JButton("Login");
+        boton = ConfiguracionUI.crearBoton("Login");
         boton.setFont(new Font("Arial", Font.BOLD, 24));
-        boton.setForeground(Color.BLACK);
-        boton.setBackground(Color.WHITE);
+        boton.setForeground(Color.BLACK); 
+        boton.setBackground(ConfiguracionUI.COLOR_BOTON_LOGIN);
         boton.setFocusPainted(false);
         boton.setEnabled(false);
         boton.setPreferredSize(new Dimension(200, 60));
         panelDerecho.add(boton, gbc);
 
         comboBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 String selectedRole = (String) comboBox.getSelectedItem();
                 usuarioField.setVisible(!selectedRole.equals("Gestor del aeropuerto"));
@@ -83,33 +85,8 @@ public class AirportManagerGUI extends JFrame {
         });
 
         boton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
-                String selectedRole = (String) comboBox.getSelectedItem();
-                String usuario = usuarioField.getText();
-                String password = new String(passwordField.getPassword());
-
-                try {
-                    if (selectedRole.equals("Gestor del aeropuerto")) {
-                        Gestor gestor = airportManager.getGestor();
-                        if (gestor != null) {
-                            gestor.iniciarSesion(password);
-                        }
-                    } else {
-                        UsuarioConDni user = airportManager.getGestor().buscarUsuarioPorDni(usuario);
-                        if (user != null) {
-                            user.iniciarSesion(usuario, password); 
-                        } else {
-                            throw new UsuarioNoEncontradoException("Usuario no encontrado.");
-                        }
-                    }
-
-                    JOptionPane.showMessageDialog(null, "Bienvenido, " + selectedRole + ".");
-
-                } catch (UsuarioNoEncontradoException ex) {
-                    JOptionPane.showMessageDialog(null, "Error: Usuario no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
-                } catch (ContrasenaInvalidaException ex) {
-                    JOptionPane.showMessageDialog(null, "Error: Contraseña incorrecta.", "Error", JOptionPane.ERROR_MESSAGE);
-                }
             }
         });
 
