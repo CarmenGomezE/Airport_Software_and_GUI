@@ -27,10 +27,8 @@ public class AirportManagerGUI extends JFrame {
         getContentPane().setBackground(ConfiguracionUI.COLOR_FONDO); 
 
         JPanel panel = ConfiguracionUI.crearPanel();
-        panel.setBackground(ConfiguracionUI.COLOR_PANEL);
-        panel.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
 
-        JLabel etiqueta = ConfiguracionUI.crearEtiqueta("Airport Manager");
+        JLabel etiqueta = new JLabel("Airport Manager");
         etiqueta.setFont(ConfiguracionUI.FUENTE_TITULO);
         etiqueta.setForeground(Color.BLACK);
         Box leftBox = Box.createHorizontalBox();
@@ -60,15 +58,11 @@ public class AirportManagerGUI extends JFrame {
         gbc.gridy++;
         passwordField = new JPasswordField();
         passwordField.setPreferredSize(new Dimension(400, 40));
-        passwordField.setFont(new Font("Arial", Font.PLAIN, 20));
+        passwordField.setFont(ConfiguracionUI.FUENTE_TEXTO);
         panelDerecho.add(passwordField, gbc);
 
         gbc.gridy++;
         boton = ConfiguracionUI.crearBoton("Login");
-        boton.setFont(new Font("Arial", Font.BOLD, 24));
-        boton.setForeground(Color.BLACK); 
-        boton.setBackground(ConfiguracionUI.COLOR_BOTON_LOGIN);
-        boton.setFocusPainted(false);
         boton.setEnabled(false);
         boton.setPreferredSize(new Dimension(200, 60));
         panelDerecho.add(boton, gbc);

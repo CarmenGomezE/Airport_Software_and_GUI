@@ -34,7 +34,7 @@ public class ConfiguracionUI {
         JButton boton = new JButton(texto);
         boton.setFont(FUENTE_BOTON);
         boton.setBackground(COLOR_BOTON_LOGIN);  // Azul más oscuro para el botón
-        boton.setForeground(Color.WHITE);  // Color de texto blanco
+        boton.setForeground(Color.BLACK);  // Color de texto blanco
         boton.setFocusPainted(false);
         boton.setBorder(BORDE_VACIO);  // Se quita el borde
         return boton;
