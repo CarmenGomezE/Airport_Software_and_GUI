@@ -65,7 +65,7 @@ public class AirportManager implements Serializable {
             }
 
             try {
-                gestor = new Gestor("Pepito Pérez", this.generarContrasena(), aeropuerto, this);
+                gestor = new Gestor("Pepito Pérez", "SoyGestor", aeropuerto, this);
             } catch (Exception e) {
                 System.out.println("Error al crear el gestor: " + e.getMessage());
             }

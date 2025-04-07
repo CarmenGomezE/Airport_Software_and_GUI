@@ -2,8 +2,7 @@ package src.airportmanager.gui;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -11,104 +10,99 @@ import src.airportmanager.AirportManager;
 
 public class OperadorGUI extends JFrame {
     private static final long serialVersionUID = 1L;
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy"); 
-    
-        public OperadorGUI(AirportManager manager) {
-            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            setExtendedState(JFrame.MAXIMIZED_BOTH); 
-            setResizable(false);
-            setLocationRelativeTo(null);
 
-            JPanel panel = new JPanel();
-            panel.setBackground(ConfiguracionUI.COLOR_FONDO); 
-            panel.setLayout(new BorderLayout());
-            add(panel);
+    public OperadorGUI(AirportManager manager) {
+        setTitle("Panel de Operador");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setExtendedState(JFrame.MAXIMIZED_BOTH); 
+        setResizable(false);
+        setLocationRelativeTo(null);
 
-            // Crear los paneles
-            JPanel panelIzquierdo = new JPanel();
-            panelIzquierdo.setLayout(new BorderLayout());
-            panelIzquierdo.setBackground(ConfiguracionUI.COLOR_FONDO); // Fondo de color azul claro
-            panelIzquierdo.setPreferredSize(new Dimension(getWidth() / 2, getHeight())); 
+        /**PANEL PRINCIPAL*/
+        JPanel panel = new JPanel(new BorderLayout(10, 10));
+        panel.setBorder(BorderFactory.createEmptyBorder(20, 30, 20, 30));
+        panel.setBackground(ConfiguracionUI.COLOR_FONDO);
+        add(panel);
 
-            JPanel panelDerecho = new JPanel();
-            panelDerecho.setLayout(new GridLayout(6, 1, 10, 10)); // Usamos GridLayout para tener botones bien organizados
-            panelDerecho.setBackground(ConfiguracionUI.COLOR_FONDO); // Fondo de color azul claro
-            panelIzquierdo.setPreferredSize(new Dimension(getWidth() / 2, getHeight())); 
-            
-            // Crear la etiqueta de lista de vuelos con la fecha
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy");
-            String formattedDate = LocalDate.now().format(formatter);
-            JLabel listaVuelosTitulo = new JLabel("Lista de vuelos (" + formattedDate + ")", JLabel.CENTER);
-            listaVuelosTitulo.setFont(new Font("Arial", Font.BOLD, 20));
-            listaVuelosTitulo.setForeground(Color.BLACK);
+        /** PANEL IZQUIERDO*/
+        JPanel panelIzquierdo = new JPanel(new BorderLayout(10, 10));
+        panelIzquierdo.setPreferredSize(new Dimension(500, 600));
+        panelIzquierdo.setBackground(ConfiguracionUI.COLOR_FONDO);
 
-            // Agregar la etiqueta al panel izquierdo
-            panelIzquierdo.add(listaVuelosTitulo, BorderLayout.NORTH);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy");
+        String formattedDate = LocalDate.now().format(formatter);
 
-            // Botón con campana
-            JButton botonCampana = new JButton("🔔");
-            botonCampana.setAlignmentX(Component.CENTER_ALIGNMENT);  // Centrar el botón
-            botonCampana.setPreferredSize(new Dimension(250, 60));  // Hacer el botón más alargado
-            
-            // Botón Cerrar sesión
-            JButton botonCerrarSesion = new JButton("Cerrar sesión");
-            botonCerrarSesion.setBackground(ConfiguracionUI.COLOR_BOTON_LOGIN);
-            botonCerrarSesion.setAlignmentX(Component.CENTER_ALIGNMENT);  // Centrar el botón
-            botonCerrarSesion.setPreferredSize(new Dimension(250, 60));  // Hacer el botón más alargado
-       
-            JButton boton1 = new JButton("Gestión de estados de los vuelos");
-            boton1.setBackground(ConfiguracionUI.COLOR_BOTON_LOGIN);
-            boton1.setAlignmentX(Component.CENTER_ALIGNMENT);  // Centrar el botón
-            boton1.setPreferredSize(new Dimension(250, 60));  // Hacer el botón más alargado
-            
-            JButton boton2 = new JButton("Gestión de aviones");
-            boton2.setBackground(ConfiguracionUI.COLOR_BOTON_LOGIN);
-            boton2.setAlignmentX(Component.CENTER_ALIGNMENT);  // Centrar el botón
-            boton2.setPreferredSize(new Dimension(250, 60));  // Hacer el botón más alargado
-            
-            JButton boton3 = new JButton("Programar un vuelo");
-            boton3.setBackground(ConfiguracionUI.COLOR_BOTON_LOGIN);
-            boton3.setAlignmentX(Component.CENTER_ALIGNMENT);  // Centrar el botón
-            boton3.setPreferredSize(new Dimension(250, 60));  // Hacer el botón más alargado
-            
-            JButton boton4 = new JButton("Compartir un vuelo");
-            boton4.setBackground(ConfiguracionUI.COLOR_BOTON_LOGIN);
-            boton4.setAlignmentX(Component.CENTER_ALIGNMENT);  // Centrar el botón
-            boton4.setPreferredSize(new Dimension(250, 60));  // Hacer el botón más alargado
-     
-            JButton botonFinal = new JButton("Estadísticas de vuelos");
-            botonFinal.setBackground(ConfiguracionUI.COLOR_BOTON_LOGIN);
-            botonFinal.setAlignmentX(Component.CENTER_ALIGNMENT);  // Centrar el botón
-            botonFinal.setPreferredSize(new Dimension(250, 60));  // Hacer el botón más alargado
+        /** Titulo de la lista de vuelos*/
+        JLabel listaVuelosTitulo = new JLabel("Lista de vuelos (" + formattedDate + ")", JLabel.CENTER);
+        listaVuelosTitulo.setFont(new Font("Arial", Font.BOLD, 24));
+        panelIzquierdo.add(listaVuelosTitulo, BorderLayout.NORTH);
 
-            // Añadir los botones al panel
-            panelDerecho.add(botonCampana);
-            panelDerecho.add(Box.createVerticalStrut(20));  // Espaciado entre los botones
-            panelDerecho.add(botonCerrarSesion);
-            panelDerecho.add(Box.createVerticalStrut(20));
-            panelDerecho.add(boton1);
-            panelDerecho.add(Box.createVerticalStrut(20));
-            panelDerecho.add(boton2);
-            panelDerecho.add(Box.createVerticalStrut(20));
-            panelDerecho.add(boton3);
-            panelDerecho.add(Box.createVerticalStrut(20));
-            panelDerecho.add(boton4);
-            panelDerecho.add(Box.createVerticalStrut(20));
-            panelDerecho.add(botonFinal);
+        /** Lista de vuelos*/
+        DefaultListModel<String> modeloLista = new DefaultListModel<>();
+        modeloLista.addElement("Vuelo MAD - BCN");
+        modeloLista.addElement("Vuelo BCN - VAL");
+        modeloLista.addElement("Vuelo MAD - LIS");
+        modeloLista.addElement("Vuelo VLC - PMI");
 
-            add(panelIzquierdo, BorderLayout.WEST);
-            add(panelDerecho, BorderLayout.EAST);
+        /** Subir y bajar lista*/
+        JList<String> lista = new JList<>(modeloLista);
+        JScrollPane scrollLista = new JScrollPane(lista);
+        scrollLista.setPreferredSize(new Dimension(400, 250));
+        panelIzquierdo.add(scrollLista, BorderLayout.CENTER);
 
-            // Configuración básica de la ventana principal
-            setTitle("Operador de Aerolínea");
-            setSize(800, 600); // Establecer el tamaño de la ventana principal
-            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            setLocationRelativeTo(null); // Centrar la ventana
-            setVisible(true);
-        }
+        /** Botones de la lista*/
+        JPanel panelBotones = new JPanel(new GridLayout(1, 2, 10, 10));
+        panelBotones.add(new JButton("🔎 Buscar vuelos"));
+        panelBotones.add(new JButton("🔄 Refrescar vuelos"));
+        panelBotones.setBackground(ConfiguracionUI.COLOR_FONDO);
+        panelIzquierdo.add(panelBotones, BorderLayout.SOUTH);
 
-        public static void main(String[] args) {
-            new OperadorGUI(new AirportManager());
-        }
+        /** PANEL DERECHO*/
+        JPanel panelDerecho = new JPanel(new GridLayout(9, 1, 10, 10));
+        panelDerecho.setPreferredSize(new Dimension(500, 600));
+        panelDerecho.setBackground(ConfiguracionUI.COLOR_FONDO);
+
+        /** Título del operador*/
+        JLabel titulo = new JLabel("Operador de la aerolínea Iberia", JLabel.CENTER);
+        titulo.setFont(new Font("Arial", Font.BOLD, 22));
+        panelDerecho.add(titulo);
+
+        /** Botones*/
+        JPanel subPanelBotones = new JPanel(new GridLayout(1, 2, 10, 10));
+        subPanelBotones.add(new JButton("🔔 Notificaciones"));
+        JButton botonCerrarSesion= new JButton("Cerrar sesión");
+        subPanelBotones.add(botonCerrarSesion);
+        botonCerrarSesion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int opcion = JOptionPane.showConfirmDialog(OperadorGUI.this, 
+                    "¿Estás seguro de que quieres cerrar sesión?", 
+                    "Cerrar sesión", 
+                    JOptionPane.YES_NO_OPTION);
+
+                if (opcion == JOptionPane.YES_OPTION) {
+                    dispose();
+                }
+            }
+        });
+        subPanelBotones.setBackground(ConfiguracionUI.COLOR_FONDO);
+        panelDerecho.add(subPanelBotones);
+
+        panelDerecho.add(new JButton("Gestión de estados de los vuelos"));
+        panelDerecho.add(new JButton("Gestión de aviones"));
+        panelDerecho.add(new JButton("Programar un vuelo"));
+        panelDerecho.add(new JButton("Compartir un vuelo"));
+        panelDerecho.add(new JButton("Estadísticas de vuelos"));
+        panelDerecho.add(new JButton("Alternativas a los vuelos"));
+
+        panelDerecho.add(Box.createVerticalStrut(10)); 
+
+        /** Añadir al panel principal*/
+        panel.add(panelIzquierdo, BorderLayout.WEST);
+        panel.add(panelDerecho, BorderLayout.CENTER);
+
+        /**Visible*/
+        setVisible(true);
     }
 
+}

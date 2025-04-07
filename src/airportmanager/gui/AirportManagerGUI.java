@@ -5,6 +5,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import src.airportmanager.AirportManager;
+import src.airportmanager.exceptions.*;
+import src.airportmanager.usuario.*;
 
 public class AirportManagerGUI extends JFrame {
     private static final long serialVersionUID = 1L;
@@ -22,46 +24,66 @@ public class AirportManagerGUI extends JFrame {
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setLayout(new BorderLayout());
+        setLayout(new BorderLayout(10, 10)); 
 
-        getContentPane().setBackground(ConfiguracionUI.COLOR_FONDO); 
+        getContentPane().setBackground(ConfiguracionUI.COLOR_FONDO);
 
-        JPanel panel = ConfiguracionUI.crearPanel();
+        /** PANEL PRINCIPAL */
+        JPanel panel = new JPanel(new BorderLayout(10, 10)); 
+        panel.setBackground(ConfiguracionUI.COLOR_FONDO);
+        panel.setBorder(BorderFactory.createEmptyBorder(20, 200, 20, 30));
 
-        JLabel etiqueta = new JLabel("Airport Manager");
-        etiqueta.setFont(ConfiguracionUI.FUENTE_TITULO);
-        etiqueta.setForeground(Color.BLACK);
-        panel.add(etiqueta, BorderLayout.WEST);
+        /** PANEL IZQUIERDO (Título y avión) */
+        JPanel panelIzquierdo = new JPanel(new BorderLayout(10, 10));
+        panelIzquierdo.setPreferredSize(new Dimension(400, getHeight())); 
+        panelIzquierdo.setBackground(ConfiguracionUI.COLOR_FONDO);
 
+        panelIzquierdo.setLayout(new BoxLayout(panelIzquierdo, BoxLayout.Y_AXIS));
+        int screenHeight = getHeight(); 
+        int spaceHeight = screenHeight / 2 - 50; 
+        panelIzquierdo.add(Box.createVerticalStrut(spaceHeight));
+
+        JLabel titulo1 = new JLabel("Airport", JLabel.CENTER);  
+        titulo1.setFont(ConfiguracionUI.FUENTE_TITULO);
+        titulo1.setForeground(Color.BLACK);
+        panelIzquierdo.add(titulo1);
+
+        JLabel titulo2 = new JLabel("Manager", JLabel.CENTER);  
+        titulo2.setFont(ConfiguracionUI.FUENTE_TITULO);
+        titulo2.setForeground(Color.BLACK);
+        panelIzquierdo.add(titulo2);
+        
+
+        /** PANEL DERECHO (login) */
         JPanel panelDerecho = new JPanel();
         panelDerecho.setLayout(new GridBagLayout());
-        panelDerecho.setOpaque(false);
+        panelDerecho.setOpaque(false); 
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.insets = new Insets(10, 10, 10, 10); 
+        
+        String[] roles = {"Gestor del aeropuerto", "Controlador aéreo", "Operador de aerolínea"};
+        comboBox = new JComboBox<>(roles);
+        comboBox.setPreferredSize(new Dimension(400, 60)); 
         gbc.gridx = 0;
         gbc.gridy = 0;
-
-        String[] roles = {"Gestor del aeropuerto", "Controlador aéreo", "Operador de aerolínea"};
-        comboBox = ConfiguracionUI.crearComboBox(roles);
-        comboBox.setPreferredSize(new Dimension(400, 60));
         panelDerecho.add(comboBox, gbc);
 
-        gbc.gridy++;
-        usuarioField = ConfiguracionUI.crearCampoTexto(20);
+        usuarioField = new JTextField();
         usuarioField.setPreferredSize(new Dimension(400, 40));
-        usuarioField.setVisible(false);
+        usuarioField.setVisible(false);  
+        gbc.gridy = 1;
         panelDerecho.add(usuarioField, gbc);
 
-        gbc.gridy++;
         passwordField = new JPasswordField();
         passwordField.setPreferredSize(new Dimension(400, 40));
         passwordField.setFont(ConfiguracionUI.FUENTE_TEXTO);
+        gbc.gridy = 2;
         panelDerecho.add(passwordField, gbc);
 
-        gbc.gridy++;
-        boton = ConfiguracionUI.crearBoton("Login");
-        boton.setEnabled(false);
+        boton = new JButton("Login");
+        boton.setEnabled(false); 
         boton.setPreferredSize(new Dimension(200, 60));
+        gbc.gridy = 3;
         panelDerecho.add(boton, gbc);
 
         comboBox.addActionListener(new ActionListener() {
@@ -78,21 +100,57 @@ public class AirportManagerGUI extends JFrame {
         boton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	
+                String role = (String) comboBox.getSelectedItem();
+                
+                String usuario = usuarioField.getText();
+                char[] password = passwordField.getPassword();
+                String passwordStr = new String(password); 
+
+                try {
+                    if (role != null) {
+                        switch (role) {
+                            case "Gestor del aeropuerto":
+                                Gestor gestor = airportManager.getGestor();
+                                gestor.iniciarSesion(passwordStr);
+                                new GestorGUI(manager);
+                                break;
+
+                            case "Controlador aéreo":
+                                ControladorAereo controlador = (ControladorAereo) airportManager.getGestor().buscarUsuarioPorDni(usuario);
+                                controlador.iniciarSesion(usuario, passwordStr);
+                                new ControladorGUI(manager);
+                                break;
+
+                            case "Operador de aerolínea":
+                                Operador operador = (Operador) airportManager.getGestor().buscarUsuarioPorDni(usuario);
+                                operador.iniciarSesion(usuario, passwordStr);
+                                new OperadorGUI(manager);
+                                break;
+
+                            default:
+                                JOptionPane.showMessageDialog(AirportManagerGUI.this, "Rol no válido.");
+                        }
+                    }
+                } catch (UsuarioNoEncontradoException | ContrasenaInvalidaException ex) {
+                    JOptionPane.showMessageDialog(AirportManagerGUI.this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
 
-        panel.add(panelDerecho, BorderLayout.EAST);
-        add(panel);
+        panel.add(panelIzquierdo, BorderLayout.WEST); 
+        panel.add(panelDerecho, BorderLayout.CENTER); 
+
+        add(panel);  
     }
 
     private void validateLogin() {
         String selectedRole = (String) comboBox.getSelectedItem();
-        boolean enable = !passwordField.getText().isEmpty();
+        boolean enable = passwordField.getPassword().length > 0; 
 
         if (!selectedRole.equals("Gestor del aeropuerto")) {
             enable = enable && !usuarioField.getText().isEmpty();
         }
-        boton.setEnabled(enable);
-    }
+
+        boton.setEnabled(enable); 
+    }    
 }
