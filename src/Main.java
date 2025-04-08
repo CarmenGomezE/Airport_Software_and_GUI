@@ -16,8 +16,8 @@ public class Main {
                 public void run() {
                     try {
                     	/** Cuando querais probar una sin pasar por el inicio de sesión ponedle true y false a las demás*/
-                        new AirportManagerGUI(manager).setVisible(true);
-                        new OperadorGUI(manager).setVisible(false);
+                        new AirportManagerGUI(manager).setVisible(false);
+                        new OperadorGUI(manager).setVisible(true);
                         new GestorGUI(manager).setVisible(false);
                         new ControladorGUI(manager).setVisible(false);
                     } catch (Exception e) {
