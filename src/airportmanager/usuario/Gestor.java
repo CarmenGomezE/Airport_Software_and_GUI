@@ -863,13 +863,9 @@ public class Gestor extends Usuario {
      * @param contrasena Contraseña.
      * 
      */
-    public void iniciarSesion(String contrasena) {
-        if (this.contrasena.equals(contrasena)) {
-            System.out.println("Inicio de sesión exitoso");
-        }
-
-        else {
-            System.out.println("Contraseña incorrecta. Inténtelo de nuevo");
+    public void iniciarSesion(String contrasena)  throws ContrasenaInvalidaException {
+        if (!this.contrasena.equals(contrasena)) {
+            throw new ContrasenaInvalidaException("La contraseña es inválida.");
         }
     }
 
@@ -1003,8 +999,9 @@ public class Gestor extends Usuario {
      * @throws ContrasenaInvalidaException si la contraseña no es válida.
      */
 	public void heOlvidadoContrasena() throws UsuarioNoEncontradoException, ContrasenaInvalidaException {
-		String nuevaContrasena=sistema.generarContrasena();
+		String nuevaContrasena="SoyNuevoGestor";
 		sistema.asignarContrasena(this.getNombre(), nuevaContrasena);
+		this.contrasena=nuevaContrasena;
 		
 	}
 

@@ -123,6 +123,7 @@ public class OperadorGUI extends JFrame {
 
                 if (opcion == JOptionPane.YES_OPTION) {
                     dispose();
+                    System.exit(0);
                 }
             }
         });

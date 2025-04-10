@@ -13,7 +13,8 @@ public class AirportManagerGUI extends JFrame {
     private JComboBox<String> comboBox;
     private JTextField usuarioField;
     private JPasswordField passwordField;
-    private JButton boton;
+    private JButton botonLogin;
+    private JButton botonRestablecer;
     private AirportManager airportManager;
 
     public AirportManagerGUI(AirportManager manager) {
@@ -80,11 +81,57 @@ public class AirportManagerGUI extends JFrame {
         gbc.gridy = 2;
         panelDerecho.add(passwordField, gbc);
 
-        boton = new JButton("Login");
-        boton.setEnabled(false); 
-        boton.setPreferredSize(new Dimension(200, 60));
+        botonLogin = new JButton("Login");
+        botonLogin.setEnabled(false); 
+        botonLogin.setPreferredSize(new Dimension(200, 60));
         gbc.gridy = 3;
-        panelDerecho.add(boton, gbc);
+        panelDerecho.add(botonLogin, gbc);
+        
+        botonRestablecer = new JButton("He olvidado mi contraseña");
+        botonRestablecer.setEnabled(true); 
+        botonRestablecer.setPreferredSize(new Dimension(300, 30));
+        botonRestablecer.setBackground(ConfiguracionUI.COLOR_FONDO);
+        botonRestablecer.setForeground(Color.WHITE);
+        botonRestablecer.setOpaque(true);
+        botonRestablecer.setBorderPainted(false);
+        gbc.gridy = 4;
+        panelDerecho.add(botonRestablecer, gbc);
+        botonRestablecer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	String role = (String) comboBox.getSelectedItem();
+            	String usuario = usuarioField.getText();
+
+                try {
+                    if (role != null) {
+                        switch (role) {
+                            case "Gestor del aeropuerto":
+                                Gestor gestor = airportManager.getGestor();
+                            	gestor.heOlvidadoContrasena();
+                            	JOptionPane.showMessageDialog(AirportManagerGUI.this, "La nueva contraseña es:"+ gestor.getContrasena());
+                                break;
+
+                            case "Controlador aéreo":
+                                ControladorAereo controlador = (ControladorAereo) airportManager.getGestor().buscarUsuarioPorDni(usuario);
+                                controlador.heOlvidadoContrasena();
+                                JOptionPane.showMessageDialog(AirportManagerGUI.this, "La nueva contraseña es:"+ controlador.getContrasena());
+                                break;
+
+                            case "Operador de aerolínea":
+                                Operador operador = (Operador) airportManager.getGestor().buscarUsuarioPorDni(usuario);
+                                operador.heOlvidadoContrasena();
+                                JOptionPane.showMessageDialog(AirportManagerGUI.this, "La nueva contraseña es:"+ operador.getContrasena());
+                                break;
+
+                            default:
+                                JOptionPane.showMessageDialog(AirportManagerGUI.this, "Rol no válido.");
+                        }
+                    }
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(AirportManagerGUI.this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
 
         comboBox.addActionListener(new ActionListener() {
             @Override
@@ -97,7 +144,7 @@ public class AirportManagerGUI extends JFrame {
             }
         });
 
-        boton.addActionListener(new ActionListener() {
+        botonLogin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String role = (String) comboBox.getSelectedItem();
@@ -112,18 +159,21 @@ public class AirportManagerGUI extends JFrame {
                             case "Gestor del aeropuerto":
                                 Gestor gestor = airportManager.getGestor();
                             	gestor.iniciarSesion(passwordStr);
+                            	dispose();
                                 new GestorGUI(manager);
                                 break;
 
                             case "Controlador aéreo":
                                 ControladorAereo controlador = (ControladorAereo) airportManager.getGestor().buscarUsuarioPorDni(usuario);
                                 controlador.iniciarSesion(usuario, passwordStr);
+                                dispose();
                                 new ControladorGUI(manager);
                                 break;
 
                             case "Operador de aerolínea":
                                 Operador operador = (Operador) airportManager.getGestor().buscarUsuarioPorDni(usuario);
                                 operador.iniciarSesion(usuario, passwordStr);
+                                dispose();
                                 new OperadorGUI(manager);
                                 break;
 
@@ -151,6 +201,6 @@ public class AirportManagerGUI extends JFrame {
             enable = enable && !usuarioField.getText().isEmpty();
         }
 
-        boton.setEnabled(enable); 
+        botonLogin.setEnabled(enable); 
     }    
 }
