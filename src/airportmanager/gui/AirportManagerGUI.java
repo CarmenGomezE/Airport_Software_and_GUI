@@ -111,7 +111,7 @@ public class AirportManagerGUI extends JFrame {
                         switch (role) {
                             case "Gestor del aeropuerto":
                                 Gestor gestor = airportManager.getGestor();
-                                gestor.iniciarSesion(passwordStr);
+                            	gestor.iniciarSesion(passwordStr);
                                 new GestorGUI(manager);
                                 break;
 
