@@ -1,4 +1,4 @@
-package src.airportmanager.gui;
+package src.airportmanager.gui.controlador;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,17 +15,17 @@ public class ControladorGUI extends JFrame {
     public ControladorGUI(AirportManager manager) {
         setTitle("Panel de Controlador");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setExtendedState(JFrame.MAXIMIZED_BOTH); 
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setResizable(false);
         setLocationRelativeTo(null);
 
-        /**PANEL PRINCIPAL*/
+        /** PANEL PRINCIPAL */
         JPanel panel = new JPanel(new BorderLayout(10, 10));
         panel.setBorder(BorderFactory.createEmptyBorder(20, 30, 20, 30));
         panel.setBackground(ConfiguracionUI.COLOR_FONDO);
         add(panel);
 
-        /** PANEL IZQUIERDO*/
+        /** PANEL IZQUIERDO */
         JPanel panelIzquierdo = new JPanel(new BorderLayout(10, 10));
         panelIzquierdo.setPreferredSize(new Dimension(500, 600));
         panelIzquierdo.setBackground(ConfiguracionUI.COLOR_FONDO);
@@ -33,12 +33,12 @@ public class ControladorGUI extends JFrame {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy");
         String formattedDate = LocalDate.now().format(formatter);
 
-        /** Titulo de la lista de vuelos*/
+        /** Titulo de la lista de vuelos */
         JLabel listaVuelosTitulo = new JLabel("Lista de vuelos (" + formattedDate + ")", JLabel.CENTER);
         listaVuelosTitulo.setFont(new Font("Arial", Font.BOLD, 24));
         panelIzquierdo.add(listaVuelosTitulo, BorderLayout.NORTH);
 
-        /** Lista de vuelos*/
+        /** Lista de vuelos */
         DefaultListModel<String> modeloLista = new DefaultListModel<>();
         modeloLista.addElement("Vuelo MAD - BCN | 06:45 | Iberia");
         modeloLista.addElement("Vuelo VLC - PMI | 07:10 | Ryanair");
@@ -85,42 +85,41 @@ public class ControladorGUI extends JFrame {
         modeloLista.addElement("Vuelo AGP - LIS | 22:20 | Ryanair");
         modeloLista.addElement("Vuelo BIO - VLC | 22:35 | Iberia Express");
 
-
-        /** Subir y bajar lista*/
+        /** Subir y bajar lista */
         JList<String> lista = new JList<>(modeloLista);
         JScrollPane scrollLista = new JScrollPane(lista);
         scrollLista.setPreferredSize(new Dimension(400, 250));
         panelIzquierdo.add(scrollLista, BorderLayout.CENTER);
 
-        /** Botones de la lista*/
+        /** Botones de la lista */
         JPanel panelBotones = new JPanel(new GridLayout(1, 2, 10, 10));
         panelBotones.add(new JButton("🔎 Buscar vuelos"));
         panelBotones.add(new JButton("🔄 Refrescar vuelos"));
         panelBotones.setBackground(ConfiguracionUI.COLOR_FONDO);
         panelIzquierdo.add(panelBotones, BorderLayout.SOUTH);
 
-        /** PANEL DERECHO*/
+        /** PANEL DERECHO */
         JPanel panelDerecho = new JPanel(new GridLayout(9, 1, 10, 10));
         panelDerecho.setPreferredSize(new Dimension(500, 600));
         panelDerecho.setBackground(ConfiguracionUI.COLOR_FONDO);
 
-        /** Título del operador*/
+        /** Título del operador */
         JLabel titulo = new JLabel("Controlador de la Terminal 1", JLabel.CENTER);
         titulo.setFont(new Font("Arial", Font.BOLD, 22));
         panelDerecho.add(titulo);
 
-        /** Botones*/
+        /** Botones */
         JPanel subPanelBotones = new JPanel(new GridLayout(1, 2, 10, 10));
         subPanelBotones.add(new JButton("🔔 Notificaciones"));
-        JButton botonCerrarSesion= new JButton("Cerrar sesión");
+        JButton botonCerrarSesion = new JButton("Cerrar sesión");
         subPanelBotones.add(botonCerrarSesion);
         botonCerrarSesion.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int opcion = JOptionPane.showConfirmDialog(ControladorGUI.this, 
-                    "¿Estás seguro de que quieres cerrar sesión?", 
-                    "Cerrar sesión", 
-                    JOptionPane.YES_NO_OPTION);
+                int opcion = JOptionPane.showConfirmDialog(ControladorGUI.this,
+                        "¿Estás seguro de que quieres cerrar sesión?",
+                        "Cerrar sesión",
+                        JOptionPane.YES_NO_OPTION);
 
                 if (opcion == JOptionPane.YES_OPTION) {
                     dispose();
@@ -132,13 +131,13 @@ public class ControladorGUI extends JFrame {
         panelDerecho.add(subPanelBotones);
 
         panelDerecho.add(new JButton("Gestión de estados de los vuelos"));
-        panelDerecho.add(Box.createVerticalStrut(10)); 
+        panelDerecho.add(Box.createVerticalStrut(10));
 
-        /** Añadir al panel principal*/
+        /** Añadir al panel principal */
         panel.add(panelIzquierdo, BorderLayout.WEST);
         panel.add(panelDerecho, BorderLayout.CENTER);
 
-        /**Visible*/
+        /** Visible */
         setVisible(true);
     }
 }

@@ -2,6 +2,9 @@ package src;
 
 import src.airportmanager.*;
 import src.airportmanager.gui.*;
+import src.airportmanager.gui.controlador.ControladorGUI;
+import src.airportmanager.gui.gestor.GestorGUI;
+import src.airportmanager.gui.operador.OperadorGUI;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -14,14 +17,17 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-        	vaciarArchivo(ARCHIVO_ESTADO);
+            vaciarArchivo(ARCHIVO_ESTADO);
             AirportManager manager = AirportManager.cargarEstado(ARCHIVO_ESTADO);
             manager.iniciarAplicacion();
 
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
                     try {
-                    	/** Cuando querais probar una sin pasar por el inicio de sesión ponedle true y false a las demás*/
+                        /**
+                         * Cuando querais probar una sin pasar por el inicio de sesión ponedle true y
+                         * false a las demás
+                         */
                         new AirportManagerGUI(manager).setVisible(false);
                         new OperadorGUI(manager).setVisible(true);
                         new GestorGUI(manager).setVisible(false);
@@ -32,15 +38,15 @@ public class Main {
                     }
                 }
             });
-            
+
             manager.guardarEstado(ARCHIVO_ESTADO);
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println("Error al cargar el estado del aeropuerto o iniciar la aplicación: " + e.getMessage());
         }
     }
-    
-	public static void vaciarArchivo(String archivo) {
+
+    public static void vaciarArchivo(String archivo) {
         try {
             File file = new File(archivo);
             System.out.println("\nIntentando vaciar el archivo: " + file.getAbsolutePath());
