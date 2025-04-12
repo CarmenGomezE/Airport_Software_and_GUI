@@ -29,7 +29,7 @@ public class OperadorGUI extends JFrame {
         panelIzquierdo.setPreferredSize(new Dimension(500, 600));
         panelIzquierdo.setBackground(ConfiguracionUI.COLOR_FONDO);
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");
         String formattedDate = LocalDate.now().format(formatter);
 
         /** Titulo de la lista de vuelos*/
