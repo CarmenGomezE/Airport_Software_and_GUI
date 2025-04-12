@@ -655,7 +655,7 @@ public class Operador extends UsuarioConDni {
      * @return Contraseña
      */
     private String establecerContrasena() {
-    	return sistema.generarContrasena();
+    	return "SoyOperador";
     }
 
     /**

@@ -7,11 +7,15 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import src.airportmanager.AirportManager;
+import src.airportmanager.gui.ConfiguracionUI;
+import src.airportmanager.usuario.Operador;
 
 public class OperadorGUI extends JFrame {
     private static final long serialVersionUID = 1L;
+    private final Operador operadorAerolinea;
 
-    public OperadorGUI(AirportManager manager) {
+    public OperadorGUI(AirportManager manager, Operador operador) {
+    	operadorAerolinea= operador;
         setTitle("Panel de Operador");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -98,18 +102,27 @@ public class OperadorGUI extends JFrame {
         panelIzquierdo.add(panelBotones, BorderLayout.SOUTH);
 
         /** PANEL DERECHO */
-        JPanel panelDerecho = new JPanel(new GridLayout(9, 1, 10, 10));
+        JPanel panelDerecho = new JPanel(new GridLayout(11, 1, 10, 10));
         panelDerecho.setPreferredSize(new Dimension(500, 600));
         panelDerecho.setBackground(ConfiguracionUI.COLOR_FONDO);
 
         /** Título del operador */
-        JLabel titulo = new JLabel("Operador de la aerolínea Iberia", JLabel.CENTER);
+        JLabel titulo = new JLabel("Operador de la aerolínea "+operador.getAerolinea().getNombre(), JLabel.CENTER);
         titulo.setFont(new Font("Arial", Font.BOLD, 22));
         panelDerecho.add(titulo);
 
         /** Botones */
         JPanel subPanelBotones = new JPanel(new GridLayout(1, 2, 10, 10));
-        subPanelBotones.add(new JButton("🔔 Notificaciones"));
+        JButton botonNotificaciones = new JButton("🔔 Notificaciones");
+        subPanelBotones.add(botonNotificaciones);
+        botonNotificaciones.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	setVisible(false);
+                new NotificacionesOperadorGUI(manager, OperadorGUI.this, operadorAerolinea);
+            }
+        });
+        
         JButton botonCerrarSesion = new JButton("Cerrar sesión");
         subPanelBotones.add(botonCerrarSesion);
         botonCerrarSesion.addActionListener(new ActionListener() {
@@ -129,12 +142,85 @@ public class OperadorGUI extends JFrame {
         subPanelBotones.setBackground(ConfiguracionUI.COLOR_FONDO);
         panelDerecho.add(subPanelBotones);
 
-        panelDerecho.add(new JButton("Gestión de estados de los vuelos"));
-        panelDerecho.add(new JButton("Gestión de aviones"));
-        panelDerecho.add(new JButton("Programar un vuelo"));
-        panelDerecho.add(new JButton("Compartir un vuelo"));
-        panelDerecho.add(new JButton("Estadísticas de vuelos"));
-        panelDerecho.add(new JButton("Alternativas a los vuelos"));
+        JButton botonGestionEstadoVuelo = new JButton("Gestión de estados de los vuelos");
+        panelDerecho.add(botonGestionEstadoVuelo);
+        botonGestionEstadoVuelo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	setVisible(false);
+                new GestionEstadoVueloGUI(manager, OperadorGUI.this, operadorAerolinea);
+            }
+        });
+        
+        JButton botonGestionAviones = new JButton("Gestión de aviones");
+        panelDerecho.add(botonGestionAviones);
+        botonGestionAviones.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	setVisible(false);
+                new GestionAvionGUI(manager, OperadorGUI.this, operadorAerolinea);
+            }
+        });
+        
+        JButton botonProgramarVuelo = new JButton("Programar un vuelo");
+        panelDerecho.add(botonProgramarVuelo);
+        botonProgramarVuelo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	 setVisible(false);
+                new ProgramarVueloGUI(manager, OperadorGUI.this, operadorAerolinea);
+            }
+        });
+        
+        JButton botonCompartirVuelo = new JButton("Compartir un vuelo");
+        panelDerecho.add(botonCompartirVuelo);
+        botonCompartirVuelo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	 setVisible(false);
+                new CompartirVueloGUI(manager, OperadorGUI.this, operadorAerolinea);
+            }
+        });
+        
+        JButton botonVerCompartirVuelo = new JButton("Gestionar solicitudes de vuelos compartidos");
+        panelDerecho.add(botonVerCompartirVuelo);
+        botonVerCompartirVuelo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	 setVisible(false);
+                new SolicitudesCompartirVueloGUI(manager, OperadorGUI.this, operadorAerolinea);
+            }
+        });
+        
+        JButton botonEstadisticas = new JButton("Estadísticas de vuelos");
+        panelDerecho.add(botonEstadisticas);
+        botonEstadisticas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	 setVisible(false);
+                new EstadisticasOperadorGUI(manager, OperadorGUI.this, operadorAerolinea);
+            }
+        });
+        
+        JButton botonAlternativas = new JButton("Alternativas a los vuelos");
+        panelDerecho.add(botonAlternativas);
+        botonAlternativas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	 setVisible(false);
+                new AlternativasVueloGUI(manager, OperadorGUI.this, operadorAerolinea);
+            }
+        });
+        
+        JButton botonFacturacion = new JButton("Pagar facturas aerolínea");
+        panelDerecho.add(botonFacturacion);
+        botonFacturacion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	 setVisible(false);
+                new PagarFacturasGUI(manager, OperadorGUI.this, operadorAerolinea);
+            }
+        });
 
         panelDerecho.add(Box.createVerticalStrut(10));
 

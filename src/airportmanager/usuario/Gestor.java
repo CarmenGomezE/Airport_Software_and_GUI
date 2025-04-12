@@ -199,7 +199,7 @@ public class Gestor extends Usuario {
      * @param terminal   Terminal del nuevo controlador.
      */
     public void darDeAltaControlador(String nombre, String dni, Terminal terminal) {
-        ControladorAereo controlador = new ControladorAereo(nombre, dni, sistema.generarContrasena(), aeropuerto, this, terminal, sistema);
+        ControladorAereo controlador = new ControladorAereo(nombre, dni, "SoyControlador", aeropuerto, this, terminal, sistema);
         aeropuerto.addUsuario(controlador);
         terminal.agregarControlador(controlador);
         sistema.addCredencial(dni, controlador.getContrasena());
@@ -881,7 +881,7 @@ public class Gestor extends Usuario {
     public void modificarUsuario(String nombre, UsuarioConDni usuario) throws UsuarioNoEncontradoException, ContrasenaInvalidaException {
         if (usuario != null) {
             usuario.setNombre(nombre);
-            String nuevaContrasena=sistema.generarContrasena();
+            String nuevaContrasena="UsuarioNuevo";
             usuario.setContrasena(nuevaContrasena);
             sistema.asignarContrasena(usuario.getDni(), nuevaContrasena);
             System.out.println("Usuario modificado correctamente");

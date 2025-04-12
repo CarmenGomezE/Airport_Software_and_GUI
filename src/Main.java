@@ -2,9 +2,6 @@ package src;
 
 import src.airportmanager.*;
 import src.airportmanager.gui.*;
-import src.airportmanager.gui.controlador.ControladorGUI;
-import src.airportmanager.gui.gestor.GestorGUI;
-import src.airportmanager.gui.operador.OperadorGUI;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -17,7 +14,7 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            vaciarArchivo(ARCHIVO_ESTADO);
+            /**vaciarArchivo(ARCHIVO_ESTADO);*/
             AirportManager manager = AirportManager.cargarEstado(ARCHIVO_ESTADO);
             manager.iniciarAplicacion();
 
@@ -28,10 +25,7 @@ public class Main {
                          * Cuando querais probar una sin pasar por el inicio de sesión ponedle true y
                          * false a las demás
                          */
-                        new AirportManagerGUI(manager).setVisible(false);
-                        new OperadorGUI(manager).setVisible(true);
-                        new GestorGUI(manager).setVisible(false);
-                        new ControladorGUI(manager).setVisible(false);
+                        new AirportManagerGUI(manager).setVisible(true);
                     } catch (Exception e) {
                         e.printStackTrace();
                         System.err.println("Error al iniciar la interfaz gráfica: " + e.getMessage());
@@ -39,7 +33,7 @@ public class Main {
                 }
             });
 
-            manager.guardarEstado(ARCHIVO_ESTADO);
+            /**manager.guardarEstado(ARCHIVO_ESTADO);*/
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println("Error al cargar el estado del aeropuerto o iniciar la aplicación: " + e.getMessage());

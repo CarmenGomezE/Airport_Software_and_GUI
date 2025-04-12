@@ -8,11 +8,15 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import src.airportmanager.AirportManager;
+import src.airportmanager.gui.ConfiguracionUI;
+import src.airportmanager.usuario.ControladorAereo;
 
 public class ControladorGUI extends JFrame {
     private static final long serialVersionUID = 1L;
+    private ControladorAereo controladorAereo;
 
-    public ControladorGUI(AirportManager manager) {
+    public ControladorGUI(AirportManager manager, ControladorAereo controlador) {
+    	this.controladorAereo=controlador;
         setTitle("Panel de Controlador");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);

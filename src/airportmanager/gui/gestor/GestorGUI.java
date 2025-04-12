@@ -8,11 +8,16 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import src.airportmanager.AirportManager;
+import src.airportmanager.gui.ConfiguracionUI;
+import src.airportmanager.usuario.Gestor;
 
 public class GestorGUI extends JFrame {
     private static final long serialVersionUID = 1L;
+    private Gestor gestor;
 
-    public GestorGUI(AirportManager manager) {
+    public GestorGUI(AirportManager manager, Gestor gestor) {
+    	this.gestor=gestor;
+    	
         setTitle("Panel de Gestor");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -99,7 +104,7 @@ public class GestorGUI extends JFrame {
         panelIzquierdo.add(panelBotones, BorderLayout.SOUTH);
 
         /** PANEL DERECHO */
-        JPanel panelDerecho = new JPanel(new GridLayout(10, 1, 10, 10));
+        JPanel panelDerecho = new JPanel(new GridLayout(9, 1, 10, 10));
         panelDerecho.setPreferredSize(new Dimension(500, 600));
         panelDerecho.setBackground(ConfiguracionUI.COLOR_FONDO);
 
@@ -130,7 +135,6 @@ public class GestorGUI extends JFrame {
         subPanelBotones.setBackground(ConfiguracionUI.COLOR_FONDO);
         panelDerecho.add(subPanelBotones);
 
-        panelDerecho.add(new JButton("Gestión de estados de los vuelos"));
         panelDerecho.add(new JButton("Gestión de infraestructura"));
         panelDerecho.add(new JButton("Configuración del aeropuerto"));
         panelDerecho.add(new JButton("Gestión de usuarios"));

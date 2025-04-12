@@ -402,4 +402,15 @@ public class AirportManager implements Serializable {
 		return credenciales;
 	}
 
+	public Vuelo buscarVueloPorCodigo(String codigo) {
+		Vuelo vueloBuscado = null;
+		for(Vuelo v:getAeropuerto().getVuelosAceptados()) {
+			if(v.getCodigo().equals(codigo)) {
+				vueloBuscado=v;
+				break;
+			}
+		}
+		return vueloBuscado;
+	}
+
 }

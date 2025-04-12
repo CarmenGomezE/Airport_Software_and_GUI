@@ -156,7 +156,7 @@ public class AirportManagerGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String role = (String) comboBox.getSelectedItem();
 
-                String usuario = usuarioField.getText();
+                String dni = usuarioField.getText();
                 char[] password = passwordField.getPassword();
                 String passwordStr = new String(password);
 
@@ -167,22 +167,22 @@ public class AirportManagerGUI extends JFrame {
                                 Gestor gestor = airportManager.getGestor();
                                 gestor.iniciarSesion(passwordStr);
                                 dispose();
-                                new GestorGUI(manager);
+                                new GestorGUI(manager,gestor);
                                 break;
 
                             case "Controlador aéreo":
                                 ControladorAereo controlador = (ControladorAereo) airportManager.getGestor()
-                                        .buscarUsuarioPorDni(usuario);
-                                controlador.iniciarSesion(usuario, passwordStr);
+                                        .buscarUsuarioPorDni(dni);
+                                controlador.iniciarSesion(dni, passwordStr);
                                 dispose();
-                                new ControladorGUI(manager);
+                                new ControladorGUI(manager, controlador);
                                 break;
 
                             case "Operador de aerolínea":
-                                Operador operador = (Operador) airportManager.getGestor().buscarUsuarioPorDni(usuario);
-                                operador.iniciarSesion(usuario, passwordStr);
+                                Operador operador = (Operador) airportManager.getGestor().buscarUsuarioPorDni(dni);
+                                operador.iniciarSesion(dni, passwordStr);
                                 dispose();
-                                new OperadorGUI(manager);
+                                new OperadorGUI(manager, operador);
                                 break;
 
                             default:
