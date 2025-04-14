@@ -727,8 +727,8 @@ public class AirportManagerMain {
 		ControladorAereo controladorT1= terminalT1.getControladores().get(0);
     	ControladorAereo controladorT2= terminalT2.getControladores().get(0);
     	
-    	Vuelo vueloFRK2234= airportManager.getAeropuerto().getVuelosAceptados().get(9);
-		Vuelo vueloFRK8103= airportManager.getAeropuerto().getVuelosAceptados().get(10);
+    	Vuelo vueloFRK2234= airportManager.getAeropuerto().getVuelosAceptados().get(10);
+		Vuelo vueloFRK8103= airportManager.getAeropuerto().getVuelosAceptados().get(11);
 		
 		System.out.println("\nIniciando el proceso de cambio de estados de vuelos.");
 		System.out.println("Comenzamos con los estados de un vuelo de salida:");

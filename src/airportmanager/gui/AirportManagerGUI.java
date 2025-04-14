@@ -25,7 +25,7 @@ public class AirportManagerGUI extends JFrame {
         ConfiguracionUI.applyLookAndFeel();
 
         setTitle("Airport Manager");
-        setSize(800, 600);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout(10, 10));
@@ -37,25 +37,25 @@ public class AirportManagerGUI extends JFrame {
         panel.setBackground(ConfiguracionUI.COLOR_FONDO);
         panel.setBorder(BorderFactory.createEmptyBorder(20, 200, 20, 30));
 
-        /** PANEL IZQUIERDO (Título y avión) */
-        JPanel panelIzquierdo = new JPanel(new BorderLayout(10, 10));
-        panelIzquierdo.setPreferredSize(new Dimension(400, getHeight()));
-        panelIzquierdo.setBackground(ConfiguracionUI.COLOR_FONDO);
-
+        /** PANEL IZQUIERDO (título) */
+        JPanel panelIzquierdo = new JPanel();
         panelIzquierdo.setLayout(new BoxLayout(panelIzquierdo, BoxLayout.Y_AXIS));
-        int screenHeight = getHeight();
-        int spaceHeight = screenHeight / 2 - 50;
-        panelIzquierdo.add(Box.createVerticalStrut(spaceHeight));
+        panelIzquierdo.setBackground(ConfiguracionUI.COLOR_FONDO);
 
         JLabel titulo1 = new JLabel("Airport", JLabel.CENTER);
         titulo1.setFont(ConfiguracionUI.FUENTE_TITULO);
         titulo1.setForeground(Color.BLACK);
-        panelIzquierdo.add(titulo1);
 
         JLabel titulo2 = new JLabel("Manager", JLabel.CENTER);
         titulo2.setFont(ConfiguracionUI.FUENTE_TITULO);
         titulo2.setForeground(Color.BLACK);
+
+        panelIzquierdo.add(Box.createVerticalGlue()); 
+        panelIzquierdo.add(titulo1);
         panelIzquierdo.add(titulo2);
+        panelIzquierdo.add(Box.createVerticalGlue()); 
+
+        panel.add(panelIzquierdo, BorderLayout.WEST);
 
         /** PANEL DERECHO (login) */
         JPanel panelDerecho = new JPanel();
