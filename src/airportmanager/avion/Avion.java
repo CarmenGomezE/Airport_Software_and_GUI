@@ -194,4 +194,9 @@ public abstract class Avion implements Serializable {
         }
         return true;
     }
+    
+    @Override
+    public String toString() {
+    	return marca+modelo+ " -- "+matricula;
+    }
 }

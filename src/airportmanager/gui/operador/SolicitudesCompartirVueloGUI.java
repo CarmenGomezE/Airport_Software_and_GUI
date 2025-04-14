@@ -17,7 +17,7 @@ public class SolicitudesCompartirVueloGUI extends JFrame {
     private DefaultListModel<String> modeloLista;
     private JList<String> listaSolicitudes;
     private JTextField campoCodigo;
-    
+
     public SolicitudesCompartirVueloGUI(AirportManager manager, OperadorGUI operadorGUI, Operador operadorAerolinea) {
         this.opGUI = operadorGUI;
         this.operador = operadorAerolinea;
@@ -26,14 +26,14 @@ public class SolicitudesCompartirVueloGUI extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setResizable(false);
         setLocationRelativeTo(null);
-        
+
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
                 opGUI.setVisible(true);
             }
         });
-        
+
         /** PANEL PRINCIPAL */
         JPanel panel = new JPanel(new BorderLayout(10, 10));
         panel.setBorder(BorderFactory.createEmptyBorder(20, 30, 20, 30));
@@ -71,24 +71,40 @@ public class SolicitudesCompartirVueloGUI extends JFrame {
         panelIzquierdo.add(panelBotones, BorderLayout.SOUTH);
 
         /** PANEL DERECHO */
-        JPanel panelDerecho = new JPanel(new GridLayout(8, 1, 10, 10));
+        JPanel panelDerecho = new JPanel();
+        panelDerecho.setLayout(new BoxLayout(panelDerecho, BoxLayout.Y_AXIS));
         panelDerecho.setPreferredSize(new Dimension(500, 600));
         panelDerecho.setBackground(ConfiguracionUI.COLOR_FONDO);
 
         JLabel titulo = new JLabel("Operador: " + operador.getNombre(), JLabel.CENTER);
         titulo.setFont(new Font("Arial", Font.BOLD, 22));
+        titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
         panelDerecho.add(titulo);
 
+        panelDerecho.add(Box.createRigidArea(new Dimension(0, 10)));
+
+        JLabel labelCodigo = new JLabel("Código de vuelo:");
+        labelCodigo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panelDerecho.add(labelCodigo);
+
         campoCodigo = new JTextField();
-        campoCodigo.setMaximumSize(new Dimension(Integer.MAX_VALUE, 10));
-        panelDerecho.add(new JLabel("Código de vuelo:"));
+        campoCodigo.setMaximumSize(new Dimension(1000, 800));
+        campoCodigo.setAlignmentX(Component.CENTER_ALIGNMENT);
         panelDerecho.add(campoCodigo);
 
-        JButton botonAceptar = new JButton("✅ Aceptar solicitud");
-        JButton botonRechazar = new JButton("❌ Rechazar solicitud");
+        panelDerecho.add(Box.createRigidArea(new Dimension(0, 20)));
 
+        JButton botonAceptar = new JButton("✅ Aceptar solicitud");
+        botonAceptar.setMaximumSize(new Dimension(1000, 800));
+        botonAceptar.setAlignmentX(Component.CENTER_ALIGNMENT);
         panelDerecho.add(botonAceptar);
+
+        JButton botonRechazar = new JButton("❌ Rechazar solicitud");
+        botonRechazar.setMaximumSize(new Dimension(1000, 800));
+        botonRechazar.setAlignmentX(Component.CENTER_ALIGNMENT);
         panelDerecho.add(botonRechazar);
+
+        panelDerecho.add(Box.createVerticalGlue());
 
         /** Acción aceptar */
         botonAceptar.addActionListener(new ActionListener() {
@@ -154,7 +170,7 @@ public class SolicitudesCompartirVueloGUI extends JFrame {
         modeloLista.clear();
         List<SolicitudVueloCompartido> solicitudes = operador.getSolicitudesRecibidas();
         for (SolicitudVueloCompartido s : solicitudes) {
-            modeloLista.addElement("Vuelo: " + s.getVueloOriginal().getCodigo() + " | De: " + s.getOperadorSolicitante().getNombre()+ " | Estado: "+ s.getEstadoSolicitud());
+            modeloLista.addElement("Vuelo: " + s.getVueloOriginal().getCodigo() + " | De: " + s.getOperadorSolicitante().getNombre() + " | Estado: " + s.getEstadoSolicitud());
         }
     }
 

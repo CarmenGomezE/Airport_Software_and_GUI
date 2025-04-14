@@ -248,5 +248,10 @@ public abstract class Aeropuerto implements Serializable {
 
     	numTemporadas=temporadas.size();
     }
+    
+    @Override
+    public String toString() {
+    	return nombre;
+    }
 
 }
