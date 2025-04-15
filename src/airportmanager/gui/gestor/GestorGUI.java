@@ -134,13 +134,34 @@ public class GestorGUI extends JFrame {
         });
         subPanelBotones.setBackground(ConfiguracionUI.COLOR_FONDO);
         panelDerecho.add(subPanelBotones);
+        
+        
+        JButton botonGestionInfraestructura = new JButton("Gestión de infraestructura");
+        panelDerecho.add(botonGestionInfraestructura);
+        
+        JButton botonConfiguracionAeropuerto = new JButton("Configuración del aeropuerto");
+        panelDerecho.add(botonConfiguracionAeropuerto);
+        botonConfiguracionAeropuerto.addActionListener(new ActionListener() {
 
-        panelDerecho.add(new JButton("Gestión de infraestructura"));
-        panelDerecho.add(new JButton("Configuración del aeropuerto"));
-        panelDerecho.add(new JButton("Gestión de usuarios"));
-        panelDerecho.add(new JButton("Estadísticas de la infraestructura"));
-        panelDerecho.add(new JButton("Gestión de vuelos"));
-        panelDerecho.add(new JButton("Gestión de facturas"));
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setVisible(true);
+				new ConfiguracionAeropuertoGUI(manager, GestorGUI.this, gestor);
+				
+			}      	
+        });
+        
+        JButton botonGestionUsuarios = new JButton("Gestión de usuarios");
+        panelDerecho.add(botonGestionUsuarios);
+        
+        JButton botonEstadisticas = new JButton("Estadísticas de la infraestructura");
+        panelDerecho.add(botonEstadisticas);
+        
+        JButton botonGestionVuelos = new JButton("Gestión de vuelos");
+        panelDerecho.add(botonGestionVuelos);
+        
+        JButton botonGestionFacturas = new JButton("Gestión de facturas");
+        panelDerecho.add(botonGestionFacturas);
 
         panelDerecho.add(Box.createVerticalStrut(10));
 

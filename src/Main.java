@@ -26,6 +26,7 @@ public class Main {
                          * false a las demás
                          */
                         new AirportManagerGUI(manager).setVisible(true);
+                    
                     } catch (Exception e) {
                         e.printStackTrace();
                         System.err.println("Error al iniciar la interfaz gráfica: " + e.getMessage());
