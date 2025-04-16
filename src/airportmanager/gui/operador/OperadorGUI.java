@@ -1,6 +1,7 @@
 package src.airportmanager.gui.operador;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.time.LocalDate;
@@ -96,7 +97,16 @@ public class OperadorGUI extends JFrame {
 
         /** Botones de la lista */
         JPanel panelBotones = new JPanel(new GridLayout(1, 2, 10, 10));
-        panelBotones.add(new JButton("🔎 Buscar vuelos"));
+        JButton botonBuscarVuelos=new JButton("🔎 Buscar vuelos");
+        panelBotones.add(botonBuscarVuelos);
+        botonBuscarVuelos.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	setVisible(false);
+                new BuscarVueloOperadorGUI(manager, OperadorGUI.this, operadorAerolinea);
+            }
+        });
+     
         panelBotones.add(new JButton("🔄 Refrescar vuelos"));
         panelBotones.setBackground(ConfiguracionUI.COLOR_FONDO);
         panelIzquierdo.add(panelBotones, BorderLayout.SOUTH);
