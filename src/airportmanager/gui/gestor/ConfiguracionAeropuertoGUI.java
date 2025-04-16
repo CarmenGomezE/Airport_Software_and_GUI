@@ -96,7 +96,7 @@ public class ConfiguracionAeropuertoGUI extends JFrame{
          panel.add(campoCodigo);
          panel.add(Box.createRigidArea(new Dimension(0, 30)));
          
-         /** CIUDAD MÁS CERCANA Y PAÍS */
+         /** CIUDAD  */
          JPanel ciudadPanel = new JPanel();
          JLabel labelCiudad = new JLabel("Ciudad más cercana: ");
          labelCiudad.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -113,7 +113,7 @@ public class ConfiguracionAeropuertoGUI extends JFrame{
          panel.add(campoCiudad);
          panel.add(Box.createRigidArea(new Dimension(0, 30)));
          
-         /** CIUDAD MÁS CERCANA Y PAÍS */
+         /**PAÍS */
          JPanel paisPanel = new JPanel();
          JLabel labelPais = new JLabel("País: ");
          labelPais.setFont(new Font("Arial", Font.PLAIN, 18));
