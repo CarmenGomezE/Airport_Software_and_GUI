@@ -5,7 +5,6 @@ import java.util.*;
 
 import src.airportmanager.factura.*;
 import src.airportmanager.usuario.Operador;
-import src.airportmanager.vuelo.SolicitudVueloCompartido;
 import src.airportmanager.vuelo.Vuelo;
 
 import java.io.Serializable;

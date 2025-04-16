@@ -269,5 +269,10 @@ public class VueloProgramado implements Serializable {
     public Escala getEscala() {
         return this.escala;
     }
+    
+    @Override
+    public String toString() {
+    	return codigo;
+    }
 
 }
