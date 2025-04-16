@@ -116,7 +116,7 @@ public class SolicitudesCompartirVueloGUI extends JFrame {
                     return;
                 }
 
-                SolicitudVueloCompartido solicitud = buscarSolicitudPorCodigo(codigo);
+                SolicitudVueloCompartido solicitud = operador.buscarSolicitudPorCodigo(codigo);
                 if (solicitud == null) {
                     JOptionPane.showMessageDialog(SolicitudesCompartirVueloGUI.this, "No se encontró ninguna solicitud para ese vuelo.");
                     return;
@@ -142,7 +142,7 @@ public class SolicitudesCompartirVueloGUI extends JFrame {
                     return;
                 }
 
-                SolicitudVueloCompartido solicitud = buscarSolicitudPorCodigo(codigo);
+                SolicitudVueloCompartido solicitud = operador.buscarSolicitudPorCodigo(codigo);
                 if (solicitud == null) {
                     JOptionPane.showMessageDialog(SolicitudesCompartirVueloGUI.this, "No se encontró ninguna solicitud para ese vuelo.");
                     return;
@@ -172,14 +172,5 @@ public class SolicitudesCompartirVueloGUI extends JFrame {
         for (SolicitudVueloCompartido s : solicitudes) {
             modeloLista.addElement("Vuelo: " + s.getVueloOriginal().getCodigo() + " | De: " + s.getOperadorSolicitante().getNombre() + " | Estado: " + s.getEstadoSolicitud());
         }
-    }
-
-    private SolicitudVueloCompartido buscarSolicitudPorCodigo(String codigoVuelo) {
-        for (SolicitudVueloCompartido s : operador.getSolicitudesRecibidas()) {
-            if (s.getVueloOriginal().getCodigo().equalsIgnoreCase(codigoVuelo)) {
-                return s;
-            }
-        }
-        return null;
     }
 }

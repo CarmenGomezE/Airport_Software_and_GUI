@@ -5,6 +5,7 @@ import java.util.*;
 
 import src.airportmanager.factura.*;
 import src.airportmanager.usuario.Operador;
+import src.airportmanager.vuelo.SolicitudVueloCompartido;
 import src.airportmanager.vuelo.Vuelo;
 
 import java.io.Serializable;
@@ -150,5 +151,14 @@ public class Aerolinea implements Serializable {
         this.operador = operador;
 
     }
+
+	public Factura buscarFacturaPorCodigo(String codigo) {
+		for (Factura f : getFacturas()) {
+            if (f.getInvoiceIdentifier().equalsIgnoreCase(codigo)) {
+                return f;
+            }
+        }
+        return null;
+	}
 
 }

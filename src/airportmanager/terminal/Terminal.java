@@ -79,4 +79,9 @@ public abstract class Terminal implements Serializable {
     public void agregarControlador(ControladorAereo controlador) {
         this.controladores.add(controlador);
     }
+    
+    @Override
+    public String toString() {
+    	return codigo;
+    }
 }

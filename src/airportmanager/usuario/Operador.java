@@ -729,4 +729,13 @@ public class Operador extends UsuarioConDni {
 			}
 		}
     }
+	
+	public SolicitudVueloCompartido buscarSolicitudPorCodigo(String codigoVuelo) {
+        for (SolicitudVueloCompartido s : getSolicitudesRecibidas()) {
+            if (s.getVueloOriginal().getCodigo().equalsIgnoreCase(codigoVuelo)) {
+                return s;
+            }
+        }
+        return null;
+    }
 }
