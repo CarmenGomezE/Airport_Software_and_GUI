@@ -8,23 +8,30 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+
 import java.time.ZoneOffset;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
+import javax.swing.JCheckBox;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
+
+
+import java.util.*;
 
 import src.airportmanager.AirportManager;
 import src.airportmanager.aeropuerto.DireccionRelativaCiudad;
+import src.airportmanager.aeropuerto.Temporada;
 import src.airportmanager.gui.ConfiguracionUI;
 import src.airportmanager.usuario.Gestor;
 
@@ -181,39 +188,55 @@ public class ConfiguracionAeropuertoGUI extends JFrame{
          panel.add(campoDiferencia);
          panel.add(Box.createRigidArea(new Dimension(0, 30)));
          
-         /** HORARIOS DE OPERACIÓN EN VERANO */
-         JPanel veranoPanel = new JPanel();
-         JLabel labelVerano = new JLabel("Horarios de operación en verano: ");
-         labelVerano.setFont(new Font("Arial", Font.PLAIN, 18));
-         veranoPanel.setLayout(new FlowLayout(FlowLayout.LEFT)); 
-	     veranoPanel.setBackground(ConfiguracionUI.COLOR_FONDO); 
-	     veranoPanel.add(labelVerano);
-	     
-         panel.add(veranoPanel);
-         panel.add(Box.createRigidArea(new Dimension(0, 10)));
-
-         JTextField campoVerano = new JTextField();
-         campoVerano.setMaximumSize(new Dimension(Integer.MAX_VALUE, 35));
-         campoVerano.setFont(new Font("Arial", Font.PLAIN, 16));
-         panel.add(campoVerano);
-         panel.add(Box.createRigidArea(new Dimension(0, 30)));
+         /**AÑADIR TEMPORADA*/
+         JCheckBox agregarTemporada = new JCheckBox("Añadir temporada");
+         agregarTemporada.setBackground(ConfiguracionUI.COLOR_FONDO);
+         agregarTemporada.setFont(new Font("Arial", Font.BOLD, 16));
+         panel.add(agregarTemporada);
+         panel.add(Box.createRigidArea(new Dimension(0, 20)));
          
-         /** HORARIOS DE OPERACIÓN EN INVIERNO */
-         JPanel inviernoPanel = new JPanel();
-         JLabel labelInvierno = new JLabel("Horarios de operación en invierno: ");
-         labelInvierno.setFont(new Font("Arial", Font.PLAIN, 18));
-         inviernoPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-	     inviernoPanel.setBackground(ConfiguracionUI.COLOR_FONDO);
-	     inviernoPanel.add(labelInvierno);
-	     
-         panel.add(inviernoPanel);
-         panel.add(Box.createRigidArea(new Dimension(0, 10)));
+         JPanel temporadaPanel = new JPanel();
+         temporadaPanel.setLayout(new BoxLayout(temporadaPanel, BoxLayout.Y_AXIS));
+         temporadaPanel.setBackground(ConfiguracionUI.COLOR_FONDO);
+         temporadaPanel.setVisible(false);
+         
+         JTextField campoInicio = new JTextField();
+         campoInicio.setMaximumSize(new Dimension(Integer.MAX_VALUE, 35));
+         campoInicio.setFont(new Font("Arial", Font.PLAIN, 16));
+         temporadaPanel.add(new JLabel("Fecha de inicio (YYYY-MM-DD)"));
+         temporadaPanel.add(campoInicio);
+         temporadaPanel.add(Box.createRigidArea(new Dimension(0,10)));
+         
+         JTextField campoFin = new JTextField();
+         campoFin.setMaximumSize(new Dimension(Integer.MAX_VALUE, 35));
+         campoFin.setFont(new Font("Arial", Font.PLAIN, 16));
+         temporadaPanel.add(new JLabel("Fecha de fin (YYYY-MM-DD)"));
+         temporadaPanel.add(campoFin);
+         temporadaPanel.add(Box.createRigidArea(new Dimension(0,10)));
+         
+         JTextField campoApertura = new JTextField();
+         campoApertura.setMaximumSize(new Dimension(Integer.MAX_VALUE, 35));
+         campoApertura.setFont(new Font("Arial", Font.PLAIN, 16));
+         temporadaPanel.add(new JLabel("Horario de apertura (HH:mm)"));
+         temporadaPanel.add(campoApertura);
+         temporadaPanel.add(Box.createRigidArea(new Dimension(0,10)));
+         
+         JTextField campoCierre = new JTextField();
+         campoCierre.setMaximumSize(new Dimension(Integer.MAX_VALUE, 35));
+         campoCierre.setFont(new Font("Arial", Font.PLAIN, 16));
+         temporadaPanel.add(new JLabel("Horario de cierre (HH:mm)"));
+         temporadaPanel.add(campoCierre);
+         temporadaPanel.add(Box.createRigidArea(new Dimension(0,10)));
+         
+         panel.add(temporadaPanel);
+         panel.add(Box.createRigidArea(new Dimension(0,20)));
+         
+         agregarTemporada.addActionListener(e -> {
+        	    temporadaPanel.setVisible(agregarTemporada.isSelected());
+        	    panel.revalidate();
+        	    panel.repaint();
+        	});
 
-         JTextField campoInvierno = new JTextField();
-         campoInvierno.setMaximumSize(new Dimension(Integer.MAX_VALUE, 35));
-         campoInvierno.setFont(new Font("Arial", Font.PLAIN, 16));
-         panel.add(campoInvierno);
-         panel.add(Box.createRigidArea(new Dimension(0, 30)));
          
          /**Barra para bajar y poder ver todo el contenido*/
          JScrollPane scrollPane = new JScrollPane(panel);
@@ -294,6 +317,21 @@ public class ConfiguracionAeropuertoGUI extends JFrame{
 					gestor.configurarAeropuertoPropioDireccionCiudad(direccion);
 					gestor.configurarAeropuertoPropioDiferenciaHoraria(diferencia);
 					
+					if (agregarTemporada.isSelected()) {
+						String fechaInicio =campoInicio.getText().trim();
+						String fechaFin = campoFin.getText().trim();
+						String horarioApertura = campoApertura.getText().trim();
+						String horarioCierre = campoCierre.getText().trim();
+						List<Temporada> temporadas = new ArrayList<>();
+						
+						Temporada nuevaTemporada = new Temporada(fechaInicio, fechaFin, horarioApertura, horarioCierre);
+						temporadas.add(nuevaTemporada);
+						
+						gestor.configurarAeropuertoPropioNumTemporadas(gestor.getAeropuerto().getNumTemporadas() + 1);
+						gestor.configurarAeropuertoPropioTemporadas(temporadas);
+						
+					}
+					
 					JOptionPane.showMessageDialog(null, 
 						    "¡Configuración guardada correctamente!", 
 						    "Éxito", 
@@ -301,12 +339,14 @@ public class ConfiguracionAeropuertoGUI extends JFrame{
 					
 				}
 				
-				catch (NumberFormatException ex) {
+				catch (NumberFormatException | DateTimeParseException ex) {
 			        JOptionPane.showMessageDialog(null, 
-			            "Por favor, introduce un número válido en los campos de Distancia y Diferencia Horaria.", 
-			            "Error de formato", 
+			        		 "Por favor, introduce valores válidos. Revisa números y fechas (YYYY-MM-DD, HH:mm).", 
+			        	        "Error de formato", 
 			            JOptionPane.ERROR_MESSAGE);
 			    }
+				
+				
 				
 				 
 				
