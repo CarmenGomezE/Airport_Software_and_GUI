@@ -22,7 +22,7 @@ public class EstadisticasGestorGUI extends JFrame{
 	private final GestorGUI gestorGUI;
 	private final AirportManager manager;
 	private DefaultListModel<String> model;
-	private JButton botonRefrescar; // 🔄 Declarado como atributo
+	private JButton botonRefrescar; 
 
 	public EstadisticasGestorGUI(AirportManager manager, GestorGUI gestorGUI, Gestor gestor) {
 		this.gestorGUI = gestorGUI;
