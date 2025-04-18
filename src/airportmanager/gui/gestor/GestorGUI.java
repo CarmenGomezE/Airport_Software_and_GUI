@@ -156,6 +156,16 @@ public class GestorGUI extends JFrame {
         
         JButton botonEstadisticas = new JButton("Estadísticas de la infraestructura");
         panelDerecho.add(botonEstadisticas);
+        botonEstadisticas.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setVisible(true);
+				new EstadisticasGestorGUI(manager, GestorGUI.this, gestor);
+				
+			}
+        	
+        });
         
         JButton botonGestionVuelos = new JButton("Gestión de vuelos");
         panelDerecho.add(botonGestionVuelos);
