@@ -1,132 +1,186 @@
 package src.airportmanager.gui.gestor;
 
+import java.awt.BorderLayout;
+
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import src.airportmanager.AirportManager;
 import src.airportmanager.gui.ConfiguracionUI;
-import src.airportmanager.usuario.ControladorAereo;
 import src.airportmanager.usuario.Gestor;
-import src.airportmanager.usuario.UsuarioConDni;
 import src.airportmanager.vuelo.VueloProgramado;
 
 public class GestionVueloGUI extends JFrame{ 
 	private static final long serialVersionUID = 1L;
-	private final GestorGUI gestorGUI;
+	private final GestorGUI geGUI;
 	private final Gestor gestor;
+	private DefaultListModel<String> modeloLista;
+    private JList<String> listaVuelos;
+    private JTextField campoCodigo;
+    private JTextArea textAreaMensajes;
 	
 	public GestionVueloGUI(AirportManager manager, GestorGUI gestorGUI, Gestor gestor) {
 		this.gestor = gestor;
-		this.gestorGUI = gestorGUI;
+		this.geGUI = gestorGUI;
 		
-		 setTitle("Panel de gestión de vuelos del Gestor");
-	     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-	     setExtendedState(JFrame.MAXIMIZED_BOTH);
-	     setResizable(false);
-	     setLocationRelativeTo(null);
-	     
-	     addWindowListener(new WindowAdapter() {
-	            @Override
-	            public void windowClosed(WindowEvent e) {
-					gestorGUI.setVisible(true);
-	            }
-	     });
-	     
-	     /** PANEL PRINCIPAL */
-	        JPanel panel = new JPanel();
-	        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-	        panel.setBorder(BorderFactory.createEmptyBorder(40, 300, 40, 300));
-	        panel.setBackground(ConfiguracionUI.COLOR_FONDO);
-	        add(panel);
-	        
-	        /** TÍTULO */
-	        JLabel titulo = new JLabel("Gestión de vuelos", JLabel.CENTER);
-	        titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
-	        titulo.setFont(new Font("Arial", Font.BOLD, 28));
-	        panel.add(titulo);
-	        panel.add(Box.createRigidArea(new Dimension(0, 40)));
+        setTitle("Panel de gestión de vuelos del Gestor");
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setResizable(false);
+        setLocationRelativeTo(null);
+        
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+				geGUI.setVisible(true);
+            }
+        });
+        
+        /** PANEL PRINCIPAL */
+        JPanel panel = new JPanel(new BorderLayout(10, 10));
+        panel.setBorder(BorderFactory.createEmptyBorder(20, 30, 20, 30));
+        panel.setBackground(ConfiguracionUI.COLOR_FONDO);
+        add(panel);
 
-	        /** CÓDIGO DE VUELO */
-	        JLabel labelCodigo = new JLabel("Código de vuelo");
-	        labelCodigo.setFont(new Font("Arial", Font.PLAIN, 18));
-	        labelCodigo.setAlignmentX(Component.CENTER_ALIGNMENT);
-	        panel.add(labelCodigo);
-	        panel.add(Box.createRigidArea(new Dimension(0, 10)));
+        /** PANEL IZQUIERDO */
+        JPanel panelIzquierdo = new JPanel(new BorderLayout(10, 10));
+        panelIzquierdo.setPreferredSize(new Dimension(500, 600));
+        panelIzquierdo.setBackground(ConfiguracionUI.COLOR_FONDO);
 
-	        JTextField campoCodigo = new JTextField();
-	        campoCodigo.setMaximumSize(new Dimension(Integer.MAX_VALUE, 35));
-	        campoCodigo.setFont(new Font("Arial", Font.PLAIN, 16));
-	        panel.add(campoCodigo);
-	        panel.add(Box.createRigidArea(new Dimension(0, 30)));  
-	        
-	        /**Terminal*/  
-	        JLabel labelTerminal = new JLabel("Terminal");
-	        labelTerminal.setFont(new Font("Arial", Font.PLAIN, 18));
-	        labelTerminal.setAlignmentX(Component.CENTER_ALIGNMENT);
-	        panel.add(labelTerminal);
-	        panel.add(Box.createRigidArea(new Dimension(0, 10)));
+        JLabel listaVuelosTitulo = new JLabel("Propuestas de vuelo recibidas", JLabel.CENTER);
+        listaVuelosTitulo.setFont(new Font("Arial", Font.BOLD, 24));
+        panelIzquierdo.add(listaVuelosTitulo, BorderLayout.NORTH);
 
-	        JTextField campoTerminal = new JTextField();
-	        campoTerminal.setMaximumSize(new Dimension(Integer.MAX_VALUE, 35));
-	        campoTerminal.setFont(new Font("Arial", Font.PLAIN, 16));
-	        panel.add(campoTerminal);
-	        panel.add(Box.createRigidArea(new Dimension(0, 30)));
-	        
-	        /**Controlador*/
-	        JLabel labelControlador = new JLabel("Dni del controlador");
-	        labelControlador.setFont(new Font("Arial", Font.PLAIN, 18));
-	        labelControlador.setAlignmentX(Component.CENTER_ALIGNMENT);
-	        panel.add(labelControlador);
-	        panel.add(Box.createRigidArea(new Dimension(0, 10)));
+        modeloLista = new DefaultListModel<>();
+        actualizarLista();
 
-	        JTextField campoControlador = new JTextField();
-	        campoControlador.setMaximumSize(new Dimension(Integer.MAX_VALUE, 35));
-	        campoControlador.setFont(new Font("Arial", Font.PLAIN, 16));
-	        panel.add(campoControlador);
-	        panel.add(Box.createRigidArea(new Dimension(0, 30)));
-	        
-	        /**Agregar vuelo*/
-	        JButton botonAgregarVuelo = new JButton("Agregar vuelo");
-	        botonAgregarVuelo.setFont(new Font("Arial", Font.BOLD, 16));	    
-	        botonAgregarVuelo.setAlignmentX(CENTER_ALIGNMENT);
-	        panel.add(botonAgregarVuelo);
-	        
-	        botonAgregarVuelo.addActionListener(new ActionListener() {
+        listaVuelos = new JList<>(modeloLista);
+        JScrollPane scrollPane = new JScrollPane(listaVuelos);
+        panelIzquierdo.add(scrollPane, BorderLayout.CENTER);
 
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					String codigo = campoCodigo.getText().trim();
-					String terminalCodigo = campoTerminal.getText().trim();
-					String dniControlador = campoControlador.getText().trim();
-					
-					VueloProgramado vueloProgramado;
-					
-					UsuarioConDni controlador = gestor.buscarUsuarioPorDni(dniControlador);
-					
-					
-				}
-	        	
-	        });
-	        
-	        setVisible(true);
-	     
+        JPanel panelBotones = new JPanel(new GridLayout(1, 2, 10, 10));
+        panelBotones.setBackground(ConfiguracionUI.COLOR_FONDO);
+
+        JButton botonRefrescar = new JButton("🔄 Refrescar vuelos propuestos");
+        panelBotones.add(botonRefrescar);
+        botonRefrescar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                actualizarLista();
+            }
+        });
+
+        panelIzquierdo.add(panelBotones, BorderLayout.SOUTH);
+
+        /** PANEL DERECHO */
+        JPanel panelDerecho = new JPanel();
+        panelDerecho.setLayout(new BoxLayout(panelDerecho, BoxLayout.Y_AXIS));
+        panelDerecho.setPreferredSize(new Dimension(500, 600));
+        panelDerecho.setBackground(ConfiguracionUI.COLOR_FONDO);
+
+        JLabel titulo = new JLabel("Gestor: " + gestor.getNombre(), JLabel.CENTER);
+        titulo.setFont(new Font("Arial", Font.BOLD, 22));
+        titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panelDerecho.add(titulo);
+
+        panelDerecho.add(Box.createRigidArea(new Dimension(0, 10)));
+
+        JLabel labelCodigo = new JLabel("Código de vuelo:");
+        labelCodigo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panelDerecho.add(labelCodigo);
+
+        campoCodigo = new JTextField();
+        campoCodigo.setMaximumSize(new Dimension(1000, 800));
+        campoCodigo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panelDerecho.add(campoCodigo);
+
+        panelDerecho.add(Box.createRigidArea(new Dimension(0, 20)));
+
+        JButton botonGestionar = new JButton("Gestionar vuelo");
+        botonGestionar.setMaximumSize(new Dimension(1000, 800));
+        botonGestionar.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panelDerecho.add(botonGestionar);
+
+        panelDerecho.add(Box.createVerticalGlue());
+        
+        textAreaMensajes = new JTextArea(10, 30); 
+        textAreaMensajes.setEditable(false);  
+        textAreaMensajes.setLineWrap(true);  
+        textAreaMensajes.setWrapStyleWord(true); 
+
+        JScrollPane scrollPaneMensajes = new JScrollPane(textAreaMensajes);
+        scrollPaneMensajes.setPreferredSize(new Dimension(500, 200)); 
+        scrollPaneMensajes.setVisible(false);
+        panelDerecho.add(scrollPaneMensajes);
+
+        /** Acción aceptar */
+        botonGestionar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String codigo = campoCodigo.getText().trim();
+                if (codigo.isEmpty()) {
+                    JOptionPane.showMessageDialog(GestionVueloGUI.this, "Introduce un código de vuelo.");
+                    return;
+                }
+
+                VueloProgramado vuelo = gestor.buscarVueloPropuestoPorCodigo(codigo);
+                if (vuelo == null) {
+                    JOptionPane.showMessageDialog(GestionVueloGUI.this, "No se encontró ningún vuelo con ese código.");
+                    return;
+                }
+
+                try {
+                    gestor.gestionarVuelos(vuelo);
+                    String mensaje = gestor.getMensajeGUI();
+                    textAreaMensajes.setText(mensaje);
+                    scrollPaneMensajes.setVisible(true);
+                    JOptionPane.showMessageDialog(GestionVueloGUI.this, "Vuelo gestionado correctamente.");
+                    actualizarLista();
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(GestionVueloGUI.this, "Error al gestionar: " + ex.getMessage());
+                }
+            }
+        });
+
+        /** Añadir los paneles al principal */
+        panel.add(panelIzquierdo, BorderLayout.WEST);
+        panel.add(panelDerecho, BorderLayout.CENTER);
+
+        /** Hacer la ventana visible */
+        setVisible(true);
+    }
+
+	private void actualizarLista() {
+	    modeloLista.clear();
+	    List<VueloProgramado> vuelos = gestor.getVuelosPropuestos();
+
+	    if (vuelos.isEmpty()) {
+	        modeloLista.addElement("No hay vuelos propuestos pendientes de gestionar.");
+	        return;
+	    }
+        for (VueloProgramado v : vuelos) {
+            modeloLista.addElement("Vuelo: " + v.getCodigo() + " | Aerolinea: " + v.getAvion().getAerolinea().getNombre() + " | Fecha/Hora: " + v.getFecha() + "/" + v.getHora());
+        }
 	}
-	
-	
-
 }

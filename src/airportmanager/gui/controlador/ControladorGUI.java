@@ -22,6 +22,8 @@ public class ControladorGUI extends JFrame {
 
     public ControladorGUI(AirportManager manager, ControladorAereo controlador) {
     	this.controladorAereo=controlador;
+    	this.AeManager=manager;
+    	
         setTitle("Panel de Controlador");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -134,7 +136,7 @@ public class ControladorGUI extends JFrame {
 	    }
         for (Vuelo v : vuelos) {
         	if (v.getFecha().equals(fecha)) {
-        		modeloLista.addElement("Vuelo: "+v+" | Hora: "+ v.getFecha()+" / "+v.getHora()+" | Estado: "+ v.getEstado());
+        		modeloLista.addElement("Vuelo: "+v+" | Hora: "+v.getHora()+" | Estado: "+ v.getEstado());
         	}
         }
 	}

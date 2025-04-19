@@ -222,7 +222,7 @@ public class OperadorGUI extends JFrame {
 	    }
         for (Vuelo v : vuelos) {
         	if (v.getFecha().equals(fecha)) {
-        		modeloLista.addElement("Vuelo: "+v+" | Hora: "+ v.getFecha()+" / "+v.getHora()+" | Estado: "+ v.getEstado());
+        		modeloLista.addElement("Vuelo: "+v+" | Hora: "+v.getHora()+" | Estado: "+ v.getEstado());
         	}
         }
 	}

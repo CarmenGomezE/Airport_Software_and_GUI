@@ -22,6 +22,7 @@ public class GestorGUI extends JFrame {
 
     public GestorGUI(AirportManager manager, Gestor gestor) {
     	this.AeGestor=gestor;
+    	this.AeManager=manager;
     	
         setTitle("Panel de Gestor");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -179,7 +180,7 @@ public class GestorGUI extends JFrame {
 	    }
         for (Vuelo v : vuelos) {
         	if (v.getFecha().equals(fecha)) {
-        		modeloLista.addElement("Vuelo: "+v+" | Hora: "+ v.getFecha()+" / "+v.getHora()+" | Estado: "+ v.getEstado());
+        		modeloLista.addElement("Vuelo: "+v+" | Hora: "+v.getHora()+" | Estado: "+ v.getEstado());
         	}
         }
 	}

@@ -381,16 +381,23 @@ public class AirportManagerMain {
     	}
  
 	    System.out.println("Iniciando gestión de vuelo del Gestor.");
-	    gestorBarajas.gestionarVuelos(gestorBarajas.getVuelosPropuestos());
+	    List<VueloProgramado> vuelosAGestionar = new ArrayList<>(gestorBarajas.getVuelosPropuestos());
+	    for (VueloProgramado v : vuelosAGestionar) {
+	        gestorBarajas.gestionarVuelos(v);
+	    }
 	    System.out.println("Gestión de vuelos completada con éxito.");
 
 	    System.out.println("Iniciando gestión de alternativas del Operador.");
-	    if(!operadorIberia.getAlternativasAgrupadas().isEmpty()) {
-	    	Map<VueloProgramado, List<Vuelo>> alternativasAgrupadas = operadorAirFrance.getAlternativasAgrupadas();
+	    if (!operadorIberia.getAlternativasAgrupadas().isEmpty()) {
+	        Map<VueloProgramado, List<Vuelo>> alternativasAgrupadas = operadorAirFrance.getAlternativasAgrupadas();
 
-	    	VueloProgramado clave = alternativasAgrupadas.keySet().iterator().next();
-	    	operadorIberia.rechazarVuelo(clave);
-	    	System.out.println("Alternativa aceptada.");
+	        if (!alternativasAgrupadas.isEmpty()) {
+	            VueloProgramado clave = alternativasAgrupadas.keySet().iterator().next();
+	            operadorIberia.rechazarVuelo(clave);
+	            System.out.println("Alternativa aceptada.");
+	        } else {
+	            System.out.println("No hay alternativas disponibles.");
+	        }
 	    }
 
     	System.out.println("\nIniciando la propuesta del vuelos del Operador de AirFrance.");
@@ -436,7 +443,11 @@ public class AirportManagerMain {
     	}
 
 	    System.out.println("Iniciando gestión de vuelo del Gestor.");
-	    gestorBarajas.gestionarVuelos(gestorBarajas.getVuelosPropuestos());
+	    List<VueloProgramado> vuelosAGestionar2 = new ArrayList<>(gestorBarajas.getVuelosPropuestos());
+	    for (VueloProgramado v : vuelosAGestionar2) {
+	        gestorBarajas.gestionarVuelos(v);
+	    }
+	    
 	    System.out.println("Gestión de vuelos completada con éxito.");
 	    
 	    System.out.println("Iniciando gestión de alternativas del Operador.");

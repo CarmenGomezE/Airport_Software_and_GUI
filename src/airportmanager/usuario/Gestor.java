@@ -52,6 +52,8 @@ public class Gestor extends Usuario {
     /** Vuelos propuestos por el Operador. */
     private List<VueloProgramado> vuelosPropuestos;
     
+    private String mensajeGUI;
+    
     /** Dias de anticipación mínima para una propuesta de Vuelo. */
     private static int diasAnticipacionMinima = 30;
     /** Rango de minutos que como máximo se puede modificar una propuesta de Vuelo.*/
@@ -82,6 +84,7 @@ public class Gestor extends Usuario {
         this.estadisticas = new EstadisticasGestor(this);
         this.vuelosPropuestos= new ArrayList<>();
         establecerSistemaFacturacion();
+        this.mensajeGUI="";
     }
 
     /**
@@ -90,6 +93,10 @@ public class Gestor extends Usuario {
     public void establecerSistemaFacturacion() {
         this.sistemaFacturacion= new SistemaFacturacion(recargoAvionMercancias, costeBaseVueloSalida, costeBaseVueloLlegada);
 
+    }
+    
+    public String getMensajeGUI() {
+    	return mensajeGUI;
     }
 
     /**
@@ -546,78 +553,78 @@ public class Gestor extends Usuario {
      * @param vuelosGestionar    Vuelos que le propone el Operador.
      * 
      */
-    public void gestionarVuelos(List<VueloProgramado> vuelosGestionar) {
-	  Iterator<VueloProgramado> iterator = vuelosGestionar.iterator();
-
-	    if (getAeropuerto().getVuelosAceptados().isEmpty() && iterator.hasNext()) {
-	        VueloProgramado vuelo = iterator.next();
+    public void gestionarVuelos(VueloProgramado vueloGestionar) {
+	    if (getAeropuerto().getVuelosAceptados().isEmpty()) {
 	        for (Terminal terminal : aeropuerto.getTerminales()) {
-	            if ((vuelo.getTipoCarga() == TipoCarga.MERCANCIAS && terminal instanceof TerminalMercancias) ||
-	                (vuelo.getTipoCarga() == TipoCarga.PASAJEROS && terminal instanceof TerminalPasajeros)) {
+	            if ((vueloGestionar.getTipoCarga() == TipoCarga.MERCANCIAS && terminal instanceof TerminalMercancias) ||
+	                (vueloGestionar.getTipoCarga() == TipoCarga.PASAJEROS && terminal instanceof TerminalPasajeros)) {
 	                
 	                ControladorAereo controladorDisponible = terminal.getControladores().get(0);
-	                aceptarVuelo(vuelo, terminal, controladorDisponible);
-	                iterator.remove(); 
+	                aceptarVuelo(vueloGestionar, terminal, controladorDisponible);
+                    mensajeGUI="El vuelo " + vueloGestionar.getCodigo() + " ha sido aceptado con el controlador: " + controladorDisponible.getNombre();
 	                break;
 	            }
 	        }
 	    }
 
-	    for (VueloProgramado vuelo : new ArrayList<>(vuelosGestionar)) { 
-	        boolean gestionado = false;
-	        Terminal terminalAsignada = null;
-	        ControladorAereo controladorAsignado = null;
+	    boolean gestionado = false;
+        Terminal terminalAsignada = null;
+        ControladorAereo controladorAsignado = null;
+        
+        for (Vuelo vueloAceptado : getAeropuerto().getVuelosAceptados()) {
+            for (Terminal terminal : aeropuerto.getTerminales()) {
+                if ((vueloGestionar.getTipoCarga() == TipoCarga.MERCANCIAS && !(terminal instanceof TerminalMercancias)) ||
+                    (vueloGestionar.getTipoCarga() == TipoCarga.PASAJEROS && !(terminal instanceof TerminalPasajeros))) {
+                    continue;
+                }
 
-	        for (Vuelo vueloAceptado : getAeropuerto().getVuelosAceptados()) {
-	            for (Terminal terminal : aeropuerto.getTerminales()) {
-	                if ((vuelo.getTipoCarga() == TipoCarga.MERCANCIAS && !(terminal instanceof TerminalMercancias)) ||
-	                    (vuelo.getTipoCarga() == TipoCarga.PASAJEROS && !(terminal instanceof TerminalPasajeros))) {
-	                    continue;
-	                }
+                for (ControladorAereo controlador : terminal.getControladores()) {
+                    if (vueloGestionar.getFecha().equals(vueloAceptado.getFecha()) &&
+                    	vueloGestionar.getHora().equals(vueloAceptado.getHora()) &&
+                        terminal.equals(vueloAceptado.getTerminal()) &&
+                        controlador.equals(vueloAceptado.getControlador())) {
 
-	                for (ControladorAereo controlador : terminal.getControladores()) {
-	                    if (vuelo.getFecha().equals(vueloAceptado.getFecha()) &&
-	                        vuelo.getHora().equals(vueloAceptado.getHora()) &&
-	                        terminal.equals(vueloAceptado.getTerminal()) &&
-	                        controlador.equals(vueloAceptado.getControlador())) {
+                        if (sePuedeMover(vueloGestionar, terminal, controlador)) {
+                        } else {
+                            List<Vuelo> alternativas = generarAlternativas(vueloGestionar, terminal, controlador);
+                            vueloGestionar.getAvion().getAerolinea().getOperador().recibirAlternativas(vueloGestionar, alternativas);
+                        }
 
-	                        if (sePuedeMover(vuelo, terminal, controlador)) {
-	                            System.out.println("El vuelo " + vuelo.getCodigo() + " se ha movido.");
-	                        } else {
-	                            System.out.println("El vuelo " + vuelo.getCodigo() + " tiene conflictos, buscando alternativas...");
-	                            List<Vuelo> alternativas = generarAlternativas(vuelo, terminal, controlador);
-	                            vuelo.getAvion().getAerolinea().getOperador().recibirAlternativas(vuelo, alternativas);
-	                        }
+                        gestionado = true;
+                        break;
+                    }
+                }
+                if (gestionado) break;
+            }
+            if (gestionado) break;
+        }
+        if (!gestionado) {
+            for (Terminal terminal : aeropuerto.getTerminales()) {
+                if ((vueloGestionar.getTipoCarga() == TipoCarga.MERCANCIAS && terminal instanceof TerminalMercancias) ||
+                    (vueloGestionar.getTipoCarga() == TipoCarga.PASAJEROS && terminal instanceof TerminalPasajeros)) {
+                    
+                    for (ControladorAereo controlador : terminal.getControladores()) {
+                        terminalAsignada = terminal;
+                        controladorAsignado = controlador;
+                        break; 
+                    }
 
-	                        gestionado = true;
-	                        break;
-	                    }
-	                }
-	                if (gestionado) break;
-	            }
-	            if (gestionado) break;
-	        }
-	        if (!gestionado) {
-	            for (Terminal terminal : aeropuerto.getTerminales()) {
-	                if ((vuelo.getTipoCarga() == TipoCarga.MERCANCIAS && terminal instanceof TerminalMercancias) ||
-	                    (vuelo.getTipoCarga() == TipoCarga.PASAJEROS && terminal instanceof TerminalPasajeros)) {
-	                    
-	                    for (ControladorAereo controlador : terminal.getControladores()) {
-	                        terminalAsignada = terminal;
-	                        controladorAsignado = controlador;
-	                        break; 
-	                    }
-
-	                    if (terminalAsignada != null && controladorAsignado != null) {
-	                        aceptarVuelo(vuelo, terminalAsignada, controladorAsignado);
-	                        System.out.println("El vuelo " + vuelo.getCodigo() + " ha sido aceptado con el controlador: " + controladorAsignado.getNombre());
-	                    }
-	                    break;
-	                }
-	            }
-	        }
-	    }
-	    this.vuelosPropuestos = null;
+                    if (terminalAsignada != null && controladorAsignado != null) {
+                        aceptarVuelo(vueloGestionar, terminalAsignada, controladorAsignado);
+                        mensajeGUI="El vuelo " + vueloGestionar.getCodigo() + " ha sido aceptado con el controlador: " + controladorAsignado.getNombre();
+                    }
+                    break;
+                }
+            }
+        }
+        
+        Iterator<VueloProgramado> iterator = vuelosPropuestos.iterator();
+        while (iterator.hasNext()) {
+            VueloProgramado vuelo = iterator.next();
+            if (vuelo.equals(vueloGestionar)) {
+                iterator.remove();
+            }
+        }
 	}
    
     /**
@@ -658,7 +665,7 @@ public class Gestor extends Usuario {
         vuelo.setHora(nuevaFechaHora.toLocalTime());
         vuelo.setFecha(nuevaFechaHora.toLocalDate());
         aceptarVuelo(vuelo, terminal, controlador);
-        System.out.println("Vuelo " + vuelo.getCodigo() + " ha sido movido a la nueva hora: " + nuevaFechaHora);
+        mensajeGUI="El vuelo " + vuelo.getCodigo() + " ha sido movido, nueva fecha y hora: " + nuevaFechaHora +".";
     }
 
     /**
@@ -692,7 +699,6 @@ public class Gestor extends Usuario {
                 }
             }
         }
-
         return true; 
     }
     
@@ -724,7 +730,10 @@ public class Gestor extends Usuario {
             }
         }
         if (!alternativas.isEmpty()) {
-            System.out.println("Se encontraron " + alternativas.size() + " alternativas para el vuelo " + vueloMover.getCodigo());
+            mensajeGUI="El vuelo " + vueloMover.getCodigo() + " no ha podido ser movido, se han generado alternativas:";
+            for(Vuelo v:alternativas) {
+            	mensajeGUI+= "Alternativa al vuelo: "+v.getCodigo()+"\nFecha/Hora: "+v.getFecha()+"/"+v.getHora()+" Terminal: "+v.getTerminal()+ " Controlador: "+ v.getControlador();
+            }
             return alternativas;
         } else {
            return null;
@@ -1033,6 +1042,17 @@ public class Gestor extends Usuario {
      */
 	public static void setAntelacionMinimaDias(int i) {
 		diasAnticipacionMinima=i;
+	}
+
+	public VueloProgramado buscarVueloPropuestoPorCodigo(String codigo) {
+		VueloProgramado vueloBuscado = null;
+		for(VueloProgramado v: vuelosPropuestos) {
+			if(v.getCodigo().equals(codigo)) {
+				vueloBuscado=v;
+				break;
+			}
+		}
+		return vueloBuscado;
 	}
 
 }
