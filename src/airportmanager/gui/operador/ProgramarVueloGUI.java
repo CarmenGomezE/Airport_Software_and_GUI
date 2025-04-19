@@ -13,7 +13,6 @@ import src.airportmanager.avion.Avion;
 import src.airportmanager.gui.ConfiguracionUI;
 import src.airportmanager.usuario.Operador;
 import src.airportmanager.vuelo.*;
-
 public class ProgramarVueloGUI extends JFrame {
     private static final long serialVersionUID = 1L;
     private final OperadorGUI opGUI;
@@ -46,20 +45,27 @@ public class ProgramarVueloGUI extends JFrame {
             }
         });
 
+        // Panel principal
         JPanel panel = new JPanel(new BorderLayout(20, 20));
         panel.setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40));
         panel.setBackground(ConfiguracionUI.COLOR_FONDO);
         add(panel);
-        
+
+        // Título
         JLabel titulo = new JLabel("Proponer un vuelo de " + operador.getAerolinea().getNombre(), JLabel.CENTER);
         titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
         titulo.setFont(new Font("Arial", Font.BOLD, 28));
         panel.add(titulo, BorderLayout.NORTH);
         panel.add(Box.createRigidArea(new Dimension(0, 40)));
 
-        JPanel izquierda = new JPanel(new GridLayout(22, 1, 10, 10));
+        // Panel izquierdo: detalles del vuelo
+        JPanel izquierda = new JPanel();
+        izquierda.setLayout(new BoxLayout(izquierda, BoxLayout.Y_AXIS));
         izquierda.setBackground(ConfiguracionUI.COLOR_FONDO);
+        izquierda.setPreferredSize(new Dimension(650, getHeight())); 
+        panel.add(izquierda, BorderLayout.WEST);
 
+        // Campos del vuelo
         JTextField campoCodigo = new JTextField();
         JTextField campoFecha = new JTextField();
         JTextField campoFechaInicio = new JTextField();
@@ -71,88 +77,74 @@ public class ProgramarVueloGUI extends JFrame {
         JComboBox<Periodicidad> comboPeriodicidad = new JComboBox<>(Periodicidad.values());
         JComboBox<TipoVuelo> comboTipo = new JComboBox<>(TipoVuelo.values());
 
-        Font labelFont = new Font("Arial", Font.PLAIN, 20);
+        // Añadir los campos a la izquierda
+        izquierda.add(crearCampoConLabel("Código:", campoCodigo));
+        izquierda.add(crearCampoConLabel("Fecha (YYYY-MM-DD):", campoFecha));
+        izquierda.add(crearCampoConLabel("Fecha Inicio (YYYY-MM-DD):", campoFechaInicio));
+        izquierda.add(crearCampoConLabel("Fecha Fin (YYYY-MM-DD):", campoFechaFin));
+        izquierda.add(crearCampoConLabel("Hora (HH:mm):", campoHora));
+        izquierda.add(crearCampoConLabel("Tipo de Carga:", comboCarga));
+        izquierda.add(crearCampoConLabel("Modo Embarque:", comboEmbarque));
+        izquierda.add(crearCampoConLabel("Periodicidad:", comboPeriodicidad));
+        izquierda.add(crearCampoConLabel("Tipo de Vuelo:", comboTipo));
 
-        izquierda.add(new JLabel("Código:")).setFont(labelFont);
-        izquierda.add(campoCodigo);
-        izquierda.add(new JLabel("Fecha (YYYY-MM-DD):")).setFont(labelFont);
-        izquierda.add(campoFecha);
-        izquierda.add(new JLabel("Fecha Inicio (YYYY-MM-DD):")).setFont(labelFont);
-        izquierda.add(campoFechaInicio);
-        izquierda.add(new JLabel("Fecha Fin (YYYY-MM-DD):")).setFont(labelFont);
-        izquierda.add(campoFechaFin);
-        izquierda.add(new JLabel("Hora (HH:mm):")).setFont(labelFont);
-        izquierda.add(campoHora);
-        izquierda.add(new JLabel("Tipo de Carga:")).setFont(labelFont);
-        izquierda.add(comboCarga);
-        izquierda.add(new JLabel("Modo Embarque:")).setFont(labelFont);
-        izquierda.add(comboEmbarque);
-        izquierda.add(new JLabel("Periodicidad:")).setFont(labelFont);
-        izquierda.add(comboPeriodicidad);
-        izquierda.add(new JLabel("Tipo de Vuelo:")).setFont(labelFont);
-        izquierda.add(comboTipo);
-
-        JPanel derecha = new JPanel(new GridLayout(10, 1, 10, 10));
+        // Panel derecho: información adicional
+        JPanel derecha = new JPanel();
+        derecha.setLayout(new BoxLayout(derecha, BoxLayout.Y_AXIS));
         derecha.setBackground(ConfiguracionUI.COLOR_FONDO);
+        derecha.setPreferredSize(new Dimension(650, getHeight())); 
+        panel.add(derecha, BorderLayout.EAST);
 
+        // Campos del avión y aeropuerto
         JComboBox<Avion> comboAvion = new JComboBox<>(operador.getAerolinea().getAviones().toArray(new Avion[0]));
         JComboBox<Aeropuerto> comboDestino = new JComboBox<>(manager.getAeropuerto().getAeropuertosDestino().toArray(new Aeropuerto[0]));
-        Aeropuerto aeropuertoSalida = operador.getAeropuerto();
 
-        JLabel avion = new JLabel("Avión:");
-        avion.setFont(labelFont);
-        derecha.add(avion); 
-        derecha.add(comboAvion);
-        JLabel ae = new JLabel("Aeropuerto Destino:");
-        ae.setFont(labelFont);
-        derecha.add(ae); 
-        derecha.add(comboDestino);
+        // Añadir los campos de avión y aeropuerto
+        derecha.add(crearCampoConLabel("Avión:", comboAvion));
+        derecha.add(crearCampoConLabel("Aeropuerto Destino:", comboDestino));
 
+        // Panel para días recurrentes
         diasPanel = new JPanel(new GridLayout(2, 4));
         diasPanel.setBackground(ConfiguracionUI.COLOR_FONDO);
         diasPanel.setBorder(BorderFactory.createTitledBorder("Días Recurrentes"));
         diasSemanaChecks = new JCheckBox[DayOfWeek.values().length];
         for (int i = 0; i < diasSemanaChecks.length; i++) {
             diasSemanaChecks[i] = new JCheckBox(DayOfWeek.of(i + 1).toString());
-            diasSemanaChecks[i].setFont(labelFont);
+            diasSemanaChecks[i].setFont(new Font("Arial", Font.PLAIN, 16));
             diasPanel.add(diasSemanaChecks[i]);
         }
         diasPanel.setVisible(false);
         derecha.add(diasPanel);
 
+        // Mostrar días recurrentes solo si es necesario
         comboPeriodicidad.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Object selected = comboPeriodicidad.getSelectedItem();
-                if (selected instanceof Periodicidad) {
-                    diasPanel.setVisible(((Periodicidad) selected) == Periodicidad.RECURRENTE);
-                }
+                Periodicidad selected = (Periodicidad) comboPeriodicidad.getSelectedItem();
+                diasPanel.setVisible(selected == Periodicidad.RECURRENTE);
             }
         });
 
+        // CheckBox para escala
         JCheckBox checkEscala = new JCheckBox("Incluir escala");
         checkEscala.setBackground(ConfiguracionUI.COLOR_FONDO);
-        checkEscala.setFont(labelFont);
         derecha.add(checkEscala);
 
+        // Panel de escala
         escalaPanel = new JPanel(new GridLayout(3, 2, 10, 10));
         escalaPanel.setBackground(ConfiguracionUI.COLOR_FONDO);
         escalaPanel.setBorder(BorderFactory.createTitledBorder("Escala (opcional)"));
 
         comboEscalaAeropuerto = new JComboBox<>(manager.getAeropuerto().getAeropuertosDestino().toArray(new Aeropuerto[0]));
-        comboEscalaAeropuerto.setFont(labelFont);
-
         campoHoraLlegadaEscala = new JTextField("13:00");
-        campoHoraLlegadaEscala.setFont(labelFont);
-
         campoHoraSalidaEscala = new JTextField("14:30");
-        campoHoraSalidaEscala.setFont(labelFont);
 
-        escalaPanel.add(new JLabel("Aeropuerto Escala:")).setFont(labelFont);
+        // Añadir los campos de escala
+        escalaPanel.add(new JLabel("Aeropuerto Escala:"));
         escalaPanel.add(comboEscalaAeropuerto);
-        escalaPanel.add(new JLabel("Hora Llegada:")).setFont(labelFont);
+        escalaPanel.add(new JLabel("Hora Llegada:"));
         escalaPanel.add(campoHoraLlegadaEscala);
-        escalaPanel.add(new JLabel("Hora Salida:")).setFont(labelFont);
+        escalaPanel.add(new JLabel("Hora Salida:"));
         escalaPanel.add(campoHoraSalidaEscala);
 
         for (Component c : escalaPanel.getComponents()) {
@@ -171,12 +163,12 @@ public class ProgramarVueloGUI extends JFrame {
 
         derecha.add(escalaPanel);
 
+        // Botón para programar el vuelo
         JButton boton = new JButton("✅ Programar Vuelo");
         boton.setAlignmentX(Component.CENTER_ALIGNMENT);
         panel.add(boton, BorderLayout.SOUTH);
-        panel.add(izquierda, BorderLayout.WEST);
-        panel.add(derecha, BorderLayout.EAST);
 
+        // Acción del botón
         boton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -213,12 +205,12 @@ public class ProgramarVueloGUI extends JFrame {
                         Aeropuerto aeEscala = (Aeropuerto) comboEscalaAeropuerto.getSelectedItem();
                         LocalTime horaLlegada = LocalTime.parse(campoHoraLlegadaEscala.getText().trim());
                         LocalTime horaSalida = LocalTime.parse(campoHoraSalidaEscala.getText().trim());
-                        escala = new Escala(aeropuertoSalida, aeEscala, horaLlegada, horaSalida);
+                        escala = new Escala(manager.getAeropuerto(), aeEscala, horaLlegada, horaSalida);
                     }
 
                     operador.proponerVuelo(codigo, fecha, fechaInicio, fechaFin, hora,
                             diasSeleccionados, carga, embarque, periodicidad, tipo,
-                            avion, destino, aeropuertoSalida, escala);
+                            avion, destino, manager.getAeropuerto(), escala);
 
                     JOptionPane.showMessageDialog(ProgramarVueloGUI.this, "Vuelo propuesto correctamente.");
                 } catch (Exception ex) {
@@ -229,5 +221,17 @@ public class ProgramarVueloGUI extends JFrame {
         });
 
         setVisible(true);
+    }
+
+    private JPanel crearCampoConLabel(String textoLabel, JComponent campo) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBackground(ConfiguracionUI.COLOR_FONDO);
+        JLabel label = new JLabel(textoLabel);
+        label.setFont(new Font("Arial", Font.PLAIN, 18));
+        campo.setAlignmentX(Component.LEFT_ALIGNMENT);
+        panel.add(label);
+        panel.add(campo);
+        return panel;
     }
 }

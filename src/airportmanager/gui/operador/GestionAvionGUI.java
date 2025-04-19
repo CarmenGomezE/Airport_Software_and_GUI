@@ -48,19 +48,29 @@ public class GestionAvionGUI extends JFrame {
 
         // Campos
         JTextField campoMarca = crearCampoTexto();
+        campoMarca.setPreferredSize(new Dimension(250, 5));
         JTextField campoModelo =crearCampoTexto();
+        campoModelo.setPreferredSize(new Dimension(250, 5));
         JTextField campoAlto = crearCampoTexto();
+        campoAlto.setPreferredSize(new Dimension(250, 5));
         JTextField campoAncho = crearCampoTexto();
+        campoAncho.setPreferredSize(new Dimension(250, 5));
         JTextField campoLargo = crearCampoTexto();
+        campoLargo.setPreferredSize(new Dimension(250, 5));
         JTextField campoAutonomia = crearCampoTexto();
+        campoAutonomia.setPreferredSize(new Dimension(250, 5));
         JTextField campoAnoCompra = crearCampoTexto();
+        campoAnoCompra.setPreferredSize(new Dimension(250, 5));
         JTextField campoFechaRevision = crearCampoTexto();
+        campoFechaRevision.setPreferredSize(new Dimension(250, 5));
         JTextField campoMatricula = crearCampoTexto();
+        campoMatricula.setPreferredSize(new Dimension(250, 5));
 
         String[] tipos = { "Pasajeros", "Mercancías" };
         JComboBox<String> tipoAvion = new JComboBox<>(tipos);
 
         JTextField campoCapacidadPasajeros = crearCampoTexto();
+        campoCapacidadPasajeros.setPreferredSize(new Dimension(250, 5));
         JTextField campoCapacidadCarga = crearCampoTexto();
         JCheckBox checkPeligroso = new JCheckBox("¿Mercancía peligrosa?");
         JCheckBox checkTemperatura = new JCheckBox("¿Control de temperatura?");
@@ -80,6 +90,7 @@ public class GestionAvionGUI extends JFrame {
         panelOpcional.setLayout(new BoxLayout(panelOpcional, BoxLayout.Y_AXIS));
         panelOpcional.setBackground(ConfiguracionUI.COLOR_FONDO);
         panelOpcional.add(crearCampoConLabel("Capacidad máxima de carga (kg):", campoCapacidadCarga));
+        panelOpcional.setPreferredSize(new Dimension(250, 100));
         formulario.add(panelOpcional); 
         
         tipoAvion.addActionListener(new ActionListener() {
@@ -171,7 +182,7 @@ public class GestionAvionGUI extends JFrame {
     
     private JTextField crearCampoTexto() {
         JTextField campo = new JTextField();
-        campo.setPreferredSize(new Dimension(0, 10));
+        campo.setPreferredSize(new Dimension(200, 30));
         return campo;
     }
 }
