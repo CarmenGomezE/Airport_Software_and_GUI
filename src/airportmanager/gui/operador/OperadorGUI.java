@@ -6,17 +6,23 @@ import java.awt.*;
 import java.awt.event.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import src.airportmanager.AirportManager;
 import src.airportmanager.gui.ConfiguracionUI;
 import src.airportmanager.usuario.Operador;
+import src.airportmanager.vuelo.Vuelo;
 
 public class OperadorGUI extends JFrame {
     private static final long serialVersionUID = 1L;
     private final Operador operadorAerolinea;
+	private DefaultListModel<String> modeloLista;
+	private JList<String> listaVuelos;
+	private AirportManager AeManager;
 
     public OperadorGUI(AirportManager manager, Operador operador) {
     	operadorAerolinea= operador;
+    	AeManager=manager;
         setTitle("Panel de Operador");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -43,57 +49,13 @@ public class OperadorGUI extends JFrame {
         panelIzquierdo.add(listaVuelosTitulo, BorderLayout.NORTH);
 
         /** Lista de vuelos */
-        DefaultListModel<String> modeloLista = new DefaultListModel<>();
-        modeloLista.addElement("Vuelo MAD - BCN | 06:45 | Iberia");
-        modeloLista.addElement("Vuelo VLC - PMI | 07:10 | Ryanair");
-        modeloLista.addElement("Vuelo AGP - SVQ | 07:30 | Vueling");
-        modeloLista.addElement("Vuelo BCN - OVD | 07:45 | Volotea");
-        modeloLista.addElement("Vuelo LIS - MAD | 08:00 | TAP Portugal");
-        modeloLista.addElement("Vuelo PMI - LPA | 08:30 | Binter Canarias");
-        modeloLista.addElement("Vuelo BIO - AGP | 08:55 | Air Europa");
-        modeloLista.addElement("Vuelo SCQ - VLC | 09:10 | Iberia Express");
-        modeloLista.addElement("Vuelo LCG - BCN | 09:35 | Vueling");
-        modeloLista.addElement("Vuelo TFN - MAD | 10:00 | Iberia");
-        modeloLista.addElement("Vuelo LPA - SCQ | 10:25 | Binter Canarias");
-        modeloLista.addElement("Vuelo OVD - LIS | 10:50 | TAP Portugal");
-        modeloLista.addElement("Vuelo SVQ - BIO | 11:05 | Air Nostrum");
-        modeloLista.addElement("Vuelo BCN - VLC | 11:30 | Vueling");
-        modeloLista.addElement("Vuelo MAD - LCG | 12:00 | Air Europa");
-        modeloLista.addElement("Vuelo VLC - TFN | 12:15 | Ryanair");
-        modeloLista.addElement("Vuelo AGP - MAD | 12:45 | Iberia Express");
-        modeloLista.addElement("Vuelo LIS - OVD | 13:00 | Volotea");
-        modeloLista.addElement("Vuelo SCQ - LPA | 13:25 | Binter Canarias");
-        modeloLista.addElement("Vuelo BIO - BCN | 13:50 | Vueling");
-        modeloLista.addElement("Vuelo MAD - SCQ | 14:10 | Iberia");
-        modeloLista.addElement("Vuelo OVD - AGP | 14:35 | Ryanair");
-        modeloLista.addElement("Vuelo TFN - LCG | 15:00 | Air Europa");
-        modeloLista.addElement("Vuelo LPA - MAD | 15:20 | Iberia Express");
-        modeloLista.addElement("Vuelo VLC - LIS | 15:45 | TAP Portugal");
-        modeloLista.addElement("Vuelo BCN - TFN | 16:10 | Binter Canarias");
-        modeloLista.addElement("Vuelo SVQ - LPA | 16:30 | Ryanair");
-        modeloLista.addElement("Vuelo AGP - LCG | 16:55 | Vueling");
-        modeloLista.addElement("Vuelo MAD - OVD | 17:20 | Air Europa");
-        modeloLista.addElement("Vuelo LIS - BIO | 17:45 | TAP Portugal");
-        modeloLista.addElement("Vuelo LPA - VLC | 18:00 | Iberia");
-        modeloLista.addElement("Vuelo SCQ - BCN | 18:30 | Vueling");
-        modeloLista.addElement("Vuelo OVD - SCQ | 18:55 | Ryanair");
-        modeloLista.addElement("Vuelo BIO - LPA | 19:15 | Binter Canarias");
-        modeloLista.addElement("Vuelo LCG - AGP | 19:40 | Iberia Express");
-        modeloLista.addElement("Vuelo MAD - SVQ | 20:00 | Air Nostrum");
-        modeloLista.addElement("Vuelo VLC - BIO | 20:25 | Volotea");
-        modeloLista.addElement("Vuelo BCN - LIS | 20:50 | TAP Portugal");
-        modeloLista.addElement("Vuelo TFN - SCQ | 21:10 | Binter Canarias");
-        modeloLista.addElement("Vuelo LCG - OVD | 21:30 | Volotea");
-        modeloLista.addElement("Vuelo LIS - SCQ | 21:45 | TAP Portugal");
-        modeloLista.addElement("Vuelo SVQ - TFN | 22:00 | Vueling");
-        modeloLista.addElement("Vuelo AGP - LIS | 22:20 | Ryanair");
-        modeloLista.addElement("Vuelo BIO - VLC | 22:35 | Iberia Express");
+        modeloLista = new DefaultListModel<>();
+        actualizarLista();
+        
+        listaVuelos = new JList<>(modeloLista);
+        JScrollPane scrollPane = new JScrollPane(listaVuelos);
+        panelIzquierdo.add(scrollPane, BorderLayout.CENTER);
 
-        /** Subir y bajar lista */
-        JList<String> lista = new JList<>(modeloLista);
-        JScrollPane scrollLista = new JScrollPane(lista);
-        scrollLista.setPreferredSize(new Dimension(400, 250));
-        panelIzquierdo.add(scrollLista, BorderLayout.CENTER);
 
         /** Botones de la lista */
         JPanel panelBotones = new JPanel(new GridLayout(1, 2, 10, 10));
@@ -107,7 +69,15 @@ public class OperadorGUI extends JFrame {
             }
         });
      
-        panelBotones.add(new JButton("🔄 Refrescar vuelos"));
+        JButton botonRefrescar= new JButton("🔄 Refrescar vuelos");
+        panelBotones.add(botonRefrescar);
+        panelBotones.add(botonRefrescar);
+        botonRefrescar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                actualizarLista();
+            }
+        });
         panelBotones.setBackground(ConfiguracionUI.COLOR_FONDO);
         panelIzquierdo.add(panelBotones, BorderLayout.SOUTH);
 
@@ -241,5 +211,20 @@ public class OperadorGUI extends JFrame {
         /** Visible */
         setVisible(true);
     }
+    private void actualizarLista() {
+	    modeloLista.clear();
+	    List<Vuelo> vuelos = AeManager.getAeropuerto().getVuelosAceptados();
+	    LocalDate fecha = LocalDate.now();
+
+	    if (vuelos.isEmpty()) {
+	        modeloLista.addElement("No hay vuelos programados.");
+	        return;
+	    }
+        for (Vuelo v : vuelos) {
+        	if (v.getFecha().equals(fecha)) {
+        		modeloLista.addElement("Vuelo: "+v+" | Hora: "+ v.getFecha()+" / "+v.getHora()+" | Estado: "+ v.getEstado());
+        	}
+        }
+	}
 
 }

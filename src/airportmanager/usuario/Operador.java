@@ -50,12 +50,12 @@ public class Operador extends UsuarioConDni {
     private Aerolinea aerolinea;
     /** Estadísticas del operador sobre vuelos de su aerolinea */
     private EstadisticasOperador estadisticas;
-    /** Alternativas que le propone el gestor a sus propuestas de vuelo */
-    private List<Vuelo> vuelosAlternativas;
     /** Bandera para la decision tomada*/
 	private boolean decisionTomada;
 	/** Timer para el tiempo en contestar a las alternativas */
-	private transient Timer timer;
+	private final Map<VueloProgramado, List<Vuelo>> alternativasPorVuelo;
+	private final Map<VueloProgramado, Timer> temporizadoresPorVuelo;
+	private final Set<VueloProgramado> decisionesTomadas;
 
     /**
      * Constructor de la clase SolicitudVueloCompartido.
@@ -74,7 +74,9 @@ public class Operador extends UsuarioConDni {
         this.solicitudesRecibidas = new ArrayList<>();
         this.solicitudesEnviadas = new ArrayList<>();
         this.estadisticas = new EstadisticasOperador(this);
-        this.vuelosAlternativas= new ArrayList<>();
+        this.alternativasPorVuelo = new HashMap<>();
+        this.temporizadoresPorVuelo = new HashMap<>();
+        this.decisionesTomadas = new HashSet<>();
         this.decisionTomada=false;
     }
 
@@ -443,30 +445,30 @@ public class Operador extends UsuarioConDni {
         System.out.println("Vuelo propuesto exitosamente.");
     }
     
+    public Map<VueloProgramado, List<Vuelo>> getAlternativasAgrupadas() {
+        return alternativasPorVuelo;
+    }
+    
     /**
      * Método para recibir alternativas.
      * 
      * @param alternativas Alternativas al vuelo.
      */
-    public void recibirAlternativas(List<Vuelo> alternativas) {
-    	recibirNotificacion(new Notificacion("Nueva alternativa recibida", TipoNotificacion.OPCIONES_REPROGRAMAR_VUELO));
-    	iniciarTemporizador();
-    	this.vuelosAlternativas=alternativas;
-    }
-  
-    /**
-     * Método dpara iniciar el temporizador.
-     */
-    private void iniciarTemporizador() {
-        timer = new Timer();
+    public void recibirAlternativas(VueloProgramado original, List<Vuelo> alternativas) {
+        recibirNotificacion(new Notificacion("Nuevas alternativas para vuelo " + original, TipoNotificacion.OPCIONES_REPROGRAMAR_VUELO));
+        
+        alternativasPorVuelo.put(original, alternativas);
+        
+        Timer timer = new Timer();
+        temporizadoresPorVuelo.put(original, timer);
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                if (!decisionTomada) {
-                    rechazarVuelo();
+                if (!decisionesTomadas.contains(original)) {
+                    cancelarVuelo(original);
                 }
             }
-        }, Gestor.getTiempoAceptarPropuesta() * 1000);
+        }, Gestor.getTiempoAceptarPropuesta() * 60);
     }
     
     /**
@@ -475,24 +477,51 @@ public class Operador extends UsuarioConDni {
      * @param alternativa La que se acepta
      */
     public void aceptarVuelo(Vuelo alternativa) {
-        if (!decisionTomada) {
-        	this.getGestor().aceptarVuelo(alternativa, alternativa.getTerminal(), alternativa.getControlador());
-            decisionTomada = true;
-            timer.cancel();
-            System.out.println("Vuelo aceptado.");
+        VueloProgramado original = encontrarOriginal(alternativa);
+        if (original != null && !decisionesTomadas.contains(original)) {
+            getGestor().aceptarVuelo(alternativa, alternativa.getTerminal(), alternativa.getControlador());
+            decisionesTomadas.add(original);
+            cancelarTemporizador(original);
+            alternativasPorVuelo.remove(encontrarOriginal(alternativa));
+            System.out.println("Vuelo aceptado: " + alternativa);
         }
     }
 
     /**
      * Método para rechazar vuelos.
      */
-    public void rechazarVuelo() {
-		if (!decisionTomada) {
-            decisionTomada = true;
-            timer.cancel();
-            System.out.println("Vuelo rechazado.");
-            this.vuelosAlternativas=null;
+    public void rechazarVuelo(VueloProgramado clave) {
+        if (!decisionesTomadas.contains(clave)) {
+            decisionesTomadas.add(clave);
+            cancelarTemporizador(clave);
+            alternativasPorVuelo.remove(clave);
+            System.out.println("Vuelo rechazado: " + clave);
         }
+    }
+    
+    /**
+     * Método para cancelar vuelos.
+     */
+    private void cancelarVuelo(VueloProgramado original) {
+        if (!decisionesTomadas.contains(original)) {
+            decisionesTomadas.add(original);
+            cancelarTemporizador(original);
+            alternativasPorVuelo.remove(original);
+            System.out.println("Vuelo cancelado automáticamente: " + original);
+        }
+    }
+    
+    private void cancelarTemporizador(VueloProgramado original) {
+        Timer t = temporizadoresPorVuelo.remove(original);
+        if (t != null) t.cancel();
+    }
+
+    private VueloProgramado encontrarOriginal(Vuelo alternativa) {
+        return alternativasPorVuelo.entrySet().stream()
+            .filter(e -> e.getValue().contains(alternativa))
+            .map(Map.Entry::getKey)
+            .findFirst()
+            .orElse(null);
     }
 
     /**
@@ -663,13 +692,16 @@ public class Operador extends UsuarioConDni {
      * 
      * @return Lista de alternativas.
      */
-	public List<Vuelo> getAlternativas() {
-		if(this.vuelosAlternativas.isEmpty()) {
-			System.out.println("No hay aternativas propuestas.");
-		}
-		return this.vuelosAlternativas;
-		
-	}
+    public List<Vuelo> getAlternativas(VueloProgramado vueloOriginal) {
+        List<Vuelo> alternativas = alternativasPorVuelo.get(vueloOriginal);
+        
+        if (alternativas == null || alternativas.isEmpty()) {
+            System.out.println("No hay alternativas propuestas para este vuelo.");
+            return Collections.emptyList();
+        }
+
+        return Collections.unmodifiableList(alternativas);
+    }
 
 	/**
      * Método que devuelve las solicitudes de vuelo recibidas del Operador.

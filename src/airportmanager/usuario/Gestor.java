@@ -586,7 +586,7 @@ public class Gestor extends Usuario {
 	                        } else {
 	                            System.out.println("El vuelo " + vuelo.getCodigo() + " tiene conflictos, buscando alternativas...");
 	                            List<Vuelo> alternativas = generarAlternativas(vuelo, terminal, controlador);
-	                            vuelo.getAvion().getAerolinea().getOperador().recibirAlternativas(alternativas);
+	                            vuelo.getAvion().getAerolinea().getOperador().recibirAlternativas(vuelo, alternativas);
 	                        }
 
 	                        gestionado = true;

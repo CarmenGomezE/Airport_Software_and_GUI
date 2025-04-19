@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -27,7 +28,7 @@ import javax.swing.JTextField;
 import src.airportmanager.AirportManager;
 import src.airportmanager.gui.ConfiguracionUI;
 import src.airportmanager.usuario.Operador;
-import src.airportmanager.vuelo.Vuelo;
+import src.airportmanager.vuelo.*;
 
 public class AlternativasVueloGUI extends JFrame {
     private static final long serialVersionUID = 1L;
@@ -130,15 +131,15 @@ public class AlternativasVueloGUI extends JFrame {
         botonAceptar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	String codigo = campoCodigo.getText().trim();
+                String codigo = campoCodigo.getText().trim();
                 if (codigo.isEmpty()) {
                     JOptionPane.showMessageDialog(AlternativasVueloGUI.this, "Introduce un código de vuelo.");
                     return;
                 }
-                Vuelo vuelo= manager.buscarVueloPorCodigo(codigo);
-                
+
+                Vuelo vuelo = manager.buscarVueloPorCodigo(codigo);
                 if (vuelo == null) {
-                    JOptionPane.showMessageDialog(AlternativasVueloGUI.this, "No se encontró ninguna alternativa a ese vuelo.");
+                    JOptionPane.showMessageDialog(AlternativasVueloGUI.this, "No se encontró ninguna alternativa con ese código.");
                     return;
                 }
 
@@ -147,7 +148,7 @@ public class AlternativasVueloGUI extends JFrame {
                     JOptionPane.showMessageDialog(AlternativasVueloGUI.this, "Alternativa aceptada correctamente.");
                     actualizarLista();
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(AlternativasVueloGUI.this, "Error al aceptar alternativa: " + ex.getMessage());
+                    JOptionPane.showMessageDialog(AlternativasVueloGUI.this, "Error al aceptar: " + ex.getMessage());
                 }
             }
         });
@@ -156,24 +157,24 @@ public class AlternativasVueloGUI extends JFrame {
         botonRechazar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	String codigo = campoCodigo.getText().trim();
+                String codigo = campoCodigo.getText().trim();
                 if (codigo.isEmpty()) {
                     JOptionPane.showMessageDialog(AlternativasVueloGUI.this, "Introduce un código de vuelo.");
                     return;
                 }
-                Vuelo vuelo= manager.buscarVueloPorCodigo(codigo);
-                
+
+                Vuelo vuelo = manager.buscarVueloPorCodigo(codigo);
                 if (vuelo == null) {
-                    JOptionPane.showMessageDialog(AlternativasVueloGUI.this, "No se encontró ninguna alternativa a ese vuelo.");
+                    JOptionPane.showMessageDialog(AlternativasVueloGUI.this, "No se encontró ninguna alternativa con ese código.");
                     return;
                 }
 
                 try {
-                    operador.rechazarVuelo();
+                    operador.rechazarVuelo(vuelo);
                     JOptionPane.showMessageDialog(AlternativasVueloGUI.this, "Alternativa rechazada correctamente.");
                     actualizarLista();
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(AlternativasVueloGUI.this, "Error al rechazar alternativa: " + ex.getMessage());
+                    JOptionPane.showMessageDialog(AlternativasVueloGUI.this, "Error al rechazar: " + ex.getMessage());
                 }
             }
         });
@@ -186,11 +187,21 @@ public class AlternativasVueloGUI extends JFrame {
         setVisible(true);
     }
 
-    private void actualizarLista() {
-        modeloLista.clear();
-        List<Vuelo> vuelos = operador.getAlternativas();
-        for (Vuelo v : vuelos) {
-            modeloLista.addElement("Vuelo: " + v.getCodigo() + " | Terminal: " + v.getTerminal() + " | Fecha/Hora: " + v.getFecha()+"/"+v.getHora());
-        }
-    }
+	private void actualizarLista() {
+	    modeloLista.clear();
+	    Map<VueloProgramado, List<Vuelo>> alternativas = operador.getAlternativasAgrupadas();
+
+	    if (alternativas.isEmpty()) {
+	        modeloLista.addElement("No hay alternativas pendientes.");
+	        return;
+	    }
+	    for (Map.Entry<VueloProgramado, List<Vuelo>> entry : alternativas.entrySet()) {
+	        VueloProgramado original = entry.getKey();
+	        List<Vuelo> propuestas = entry.getValue();
+	        modeloLista.addElement(" Alternativas para vuelo original: " + original.getCodigo());
+	        for (Vuelo v : propuestas) {
+	            modeloLista.addElement("Vuelo: " + v.getCodigo() + " | Terminal: " + v.getTerminal() + " | Fecha/Hora: " + v.getFecha() + "/" + v.getHora());
+	        }
+	    }
+	}
 }

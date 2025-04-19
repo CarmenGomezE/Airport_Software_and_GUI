@@ -385,8 +385,11 @@ public class AirportManagerMain {
 	    System.out.println("Gestión de vuelos completada con éxito.");
 
 	    System.out.println("Iniciando gestión de alternativas del Operador.");
-	    if(!operadorIberia.getAlternativas().isEmpty()) {
-	    	operadorIberia.aceptarVuelo(operadorIberia.getAlternativas().get(0));
+	    if(!operadorIberia.getAlternativasAgrupadas().isEmpty()) {
+	    	Map<VueloProgramado, List<Vuelo>> alternativasAgrupadas = operadorAirFrance.getAlternativasAgrupadas();
+
+	    	VueloProgramado clave = alternativasAgrupadas.keySet().iterator().next();
+	    	operadorIberia.rechazarVuelo(clave);
 	    	System.out.println("Alternativa aceptada.");
 	    }
 
@@ -437,8 +440,11 @@ public class AirportManagerMain {
 	    System.out.println("Gestión de vuelos completada con éxito.");
 	    
 	    System.out.println("Iniciando gestión de alternativas del Operador.");
-	    if(!operadorAirFrance.getAlternativas().isEmpty()) {
-	    	operadorAirFrance.aceptarVuelo(operadorAirFrance.getAlternativas().get(0));
+	    if(!operadorAirFrance.getAlternativasAgrupadas().isEmpty()) {
+	    	Map<VueloProgramado, List<Vuelo>> alternativasAgrupadas = operadorAirFrance.getAlternativasAgrupadas();
+
+	    	VueloProgramado clave = alternativasAgrupadas.keySet().iterator().next();
+	    	operadorAirFrance.aceptarVuelo(alternativasAgrupadas.get(clave).get(0));
 	    	System.out.println("Alternativa aceptada.");
 	    }
     	
@@ -711,10 +717,8 @@ public class AirportManagerMain {
 		airportManager.getGestor().aceptarVuelo(vueloFRK2234, terminalT1, controladorT1);
 		airportManager.getGestor().aceptarVuelo(vueloFRK8103, terminalT2, controladorT2);
 		
-		System.out.println("\nLista de vuelos aceptados:");
-    	for (VueloProgramado v : airportManager.getAeropuerto().getVuelosAceptados()) {
-    	    System.out.println("Vuelo: " + v.getCodigo() + " - Fecha: " + v.getFecha() + " - Hora: " + v.getHora());
-    	}
+		
+
 	}
 
 	/**
@@ -727,8 +731,8 @@ public class AirportManagerMain {
 		ControladorAereo controladorT1= terminalT1.getControladores().get(0);
     	ControladorAereo controladorT2= terminalT2.getControladores().get(0);
     	
-    	Vuelo vueloFRK2234= airportManager.getAeropuerto().getVuelosAceptados().get(10);
-		Vuelo vueloFRK8103= airportManager.getAeropuerto().getVuelosAceptados().get(11);
+    	Vuelo vueloFRK2234= airportManager.getAeropuerto().getVuelosAceptados().get(9);
+		Vuelo vueloFRK8103= airportManager.getAeropuerto().getVuelosAceptados().get(10);
 		
 		System.out.println("\nIniciando el proceso de cambio de estados de vuelos.");
 		System.out.println("Comenzamos con los estados de un vuelo de salida:");
