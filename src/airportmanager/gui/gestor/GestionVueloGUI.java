@@ -124,15 +124,29 @@ public class GestionVueloGUI extends JFrame{
 
         panelDerecho.add(Box.createVerticalGlue());
         
-        textAreaMensajes = new JTextArea(10, 30); 
+     // Crear el área de texto y su scroll
+        textAreaMensajes = new JTextArea(5, 30); 
         textAreaMensajes.setEditable(false);  
         textAreaMensajes.setLineWrap(true);  
         textAreaMensajes.setWrapStyleWord(true); 
 
         JScrollPane scrollPaneMensajes = new JScrollPane(textAreaMensajes);
-        scrollPaneMensajes.setPreferredSize(new Dimension(500, 200)); 
-        scrollPaneMensajes.setVisible(false);
-        panelDerecho.add(scrollPaneMensajes);
+        // No usamos setPreferredSize
+        scrollPaneMensajes.setAlignmentX(Component.CENTER_ALIGNMENT);
+        scrollPaneMensajes.setMaximumSize(new Dimension(600, 200)); // ajustable
+
+        // Contenedor del mensaje
+        JPanel contenedorMensajes = new JPanel();
+        contenedorMensajes.setLayout(new BoxLayout(contenedorMensajes, BoxLayout.Y_AXIS));
+        contenedorMensajes.setOpaque(false);
+        contenedorMensajes.setAlignmentX(Component.CENTER_ALIGNMENT);
+        contenedorMensajes.add(Box.createRigidArea(new Dimension(0, 10)));
+        contenedorMensajes.add(scrollPaneMensajes);
+        contenedorMensajes.setVisible(false);
+
+        // Añadir al panel derecho
+        panelDerecho.add(Box.createRigidArea(new Dimension(0, 20))); // espaciado
+        panelDerecho.add(contenedorMensajes);
 
         /** Acción aceptar */
         botonGestionar.addActionListener(new ActionListener() {
@@ -153,8 +167,11 @@ public class GestionVueloGUI extends JFrame{
                 try {
                     gestor.gestionarVuelos(vuelo);
                     String mensaje = gestor.getMensajeGUI();
+                    System.out.println(mensaje);
                     textAreaMensajes.setText(mensaje);
-                    scrollPaneMensajes.setVisible(true);
+                    contenedorMensajes.setVisible(true);
+                    contenedorMensajes.revalidate();
+                    contenedorMensajes.repaint();
                     JOptionPane.showMessageDialog(GestionVueloGUI.this, "Vuelo gestionado correctamente.");
                     actualizarLista();
                 } catch (Exception ex) {

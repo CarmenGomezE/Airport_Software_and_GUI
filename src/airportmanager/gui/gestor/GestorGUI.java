@@ -167,8 +167,18 @@ public class GestorGUI extends JFrame {
         
         JButton botonGestionFacturas = new JButton("Gestión de facturas");
         panelDerecho.add(botonGestionFacturas);
+        
+        JButton botonVuelosAceptados = new JButton("Ver vuelos aceptados");
+        panelDerecho.add(botonVuelosAceptados);
+        botonVuelosAceptados.addActionListener(new ActionListener() {
 
-        panelDerecho.add(Box.createVerticalStrut(10));
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setVisible(true);
+				new VuelosAceptadosGUI(manager, GestorGUI.this, gestor);
+				
+			}      	
+        });
 
         /** Añadir al panel principal */
         panel.add(panelIzquierdo, BorderLayout.WEST);

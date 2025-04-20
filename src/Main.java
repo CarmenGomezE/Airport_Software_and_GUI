@@ -16,25 +16,27 @@ public class Main {
         try {
             /**vaciarArchivo(ARCHIVO_ESTADO);*/
             AirportManager manager = AirportManager.cargarEstado(ARCHIVO_ESTADO);
+            
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                try {
+                    manager.guardarEstado(ARCHIVO_ESTADO);
+                    System.out.println("Estado guardado automáticamente al cerrar.");
+                } catch (Exception e) {
+                    System.err.println("Error al guardar el estado al cerrar: " + e.getMessage());
+                }
+            }));
             manager.iniciarAplicacion();
 
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
                     try {
-                        /**
-                         * Cuando querais probar una sin pasar por el inicio de sesión ponedle true y
-                         * false a las demás
-                         */
                         new AirportManagerGUI(manager).setVisible(true);
-                    
                     } catch (Exception e) {
                         e.printStackTrace();
                         System.err.println("Error al iniciar la interfaz gráfica: " + e.getMessage());
                     }
                 }
             });
-
-            /**manager.guardarEstado(ARCHIVO_ESTADO);*/
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println("Error al cargar el estado del aeropuerto o iniciar la aplicación: " + e.getMessage());

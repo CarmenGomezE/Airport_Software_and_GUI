@@ -34,7 +34,7 @@ public class NotificacionesGestorGUI extends JFrame {
     public NotificacionesGestorGUI(AirportManager manager, GestorGUI gestorGUI, Gestor gestorAe) {
         this.geGUI = gestorGUI;
         this.gestor = gestorAe;
-        setTitle("Panel de notificaciones del Operador");
+        setTitle("Panel de notificaciones del Gestor");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setResizable(false);
