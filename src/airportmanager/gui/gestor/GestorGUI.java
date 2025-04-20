@@ -93,7 +93,15 @@ public class GestorGUI extends JFrame {
 
         /** Botones */
         JPanel subPanelBotones = new JPanel(new GridLayout(1, 2, 10, 10));
-        subPanelBotones.add(new JButton("🔔 Notificaciones"));
+        JButton botonNotificaciones = new JButton("🔔 Notificaciones");
+        subPanelBotones.add(botonNotificaciones);
+        botonNotificaciones.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	setVisible(false);
+                new NotificacionesGestorGUI(manager, GestorGUI.this, gestor);
+            }
+        });
         JButton botonCerrarSesion = new JButton("Cerrar sesión");
         subPanelBotones.add(botonCerrarSesion);
         botonCerrarSesion.addActionListener(new ActionListener() {

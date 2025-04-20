@@ -22,16 +22,15 @@ public class ProgramarVueloGUI extends JFrame {
 
     private JPanel diasPanel;
     private JCheckBox[] diasSemanaChecks;
-
     private JPanel escalaPanel;
     private JComboBox<Aeropuerto> comboEscalaAeropuerto;
     private JTextField campoHoraLlegadaEscala;
     private JTextField campoHoraSalidaEscala;
 
-    public ProgramarVueloGUI(AirportManager Aemanager, OperadorGUI operadorGUI, Operador operadorAerolinea) {
+    public ProgramarVueloGUI(AirportManager AeManager, OperadorGUI operadorGUI, Operador AeOperador) {
         this.opGUI = operadorGUI;
-        this.operador = operadorAerolinea;
-        this.manager = Aemanager;
+        this.operador = AeOperador;
+        this.manager = AeManager;
 
         setTitle("Panel de programar vuelos del Operador");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -40,7 +39,6 @@ public class ProgramarVueloGUI extends JFrame {
         setLocationRelativeTo(null);
 
         addWindowListener(new WindowAdapter() {
-            @Override
             public void windowClosed(WindowEvent e) {
                 opGUI.setVisible(true);
             }
@@ -52,15 +50,12 @@ public class ProgramarVueloGUI extends JFrame {
         add(panel);
 
         JLabel titulo = new JLabel("Proponer un vuelo de " + operador.getAerolinea().getNombre(), JLabel.CENTER);
-        titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
         titulo.setFont(new Font("Arial", Font.BOLD, 28));
         panel.add(titulo, BorderLayout.NORTH);
-        panel.add(Box.createRigidArea(new Dimension(0, 40)));
 
         JPanel izquierda = new JPanel();
         izquierda.setLayout(new BoxLayout(izquierda, BoxLayout.Y_AXIS));
         izquierda.setBackground(ConfiguracionUI.COLOR_FONDO);
-        izquierda.setPreferredSize(new Dimension(650, getHeight()));
 
         JTextField campoCodigo = new JTextField();
         JTextField campoFecha = new JTextField();
@@ -86,40 +81,34 @@ public class ProgramarVueloGUI extends JFrame {
         JPanel derecha = new JPanel();
         derecha.setLayout(new BoxLayout(derecha, BoxLayout.Y_AXIS));
         derecha.setBackground(ConfiguracionUI.COLOR_FONDO);
-        derecha.setPreferredSize(new Dimension(650, getHeight()));
-
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, izquierda, derecha);
-        splitPane.setResizeWeight(0.5);
-        splitPane.setDividerSize(30);
-        splitPane.setEnabled(false);
-        splitPane.setBackground(ConfiguracionUI.COLOR_FONDO);
-        splitPane.setBorder(null);
-        panel.add(splitPane, BorderLayout.CENTER);
 
         JComboBox<Avion> comboAvion = new JComboBox<>(operador.getAerolinea().getAviones().toArray(new Avion[0]));
-        JComboBox<Aeropuerto> comboDestino = new JComboBox<>(manager.getAeropuerto().getAeropuertosDestino().toArray(new Aeropuerto[0]));
-        
-        comboAvion.setAlignmentX(Component.CENTER_ALIGNMENT);
-        comboDestino.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JComboBox<Aeropuerto> comboAeropuerto = new JComboBox<>(manager.getAeropuerto().getAeropuertosDestino().toArray(new Aeropuerto[0]));
 
         derecha.add(crearCampoConLabel("Avión:", comboAvion));
-        derecha.add(crearCampoConLabel("Aeropuerto Destino:", comboDestino));
+        derecha.add(crearCampoConLabel("Aeropuerto Salida/Llegada:", comboAeropuerto));
 
         diasPanel = new JPanel(new GridLayout(2, 4));
         diasPanel.setBackground(ConfiguracionUI.COLOR_FONDO);
-        diasPanel.setBorder(BorderFactory.createTitledBorder("Días Recurrentes"));
+        diasPanel.setBorder( BorderFactory.createTitledBorder("Días Recurrentes"));
+
         diasSemanaChecks = new JCheckBox[DayOfWeek.values().length];
         for (int i = 0; i < diasSemanaChecks.length; i++) {
             diasSemanaChecks[i] = new JCheckBox(DayOfWeek.of(i + 1).toString());
             diasSemanaChecks[i].setFont(new Font("Arial", Font.PLAIN, 16));
+            diasSemanaChecks[i].setEnabled(false);
             diasPanel.add(diasSemanaChecks[i]);
         }
-        setDiasSemanaEnabled(false);
         derecha.add(diasPanel);
 
-        comboPeriodicidad.addActionListener(e -> {
-            Periodicidad selected = (Periodicidad) comboPeriodicidad.getSelectedItem();
-            setDiasSemanaEnabled(selected == Periodicidad.RECURRENTE);
+        comboPeriodicidad.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Periodicidad selected = (Periodicidad) comboPeriodicidad.getSelectedItem();
+                boolean activar = selected == Periodicidad.RECURRENTE;
+                for (JCheckBox check : diasSemanaChecks) {
+                    check.setEnabled(activar);
+                }
+            }
         });
 
         JCheckBox checkEscala = new JCheckBox("Incluir escala");
@@ -131,8 +120,8 @@ public class ProgramarVueloGUI extends JFrame {
         escalaPanel.setBorder(BorderFactory.createTitledBorder("Escala (opcional)"));
 
         comboEscalaAeropuerto = new JComboBox<>(manager.getAeropuerto().getAeropuertosDestino().toArray(new Aeropuerto[0]));
-        campoHoraLlegadaEscala = new JTextField("13:00");
-        campoHoraSalidaEscala = new JTextField("14:30");
+        campoHoraLlegadaEscala = new JTextField();
+        campoHoraSalidaEscala = new JTextField();
 
         escalaPanel.add(new JLabel("Aeropuerto Escala:"));
         escalaPanel.add(comboEscalaAeropuerto);
@@ -145,64 +134,80 @@ public class ProgramarVueloGUI extends JFrame {
             c.setEnabled(false);
         }
 
-        checkEscala.addActionListener(e -> {
-            boolean activo = checkEscala.isSelected();
-            for (Component c : escalaPanel.getComponents()) {
-                c.setEnabled(activo);
+        checkEscala.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                boolean activo = checkEscala.isSelected();
+                for (Component c : escalaPanel.getComponents()) {
+                    c.setEnabled(activo);
+                }
             }
         });
 
         derecha.add(escalaPanel);
 
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, izquierda, derecha);
+        splitPane.setResizeWeight(0.5);
+        splitPane.setDividerSize(30);
+        splitPane.setEnabled(false);
+        splitPane.setBackground(ConfiguracionUI.COLOR_FONDO);
+        splitPane.setBorder(null);
+        panel.add(splitPane, BorderLayout.CENTER);
+
         JButton boton = new JButton("✅ Programar Vuelo");
         boton.setAlignmentX(Component.CENTER_ALIGNMENT);
         panel.add(boton, BorderLayout.SOUTH);
 
-        boton.addActionListener(e -> {
-            try {
-                String codigo = campoCodigo.getText().trim();
-                LocalDate fecha = LocalDate.parse(campoFecha.getText().trim());
-                LocalDate fechaInicio = LocalDate.parse(campoFechaInicio.getText().trim());
-                LocalDate fechaFin = LocalDate.parse(campoFechaFin.getText().trim());
-                LocalTime hora = LocalTime.parse(campoHora.getText().trim());
+        boton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    String codigo = campoCodigo.getText().trim();
+                    LocalDate fecha = LocalDate.parse(campoFecha.getText().trim());
+                    LocalDate fechaInicio = LocalDate.parse(campoFechaInicio.getText().trim());
+                    LocalDate fechaFin = LocalDate.parse(campoFechaFin.getText().trim());
+                    LocalTime hora = LocalTime.parse(campoHora.getText().trim());
 
-                TipoCarga carga = (TipoCarga) comboCarga.getSelectedItem();
-                TipoModoEmbarque embarque = (TipoModoEmbarque) comboEmbarque.getSelectedItem();
-                Periodicidad periodicidad = (Periodicidad) comboPeriodicidad.getSelectedItem();
-                TipoVuelo tipo = (TipoVuelo) comboTipo.getSelectedItem();
-                Avion avion = (Avion) comboAvion.getSelectedItem();
-                Aeropuerto destino = (Aeropuerto) comboDestino.getSelectedItem();
+                    TipoCarga carga = (TipoCarga) comboCarga.getSelectedItem();
+                    TipoModoEmbarque embarque = (TipoModoEmbarque) comboEmbarque.getSelectedItem();
+                    Periodicidad periodicidad = (Periodicidad) comboPeriodicidad.getSelectedItem();
+                    TipoVuelo tipo = (TipoVuelo) comboTipo.getSelectedItem();
+                    Avion avion = (Avion) comboAvion.getSelectedItem();
+                    Aeropuerto aeropuerto = (Aeropuerto) comboAeropuerto.getSelectedItem();
 
-                List<DayOfWeek> diasSeleccionados = null;
-                if (periodicidad == Periodicidad.RECURRENTE) {
-                    diasSeleccionados = new ArrayList<>();
-                    for (int i = 0; i < diasSemanaChecks.length; i++) {
-                        if (diasSemanaChecks[i].isSelected()) {
-                            diasSeleccionados.add(DayOfWeek.of(i + 1));
+                    List<DayOfWeek> diasSeleccionados = null;
+                    if (periodicidad == Periodicidad.RECURRENTE) {
+                        diasSeleccionados = new ArrayList<>();
+                        for (int i = 0; i < diasSemanaChecks.length; i++) {
+                            if (diasSemanaChecks[i].isSelected()) {
+                                diasSeleccionados.add(DayOfWeek.of(i + 1));
+                            }
+                        }
+                        if (diasSeleccionados.isEmpty()) {
+                            JOptionPane.showMessageDialog(ProgramarVueloGUI.this, "Selecciona al menos un día para los vuelos recurrentes.");
+                            return;
                         }
                     }
-                    if (diasSeleccionados.isEmpty()) {
-                        JOptionPane.showMessageDialog(this, "Selecciona al menos un día para los vuelos recurrentes.");
-                        return;
+
+                    Escala escala = null;
+                    if (checkEscala.isSelected()) {
+                        Aeropuerto aeEscala = (Aeropuerto) comboEscalaAeropuerto.getSelectedItem();
+                        LocalTime horaLlegada = LocalTime.parse(campoHoraLlegadaEscala.getText().trim());
+                        LocalTime horaSalida = LocalTime.parse(campoHoraSalidaEscala.getText().trim());
+                        escala = new Escala(manager.getAeropuerto(), aeEscala, horaLlegada, horaSalida);
                     }
+
+                    if(tipo==TipoVuelo.LLEGADA) { 
+                    	operador.proponerVuelo(codigo, fecha, fechaInicio, fechaFin, hora, diasSeleccionados, carga, embarque, periodicidad, 
+                    			tipo, avion,manager.getAeropuerto(),aeropuerto, escala); 
+                    } 
+                    else { 
+                    	operador.proponerVuelo(codigo, fecha, fechaInicio, fechaFin, hora, diasSeleccionados, carga, embarque, periodicidad, 
+                    			tipo, avion, aeropuerto, manager.getAeropuerto(), escala); 
+                    }
+                    JOptionPane.showMessageDialog(ProgramarVueloGUI.this, "Vuelo propuesto correctamente.");
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(ProgramarVueloGUI.this, "Error al programar vuelo: " + ex.getMessage());
+                    ex.printStackTrace();
                 }
-
-                Escala escala = null;
-                if (checkEscala.isSelected()) {
-                    Aeropuerto aeEscala = (Aeropuerto) comboEscalaAeropuerto.getSelectedItem();
-                    LocalTime horaLlegada = LocalTime.parse(campoHoraLlegadaEscala.getText().trim());
-                    LocalTime horaSalida = LocalTime.parse(campoHoraSalidaEscala.getText().trim());
-                    escala = new Escala(manager.getAeropuerto(), aeEscala, horaLlegada, horaSalida);
-                }
-
-                operador.proponerVuelo(codigo, fecha, fechaInicio, fechaFin, hora,
-                        diasSeleccionados, carga, embarque, periodicidad, tipo,
-                        avion, destino, manager.getAeropuerto(), escala);
-
-                JOptionPane.showMessageDialog(this, "Vuelo propuesto correctamente.");
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Error al programar vuelo: " + ex.getMessage());
-                ex.printStackTrace();
             }
         });
 
@@ -216,23 +221,16 @@ public class ProgramarVueloGUI extends JFrame {
 
         JLabel label = new JLabel(textoLabel);
         label.setFont(new Font("Arial", Font.PLAIN, 18));
+        label.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         campo.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
         campo.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        label.setAlignmentX(Component.LEFT_ALIGNMENT);
         panel.add(label);
         panel.add(Box.createRigidArea(new Dimension(0, 5)));
         panel.add(campo);
         panel.add(Box.createRigidArea(new Dimension(0, 15)));
 
-        panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, panel.getPreferredSize().height));
         return panel;
     }
-
-    private void setDiasSemanaEnabled(boolean enabled) {
-        for (JCheckBox dia : diasSemanaChecks) {
-            dia.setEnabled(enabled);
-        }
-    }
-} 
+}
