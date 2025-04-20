@@ -82,7 +82,7 @@ public class GestorGUI extends JFrame {
         panelIzquierdo.add(panelBotones, BorderLayout.SOUTH);
 
         /** PANEL DERECHO */
-        JPanel panelDerecho = new JPanel(new GridLayout(9, 1, 10, 10));
+        JPanel panelDerecho = new JPanel(new GridLayout(10, 1, 10, 10));
         panelDerecho.setPreferredSize(new Dimension(500, 600));
         panelDerecho.setBackground(ConfiguracionUI.COLOR_FONDO);
 
@@ -179,6 +179,7 @@ public class GestorGUI extends JFrame {
 				
 			}      	
         });
+        panelDerecho.add(Box.createVerticalStrut(10));
 
         /** Añadir al panel principal */
         panel.add(panelIzquierdo, BorderLayout.WEST);

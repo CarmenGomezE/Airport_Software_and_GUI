@@ -732,7 +732,7 @@ public class Gestor extends Usuario {
         if (!alternativas.isEmpty()) {
             mensajeGUI="El vuelo " + vueloMover.getCodigo() + " no ha podido ser movido, se han generado alternativas:";
             for(Vuelo v:alternativas) {
-            	mensajeGUI+= "Alternativa al vuelo: "+v.getCodigo()+"\nFecha/Hora: "+v.getFecha()+"/"+v.getHora()+" Terminal: "+v.getTerminal()+ " Controlador: "+ v.getControlador();
+            	mensajeGUI+= "\nAlternativa al vuelo: "+v.getCodigo()+"\nFecha/Hora: "+v.getFecha()+"/"+v.getHora()+" Terminal: "+v.getTerminal()+ " Controlador: "+ v.getControlador().getNombre();
             }
             return alternativas;
         } else {

@@ -468,7 +468,7 @@ public class Operador extends UsuarioConDni {
                     cancelarVuelo(original);
                 }
             }
-        }, Gestor.getTiempoAceptarPropuesta() * 60);
+        }, Gestor.getTiempoAceptarPropuesta() * 60 * 1000);
     }
     
     /**
