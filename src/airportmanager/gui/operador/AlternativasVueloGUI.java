@@ -30,6 +30,12 @@ import src.airportmanager.gui.ConfiguracionUI;
 import src.airportmanager.usuario.Operador;
 import src.airportmanager.vuelo.*;
 
+/**
+ * La clase AlternativasVueloGUI representa la ventana del operador desde la que este puede gestionar
+ * las alternativas a vuelos que no se han podido programar.
+ * 
+ * @author Carmen Gómez, María Pozo, Claudia Municio.
+ */
 public class AlternativasVueloGUI extends JFrame {
     private static final long serialVersionUID = 1L;
     private OperadorGUI opGUI;

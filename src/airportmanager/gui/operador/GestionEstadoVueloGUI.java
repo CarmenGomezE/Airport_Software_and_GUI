@@ -25,6 +25,12 @@ import src.airportmanager.usuario.Operador;
 import src.airportmanager.vuelo.EstadoVuelo;
 import src.airportmanager.vuelo.Vuelo;
 
+/**
+ * La clase GestionEstadoVueloGUI representa la ventana del operador desde la que este puede cambiar
+ * los estados de los vuelos que le corresponden.
+ * 
+ * @author Carmen Gómez, María Pozo, Claudia Municio.
+ */
 public class GestionEstadoVueloGUI extends JFrame {
     private static final long serialVersionUID = 1L;
     private final OperadorGUI opGUI;

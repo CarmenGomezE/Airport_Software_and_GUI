@@ -9,7 +9,12 @@ import src.airportmanager.AirportManager;
 import src.airportmanager.gui.ConfiguracionUI;
 import src.airportmanager.usuario.Operador;
 import src.airportmanager.vuelo.SolicitudVueloCompartido;
-
+/**
+ * La clase SolicitudesCompartirVueloGUI representa la ventana del operador desde la que este gestiona
+ * las solicituedes para compartir vuelos con otras aerolíneas.
+ * 
+ * @author Carmen Gómez, María Pozo, Claudia Municio.
+ */
 public class SolicitudesCompartirVueloGUI extends JFrame {
     private static final long serialVersionUID = 1L;
     private final OperadorGUI opGUI;

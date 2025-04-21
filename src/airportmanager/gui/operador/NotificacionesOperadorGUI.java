@@ -25,6 +25,12 @@ import src.airportmanager.gui.ConfiguracionUI;
 import src.airportmanager.notificacion.Notificacion;
 import src.airportmanager.usuario.Operador;
 
+/**
+ * La clase NotificacionesOperadorGUI representa la ventana del operador desde la que este puede 
+ * consultar las notificaciones que ha recibido.
+ * 
+ * @author Carmen Gómez, María Pozo, Claudia Municio.
+ */
 public class NotificacionesOperadorGUI extends JFrame {
     private static final long serialVersionUID = 1L;
     private final OperadorGUI opGUI;

@@ -30,6 +30,12 @@ import src.airportmanager.factura.Factura;
 import src.airportmanager.gui.ConfiguracionUI;
 import src.airportmanager.usuario.Operador;
 
+/**
+ * La clase PagarFacturasGUI representa la ventana del operador desde la que este paga las facturas
+ * que el gestor ha emitido para su aerolinea.
+ * 
+ * @author Carmen Gómez, María Pozo, Claudia Municio.
+ */
 public class PagarFacturasGUI extends JFrame {
     private static final long serialVersionUID = 1L;
     private OperadorGUI opGUI;

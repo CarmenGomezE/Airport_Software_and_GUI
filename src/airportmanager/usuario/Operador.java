@@ -30,12 +30,9 @@ import java.time.temporal.ChronoUnit;
 
 /**
  * La clase Operador representa un tipo de usuario con dni, este usuario es el
- * encargado
- * de cambiar los estados de vuelo de embarque y desembarque, así como el de en
- * preparación
- * para despegar. Además podrá realizar otras acciones como dar de alta aviones,
- * programar
- * y compartir vuelos, recibir notificaciones o pagar facturas.
+ * encargado de cambiar los estados de vuelo de embarque y desembarque, así como el de en
+ * preparación para despegar. Además podrá realizar otras acciones como dar de alta aviones,
+ * programar y compartir vuelos, recibir notificaciones o pagar facturas.
  * 
  * @author Carmen Gómez, María Pozo, Claudia Municio.
  */
@@ -50,8 +47,6 @@ public class Operador extends UsuarioConDni {
     private Aerolinea aerolinea;
     /** Estadísticas del operador sobre vuelos de su aerolinea */
     private EstadisticasOperador estadisticas;
-    /** Bandera para la decision tomada*/
-	private boolean decisionTomada;
 	/** Mapa de cada vuelo original con sus cinco alternativas generadas */
 	private final Map<VueloProgramado, List<Vuelo>> alternativasPorVuelo;
 	/** Mapa de cada vuelo con su temporizador */
@@ -79,7 +74,6 @@ public class Operador extends UsuarioConDni {
         this.alternativasPorVuelo = new HashMap<>();
         this.temporizadoresPorVuelo = new HashMap<>();
         this.decisionesTomadas = new HashSet<>();
-        this.decisionTomada=false;
     }
 
     /**
@@ -733,23 +727,6 @@ public class Operador extends UsuarioConDni {
 	public List<SolicitudVueloCompartido> getSolicitudesRecibidas() {
 		return this.solicitudesRecibidas;
 	}
-
-	
-	/**
-	 * Método que devuelve la decisión tomada.
-	 * @return decisión tomada.
-	 */
-	public boolean getDecisionTomada() {
-		return this.decisionTomada;
-	}
-	
-	/**
-	 * Método que asigna una decision tomada.
-	 * @param nuevaDecision				Nueva decision a tomar.
-	 */
-	public void setDecisionTomada(boolean nuevaDecision) {
-		decisionTomada = nuevaDecision;
-	}
 	
 	/**
      * Método para recibir notificaciones.
@@ -797,4 +774,13 @@ public class Operador extends UsuarioConDni {
         }
         return null;
     }
+
+	/**
+     * Método que devuelve los vuelos de los que se han tomado decisiones.
+     * 
+     * @return set de vuelos sobre los que se ha tomado una decisión.
+     */
+	public Set<VueloProgramado> getDecisionTomada() {
+		return this.decisionesTomadas;
+	}
 }

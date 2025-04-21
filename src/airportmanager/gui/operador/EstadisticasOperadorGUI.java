@@ -23,6 +23,12 @@ import src.airportmanager.aeropuerto.AeropuertoDestino;
 import src.airportmanager.vuelo.Vuelo;
 import src.airportmanager.usuario.Operador;
 
+/**
+ * La clase EstadisticasOperadorGUI representa la ventana del operador desde la que este puede consultar
+ * las estadísticas de los vuelos de su aerolínea.
+ * 
+ * @author Carmen Gómez, María Pozo, Claudia Municio.
+ */
 public class EstadisticasOperadorGUI extends JFrame {
     private static final long serialVersionUID = 1L;
     private final OperadorGUI opGUI;

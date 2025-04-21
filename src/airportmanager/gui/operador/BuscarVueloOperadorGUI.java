@@ -12,6 +12,12 @@ import src.airportmanager.AirportManager;
 import src.airportmanager.gui.ConfiguracionUI;
 import src.airportmanager.usuario.Operador;
 
+/**
+ * La clase BuscarVueloOperadorGUI representa la ventana del operador desde la que este busca vuelos 
+ * por unos determinados criterios.
+ * 
+ * @author Carmen Gómez, María Pozo, Claudia Municio.
+ */
 public class BuscarVueloOperadorGUI extends JFrame{
 	private static final long serialVersionUID = 1L;
     private OperadorGUI opGUI;

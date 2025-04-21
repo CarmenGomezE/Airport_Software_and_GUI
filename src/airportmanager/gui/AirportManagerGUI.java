@@ -11,6 +11,12 @@ import src.airportmanager.gui.gestor.GestorGUI;
 import src.airportmanager.gui.operador.OperadorGUI;
 import src.airportmanager.usuario.*;
 
+/**
+ * La clase AirportManagerGUI representa la ventana principal de la interfaz, desde ella
+ * se inicia sesión.
+ * 
+ * @author Carmen Gómez, María Pozo, Claudia Municio.
+ */
 public class AirportManagerGUI extends JFrame {
     private static final long serialVersionUID = 1L;
     private JComboBox<String> comboBox;

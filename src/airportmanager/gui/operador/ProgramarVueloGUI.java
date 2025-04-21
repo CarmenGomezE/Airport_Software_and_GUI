@@ -14,6 +14,12 @@ import src.airportmanager.gui.ConfiguracionUI;
 import src.airportmanager.usuario.Operador;
 import src.airportmanager.vuelo.*;
 
+/**
+ * La clase ProgramarVueloGUI representa la ventana del operador desde la que este programa
+ * vuelos que después el gestor gestiona.
+ * 
+ * @author Carmen Gómez, María Pozo, Claudia Municio.
+ */
 public class ProgramarVueloGUI extends JFrame {
     private static final long serialVersionUID = 1L;
     private final OperadorGUI opGUI;

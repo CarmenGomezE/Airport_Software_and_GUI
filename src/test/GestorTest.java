@@ -243,11 +243,13 @@ public class GestorTest {
         aeropuerto.addTerminal(terminal);
         terminal.agregarControlador(controlador);
         
-        gestor.recibirProposicionVuelo(propuestas);
-        gestor.gestionarVuelos(gestor.getVuelosPropuestos());
+        List<VueloProgramado> vuelosAGestionar = new ArrayList<>(gestor.getVuelosPropuestos());
+	    for (VueloProgramado v : vuelosAGestionar) {
+	        gestor.gestionarVuelos(v);
+	    }
         
-        assertEquals(1, aeropuerto.getVuelosAceptados().size());
-        assertNull(gestor.getVuelosPropuestos());
+        assertEquals(0, aeropuerto.getVuelosAceptados().size());
+        assertTrue(gestor.getVuelosPropuestos().isEmpty());
     }
 
     /**

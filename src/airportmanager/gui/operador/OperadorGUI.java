@@ -13,6 +13,12 @@ import src.airportmanager.gui.ConfiguracionUI;
 import src.airportmanager.usuario.Operador;
 import src.airportmanager.vuelo.Vuelo;
 
+/**
+ * La clase OperadorGUI representa la ventana principal del operador desde la que este puede acceder
+ * a las ventanas desde las que realiza las acciones que le corresponden.
+ * 
+ * @author Carmen Gómez, María Pozo, Claudia Municio.
+ */
 public class OperadorGUI extends JFrame {
     private static final long serialVersionUID = 1L;
     private final Operador operadorAerolinea;

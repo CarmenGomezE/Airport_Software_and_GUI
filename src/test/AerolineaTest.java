@@ -75,7 +75,7 @@ public class AerolineaTest {
         aerolinea.agregarAvion(avion);
         vuelo = new Vuelo("V123", LocalDate.of(2025, 2, 10), null, null, LocalTime.of(9,30,0), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER, Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avion, aeropuertoDestino, aeropuerto, null, operador);
         avion.agregarVuelo(vuelo);
-        operador.recibirAlternativas(List.of(vuelo));
+        operador.recibirAlternativas(vuelo, List.of(vuelo));
         operador.aceptarVuelo(vuelo);
         aeropuerto.addVueloAceptado(vuelo);
         aeropuerto.addUsuario(operador);

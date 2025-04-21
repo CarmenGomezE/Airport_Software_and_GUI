@@ -11,6 +11,12 @@ import src.airportmanager.AirportManager;
 import src.airportmanager.gui.ConfiguracionUI;
 import src.airportmanager.usuario.Operador;
 
+/**
+ * La clase GestionAvionGUI representa la ventana del operador desde la que este da de alta
+ * nuevos aviones para su aerolínea.
+ * 
+ * @author Carmen Gómez, María Pozo, Claudia Municio.
+ */
 public class GestionAvionGUI extends JFrame {
     private static final long serialVersionUID = 1L;
     private final OperadorGUI opGUI;
