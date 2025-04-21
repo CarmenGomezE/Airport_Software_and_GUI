@@ -151,6 +151,12 @@ public class Aerolinea implements Serializable {
 
     }
 
+    /**
+     * Método devuelve una factura dado su código.
+     * 
+     * @param codigo Código de la factura.
+     * @return La fatura con ese código.
+     */
 	public Factura buscarFacturaPorCodigo(String codigo) {
 		for (Factura f : getFacturas()) {
             if (f.getInvoiceIdentifier().equalsIgnoreCase(codigo)) {

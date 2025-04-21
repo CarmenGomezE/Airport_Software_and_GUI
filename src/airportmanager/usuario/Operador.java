@@ -52,9 +52,11 @@ public class Operador extends UsuarioConDni {
     private EstadisticasOperador estadisticas;
     /** Bandera para la decision tomada*/
 	private boolean decisionTomada;
-	/** Timer para el tiempo en contestar a las alternativas */
+	/** Mapa de cada vuelo original con sus cinco alternativas generadas */
 	private final Map<VueloProgramado, List<Vuelo>> alternativasPorVuelo;
-	private final Map<VueloProgramado, Timer> temporizadoresPorVuelo;
+	/** Mapa de cada vuelo con su temporizador */
+	private final transient Map<VueloProgramado, Timer> temporizadoresPorVuelo;
+	/** Set de vuelos sobre los que se ha tomado una decisión */
 	private final Set<VueloProgramado> decisionesTomadas;
 
     /**
@@ -445,6 +447,11 @@ public class Operador extends UsuarioConDni {
         System.out.println("Vuelo propuesto exitosamente.");
     }
     
+    /**
+     * Método que devuelve el mapa de alternativas.
+     * 
+     * @return mapa de alternativas al vuelo.
+     */
     public Map<VueloProgramado, List<Vuelo>> getAlternativasAgrupadas() {
         return alternativasPorVuelo;
     }
@@ -489,6 +496,8 @@ public class Operador extends UsuarioConDni {
 
     /**
      * Método para rechazar vuelos.
+     * 
+     * @param clave Vuelo que se rechazada
      */
     public void rechazarVuelo(VueloProgramado clave) {
         if (!decisionesTomadas.contains(clave)) {
@@ -501,6 +510,8 @@ public class Operador extends UsuarioConDni {
     
     /**
      * Método para cancelar vuelos.
+     * 
+     * @param original Vuelo que se cancela
      */
     private void cancelarVuelo(VueloProgramado original) {
         if (!decisionesTomadas.contains(original)) {
@@ -511,11 +522,21 @@ public class Operador extends UsuarioConDni {
         }
     }
     
+    /**
+     * Método para cancelar el temporizador de un vuelo.
+     * 
+     * @param original Vuelo del que se cancela el temporizador.
+     */
     private void cancelarTemporizador(VueloProgramado original) {
         Timer t = temporizadoresPorVuelo.remove(original);
         if (t != null) t.cancel();
     }
 
+    /**
+     * Método para encontrar el vuelo original de una alternativa.
+     * 
+     * @param alternativa Alternativa de la que se busca el vuelo original.
+     */
     private VueloProgramado encontrarOriginal(Vuelo alternativa) {
         return alternativasPorVuelo.entrySet().stream()
             .filter(e -> e.getValue().contains(alternativa))
@@ -690,6 +711,7 @@ public class Operador extends UsuarioConDni {
     /**
      * Método que devuelve las alternativas del Operador.
      * 
+     * @param vueloOriginal vuelo del que se han generado las alternativas.
      * @return Lista de alternativas.
      */
     public List<Vuelo> getAlternativas(VueloProgramado vueloOriginal) {
@@ -762,6 +784,11 @@ public class Operador extends UsuarioConDni {
 		}
     }
 	
+	/**
+     * Método que devuelve una solicitud de vuelo compartido según el código del vuelo.
+     * 
+     * @param codigoVuelo El codigo del vuelo del que es la solicitud.
+     */
 	public SolicitudVueloCompartido buscarSolicitudPorCodigo(String codigoVuelo) {
         for (SolicitudVueloCompartido s : getSolicitudesRecibidas()) {
             if (s.getVueloOriginal().getCodigo().equalsIgnoreCase(codigoVuelo)) {

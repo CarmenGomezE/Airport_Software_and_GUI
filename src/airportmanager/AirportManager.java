@@ -402,6 +402,12 @@ public class AirportManager implements Serializable {
 		return credenciales;
 	}
 
+	/**
+    * Método devuelve un vuleo dado su código.
+    * 
+    * @param codigo Código del vuelo.
+    * @return Vuelo al que pertenece el código.
+    */
 	public Vuelo buscarVueloPorCodigo(String codigo) {
 		Vuelo vueloBuscado = null;
 		for(Vuelo v:getAeropuerto().getVuelosAceptados()) {

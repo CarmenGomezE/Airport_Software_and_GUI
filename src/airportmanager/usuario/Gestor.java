@@ -51,7 +51,7 @@ public class Gestor extends Usuario {
     private SistemaFacturacion sistemaFacturacion;
     /** Vuelos propuestos por el Operador. */
     private List<VueloProgramado> vuelosPropuestos;
-    
+    /** Mensaje de la interfaz. */
     private String mensajeGUI;
     
     /** Dias de anticipación mínima para una propuesta de Vuelo. */
