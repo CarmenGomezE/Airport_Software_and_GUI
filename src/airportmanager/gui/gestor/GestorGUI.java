@@ -17,13 +17,18 @@ public class GestorGUI extends JFrame {
     private static final long serialVersionUID = 1L;
     private Gestor AeGestor;
     private DefaultListModel<String> modeloLista;
-	private JList<String> listaVuelos;
-	private AirportManager AeManager;
+    private JList<String> listaVuelos;
+    private AirportManager AeManager;
+    private JComboBox<String> comboUsuarios;
+    private JComboBox<String> comboInfra;
+    private String usuarioSeleccionado;
+    private String infraestructuraSeleccionada;
+
 
     public GestorGUI(AirportManager manager, Gestor gestor) {
-    	this.AeGestor=gestor;
-    	this.AeManager=manager;
-    	
+        this.AeGestor = gestor;
+        this.AeManager = manager;
+
         setTitle("Panel de Gestor");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -51,26 +56,24 @@ public class GestorGUI extends JFrame {
         /** Lista de vuelos */
         modeloLista = new DefaultListModel<>();
         actualizarLista();
-        
+
         listaVuelos = new JList<>(modeloLista);
         JScrollPane scrollPane = new JScrollPane(listaVuelos);
         panelIzquierdo.add(scrollPane, BorderLayout.CENTER);
 
-
         /** Botones de la lista */
         JPanel panelBotones = new JPanel(new GridLayout(1, 2, 10, 10));
-        JButton botonBuscarVuelos=new JButton("🔎 Buscar vuelos");
+        JButton botonBuscarVuelos = new JButton("🔎 Buscar vuelos");
         panelBotones.add(botonBuscarVuelos);
         botonBuscarVuelos.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	setVisible(false);
+                setVisible(false);
                 new BuscarVueloGestorGUI(manager, GestorGUI.this, AeGestor);
             }
         });
-     
-        JButton botonRefrescar= new JButton("🔄 Refrescar vuelos");
-        panelBotones.add(botonRefrescar);
+
+        JButton botonRefrescar = new JButton("🔄 Refrescar vuelos");
         panelBotones.add(botonRefrescar);
         botonRefrescar.addActionListener(new ActionListener() {
             @Override
@@ -98,7 +101,7 @@ public class GestorGUI extends JFrame {
         botonNotificaciones.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	setVisible(false);
+                setVisible(false);
                 new NotificacionesGestorGUI(manager, GestorGUI.this, gestor);
             }
         });
@@ -120,64 +123,193 @@ public class GestorGUI extends JFrame {
         });
         subPanelBotones.setBackground(ConfiguracionUI.COLOR_FONDO);
         panelDerecho.add(subPanelBotones);
-        
-        
+
+        JPanel subPanelInfraestructura = new JPanel(new GridLayout(1,2,10,10));
         JButton botonGestionInfraestructura = new JButton("Gestión de infraestructura");
-        panelDerecho.add(botonGestionInfraestructura);
+        subPanelInfraestructura.add(botonGestionInfraestructura);
         
-        JButton botonConfiguracionAeropuerto = new JButton("Configuración del aeropuerto");
-        panelDerecho.add(botonConfiguracionAeropuerto);
-        botonConfiguracionAeropuerto.addActionListener(new ActionListener() {
+        String[] infras = {"Hangar", "Terminal", "Finger", "Zona de aparcamiento", "Pista de despegue", "Pista de aterrizaje", "Aerolínea", "Aeropuerto de destino"};
+        comboInfra = new JComboBox<>(infras);
+        comboInfra.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				setVisible(true);
-				new ConfiguracionAeropuertoGUI(manager, GestorGUI.this, gestor);
-				
-			}      	
-        });
-        
-        JButton botonGestionUsuarios = new JButton("Gestión de usuarios");
-        panelDerecho.add(botonGestionUsuarios);
-        
-        JButton botonEstadisticas = new JButton("Estadísticas de la infraestructura");
-        panelDerecho.add(botonEstadisticas);
-        botonEstadisticas.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				setVisible(true);
-				new EstadisticasGestorGUI(manager, GestorGUI.this, gestor);
+				infraestructuraSeleccionada = (String) comboInfra.getSelectedItem();
 				
 			}
         	
         });
         
+        subPanelInfraestructura.add(comboInfra);
+        subPanelInfraestructura.setBackground(ConfiguracionUI.COLOR_FONDO);
+        panelDerecho.add(subPanelInfraestructura);
+        botonGestionInfraestructura.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (infraestructuraSeleccionada == null) {
+					JOptionPane.showMessageDialog(null, 
+				            "Por favor, selecciona la infraestructura que desea gestionar.", 
+				            "Campos vacíos", 
+				            JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				switch(infraestructuraSeleccionada) {
+				
+					case "Terminal":
+						setVisible(true);
+						new GestionInfraestructurasTerminalGUI(manager, GestorGUI.this, gestor);
+						break;
+						
+					case "Hangar":
+						setVisible(true);
+						new GestionInfraestructurasHangarGUI(manager, GestorGUI.this, gestor);
+						break;
+						
+					case "Finger":
+						setVisible(true);
+						new GestionInfraestructurasFingerGUI(manager, GestorGUI.this, gestor);
+						break;
+						
+					case "Zona de aparcamiento":
+						setVisible(true);
+						new GestionInfraestructurasZonaAparcamientoGUI(manager, GestorGUI.this, gestor);
+						break;
+						
+					case "Pista de despegue":
+						setVisible(true);
+						new GestionInfraestructuraPistaDespegueGUI(manager, GestorGUI.this, gestor);
+						break;
+						
+					case "Pista de aterrizaje":
+						setVisible(true);
+						new GestionInfraestructuraPistaAterrizajeGUI(manager, GestorGUI.this, gestor);
+						break;
+						
+					case "Aerolínea":
+						setVisible(true);
+						new GestionInfraestructuraAerolineaGUI(manager, GestorGUI.this, gestor);
+						break;
+						
+					case "Aeropuerto de destino":
+						setVisible(true);
+						new GestionInfraestructuraAeropuertoDestinoGUI(manager, GestorGUI.this, gestor);
+						break;
+						
+					default:
+						JOptionPane.showMessageDialog(null, 
+					            "Por favor, selecciona la infraestructura que desea gestionar.", 
+					            "Campos vacíos", 
+					            JOptionPane.WARNING_MESSAGE);
+						return;
+						
+					
+				}
+				
+			}
+        	
+        });
+
+        JButton botonConfiguracionAeropuerto = new JButton("Configuración del aeropuerto");
+        panelDerecho.add(botonConfiguracionAeropuerto);
+        botonConfiguracionAeropuerto.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(true);
+                new ConfiguracionAeropuertoGUI(manager, GestorGUI.this, gestor);
+            }
+        });
+
+        JPanel subPanelUsuarios = new JPanel(new GridLayout(1, 2, 10, 10));
+        JButton botonGestionUsuarios = new JButton("Gestión usuarios");
+        subPanelUsuarios.add(botonGestionUsuarios);
+        
+        String[] usuarios = {"Controlador", "Operador de la aerolínea"};
+        comboUsuarios = new JComboBox<>(usuarios);
+        comboUsuarios.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				usuarioSeleccionado = (String) comboUsuarios.getSelectedItem();
+			}
+		});
+        subPanelUsuarios.add(comboUsuarios);
+        subPanelUsuarios.setBackground(ConfiguracionUI.COLOR_FONDO);
+        panelDerecho.add(subPanelUsuarios);
+        botonGestionUsuarios.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				if (usuarioSeleccionado == null) {
+					JOptionPane.showMessageDialog(null, 
+				            "Por favor, selecciona el usuario que desea gestionar.", 
+				            "Campos vacíos", 
+				            JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				
+				switch(usuarioSeleccionado) {
+				
+					case "Controlador": 
+						setVisible(true);
+						new GestionUsuariosControladorGUI(manager, GestorGUI.this, gestor);
+						break;
+						
+					case "Operador de la aerolínea":
+						setVisible(true);
+						new GestionUsuariosOperadorGUI(manager, GestorGUI.this, gestor);
+						break;
+						
+					default:
+						JOptionPane.showMessageDialog(null, 
+					            "Por favor, selecciona el usuario que desea gestionar.", 
+					            "Campos vacíos", 
+					            JOptionPane.WARNING_MESSAGE);
+						return;
+					
+				}	
+			}
+        	
+        });
+		
+        JButton botonEstadisticas = new JButton("Estadísticas de la infraestructura");
+        panelDerecho.add(botonEstadisticas);
+        botonEstadisticas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(true);
+                new EstadisticasGestorGUI(manager, GestorGUI.this, gestor);
+            }
+        });
+
         JButton botonGestionVuelos = new JButton("Gestión de vuelos");
         panelDerecho.add(botonGestionVuelos);
         botonGestionVuelos.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				setVisible(true);
-				new GestionVueloGUI(manager, GestorGUI.this, gestor);
-				
-			}      	
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(true);
+                new GestionVueloGUI(manager, GestorGUI.this, gestor);
+            }
         });
-        
+
         JButton botonGestionFacturas = new JButton("Gestión de facturas");
         panelDerecho.add(botonGestionFacturas);
-        
+        botonGestionFacturas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(true);
+                new GestionFacturasGUI(manager, GestorGUI.this, gestor);
+            }
+        });
+
         JButton botonVuelosAceptados = new JButton("Ver vuelos aceptados");
         panelDerecho.add(botonVuelosAceptados);
         botonVuelosAceptados.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				setVisible(true);
-				new VuelosAceptadosGUI(manager, GestorGUI.this, gestor);
-				
-			}      	
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(true);
+                new VuelosAceptadosGUI(manager, GestorGUI.this, gestor);
+            }
         });
         panelDerecho.add(Box.createVerticalStrut(10));
 
@@ -188,19 +320,20 @@ public class GestorGUI extends JFrame {
         /** Visible */
         setVisible(true);
     }
-    private void actualizarLista() {
-	    modeloLista.clear();
-	    List<Vuelo> vuelos = AeManager.getAeropuerto().getVuelosAceptados();
-	    LocalDate fecha = LocalDate.now();
 
-	    if (vuelos.isEmpty()) {
-	        modeloLista.addElement("No hay vuelos programados.");
-	        return;
-	    }
-        for (Vuelo v : vuelos) {
-        	if (v.getFecha().equals(fecha)) {
-        		modeloLista.addElement("Vuelo: "+v+" | Hora: "+v.getHora()+" | Estado: "+ v.getEstado());
-        	}
+    private void actualizarLista() {
+        modeloLista.clear();
+        List<Vuelo> vuelos = AeManager.getAeropuerto().getVuelosAceptados();
+        LocalDate fecha = LocalDate.now();
+
+        if (vuelos.isEmpty()) {
+            modeloLista.addElement("No hay vuelos programados.");
+            return;
         }
-	}
+        for (Vuelo v : vuelos) {
+            if (v.getFecha().equals(fecha)) {
+                modeloLista.addElement("Vuelo: " + v + " | Hora: " + v.getHora() + " | Estado: " + v.getEstado());
+            }
+        }
+    }
 }
