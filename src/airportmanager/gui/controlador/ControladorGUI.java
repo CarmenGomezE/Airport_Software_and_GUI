@@ -10,6 +10,9 @@ import java.util.List;
 
 import src.airportmanager.AirportManager;
 import src.airportmanager.gui.ConfiguracionUI;
+import src.airportmanager.gui.operador.GestionEstadoVueloGUI;
+import src.airportmanager.gui.operador.NotificacionesOperadorGUI;
+import src.airportmanager.gui.operador.OperadorGUI;
 import src.airportmanager.usuario.ControladorAereo;
 import src.airportmanager.vuelo.Vuelo;
 
@@ -21,8 +24,8 @@ public class ControladorGUI extends JFrame {
 	private AirportManager AeManager;
 
     public ControladorGUI(AirportManager manager, ControladorAereo controlador) {
-    	this.controladorAereo=controlador;
-    	this.AeManager=manager;
+    	this.controladorAereo = controlador;
+    	this.AeManager = manager;
     	
         setTitle("Panel de Controlador");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -41,7 +44,7 @@ public class ControladorGUI extends JFrame {
         panelIzquierdo.setPreferredSize(new Dimension(500, 600));
         panelIzquierdo.setBackground(ConfiguracionUI.COLOR_FONDO);
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");
         String formattedDate = LocalDate.now().format(formatter);
 
         /** Titulo de la lista de vuelos */
@@ -94,7 +97,16 @@ public class ControladorGUI extends JFrame {
 
         /** Botones */
         JPanel subPanelBotones = new JPanel(new GridLayout(1, 2, 10, 10));
-        subPanelBotones.add(new JButton("🔔 Notificaciones"));
+        JButton botonNotificaciones = new JButton("🔔 Notificaciones");
+        subPanelBotones.add(botonNotificaciones);
+        botonNotificaciones.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	setVisible(false);
+                new NotificacionesControladorGUI(manager, ControladorGUI.this, controladorAereo);
+            }
+        });
+        
         JButton botonCerrarSesion = new JButton("Cerrar sesión");
         subPanelBotones.add(botonCerrarSesion);
         botonCerrarSesion.addActionListener(new ActionListener() {
@@ -114,7 +126,16 @@ public class ControladorGUI extends JFrame {
         subPanelBotones.setBackground(ConfiguracionUI.COLOR_FONDO);
         panelDerecho.add(subPanelBotones);
 
-        panelDerecho.add(new JButton("Gestión de estados de los vuelos"));
+        JButton botonGestionEstadoVuelo = new JButton("Gestión de estados de los vuelos");
+        panelDerecho.add(botonGestionEstadoVuelo);
+        botonGestionEstadoVuelo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	setVisible(false);
+                new src.airportmanager.gui.controlador.GestionEstadoVueloGUI(manager, ControladorGUI.this, controladorAereo);
+            }
+        });
+        
         panelDerecho.add(Box.createVerticalStrut(10));
 
         /** Añadir al panel principal */
