@@ -1055,4 +1055,19 @@ public class Gestor extends Usuario {
 		return vueloBuscado;
 	}
 
+	public Aerolinea buscarAerolineaPorNombre(String nombreAerolinea) {
+		
+		Aerolinea aerolinea = null;
+		
+		for (Aerolinea a : getAeropuerto().getAerolineas()) {
+			if (a.getNombre().equals(nombreAerolinea)) {
+				aerolinea = a;
+				break;
+			}
+		}
+		
+		return aerolinea;
+	
+	}
+
 }
