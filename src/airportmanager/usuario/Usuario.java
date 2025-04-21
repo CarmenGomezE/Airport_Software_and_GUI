@@ -172,7 +172,7 @@ public abstract class Usuario implements Serializable {
      * @param criterio Criterio de búsqueda.
      * @param valor    Valor del criterio.
      */
-    public void buscarVuelo(CriterioBusqueda criterio, String valor) {
+    public List<Vuelo> buscarVuelo(CriterioBusqueda criterio, String valor) {
         List<Vuelo> vuelosEncontrados = new ArrayList<>();
 
         switch (criterio) {
@@ -201,25 +201,7 @@ public abstract class Usuario implements Serializable {
                 throw new IllegalArgumentException("El criterio de búsqueda debe ser válido.");
         }
 
-        System.out.printf("BÚSQUEDA DE VUELOS SEGÚN EL CRITERIO %s\n", criterio);
-
-        if (vuelosEncontrados.isEmpty()) {
-            System.out.println("No se encontraron vuelos con el criterio de búsqueda especificado.");
-            return;
-        }
-
-        String formato = "| %-19s | %-16s |\n";
-        
-        System.out.println("+---------------------+------------------+");
-        System.out.printf(formato, "Código de Vuelo", "Estado del Vuelo");
-        System.out.println("+---------------------+------------------+");
-
-        for (Vuelo v : vuelosEncontrados) {
-            System.out.printf(formato, v.getCodigo(), v.getEstado());
-        }
-
-        System.out.println("+---------------------+------------------+");
-        System.out.println("+---------------------+------------------+");
+        return vuelosEncontrados;
     }
 
     private List<Vuelo> buscarVueloPorCodigo(String codigo) {

@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 import src.airportmanager.AirportManager;
 import src.airportmanager.gui.ConfiguracionUI;
 import src.airportmanager.usuario.ControladorAereo;
+import src.airportmanager.usuario.CriterioBusqueda;
 import src.airportmanager.vuelo.EstadoVuelo;
 import src.airportmanager.vuelo.Vuelo;
 
@@ -87,7 +88,7 @@ public class GestionEstadoVueloGUI extends JFrame {
         panel.add(labelEstado);
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-        String[] estados = {"Esperando despegue", "Esperando pista de despegue", "Esperando pista de aterrizaje", "Esperando aterrizaje", "Aterrizaje", "Avión a hangar", "Operativo"};
+        String[] estados = {"Esperando despegue", "Esperando pista de despegue", "Esperando pista de aterrizaje", "Esperando aterrizaje", "Aterrizaje", "Avión al  hangar", "Operativo"};
         JComboBox<String> comboEstados = new JComboBox<>(estados);
         comboEstados.setMaximumSize(new Dimension(Integer.MAX_VALUE, 35));
         comboEstados.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -119,7 +120,7 @@ public class GestionEstadoVueloGUI extends JFrame {
 
                 EstadoVuelo nuevoEstado = null;
                 try {
-                    nuevoEstado = EstadoVuelo.valueOf(estadoSeleccionado.toUpperCase().replace(' ', '_'));
+                    nuevoEstado = convertirTextoAEstadoVuelo(estadoSeleccionado);
                 } catch (IllegalArgumentException ex) {
                     JOptionPane.showMessageDialog(null, "Estado no válido seleccionado.", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
@@ -137,4 +138,17 @@ public class GestionEstadoVueloGUI extends JFrame {
         /** Visible */
         setVisible(true);
 	}
+	
+	private EstadoVuelo convertirTextoAEstadoVuelo(String texto) {
+        switch (texto) {
+            case "Esperando despegue": return EstadoVuelo.ESPERANDO_DESPEGUE;
+            case "Esperando pista de despegue": return EstadoVuelo.ESPERANDO_PISTA_DE_DESPEGUE;
+            case "Esperando pista de aterrizaje": return EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE;
+            case "Esperando aterrizaje": return EstadoVuelo.ESPERANDO_ATERRIZAJE;
+            case "Aterrizaje": return EstadoVuelo.ATERRIZAJE;
+            case "Avión al hangar": return EstadoVuelo.AVION_A_HANGAR;
+            case "Operativo": return EstadoVuelo.OPERATIVO;
+            default: throw new IllegalArgumentException("Criterio no válido: " + texto);
+        }
+    }
 }
