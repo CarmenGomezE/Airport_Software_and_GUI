@@ -150,7 +150,7 @@ public class AirportManager implements Serializable {
      * @param v                             Vuelo al que actualizar sus estados.
      */
 	public void actualizarEstadoVueloAutomatico(Vuelo v) {
-		LocalDateTime ahora = LocalDateTime.now();
+		LocalDateTime ahora = LocalDateTime.now(); 
 		LocalDateTime horaVuelo = LocalDateTime.of(LocalDate.now(), v.getHora()); 
 
 		if (v.getTipoVuelo() == TipoVuelo.LLEGADA) {
@@ -211,7 +211,7 @@ public class AirportManager implements Serializable {
         TimerTask tarea = new TimerTask(){
             @Override
             public void run() {
-                if (LocalTime.now().isAfter(v.getHora().minus(Duration.ofMinutes(41).minusSeconds(58)))) {
+                if (LocalTime.now().isAfter(v.getHora())) {
                     timer.cancel();
                     System.out.println("El vuelo ha alcanzado el estado VUELO o ATERRIZAJE, deteniendo las actualizaciones.");
                     return;
@@ -219,7 +219,7 @@ public class AirportManager implements Serializable {
                 actualizarEstadoVueloAutomatico(v);
             }
         };
-        timer.scheduleAtFixedRate(tarea, 0, 5 * 60 * 1000);
+        timer.scheduleAtFixedRate(tarea, 0,5 * 60 * 1000);
     }
 
      /**

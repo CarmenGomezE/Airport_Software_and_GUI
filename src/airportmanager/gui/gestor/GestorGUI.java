@@ -4,11 +4,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import src.airportmanager.AirportManager;
+import src.airportmanager.gui.AirportManagerGUI;
 import src.airportmanager.gui.ConfiguracionUI;
 import src.airportmanager.usuario.Gestor;
 import src.airportmanager.vuelo.Vuelo;
@@ -25,15 +28,22 @@ public class GestorGUI extends JFrame {
     private String infraestructuraSeleccionada;
 
 
-    public GestorGUI(AirportManager manager, Gestor gestor) {
+    public GestorGUI(AirportManagerGUI AirportGUI, AirportManager manager, Gestor gestor) {
         this.AeGestor = gestor;
         this.AeManager = manager;
 
         setTitle("Panel de Gestor");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setResizable(false);
         setLocationRelativeTo(null);
+        
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+            	AirportGUI.setVisible(true);
+            }
+        });
 
         /** PANEL PRINCIPAL */
         JPanel panel = new JPanel(new BorderLayout(10, 10));
@@ -117,7 +127,7 @@ public class GestorGUI extends JFrame {
 
                 if (opcion == JOptionPane.YES_OPTION) {
                     dispose();
-                    System.exit(0);
+                    AirportGUI.setVisible(true);
                 }
             }
         });

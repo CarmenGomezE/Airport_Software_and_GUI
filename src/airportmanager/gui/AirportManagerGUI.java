@@ -173,7 +173,7 @@ public class AirportManagerGUI extends JFrame {
                                 Gestor gestor = airportManager.getGestor();
                                 gestor.iniciarSesion(passwordStr);
                                 dispose();
-                                new GestorGUI(manager,gestor);
+                                new GestorGUI(AirportManagerGUI.this,manager,gestor);
                                 break;
 
                             case "Controlador aéreo":
@@ -181,14 +181,14 @@ public class AirportManagerGUI extends JFrame {
                                         .buscarUsuarioPorDni(dni);
                                 controlador.iniciarSesion(dni, passwordStr);
                                 dispose();
-                                new ControladorGUI(manager, controlador);
+                                new ControladorGUI(AirportManagerGUI.this,manager, controlador);
                                 break;
 
                             case "Operador de aerolínea":
                                 Operador operador = (Operador) airportManager.getGestor().buscarUsuarioPorDni(dni);
                                 operador.iniciarSesion(dni, passwordStr);
                                 dispose();
-                                new OperadorGUI(manager, operador);
+                                new OperadorGUI(AirportManagerGUI.this, manager, operador);
                                 break;
 
                             default:
@@ -199,7 +199,7 @@ public class AirportManagerGUI extends JFrame {
                     JOptionPane.showMessageDialog(AirportManagerGUI.this, "Error: " + ex.getMessage(), "Error",
                             JOptionPane.ERROR_MESSAGE);
                 }
-            }
+            } 
         });
 
         panel.add(panelIzquierdo, BorderLayout.WEST);

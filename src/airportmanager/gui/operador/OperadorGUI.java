@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import src.airportmanager.AirportManager;
+import src.airportmanager.gui.AirportManagerGUI;
 import src.airportmanager.gui.ConfiguracionUI;
 import src.airportmanager.usuario.Operador;
 import src.airportmanager.vuelo.Vuelo;
@@ -26,14 +27,21 @@ public class OperadorGUI extends JFrame {
 	private JList<String> listaVuelos;
 	private AirportManager AeManager;
 
-    public OperadorGUI(AirportManager manager, Operador operador) {
+    public OperadorGUI(AirportManagerGUI AirportGUI, AirportManager manager, Operador operador) {
     	operadorAerolinea= operador;
     	AeManager=manager;
         setTitle("Panel de Operador");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setResizable(false);
         setLocationRelativeTo(null);
+        
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+            	AirportGUI.setVisible(true);
+            }
+        });
 
         /** PANEL PRINCIPAL */
         JPanel panel = new JPanel(new BorderLayout(10, 10));
@@ -121,7 +129,7 @@ public class OperadorGUI extends JFrame {
 
                 if (opcion == JOptionPane.YES_OPTION) {
                     dispose();
-                    System.exit(0);
+                    AirportGUI.setVisible(true);
                 }
             }
         });

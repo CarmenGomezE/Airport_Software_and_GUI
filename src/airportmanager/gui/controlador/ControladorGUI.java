@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -11,10 +13,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import src.airportmanager.AirportManager;
+import src.airportmanager.gui.AirportManagerGUI;
 import src.airportmanager.gui.ConfiguracionUI;
-import src.airportmanager.gui.operador.GestionEstadoVueloGUI;
-import src.airportmanager.gui.operador.NotificacionesOperadorGUI;
-import src.airportmanager.gui.operador.OperadorGUI;
 import src.airportmanager.usuario.ControladorAereo;
 import src.airportmanager.vuelo.EstadoVuelo;
 import src.airportmanager.vuelo.Vuelo;
@@ -26,15 +26,22 @@ public class ControladorGUI extends JFrame {
 	private JList<String> listaVuelos;
 	private AirportManager AeManager;
 
-    public ControladorGUI(AirportManager manager, ControladorAereo controlador) {
+    public ControladorGUI(AirportManagerGUI AirportGUI, AirportManager manager, ControladorAereo controlador) {
     	this.controladorAereo = controlador;
     	this.AeManager = manager;
     	
         setTitle("Panel de Controlador");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setResizable(false);
         setLocationRelativeTo(null);
+        
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+            	AirportGUI.setVisible(true);
+            }
+        });
 
         /** PANEL PRINCIPAL */
         JPanel panel = new JPanel(new BorderLayout(10, 10));
@@ -122,7 +129,7 @@ public class ControladorGUI extends JFrame {
 
                 if (opcion == JOptionPane.YES_OPTION) {
                     dispose();
-                    System.exit(0);
+                    AirportGUI.setVisible(true);
                 }
             }
         });
