@@ -1070,4 +1070,16 @@ public class Gestor extends Usuario {
 	
 	}
 
+	public Terminal buscarTerminalPorCodigo (String codigo) {
+		Terminal terminal = null;
+		for (Terminal t: getAeropuerto().getTerminales()) {
+			if (t.getCodigo().equals(codigo)) {
+				terminal = t;
+				break;
+			}
+		}
+		
+		return terminal;
+	}
+
 }
