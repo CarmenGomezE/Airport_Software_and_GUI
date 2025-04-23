@@ -67,6 +67,26 @@ public class ControladorGUI extends JFrame {
         actualizarLista();
         
         listaVuelos = new JList<>(modeloLista);
+        listaVuelos.setCellRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index,
+                                                          boolean isSelected, boolean cellHasFocus) {
+                JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                String texto = value.toString();
+
+                if (texto.contains("Esperando pista durante más de 10 min")) {
+                    label.setForeground(Color.RED);
+                } else if (texto.contains("Retrasado")) {
+                    label.setForeground(Color.ORANGE);
+                } else if (texto.contains("Salida en menos de 1 hora")) {
+                    label.setForeground(Color.BLUE);
+                } else {
+                    label.setForeground(Color.BLACK);
+                }
+
+                return label;
+            }
+        });
         JScrollPane scrollPane = new JScrollPane(listaVuelos);
         panelIzquierdo.add(scrollPane, BorderLayout.CENTER);
 
