@@ -1081,5 +1081,17 @@ public class Gestor extends Usuario {
 		
 		return terminal;
 	}
+	
+	public PuertaEmbarque obtenerPuertaEmbarquePorId(int id) {
+		PuertaEmbarque puerta = null;
+		for (PuertaEmbarque p: getAeropuerto().getPuertasEmbarque()) {
+			if (p.getId() == id) {
+				puerta = p;
+				break;
+			}
+		}
+		
+		return puerta;
+	}
 
 }
