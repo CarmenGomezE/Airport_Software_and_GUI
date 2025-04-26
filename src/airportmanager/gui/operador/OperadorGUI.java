@@ -4,7 +4,9 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -12,6 +14,7 @@ import src.airportmanager.AirportManager;
 import src.airportmanager.gui.AirportManagerGUI;
 import src.airportmanager.gui.ConfiguracionUI;
 import src.airportmanager.usuario.Operador;
+import src.airportmanager.vuelo.EstadoVuelo;
 import src.airportmanager.vuelo.Vuelo;
 
 /**
@@ -67,6 +70,26 @@ public class OperadorGUI extends JFrame {
         actualizarLista();
         
         listaVuelos = new JList<>(modeloLista);
+        listaVuelos.setCellRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index,
+                                                          boolean isSelected, boolean cellHasFocus) {
+                JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                String texto = value.toString();
+
+                if (texto.contains("Esperando pista durante más de 10 min")) {
+                    label.setForeground(Color.RED);
+                } else if (texto.contains("Retrasado")) {
+                    label.setForeground(Color.ORANGE);
+                } else if (texto.contains("Salida en menos de 1 hora")) {
+                    label.setForeground(Color.BLUE);
+                } else {
+                    label.setForeground(Color.BLACK);
+                }
+
+                return label;
+            }
+        });
         JScrollPane scrollPane = new JScrollPane(listaVuelos);
         panelIzquierdo.add(scrollPane, BorderLayout.CENTER);
 
@@ -225,6 +248,7 @@ public class OperadorGUI extends JFrame {
         /** Visible */
         setVisible(true);
     }
+    
     private void actualizarLista() {
 	    modeloLista.clear();
 	    List<Vuelo> vuelos = AeManager.getAeropuerto().getVuelosAceptados();
@@ -234,10 +258,25 @@ public class OperadorGUI extends JFrame {
 	        modeloLista.addElement("No hay vuelos programados.");
 	        return;
 	    }
+        
         for (Vuelo v : vuelos) {
-        	if (v.getFecha().equals(fecha)) {
-        		modeloLista.addElement("Vuelo: "+v+" | Hora: "+v.getHora()+" | Estado: "+ v.getEstado());
-        	}
+            if (v.getFecha().equals(fecha)) {
+            	if (v.getEstado().equals(EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE)) {
+            		Duration tiempo = Duration.between(v.getHistorialEstadoVuelo().getHoraCambio(EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE), LocalTime.now());
+            		if (tiempo.toMinutes() >= 10) {
+            			modeloLista.addElement("Vuelo: "+v+" | Hora: "+v.getHora()+" | Estado: "+ v.getEstado()+" | Esperando pista durante más de 10 min");
+            		}
+            	} else if (v.getEstado().equals(EstadoVuelo.RETRASADO)) {
+                	modeloLista.addElement("Vuelo: "+v+" | Hora: "+v.getHora()+" | Estado: "+ v.getEstado() +" | Retrasado");
+            	} else if (v.getEstado().equals(EstadoVuelo.OPERATIVO)) {
+            		Duration tiempo = Duration.between(LocalTime.now(), v.getHora());
+            		if (tiempo.toMinutes() <= 60) {
+            			modeloLista.addElement("Vuelo: "+v+" | Hora: "+v.getHora()+" | Estado: "+ v.getEstado()+" | Salida en menos de 1 hora");
+            		}
+            	} else {
+                	modeloLista.addElement("Vuelo: "+v+" | Hora: "+v.getHora()+" | Estado: "+ v.getEstado());
+                }
+            }  
         }
 	}
 

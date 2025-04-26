@@ -95,6 +95,11 @@ public class Gestor extends Usuario {
 
     }
     
+    /**
+     * Método para obtener el mensaje de la interfaz.
+     * 
+     * @return El mensaje de la interfaz.
+     */
     public String getMensajeGUI() {
     	return mensajeGUI;
     }

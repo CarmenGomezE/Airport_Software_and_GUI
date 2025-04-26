@@ -200,10 +200,10 @@ public class ControladorGUI extends JFrame {
             		if (tiempo.toMinutes() <= 60) {
             			modeloLista.addElement("Vuelo: "+v+" | Hora: "+v.getHora()+" | Estado: "+ v.getEstado()+" | Salida en menos de 1 hora");
             		}
-            	}
-            }  else {
-            	modeloLista.addElement("Vuelo: "+v+" | Hora: "+v.getHora()+" | Estado: "+ v.getEstado());
-            }
+            	} else {
+                	modeloLista.addElement("Vuelo: "+v+" | Hora: "+v.getHora()+" | Estado: "+ v.getEstado());
+                }
+            }  
         }
 	}
 }

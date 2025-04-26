@@ -43,6 +43,8 @@ public class ControladorAereo extends UsuarioConDni {
 	private static final long serialVersionUID = 1L;
     /** Temrinal del controlador aéreo */
     private Terminal terminal;
+    /** Mensaje de la interfaz. */
+    private String mensajeGUI;
 
     /**
      * Constructor de la clase ControladorAereo.
@@ -59,6 +61,7 @@ public class ControladorAereo extends UsuarioConDni {
             Terminal terminal, AirportManager sistema) {
         super(nombre, contrasena, dni, aeropuerto, gestor, sistema);
         this.terminal = terminal;
+        this.mensajeGUI = "";
     }
 
     /**
@@ -68,6 +71,15 @@ public class ControladorAereo extends UsuarioConDni {
      */
     public Terminal getTerminal() {
         return terminal;
+    }
+    
+    /**
+     * Método para obtener el mensaje de la interfaz.
+     * 
+     * @return El mensaje de la interfaz.
+     */
+    public String getMensajeGUI() {
+    	return mensajeGUI;
     }
 
     /**
@@ -186,6 +198,7 @@ public class ControladorAereo extends UsuarioConDni {
             asignarPuertaEmbarque(puerta, vueloNuevo);
             liberarModoEmbarque(vuelo);
             asignarModoEmbarque(modoActual, vueloNuevo);
+            mensajeGUI = "Se le han asignado la puerta de embarque " + puerta.getId() + " y el modo de embarque " + modoActual.getId() + " al vuelo " + vueloNuevo.getCodigo() + ".";
         } else {
             if (vueloNuevo.getTipoModoEmbarque() == TipoModoEmbarque.FINGER) {
         
@@ -194,6 +207,7 @@ public class ControladorAereo extends UsuarioConDni {
                     asignarPuertaEmbarque(puerta, vueloNuevo);
                     liberarModoEmbarque(vuelo);
                     asignarModoEmbarque(puerta.getFinger(), vueloNuevo);
+                    mensajeGUI = "Se le han asignado la puerta de embarque " + puerta.getId() + " y el modo de embarque " + puerta.getFinger().getId() + " al vuelo " + vueloNuevo.getCodigo() + ".";
         		}
 
                 
@@ -204,6 +218,7 @@ public class ControladorAereo extends UsuarioConDni {
                         asignarPuertaEmbarque(puerta, vueloNuevo);
                         liberarModoEmbarque(vuelo);
                         asignarModoEmbarque(z, vueloNuevo);
+                        mensajeGUI = "Se le han asignado la puerta de embarque " + puerta.getId() + " y el modo de embarque " + z.getId() + " al vuelo " + vueloNuevo.getCodigo() + ".";
                         break;
                     }
                 }
@@ -222,6 +237,7 @@ public class ControladorAereo extends UsuarioConDni {
                                     if (p.contieneZonaAparcamiento(z) && p.getVuelo() == null) {
                                         asignarModoEmbarque(z, vueloNuevo);
                                         asignarPuertaEmbarque(p, vueloNuevo);
+                                        mensajeGUI = "Se le han asignado la puerta de embarque " + p.getId() + " y el modo de embarque " + z.getId() + " al vuelo " + vueloNuevo.getCodigo() + ".";
                                         break;
                                     }
                                 }
@@ -257,6 +273,7 @@ public class ControladorAereo extends UsuarioConDni {
                                     if (p.contieneZonaAparcamiento(z) && p.getVuelo() == null) {
                                         asignarModoEmbarque(z, vueloNuevo);
                                         asignarPuertaEmbarque(p, vueloNuevo);
+                                        mensajeGUI = "Se le han asignado la puerta de embarque " + p.getId() + " y el modo de embarque " + z.getId() + " al vuelo " + vueloNuevo.getCodigo() + ".";
                                         break;
                                     }
                                 }
@@ -452,6 +469,7 @@ public class ControladorAereo extends UsuarioConDni {
                             if (p.contieneZonaAparcamiento(z) && p.getVuelo() == null) {
                                 asignarModoEmbarque(z, vuelo);
                                 asignarPuertaEmbarque(p, vuelo);
+                                mensajeGUI = "Se le han asignado la pista " + pista.getCodigo() + ", la puerta de embarque " + p.getId() + " y el modo de embarque " + z.getId() + " al vuelo " + vuelo.getCodigo() + ".";
                                 break;
                             }
 		                }
@@ -470,6 +488,7 @@ public class ControladorAereo extends UsuarioConDni {
         	            if (p.getVuelo() == null) {
         	                asignarModoEmbarque(f, vuelo);
         	                asignarPuertaEmbarque(p, vuelo);
+                            mensajeGUI = "Se le han asignado la pista " + pista.getCodigo() + ", la puerta de embarque " + p.getId() + " y el modo de embarque " + f.getId() + " al vuelo " + vuelo.getCodigo() + ".";
         	                break;  
         	            }
         	        }
@@ -485,6 +504,7 @@ public class ControladorAereo extends UsuarioConDni {
                             if (p.contieneZonaAparcamiento(z) && p.getVuelo() == null) {
                                 asignarModoEmbarque(z, vuelo);
                                 asignarPuertaEmbarque(p, vuelo);
+                                mensajeGUI = "Se le han asignado la pista " + pista.getCodigo() + ", la puerta de embarque " + p.getId() + " y el modo de embarque " + z.getId() + " al vuelo " + vuelo.getCodigo() + ".";
                                 break;
                             }
                         }
@@ -560,6 +580,7 @@ public class ControladorAereo extends UsuarioConDni {
         if (vuelo.getPista() == null) {
             throw new NoPistasDisponiblesException("No hay pistas disponibles");
         }
+        mensajeGUI = "Se le ha asignado la pista " + pista.getCodigo() + " al vuelo " + vuelo.getCodigo() + ".";
         
         vuelo.cambiarEstado(EstadoVuelo.ESPERANDO_DESPEGUE);
         
