@@ -156,9 +156,17 @@ public class AirportManagerMain {
     	System.out.println("\nIniciando el proceso de alta de aerolíneas y operadores.");
     	/** Aerolinea y operador*/
     	System.out.println("Dando de alta la aerolínea Iberia con código IBE.");
-    	airportManager.getGestor().darDeAltaAerolinea("Iberia", "IBE");
+    	try {
+			airportManager.getGestor().darDeAltaAerolinea("Iberia", "IBE");
+		} catch (AerolineaYaExisteException e) {
+			System.err.println("Error al dar de alta aerolinea: " + e.getMessage());
+		}
     	System.out.println("Dando de alta el operador Francisco Gonzalez para la aerolínea Iberia.");
-    	airportManager.getGestor().darDeAltaOperador("Francisco Gonzalez", "12345678A", airportManager.getAeropuerto().getAerolineas().get(0));
+    	try {
+			airportManager.getGestor().darDeAltaOperador("Francisco Gonzalez", "12345678A", airportManager.getAeropuerto().getAerolineas().get(0));
+		} catch (UsuarioYaExisteException e) {
+			System.err.println("Error al dar de alta operador: " + e.getMessage());
+		}
     	
     	Operador operadorIberia= airportManager.getAeropuerto().getAerolineas().get(0).getOperador();
     	/** Aviones*/
@@ -174,9 +182,17 @@ public class AirportManagerMain {
 
     	/** Aerolinea y operador*/
     	System.out.println("Dando de alta la aerolínea Air France con código AFR.");
-    	airportManager.getGestor().darDeAltaAerolinea("Air France", "AFR");
+    	try {
+			airportManager.getGestor().darDeAltaAerolinea("Air France", "AFR");
+		} catch (AerolineaYaExisteException e) {
+			System.err.println("Error al dar de alta aerolinea: " + e.getMessage());
+		}
     	System.out.println("Dando de alta el operador Danielle Abbadie para la aerolínea Air France.");
-    	airportManager.getGestor().darDeAltaOperador("Danielle Abbadie", "87654321B", airportManager.getAeropuerto().getAerolineas().get(1));
+    	try {
+			airportManager.getGestor().darDeAltaOperador("Danielle Abbadie", "87654321B", airportManager.getAeropuerto().getAerolineas().get(1));
+		} catch (UsuarioYaExisteException e) {
+			System.err.println("Error al dar de alta operador: " + e.getMessage());
+		}
     	
     	Operador operadorAirFrance= airportManager.getAeropuerto().getAerolineas().get(1).getOperador();
     	/** Aviones*/
@@ -206,9 +222,17 @@ public class AirportManagerMain {
     	System.out.println("Puertas de embarque para T1: " + puertasT1.size() + " y para T2: " + puertasT2.size());
 
     	/** Terminales */
-    	airportManager.getGestor().darDeAltaTerminal("T1", "Pasajeros", 500, puertasT1);
+    	try {
+			airportManager.getGestor().darDeAltaTerminal("T1", "Pasajeros", 500, puertasT1);
+		} catch (TerminalYaExisteException e) {
+			System.err.println("Error al dar de alta terminal: " + e.getMessage());
+		}
     	Terminal terminalT1= airportManager.getAeropuerto().getTerminales().get(0);
-    	airportManager.getGestor().darDeAltaTerminal("T2", "Mercancías", 500, puertasT2);
+    	try {
+			airportManager.getGestor().darDeAltaTerminal("T2", "Mercancías", 500, puertasT2);
+		} catch (TerminalYaExisteException e) {
+			System.err.println("Error al dar de alta terminal: " + e.getMessage());
+		}
     	Terminal terminalT2=airportManager.getAeropuerto().getTerminales().get(1);
     	System.out.println("Dadas de alta Terminal T1 (Pasajeros) y Terminal T2 (Mercancías).");
     	
@@ -223,11 +247,31 @@ public class AirportManagerMain {
 
     	/** Controladores */
     	System.out.println("Dando de alta los controladores para las terminales:");
-    	airportManager.getGestor().darDeAltaControlador("Ana Gómez", "123456789L", terminalT1);
-    	airportManager.getGestor().darDeAltaControlador("Victoria Ramirez", "123356789C", terminalT1);
-    	airportManager.getGestor().darDeAltaControlador("Alfonso Ruiz", "123456239T", terminalT2);
-    	airportManager.getGestor().darDeAltaControlador("Charles Green", "174456789F", terminalT2);
-    	airportManager.getGestor().darDeAltaControlador("Marta Sanz", "123126789K", terminalT2);
+    	try {
+			airportManager.getGestor().darDeAltaControlador("Ana Gómez", "123456789L", terminalT1);
+		} catch (UsuarioYaExisteException e) {
+			System.err.println("Error al dar de alta controlador: " + e.getMessage());
+		}
+    	try {
+			airportManager.getGestor().darDeAltaControlador("Victoria Ramirez", "123356789C", terminalT1);
+		} catch (UsuarioYaExisteException e) {
+			System.err.println("Error al dar de alta controlador: " + e.getMessage());
+		}
+    	try {
+			airportManager.getGestor().darDeAltaControlador("Alfonso Ruiz", "123456239T", terminalT2);
+		} catch (UsuarioYaExisteException e) {
+			System.err.println("Error al dar de alta controlador: " + e.getMessage());
+		}
+    	try {
+			airportManager.getGestor().darDeAltaControlador("Charles Green", "174456789F", terminalT2);
+		} catch (UsuarioYaExisteException e) {
+			System.err.println("Error al dar de alta controlador: " + e.getMessage());
+		}
+    	try {
+			airportManager.getGestor().darDeAltaControlador("Marta Sanz", "123126789K", terminalT2);
+		} catch (UsuarioYaExisteException e) {
+			System.err.println("Error al dar de alta controlador: " + e.getMessage());
+		}
     	System.out.println("Controladores Ana Gómez y Victoria Ramirez dados de alta para la Terminal T1.");
     	System.out.println("Controladores Alfonso Ruiz, Charles Green y Marta Sanz dados de alta para la Terminal T2.");
 
@@ -288,8 +332,16 @@ public class AirportManagerMain {
 
     	/** Pistas */
     	System.out.println("Dando de alta las pistas de aterrizaje y despegue.");
-    	airportManager.getGestor().darDeAltaPista("P1", 3000, TipoPista.ATERRIZAJE);
-    	airportManager.getGestor().darDeAltaPista("P2", 3000, TipoPista.DESPEGUE);
+    	try {
+			airportManager.getGestor().darDeAltaPista("P1", 3000, TipoPista.ATERRIZAJE);
+		} catch (PistaYaExisteException e) {
+			System.err.println("Error:al dar de alta pista: " + e.getMessage());
+		}
+    	try {
+			airportManager.getGestor().darDeAltaPista("P2", 3000, TipoPista.DESPEGUE);
+		} catch (PistaYaExisteException e) {
+			System.err.println("Error al dar de alta pista: " + e.getMessage());
+		}
     	System.out.println("Pistas de aterrizaje y despegue dadas de alta.");
     	System.out.println("Proceso de alta de infraestructura del aeropuerto completado.");
         
@@ -300,7 +352,9 @@ public class AirportManagerMain {
     	    System.out.println("Aeropuerto destino dado de alta correctamente. Nombre del nuevo aeropuerto: "+airportManager.getAeropuerto().getAeropuertosDestino().getLast().getNombre());
     	} catch (IOException | TemporadasSolapadasException e) {
     	    System.err.println("Error al dar de alta aeropuerto destino: " + e.getMessage());
-    	}
+    	} catch (AeropuertoYaExisteException e) {
+    		System.err.println("Error al dar de alta aeropuerto destino: " + e.getMessage());
+		}
     	
     	System.out.println("Proceso de alta de aeropuertos de destino completado.");
     }
@@ -524,8 +578,16 @@ public class AirportManagerMain {
 	private static void compartirVuelosProgramados() {
 		Operador operadorIberia=(Operador)airportManager.getGestor().buscarUsuarioPorDni("12345678A");
     	Operador operadorAirFrance=(Operador)airportManager.getGestor().buscarUsuarioPorDni("87654321B");
-    	airportManager.getGestor().darDeAltaAerolinea("Ryanair", "FRK");
-    	airportManager.getGestor().darDeAltaOperador("Eustaquio Hernandez", "50738890L", airportManager.getAeropuerto().getAerolineas().get(2));
+    	try {
+			airportManager.getGestor().darDeAltaAerolinea("Ryanair", "FRK");
+		} catch (AerolineaYaExisteException e) {
+			System.err.println("Error al dar de alta aerolinea: " + e.getMessage());
+		}
+    	try {
+			airportManager.getGestor().darDeAltaOperador("Eustaquio Hernandez", "50738890L", airportManager.getAeropuerto().getAerolineas().get(2));
+		} catch (UsuarioYaExisteException e) {
+			System.err.println("Error al dar de alta operador: " + e.getMessage());
+		}
     	Operador operadorRyanair=airportManager.getAeropuerto().getAerolineas().get(2).getOperador();   
     	Vuelo vueloAFR2270= airportManager.getAeropuerto().getVuelosAceptados().get(6);
     	Vuelo vueloAFR7107=  airportManager.getAeropuerto().getVuelosAceptados().get(8);
@@ -742,8 +804,8 @@ public class AirportManagerMain {
 		ControladorAereo controladorT1= terminalT1.getControladores().get(0);
     	ControladorAereo controladorT2= terminalT2.getControladores().get(0);
     	
-    	Vuelo vueloFRK2234= airportManager.getAeropuerto().getVuelosAceptados().get(10);
-		Vuelo vueloFRK8103= airportManager.getAeropuerto().getVuelosAceptados().get(11);
+    	Vuelo vueloFRK2234= airportManager.getAeropuerto().getVuelosAceptados().get(9);
+		Vuelo vueloFRK8103= airportManager.getAeropuerto().getVuelosAceptados().get(10);
 		
 		System.out.println("\nIniciando el proceso de cambio de estados de vuelos.");
 		System.out.println("Comenzamos con los estados de un vuelo de salida:");
