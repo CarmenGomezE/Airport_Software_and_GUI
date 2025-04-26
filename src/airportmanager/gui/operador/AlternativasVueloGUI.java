@@ -143,7 +143,7 @@ public class AlternativasVueloGUI extends JFrame {
                     return;
                 }
 
-                Vuelo vuelo = manager.buscarVueloPorCodigo(codigo);
+                Vuelo vuelo = operador.buscarAlternativaPorCodigo(codigo);
                 if (vuelo == null) {
                     JOptionPane.showMessageDialog(AlternativasVueloGUI.this, "No se encontró ninguna alternativa con ese código.");
                     return;
@@ -169,7 +169,7 @@ public class AlternativasVueloGUI extends JFrame {
                     return;
                 }
 
-                Vuelo vuelo = manager.buscarVueloPorCodigo(codigo);
+                VueloProgramado vuelo = operador.buscarVueloProgramadoPorCodigo(codigo);
                 if (vuelo == null) {
                     JOptionPane.showMessageDialog(AlternativasVueloGUI.this, "No se encontró ninguna alternativa con ese código.");
                     return;

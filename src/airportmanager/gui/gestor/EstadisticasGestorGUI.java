@@ -26,7 +26,7 @@ public class EstadisticasGestorGUI extends JFrame{
 
 	public EstadisticasGestorGUI(AirportManager manager, GestorGUI gestorGUI, Gestor gestor) {
 		this.gestorGUI = gestorGUI;
-		this.gestor = gestor;
+		this.gestor = gestor; 
 		this.manager = manager;
 
 		setTitle("Panel de estadísticas del Gestor");

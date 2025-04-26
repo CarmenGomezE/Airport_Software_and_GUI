@@ -150,7 +150,7 @@ public class AirportManager implements Serializable {
      * @param v                             Vuelo al que actualizar sus estados.
      */
 	public void actualizarEstadoVueloAutomatico(Vuelo v) {
-		LocalDateTime ahora = LocalDateTime.now(); 
+		LocalDateTime ahora = LocalDateTime.now();  
 		LocalDateTime horaVuelo = LocalDateTime.of(LocalDate.now(), v.getHora()); 
 
 		if (v.getTipoVuelo() == TipoVuelo.LLEGADA) {

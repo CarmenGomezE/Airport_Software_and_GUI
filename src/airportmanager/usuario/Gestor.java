@@ -73,6 +73,8 @@ public class Gestor extends Usuario {
     private static double costeBaseVueloLlegada = 105.3;
     /** Tiempo que tiene el Operador para aceptar una propuesta de Vuelo. */
     private static int tiempoAceptarPropuesta = 1;
+    /** Número de alternativa */
+    private static int contadorAlternativa=0;
 
     /**
      * Constructor de la clase Gestor.
@@ -592,6 +594,15 @@ public class Gestor extends Usuario {
         }
     }
     
+    public List<Vuelo> getVuelosAceptadosMasAlternativas(VueloProgramado vuelo){
+    	List<Vuelo> vuelos= new ArrayList<>();
+    	vuelos.addAll(getAeropuerto().getVuelosAceptados());
+    	vuelos.addAll(getAeropuerto().getVuelosAceptados());
+    	vuelos.addAll(vuelo.getAvion().getAerolinea().getOperador().getTodasAlternativas());
+    	
+    	return vuelos;
+    }
+    
     /**
      * Método para gestionar vuelos.
      * 
@@ -599,7 +610,7 @@ public class Gestor extends Usuario {
      * 
      */
     public void gestionarVuelos(VueloProgramado vueloGestionar) {
-	    if (getAeropuerto().getVuelosAceptados().isEmpty()) {
+	    if (getVuelosAceptadosMasAlternativas(vueloGestionar).isEmpty()) {
 	        for (Terminal terminal : aeropuerto.getTerminales()) {
 	            if ((vueloGestionar.getTipoCarga() == TipoCarga.MERCANCIAS && terminal instanceof TerminalMercancias) ||
 	                (vueloGestionar.getTipoCarga() == TipoCarga.PASAJEROS && terminal instanceof TerminalPasajeros)) {
@@ -616,7 +627,7 @@ public class Gestor extends Usuario {
         Terminal terminalAsignada = null;
         ControladorAereo controladorAsignado = null;
         
-        for (Vuelo vueloAceptado : getAeropuerto().getVuelosAceptados()) {
+        for (Vuelo vueloAceptado : getVuelosAceptadosMasAlternativas(vueloGestionar)) {
             for (Terminal terminal : aeropuerto.getTerminales()) {
                 if ((vueloGestionar.getTipoCarga() == TipoCarga.MERCANCIAS && !(terminal instanceof TerminalMercancias)) ||
                     (vueloGestionar.getTipoCarga() == TipoCarga.PASAJEROS && !(terminal instanceof TerminalPasajeros))) {
@@ -629,8 +640,7 @@ public class Gestor extends Usuario {
                         terminal.equals(vueloAceptado.getTerminal()) &&
                         controlador.equals(vueloAceptado.getControlador())) {
 
-                        if (sePuedeMover(vueloGestionar, terminal, controlador)) {
-                        } else {
+                        if (!sePuedeMover(vueloGestionar, terminal, controlador)) {
                             List<Vuelo> alternativas = generarAlternativas(vueloGestionar, terminal, controlador);
                             vueloGestionar.getAvion().getAerolinea().getOperador().recibirAlternativas(vueloGestionar, alternativas);
                         }
@@ -727,7 +737,7 @@ public class Gestor extends Usuario {
         		nuevaFechaHora.toLocalTime(),vuelo.getDiasRecurrente(),vuelo.getTipoCarga(),vuelo.getTipoModoEmbarque(),vuelo.getPeriodicidad(),
                 vuelo.getTipoVuelo(),vuelo.getAvion(),vuelo.getAeropuertoDestino(),vuelo.getAeropuertoSalida(),vuelo.getEscala());
 
-        for (Vuelo vueloAceptado : getAeropuerto().getVuelosAceptados()) {
+        for (Vuelo vueloAceptado : getVuelosAceptadosMasAlternativas(vuelo)) {
             for (Terminal terminal : aeropuerto.getTerminales()) {
                 if ((vueloAlternativo.getTipoCarga() == TipoCarga.MERCANCIAS && !(terminal instanceof TerminalMercancias)) ||
                     (vueloAlternativo.getTipoCarga() == TipoCarga.PASAJEROS && !(terminal instanceof TerminalPasajeros))) {
@@ -761,6 +771,7 @@ public class Gestor extends Usuario {
         LocalDateTime fechaHoraLimite = fechaHoraOriginal.plusHours(Gestor.horasMaximasReprogramacion);
         List<Vuelo> alternativas = new ArrayList<>();
         int alternativasEncontradas = 0;
+        contadorAlternativa=0;
 
         /**Buscamos 5 alternativas máximo en periodos de 5 minutos*/
         for (LocalDateTime nuevaFechaHora = fechaHoraOriginal.plusMinutes(30); nuevaFechaHora.isBefore(fechaHoraLimite) && alternativasEncontradas < 5; 
@@ -794,7 +805,8 @@ public class Gestor extends Usuario {
      * 
      */
     private Vuelo crearVueloAlternativo(VueloProgramado vueloMover, LocalDateTime nuevaFechaHora) {
-        return new Vuelo( vueloMover.getCodigo(),nuevaFechaHora.toLocalDate(),vueloMover.getFechaInicio(),
+    	String codigo=vueloMover.getCodigo()+"A"+contadorAlternativa++;
+        return new Vuelo(codigo,nuevaFechaHora.toLocalDate(),vueloMover.getFechaInicio(),
                 vueloMover.getFechaFinal(),nuevaFechaHora.toLocalTime(),vueloMover.getDiasRecurrente(),vueloMover.getTipoCarga(),
                 vueloMover.getTipoModoEmbarque(), vueloMover.getPeriodicidad(), vueloMover.getTipoVuelo(),vueloMover.getAvion(), 
                 vueloMover.getAeropuertoDestino(), vueloMover.getAeropuertoSalida(),vueloMover.getEscala(), vueloMover.getAvion().getAerolinea().getOperador());
@@ -808,7 +820,7 @@ public class Gestor extends Usuario {
      * 
      */
     private boolean esAlternativaValida(VueloProgramado vueloAlternativo) {
-        for (Vuelo vueloAceptado : getAeropuerto().getVuelosAceptados()) {
+        for (Vuelo vueloAceptado : getVuelosAceptadosMasAlternativas(vueloAlternativo)) {
             for (Terminal terminal : aeropuerto.getTerminales()) {
                 if ((vueloAlternativo.getTipoCarga() == TipoCarga.MERCANCIAS && !(terminal instanceof TerminalMercancias)) ||
                     (vueloAlternativo.getTipoCarga() == TipoCarga.PASAJEROS && !(terminal instanceof TerminalPasajeros))) {

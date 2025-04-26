@@ -204,7 +204,7 @@ public abstract class Usuario implements Serializable {
         return vuelosEncontrados;
     }
 
-    private List<Vuelo> buscarVueloPorCodigo(String codigo) {
+    public List<Vuelo> buscarVueloPorCodigo(String codigo) {
         List<Vuelo> vuelosEncontrados = new ArrayList<>();
 
         for (Vuelo v : aeropuerto.getVuelosAceptados()) {

@@ -177,7 +177,7 @@ public class GestionVueloGUI extends JFrame{
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(GestionVueloGUI.this, "Error al gestionar: " + ex.getMessage());
                 }
-            }
+            } 
         });
 
         /** Añadir los paneles al principal */

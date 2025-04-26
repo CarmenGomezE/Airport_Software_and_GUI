@@ -50,7 +50,7 @@ public class EstadisticasGestor implements Serializable {
      * 
      */
     private void cargarDatosEstadisticas() {
-        for (Terminal terminal : gestor.getAeropuerto().getTerminales()) {
+        for (Terminal terminal : gestor.getAeropuerto().getTerminales()) { 
         	for (PuertaEmbarque puerta : terminal.getPuertasEmbarque()) {
         		Finger finger = puerta.getFinger();
     			horasUsoFinger.put(finger, finger.getHorasUso() / gestor.getAeropuerto().getHorasOperacion());

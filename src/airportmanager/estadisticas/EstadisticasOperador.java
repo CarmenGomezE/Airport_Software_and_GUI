@@ -82,7 +82,7 @@ public class EstadisticasOperador implements Serializable {
             for (ZoneId franja : retrasosPorFranjaHoraria.keySet()) {
                 tiempoMedioRetrasoPorFranjaHoraria.put(franja, calcularMedia(retrasosPorFranjaHoraria.get(franja)));
             }
-        }
+        } 
 
         if (!retrasosPorVuelo.isEmpty()) {
             for (Vuelo vuelo : retrasosPorVuelo.keySet()) {

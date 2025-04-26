@@ -25,6 +25,7 @@ import src.airportmanager.vuelo.*;
 import src.airportmanager.*;
 
 import java.util.*;
+import java.io.IOException;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
 
@@ -34,7 +35,7 @@ import java.time.temporal.ChronoUnit;
  * preparación para despegar. Además podrá realizar otras acciones como dar de alta aviones,
  * programar y compartir vuelos, recibir notificaciones o pagar facturas.
  * 
- * @author Carmen Gómez, María Pozo, Claudia Municio.
+ * @author Carmen Gómez, María Pozo, Claudia Municio
  */
 public class Operador extends UsuarioConDni {
 	/** Número de versión de la clase */
@@ -50,9 +51,10 @@ public class Operador extends UsuarioConDni {
 	/** Mapa de cada vuelo original con sus cinco alternativas generadas */
 	private final Map<VueloProgramado, List<Vuelo>> alternativasPorVuelo;
 	/** Mapa de cada vuelo con su temporizador */
-	private final transient Map<VueloProgramado, Timer> temporizadoresPorVuelo;
+	private transient Map<VueloProgramado, Timer> temporizadoresPorVuelo;
 	/** Set de vuelos sobre los que se ha tomado una decisión */
 	private final Set<VueloProgramado> decisionesTomadas;
+	private Map<VueloProgramado, Long> vencimientoPorVuelo;
 
     /**
      * Constructor de la clase SolicitudVueloCompartido.
@@ -73,7 +75,9 @@ public class Operador extends UsuarioConDni {
         this.estadisticas = new EstadisticasOperador(this);
         this.alternativasPorVuelo = new HashMap<>();
         this.temporizadoresPorVuelo = new HashMap<>();
+        System.out.println("constructor: temporizadoresPorVuelo = " + temporizadoresPorVuelo);
         this.decisionesTomadas = new HashSet<>();
+        this.vencimientoPorVuelo = new HashMap<>();
     }
 
     /**
@@ -156,7 +160,9 @@ public class Operador extends UsuarioConDni {
         }
         
         for (Operador o : vuelo.getOperadores()) {
-            o.recibirNotificacionCambioEstado(vuelo);
+        	if(o!=this) {
+        		o.recibirNotificacionCambioEstado(vuelo);
+        	}
         }
         gestor.recibirNotificacion(new Notificacion("El vuelo " + vuelo.getCodigo() + " ha cambiado su estado a " + vuelo.getEstado() + ".", TipoNotificacion.CAMBIO_ESTADO_VUELO));
 
@@ -202,7 +208,9 @@ public class Operador extends UsuarioConDni {
         }
         
         for (Operador o : vuelo.getOperadores()) {
-            o.recibirNotificacionCambioEstado(vuelo);
+        	if(o!=this) {
+        		o.recibirNotificacionCambioEstado(vuelo);
+        	}
         }
         gestor.recibirNotificacion(new Notificacion("El vuelo " + vuelo.getCodigo() + " ha cambiado su estado a " + vuelo.getEstado() + ".", TipoNotificacion.CAMBIO_ESTADO_VUELO));
 
@@ -226,7 +234,9 @@ public class Operador extends UsuarioConDni {
         }
         
         for (Operador o : vuelo.getOperadores()) {
-            o.recibirNotificacionCambioEstado(vuelo);
+        	if(o!=this) {
+        		o.recibirNotificacionCambioEstado(vuelo);
+        	}
         }
         gestor.recibirNotificacion(new Notificacion("El vuelo " + vuelo.getCodigo() + " ha cambiado su estado a " + vuelo.getEstado() + ".", TipoNotificacion.CAMBIO_ESTADO_VUELO));
 
@@ -250,7 +260,9 @@ public class Operador extends UsuarioConDni {
         }
         
         for (Operador o : vuelo.getOperadores()) {
-            o.recibirNotificacionCambioEstado(vuelo);
+        	if(o!=this) {
+        		o.recibirNotificacionCambioEstado(vuelo);
+        	}
         }
         gestor.recibirNotificacion(new Notificacion("El vuelo " + vuelo.getCodigo() + " ha cambiado su estado a " + vuelo.getEstado() + ".", TipoNotificacion.CAMBIO_ESTADO_VUELO));
 
@@ -274,7 +286,9 @@ public class Operador extends UsuarioConDni {
         }
         
         for (Operador o : vuelo.getOperadores()) {
-            o.recibirNotificacionCambioEstado(vuelo);
+        	if(o!=this) {
+        		o.recibirNotificacionCambioEstado(vuelo);
+        	}
         }
         gestor.recibirNotificacion(new Notificacion("El vuelo " + vuelo.getCodigo() + " ha cambiado su estado a " + vuelo.getEstado() + ".", TipoNotificacion.CAMBIO_ESTADO_VUELO));
 
@@ -460,16 +474,33 @@ public class Operador extends UsuarioConDni {
         
         alternativasPorVuelo.put(original, alternativas);
         
+        long tiempoExpiracion = System.currentTimeMillis() + Gestor.getTiempoAceptarPropuesta() * 60 * 1000;
+        vencimientoPorVuelo.put(original, tiempoExpiracion);
+        
+        programarTemporizador(original, tiempoExpiracion);
+    }
+    
+    private void programarTemporizador(VueloProgramado original, long tiempoExpiracion) {
+        if (temporizadoresPorVuelo == null) {
+            temporizadoresPorVuelo = new HashMap<>();
+        }
         Timer timer = new Timer();
         temporizadoresPorVuelo.put(original, timer);
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if (!decisionesTomadas.contains(original)) {
-                    cancelarVuelo(original);
+        
+        long delay = tiempoExpiracion - System.currentTimeMillis();
+        if (delay > 0) {
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    if (!decisionesTomadas.contains(original)) {
+                        cancelarVuelo(original);
+                    }
                 }
-            }
-        }, Gestor.getTiempoAceptarPropuesta() * 60 * 1000);
+            }, delay);
+        } else {
+            // Si ya venció, lo cancelamos directamente
+            cancelarVuelo(original);
+        }
     }
     
     /**
@@ -522,8 +553,18 @@ public class Operador extends UsuarioConDni {
      * @param original Vuelo del que se cancela el temporizador.
      */
     private void cancelarTemporizador(VueloProgramado original) {
-        Timer t = temporizadoresPorVuelo.remove(original);
+        Timer t = (temporizadoresPorVuelo != null) ? temporizadoresPorVuelo.remove(original) : null;
         if (t != null) t.cancel();
+        vencimientoPorVuelo.remove(original);
+    }
+    
+    private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        temporizadoresPorVuelo = new HashMap<>();
+        
+        for (Map.Entry<VueloProgramado, Long> entry : vencimientoPorVuelo.entrySet()) {
+            programarTemporizador(entry.getKey(), entry.getValue());
+        }
     }
 
     /**
@@ -782,5 +823,35 @@ public class Operador extends UsuarioConDni {
      */
 	public Set<VueloProgramado> getDecisionTomada() {
 		return this.decisionesTomadas;
+	}
+
+	public Vuelo buscarAlternativaPorCodigo(String codigo) {
+		for (Map.Entry<VueloProgramado, List<Vuelo>> entry : alternativasPorVuelo.entrySet()) {
+			for(Vuelo vuelo: entry.getValue()){
+				if(vuelo.getCodigo().equals(codigo)) {
+					return vuelo;
+				}
+			}
+		}
+		return null;
+	}
+	
+	public List<Vuelo> getTodasAlternativas(){
+		List<Vuelo> alternativas=new ArrayList<>();
+		for (Map.Entry<VueloProgramado, List<Vuelo>> entry : alternativasPorVuelo.entrySet()) {
+			for(Vuelo vuelo: entry.getValue()){
+				alternativas.add(vuelo);
+			}
+		}
+		return alternativas;
+	}
+	
+	public VueloProgramado buscarVueloProgramadoPorCodigo(String codigo) {
+	    for (Map.Entry<VueloProgramado, List<Vuelo>> entry : alternativasPorVuelo.entrySet()) {
+	        if (entry.getKey().getCodigo().equals(codigo)) {
+	            return entry.getKey(); 
+	        }
+	    }
+	    return null; 
 	}
 }
