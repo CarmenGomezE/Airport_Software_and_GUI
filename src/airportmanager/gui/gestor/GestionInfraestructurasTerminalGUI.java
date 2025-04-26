@@ -29,6 +29,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import src.airportmanager.AirportManager;
+import src.airportmanager.exceptions.TerminalYaExisteException;
 import src.airportmanager.gui.ConfiguracionUI;
 import src.airportmanager.terminal.PuertaEmbarque;
 import src.airportmanager.usuario.Gestor;
@@ -177,12 +178,30 @@ public class GestionInfraestructurasTerminalGUI extends JFrame{
 					    return;
 				}
 				int aforo = Integer.parseInt(aforoTexto);
-				gestor.darDeAltaTerminal(codigo, "Pasajeros", aforo, puertas);
+				try {
+					gestor.darDeAltaTerminal(codigo, "Pasajeros", aforo, puertas);
+				} catch (TerminalYaExisteException e1) {
+					
+					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, 
+	                        "Error: la terminal ya existe.", 
+	                        "Terminal ya existente", 
+	                        JOptionPane.ERROR_MESSAGE);
+				}
 			}
 			
 			else {
 				
-				gestor.darDeAltaTerminal(codigo, "Mercancías", 0, puertas);
+				try {
+					gestor.darDeAltaTerminal(codigo, "Mercancías", 0, puertas);
+				} catch (TerminalYaExisteException e1) {
+					
+					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, 
+	                        "Error: la terminal ya existe.", 
+	                        "Terminal ya existente", 
+	                        JOptionPane.ERROR_MESSAGE);
+				}
 				
 			}
 			

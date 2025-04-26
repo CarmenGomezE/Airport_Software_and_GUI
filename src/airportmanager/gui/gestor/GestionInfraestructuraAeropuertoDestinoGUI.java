@@ -25,6 +25,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import src.airportmanager.AirportManager;
+import src.airportmanager.exceptions.AeropuertoYaExisteException;
 import src.airportmanager.exceptions.TemporadasSolapadasException;
 import src.airportmanager.gui.ConfiguracionUI;
 import src.airportmanager.usuario.Gestor;
@@ -108,6 +109,12 @@ public class GestionInfraestructuraAeropuertoDestinoGUI extends JFrame {
                         "Error: hay temporadas solapadas en el aeropuerto.", 
                         "Temporadas solapadas", 
                         JOptionPane.ERROR_MESSAGE);
+                }catch(AeropuertoYaExisteException e1) {
+                	e1.printStackTrace();
+                    JOptionPane.showMessageDialog(null, 
+                        "Error: el aeropuerto de destino ya existe.", 
+                        "Aeropuerto de destino ya existente", 
+                        JOptionPane.ERROR_MESSAGE);
                 }
                 
                 JOptionPane.showMessageDialog(null, 
@@ -124,14 +131,7 @@ public class GestionInfraestructuraAeropuertoDestinoGUI extends JFrame {
         add(panel);
  	     
 	    setVisible(true);
-	    
-	    
-	    
-	    
 
-        
-        
-		
 	}
 	
 	private JPanel crearCampoConLabel(String textoLabel, JComponent campo) {

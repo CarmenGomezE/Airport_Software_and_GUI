@@ -23,6 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import src.airportmanager.AirportManager;
+import src.airportmanager.exceptions.UsuarioYaExisteException;
 import src.airportmanager.gui.ConfiguracionUI;
 import src.airportmanager.terminal.Terminal;
 import src.airportmanager.usuario.Gestor;
@@ -115,7 +116,16 @@ public class GestionUsuariosControladorGUI extends JFrame{
 				   return;
 			   }
 			   
-			   gestor.darDeAltaControlador(nombre, dni, terminal);
+			   try {
+				gestor.darDeAltaControlador(nombre, dni, terminal);
+			} catch (UsuarioYaExisteException e1) {
+				
+				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, 
+                        "Error: el controlador ya está dado de alta en el sistema.", 
+                        "Controlador ya existente", 
+                        JOptionPane.ERROR_MESSAGE);
+			}
 			   JOptionPane.showMessageDialog(null, 
 					    "¡Controlador dado de alta correctamente!", 
 					    "Éxito", 

@@ -13,6 +13,7 @@ import java.awt.event.WindowEvent;
 import javax.swing.*;
 
 import src.airportmanager.AirportManager;
+import src.airportmanager.exceptions.PistaYaExisteException;
 import src.airportmanager.gui.ConfiguracionUI;
 import src.airportmanager.pista.TipoPista;
 import src.airportmanager.usuario.Gestor;
@@ -92,7 +93,16 @@ public class GestionInfraestructuraPistaDespegueGUI extends JFrame{
 				
 				double longitud = Double.parseDouble(longitudTexto);
 				
-				gestor.darDeAltaPista(codigo, longitud, TipoPista.DESPEGUE);
+				try {
+					gestor.darDeAltaPista(codigo, longitud, TipoPista.DESPEGUE);
+				} catch (PistaYaExisteException e1) {
+					
+					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, 
+	                        "Error: la pista de despegue ya existe.", 
+	                        "Pista de despegeue ya existente", 
+	                        JOptionPane.ERROR_MESSAGE);
+				}
 				
 				 JOptionPane.showMessageDialog(null, 
 						    "¡Pista de despegue dada de alta correctamente!", 

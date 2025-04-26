@@ -100,6 +100,10 @@ public class GestionInfraestructuraAerolineaGUI extends JFrame{
 					gestor.darDeAltaAerolinea(nombre, codigo);
 				} catch (AerolineaYaExisteException e1) {
 					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, 
+	                        "Error: la aerolínea ya existe.", 
+	                        "Aeroínea ya existente", 
+	                        JOptionPane.ERROR_MESSAGE);
 				}
 				 JOptionPane.showMessageDialog(null, 
 						    "¡Aerolínea " + nombre + " dada de alta correctamente!", 

@@ -115,6 +115,10 @@ public class GestionUsuariosOperadorGUI extends JFrame{
 				gestor.darDeAltaOperador(nombre, dni, aerolinea);
 			} catch (UsuarioYaExisteException e1) {
 				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, 
+                        "Error: el operador ya está dado de alta en el sistema.", 
+                        "Operador ya existente", 
+                        JOptionPane.ERROR_MESSAGE);
 			};
 			   JOptionPane.showMessageDialog(null, 
 					    "¡Operador dado de alta correctamente en la aerolínea "+ aerolinea.getNombre() + "!", 

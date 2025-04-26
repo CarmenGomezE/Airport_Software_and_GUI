@@ -22,6 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import src.airportmanager.AirportManager;
+import src.airportmanager.exceptions.PistaYaExisteException;
 import src.airportmanager.gui.ConfiguracionUI;
 import src.airportmanager.pista.TipoPista;
 import src.airportmanager.usuario.Gestor;
@@ -99,7 +100,16 @@ public class GestionInfraestructuraPistaAterrizajeGUI extends JFrame{
 				
 				double longitud = Double.parseDouble(longitudTexto);
 				
-				gestor.darDeAltaPista(codigo, longitud, TipoPista.ATERRIZAJE);
+				try {
+					gestor.darDeAltaPista(codigo, longitud, TipoPista.ATERRIZAJE);
+				} catch (PistaYaExisteException e1) {
+					
+					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, 
+	                        "Error: la pista de aterrizaje ya existe.", 
+	                        "Pista de aterrizaje ya existente", 
+	                        JOptionPane.ERROR_MESSAGE);
+				}
 				
 				 JOptionPane.showMessageDialog(null, 
 						    "¡Pista de aterrizaje dada de alta correctamente!", 
