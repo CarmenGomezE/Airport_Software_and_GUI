@@ -11,10 +11,15 @@ import src.airportmanager.aeropuerto.DireccionRelativaCiudad;
 import src.airportmanager.aeropuerto.Temporada;
 import src.airportmanager.avion.Aerolinea;
 import src.airportmanager.estadisticas.EstadisticasGestor;
+import src.airportmanager.exceptions.AerolineaYaExisteException;
+import src.airportmanager.exceptions.AeropuertoYaExisteException;
 import src.airportmanager.exceptions.AntelacionInvalidaException;
 import src.airportmanager.exceptions.ContrasenaInvalidaException;
+import src.airportmanager.exceptions.PistaYaExisteException;
 import src.airportmanager.exceptions.TemporadasSolapadasException;
+import src.airportmanager.exceptions.TerminalYaExisteException;
 import src.airportmanager.exceptions.UsuarioNoEncontradoException;
+import src.airportmanager.exceptions.UsuarioYaExisteException;
 import src.airportmanager.factura.*;
 import src.airportmanager.hangar.Hangar;
 import src.airportmanager.hangar.HangarMercancias;
@@ -196,8 +201,14 @@ public class Gestor extends Usuario {
      * 
      * @param nombre   Nombre de la nueva aerolinea.
      * @param codigo   Codigo de la nueva aerolinea.
+     * @throws AerolineaYaExisteException Ya existe una aerolínea con ese código.
      */
-    public void darDeAltaAerolinea(String nombre, String codigo) {
+    public void darDeAltaAerolinea(String nombre, String codigo) throws AerolineaYaExisteException {
+    	for (Aerolinea a: aeropuerto.getAerolineas()) {
+    		if (a.getCodigo().equals(codigo)) {
+    			throw new AerolineaYaExisteException("Ya existe una aerolínea con ese código");
+    		}
+    	}
         Aerolinea aerolinea;
         aerolinea = new Aerolinea(nombre, codigo);
         aeropuerto.addAerolinea(aerolinea);
@@ -209,8 +220,13 @@ public class Gestor extends Usuario {
      * @param nombre     Nombre del nuevo controlador.
      * @param dni        Dni del nuevo controlador.
      * @param terminal   Terminal del nuevo controlador.
+     * @throws UsuarioYaExisteException Ya existe un usuario con ese dni.
      */
-    public void darDeAltaControlador(String nombre, String dni, Terminal terminal) {
+    public void darDeAltaControlador(String nombre, String dni, Terminal terminal) throws UsuarioYaExisteException {
+    	if (sistema.getCredenciales().containsKey(dni)) {
+    		throw new UsuarioYaExisteException("Ya existe un usuario con ese dni.");
+    	}
+    	
         ControladorAereo controlador = new ControladorAereo(nombre, dni, "SoyControlador", aeropuerto, this, terminal, sistema);
         aeropuerto.addUsuario(controlador);
         terminal.agregarControlador(controlador);
@@ -223,8 +239,13 @@ public class Gestor extends Usuario {
      * @param nombre Nombre del nuevo controlador.
      * @param dni    Dni del nuevo controlador.
      * @param aerolinea	Aerolinea.
+     * @throws UsuarioYaExisteException Ya existe un usuario con ese dni.
      */
-    public void darDeAltaOperador(String nombre, String dni, Aerolinea aerolinea) {
+    public void darDeAltaOperador(String nombre, String dni, Aerolinea aerolinea) throws UsuarioYaExisteException {
+    	if (sistema.getCredenciales().containsKey(dni)) {
+    		throw new UsuarioYaExisteException("Ya existe un usuario con ese dni.");
+    	}
+    	
         Operador operador = new Operador(nombre, dni, aerolinea, aeropuerto, this, sistema);
         aerolinea.setOperador(operador);
         aeropuerto.addUsuario(operador);
@@ -238,8 +259,9 @@ public class Gestor extends Usuario {
      *                      aeropuerto de destino.
      * @throws TemporadasSolapadasException si las temporadas se solpan.
      * @throws IOException si hay errores con el fichero.
+     * @throws AeropuertoYaExisteException Ya existe un aeropuerto de destino con ese código.
      */
-    public void darDeAltaAeropuertoDestino(String nombreFichero) throws IOException, TemporadasSolapadasException {
+    public void darDeAltaAeropuertoDestino(String nombreFichero) throws IOException, TemporadasSolapadasException, AeropuertoYaExisteException {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(nombreFichero)))) {
             String linea;
 
@@ -249,6 +271,11 @@ public class Gestor extends Usuario {
                 if (campos.length >= 9) {
                     String nombre = campos[0];
                     String codigo = campos[1];
+                    for (AeropuertoDestino a: aeropuerto.getAeropuertosDestino()) {
+                    	if (a.getCodigo().equals(codigo)) {
+                    		throw new AeropuertoYaExisteException("Ya existe un aeropuerto de destino con ese código.");
+                    	}
+                    }
                     String ciudadMasCercana = campos[2];
                     String pais = campos[3];
                     double distanciaCiudad = Double.parseDouble(campos[4]);
@@ -426,10 +453,16 @@ public class Gestor extends Usuario {
      * @param tipo            Tipo de terminal.
      * @param aforo           Aforo de la terminal.
      * @param puertasEmbarque Puertas de embarque de la terminal.
+     * @throws TerminalYaExisteException Ya existe una terminal con ese código.
      * 
      */
-    public void darDeAltaTerminal(String codigo, String tipo, int aforo, List<PuertaEmbarque> puertasEmbarque) {
-
+    public void darDeAltaTerminal(String codigo, String tipo, int aforo, List<PuertaEmbarque> puertasEmbarque) throws TerminalYaExisteException {
+    	for (Terminal t: aeropuerto.getTerminales()) {
+    		if (t.getCodigo().equals(codigo)) {
+    			throw new TerminalYaExisteException("Ya existe una terminal con ese código.");
+    		}
+    	}
+    	
         Terminal terminal;
         if (puertasEmbarque == null || puertasEmbarque.isEmpty()) {
             throw new IllegalArgumentException("La terminal debe tener al menos una puerta.");
@@ -457,7 +490,7 @@ public class Gestor extends Usuario {
      * @param puertasEmbarque Puertas de embarque del finger.
      * 
      */
-    public void darDeAltaFinger( double dimAlto, double costePorHora, List<PuertaEmbarque> puertasEmbarque) {
+    public void darDeAltaFinger(double dimAlto, double costePorHora, List<PuertaEmbarque> puertasEmbarque) {
     	if (puertasEmbarque.isEmpty()|| puertasEmbarque.size() > 2) {
             throw new IllegalArgumentException("Un finger debe estar conectado a 1 o 2 puertas de embarque");
         }
@@ -518,9 +551,16 @@ public class Gestor extends Usuario {
      * @param codigo    Código de la pista.
      * @param longitud  Longitud de la pista.
      * @param tipoPista Tipo de la pista.
+     * @throws PistaYaExisteException Ya existe una pista con ese código.
      * 
      */
-    public void darDeAltaPista(String codigo, double longitud, TipoPista tipoPista) {
+    public void darDeAltaPista(String codigo, double longitud, TipoPista tipoPista) throws PistaYaExisteException {
+    	for (Pista p: aeropuerto.getPistas()) {
+    		if (p.getCodigo().equals(codigo)) {
+    			throw new PistaYaExisteException("Ya existe una pista con ese código.");
+    		}
+    	}
+    	
         Pista pista;
         pista = new Pista(codigo, longitud, tipoPista);
         aeropuerto.addPista(pista);
