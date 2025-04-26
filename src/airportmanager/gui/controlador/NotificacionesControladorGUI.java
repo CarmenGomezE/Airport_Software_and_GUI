@@ -32,11 +32,22 @@ import src.airportmanager.usuario.ControladorAereo;
  * @author María Pozo, Carmen Gómez, Claudia Municio.
  */
 public class NotificacionesControladorGUI extends JFrame {
+	/** Número de versión de la clase */
     private static final long serialVersionUID = 1L;
+    /** Interfaz principal del controlador */
     private final ControladorGUI conGUI; 
+    /** Controlador de la interfaz */
     private final ControladorAereo controlador;
+    /** Modelo */
     private DefaultListModel<String> model;
 
+    /**
+     * Contructor de la clase NotificacionesControladorGUI.
+     * 
+     * @param manager 		Aplicación.
+     * @param conGUI		Interfaz principal del controlador.
+     * @param controlador   Controlador de la interfaz.
+     */
     public NotificacionesControladorGUI(AirportManager manager, ControladorGUI conGUI, ControladorAereo controlador) {
         this.conGUI = conGUI;
         this.controlador = controlador;

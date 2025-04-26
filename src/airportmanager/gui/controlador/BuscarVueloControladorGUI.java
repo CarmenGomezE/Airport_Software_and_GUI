@@ -12,11 +12,26 @@ import src.airportmanager.usuario.ControladorAereo;
 import src.airportmanager.usuario.CriterioBusqueda;
 import src.airportmanager.vuelo.Vuelo;
 
+/**
+ * La clase BuscarVueloControladorGUI representa la ventana del controlador desde la que se realiza la acción de buscar un vuelo.
+ * 
+ * @author María Pozo, Carmen Gómez, Claudia Municio.
+ */
 public class BuscarVueloControladorGUI extends JFrame {
+	/** Número de versión de la clase */
     private static final long serialVersionUID = 1L;
+    /** Interfaz principal del controlador */
     private final ControladorGUI conGUI;
+    /** Controlador de la interfaz */
     private final ControladorAereo controlador;
 
+    /**
+     * Constructor de la clase BuscarVueloControladorGUI.
+     * 
+     * @param manager 		Aplicación.
+     * @param conGUI		Interfaz principal del controlador.
+     * @param controlador 	Controlador de la interfaz.
+     */
     public BuscarVueloControladorGUI(AirportManager manager, ControladorGUI conGUI, ControladorAereo controlador) {
         this.conGUI = conGUI;
         this.controlador = controlador;

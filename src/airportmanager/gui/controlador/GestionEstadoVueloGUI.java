@@ -35,11 +35,20 @@ import src.airportmanager.vuelo.Vuelo;
  * @author María Pozo, Carmen Gómez, Claudia Municio.
  */
 public class GestionEstadoVueloGUI extends JFrame {
+	/** Número de versión de la clase */
 	private static final long serialVersionUID = 1L;
+	/** Interfaz principal del controlador */
     private final ControladorGUI conGUI;
+    /** Controlador de la interfaz */
     private final ControladorAereo controlador;
-    private JTextArea textAreaMensajes;
     
+    /**
+     * Contructor de la clase GestionEstadoVueloGUI.
+     * 
+     * @param manager 		Aplicación.
+     * @param conGUI		Interfaz principal del controlador.
+     * @param controlador   Controlador de la interfaz.
+     */
 	public GestionEstadoVueloGUI(AirportManager manager, ControladorGUI conGUI, ControladorAereo controlador) {
 		this.conGUI = conGUI;
 		this.controlador = controlador;
@@ -105,7 +114,7 @@ public class GestionEstadoVueloGUI extends JFrame {
         panel.add(botonCambiar);
         
         /** ÁREA DE TEXTO */
-        textAreaMensajes = new JTextArea(5, 30); 
+        JTextArea textAreaMensajes = new JTextArea(5, 30); 
         textAreaMensajes.setEditable(false);  
         textAreaMensajes.setLineWrap(true);  
         textAreaMensajes.setWrapStyleWord(true);
@@ -175,6 +184,12 @@ public class GestionEstadoVueloGUI extends JFrame {
         setVisible(true);
 	}
 	
+	/**
+	 * Método para convertir un String a la clase EstadoVuelo.
+	 * 
+	 * @param texto Texto que se quiere convertir.
+	 * @return El String convertido a EstadoVuelo.
+	 */
 	private EstadoVuelo convertirTextoAEstadoVuelo(String texto) {
         switch (texto) {
             case "Esperando despegue": return EstadoVuelo.ESPERANDO_DESPEGUE;

@@ -19,13 +19,31 @@ import src.airportmanager.usuario.ControladorAereo;
 import src.airportmanager.vuelo.EstadoVuelo;
 import src.airportmanager.vuelo.Vuelo;
 
+/**
+ * La clase ControladorGUI representa la ventana principal del controlador desde la que este puede acceder
+ * a las ventanas desde las que realiza las acciones que le corresponden.
+ * 
+ * @author María Pozo, Carmen Gómez, Claudia Municio.
+ */
 public class ControladorGUI extends JFrame {
+	/** Número de versión de la clase */
     private static final long serialVersionUID = 1L;
+    /** Controlador de la interfaz */
     private ControladorAereo controladorAereo;
+    /** Modelo de lista */
     private DefaultListModel<String> modeloLista;
+    /** Lista de vuelos */
 	private JList<String> listaVuelos;
+	/** Aplicación */
 	private AirportManager AeManager;
 
+	/**
+	 * Constructor de la clase ControladorGUI.
+	 * 
+	 * @param AirportGUI 	Interfaz principal.
+	 * @param manager	 	Aplicación.
+	 * @param controlador 	Controlador.
+	 */
     public ControladorGUI(AirportManagerGUI AirportGUI, AirportManager manager, ControladorAereo controlador) {
     	this.controladorAereo = controlador;
     	this.AeManager = manager;
