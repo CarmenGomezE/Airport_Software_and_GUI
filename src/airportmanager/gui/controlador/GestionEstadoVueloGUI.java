@@ -24,7 +24,6 @@ import javax.swing.JTextField;
 import src.airportmanager.AirportManager;
 import src.airportmanager.gui.ConfiguracionUI;
 import src.airportmanager.usuario.ControladorAereo;
-import src.airportmanager.usuario.CriterioBusqueda;
 import src.airportmanager.vuelo.EstadoVuelo;
 import src.airportmanager.vuelo.Vuelo;
 
@@ -37,10 +36,6 @@ import src.airportmanager.vuelo.Vuelo;
 public class GestionEstadoVueloGUI extends JFrame {
 	/** Número de versión de la clase */
 	private static final long serialVersionUID = 1L;
-	/** Interfaz principal del controlador */
-    private final ControladorGUI conGUI;
-    /** Controlador de la interfaz */
-    private final ControladorAereo controlador;
     
     /**
      * Contructor de la clase GestionEstadoVueloGUI.
@@ -50,9 +45,6 @@ public class GestionEstadoVueloGUI extends JFrame {
      * @param controlador   Controlador de la interfaz.
      */
 	public GestionEstadoVueloGUI(AirportManager manager, ControladorGUI conGUI, ControladorAereo controlador) {
-		this.conGUI = conGUI;
-		this.controlador = controlador;
-		
         setTitle("Panel de gestión de estados de vuelo del Controlador");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
