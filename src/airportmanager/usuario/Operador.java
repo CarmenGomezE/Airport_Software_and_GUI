@@ -54,7 +54,9 @@ public class Operador extends UsuarioConDni {
 	private transient Map<VueloProgramado, Timer> temporizadoresPorVuelo;
 	/** Set de vuelos sobre los que se ha tomado una decisión */
 	private final Set<VueloProgramado> decisionesTomadas;
+	/** Mapa para que no se borren los temporizadores */
 	private Map<VueloProgramado, Long> vencimientoPorVuelo;
+	/** Bandera para indicar si es la primera vez que se hace log in */
 	private boolean necesitaEstablecerContrasena = true;
 
     /**
@@ -82,10 +84,20 @@ public class Operador extends UsuarioConDni {
         
     }
 
+    /**
+     * Método que devuelve si se necesita establecer la contraseña.
+     * 
+     * @return True si es el primer log in, false en otro caso.
+     */
     public boolean isNecesitaEstablecerContrasena() {
         return necesitaEstablecerContrasena;
     }
 
+    /**
+     * Método que establece si se necesita establecer la contraseña.
+     * 
+     * @param necesita Bandera de log in.
+     */
     public void setNecesitaEstablecerContrasena(boolean necesita) {
         this.necesitaEstablecerContrasena = necesita;
     }
@@ -482,7 +494,8 @@ public class Operador extends UsuarioConDni {
     /**
      * Método para recibir alternativas.
      * 
-     * @param alternativas Alternativas al vuelo.
+     * @param original	 	Vuelo original.
+     * @param alternativas	Lista de alternativas
      */
     public void recibirAlternativas(VueloProgramado original, List<Vuelo> alternativas) {
         recibirNotificacion(new Notificacion("Nuevas alternativas para vuelo " + original, TipoNotificacion.OPCIONES_REPROGRAMAR_VUELO));
@@ -495,6 +508,12 @@ public class Operador extends UsuarioConDni {
         programarTemporizador(original, tiempoExpiracion);
     }
     
+    /**
+     * Método programar temporizadores.
+     * 
+     * @param original			Vuelo original
+     * @param tiempoExpiracion	Tiempo que le quedaba.
+     */
     private void programarTemporizador(VueloProgramado original, long tiempoExpiracion) {
         if (temporizadoresPorVuelo == null) {
             temporizadoresPorVuelo = new HashMap<>();
@@ -513,7 +532,6 @@ public class Operador extends UsuarioConDni {
                 }
             }, delay);
         } else {
-            // Si ya venció, lo cancelamos directamente
             cancelarVuelo(original);
         }
     }
@@ -573,6 +591,11 @@ public class Operador extends UsuarioConDni {
         vencimientoPorVuelo.remove(original);
     }
     
+    /**
+     * Método para leer objetos.
+     * 
+     * @param in Input stream.
+     */
     private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         temporizadoresPorVuelo = new HashMap<>();
@@ -812,6 +835,7 @@ public class Operador extends UsuarioConDni {
      * Método que devuelve una solicitud de vuelo compartido según el código del vuelo.
      * 
      * @param codigoVuelo El codigo del vuelo del que es la solicitud.
+     * @return Solicitud de vuelo compartido.
      */
 	public SolicitudVueloCompartido buscarSolicitudPorCodigo(String codigoVuelo) {
         for (SolicitudVueloCompartido s : getSolicitudesRecibidas()) {
@@ -831,6 +855,12 @@ public class Operador extends UsuarioConDni {
 		return this.decisionesTomadas;
 	}
 
+	/**
+     * Método que devuelve una akternativa según el código del vuelo.
+     * 
+     * @param codigo El codigo del vuelo.
+     * @return Alternativa.
+     */
 	public Vuelo buscarAlternativaPorCodigo(String codigo) {
 		for (Map.Entry<VueloProgramado, List<Vuelo>> entry : alternativasPorVuelo.entrySet()) {
 			for(Vuelo vuelo: entry.getValue()){
@@ -842,6 +872,11 @@ public class Operador extends UsuarioConDni {
 		return null;
 	}
 	
+	/**
+     * Método que devuelve todas las alternativas que ha recibido el operador.
+     * 
+     * @return Lista de alternativas.
+     */
 	public List<Vuelo> getTodasAlternativas(){
 		List<Vuelo> alternativas=new ArrayList<>();
 		for (Map.Entry<VueloProgramado, List<Vuelo>> entry : alternativasPorVuelo.entrySet()) {
@@ -852,6 +887,12 @@ public class Operador extends UsuarioConDni {
 		return alternativas;
 	}
 	
+	/**
+     * Método que devuelve un vuelo programado con alternativas según el código del vuelo.
+     * 
+     * @param codigo El codigo del vuelo.
+     * @return Vuelo programado con alternativas.
+     */
 	public VueloProgramado buscarVueloProgramadoPorCodigo(String codigo) {
 	    for (Map.Entry<VueloProgramado, List<Vuelo>> entry : alternativasPorVuelo.entrySet()) {
 	        if (entry.getKey().getCodigo().equals(codigo)) {

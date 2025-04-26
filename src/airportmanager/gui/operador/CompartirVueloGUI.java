@@ -33,30 +33,38 @@ public class CompartirVueloGUI extends JFrame {
     private static final long serialVersionUID = 1L;
     private final OperadorGUI opGUI;
     private final Operador operador;
-    
-	public CompartirVueloGUI(AirportManager manager, OperadorGUI operadorGUI, Operador operadorAerolinea) {
-		this.opGUI=operadorGUI;
-		this.operador=operadorAerolinea;
+
+    /**
+     * Constructor de la interfaz gráfica CompartirVueloGUI.
+     * 
+     * @param manager El objeto AirportManager que gestiona los datos y operaciones.
+     * @param operadorGUI La interfaz gráfica del operador.
+     * @param operadorAerolinea El operador que gestiona los vuelos.
+     */
+    public CompartirVueloGUI(AirportManager manager, OperadorGUI operadorGUI, Operador operadorAerolinea) {
+        this.opGUI = operadorGUI;
+        this.operador = operadorAerolinea;
+
         setTitle("Panel compartir vuelos del Operador");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setResizable(false);
         setLocationRelativeTo(null);
-        
+
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
-				opGUI.setVisible(true);
+                opGUI.setVisible(true);
             }
         });
-        
+
         /** PANEL PRINCIPAL */
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBorder(BorderFactory.createEmptyBorder(40, 300, 40, 300));
         panel.setBackground(ConfiguracionUI.COLOR_FONDO);
         add(panel);
-        
+
         /** TÍTULO */
         JLabel titulo = new JLabel("Solicitar compartir un vuelo", JLabel.CENTER);
         titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -95,13 +103,13 @@ public class CompartirVueloGUI extends JFrame {
         botonCambiar.setFont(new Font("Arial", Font.BOLD, 18));
         botonCambiar.setAlignmentX(Component.CENTER_ALIGNMENT);
         panel.add(botonCambiar);
-        
+
         botonCambiar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String codigo = campoCodigo1.getText().trim();
                 double porcentaje = 0;
-                
+
                 try {
                     porcentaje = Double.parseDouble(campoCodigo2.getText());
                 } catch (NumberFormatException ex) {
@@ -120,15 +128,15 @@ public class CompartirVueloGUI extends JFrame {
                 }
 
                 try {
-					operador.solicitarCompartirVuelo(vuelo, vuelo.getOperadorPrincipal(), porcentaje);
+                    operador.solicitarCompartirVuelo(vuelo, vuelo.getOperadorPrincipal(), porcentaje);
                     JOptionPane.showMessageDialog(null, "Estado cambiado correctamente.");
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Error al cambiar el estado del vuelo: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
-        
-        /** Visible */
+
+        /** Mostrar ventana */
         setVisible(true);
-	}
+    }
 }

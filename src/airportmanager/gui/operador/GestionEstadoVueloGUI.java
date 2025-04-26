@@ -35,11 +35,11 @@ public class GestionEstadoVueloGUI extends JFrame {
     private static final long serialVersionUID = 1L;
     private final OperadorGUI opGUI;
     private final Operador operador;
-    
-	public GestionEstadoVueloGUI(AirportManager manager, OperadorGUI operadorGUI, Operador operadorAerolinea) {
-		this.opGUI=operadorGUI;
-		this.operador=operadorAerolinea;
-		
+
+    public GestionEstadoVueloGUI(AirportManager manager, OperadorGUI operadorGUI, Operador operadorAerolinea) {
+        this.opGUI = operadorGUI;
+        this.operador = operadorAerolinea;
+        
         setTitle("Panel de gestión de estados de vuelo del Operador");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -49,7 +49,7 @@ public class GestionEstadoVueloGUI extends JFrame {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
-				opGUI.setVisible(true);
+                opGUI.setVisible(true);
             }
         });
         
@@ -136,5 +136,5 @@ public class GestionEstadoVueloGUI extends JFrame {
         
         /** Visible */
         setVisible(true);
-	}
+    }
 }

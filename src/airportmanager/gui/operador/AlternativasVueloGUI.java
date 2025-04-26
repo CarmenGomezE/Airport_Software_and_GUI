@@ -37,17 +37,30 @@ import src.airportmanager.vuelo.*;
  * @author Carmen Gómez, María Pozo, Claudia Municio.
  */
 public class AlternativasVueloGUI extends JFrame {
+	/** Identificador de version de clase */
     private static final long serialVersionUID = 1L;
-    private OperadorGUI opGUI;
-    private Operador operador;
+    /** Interfaz de la ventana principal del operador */
+    private final OperadorGUI opGUI;
+    /** Operador */
+    private final Operador operador;
+    /** Modelo de la lista */
     private DefaultListModel<String> modeloLista;
+    /** Lista de alternativas */
     private JList<String> listaAlternativas;
+    /** Hueco para introducir el código del vuelo */
     private JTextField campoCodigo;
     
-	public AlternativasVueloGUI(AirportManager manager, OperadorGUI operadorGUI, Operador operadorAerolinea) {
-		this.opGUI=operadorGUI;
-		this.operador= operadorAerolinea;
-		
+    /**
+     * Constructor de la ventana AlternativasVueloGUI.
+     * 
+     * @param manager El objeto AirportManager que gestiona los datos y operaciones.
+     * @param operadorGUI La interfaz gráfica del operador.
+     * @param operadorAerolinea El operador que gestiona los vuelos.
+     */
+    public AlternativasVueloGUI(AirportManager manager, OperadorGUI operadorGUI, Operador operadorAerolinea) {
+        this.opGUI = operadorGUI;
+        this.operador = operadorAerolinea;
+        
         setTitle("Panel de alternativas de vuelo de Operador");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -57,7 +70,7 @@ public class AlternativasVueloGUI extends JFrame {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
-				opGUI.setVisible(true);
+                opGUI.setVisible(true);
             }
         });
         
@@ -193,21 +206,24 @@ public class AlternativasVueloGUI extends JFrame {
         setVisible(true);
     }
 
-	private void actualizarLista() {
-	    modeloLista.clear();
-	    Map<VueloProgramado, List<Vuelo>> alternativas = operador.getAlternativasAgrupadas();
+    /**
+     * Método que actualiza la lista de alternativas de vuelos pendientes.
+     */
+    private void actualizarLista() {
+        modeloLista.clear();
+        Map<VueloProgramado, List<Vuelo>> alternativas = operador.getAlternativasAgrupadas();
 
-	    if (alternativas.isEmpty()) {
-	        modeloLista.addElement("No hay alternativas pendientes.");
-	        return;
-	    }
-	    for (Map.Entry<VueloProgramado, List<Vuelo>> entry : alternativas.entrySet()) {
-	        VueloProgramado original = entry.getKey();
-	        List<Vuelo> propuestas = entry.getValue();
-	        modeloLista.addElement(" Alternativas para vuelo original: " + original.getCodigo());
-	        for (Vuelo v : propuestas) {
-	            modeloLista.addElement("Vuelo: " + v.getCodigo() + " | Terminal: " + v.getTerminal() + " | Fecha/Hora: " + v.getFecha() + "/" + v.getHora());
-	        }
-	    }
-	}
+        if (alternativas.isEmpty()) {
+            modeloLista.addElement("No hay alternativas pendientes.");
+            return;
+        }
+        for (Map.Entry<VueloProgramado, List<Vuelo>> entry : alternativas.entrySet()) {
+            VueloProgramado original = entry.getKey();
+            List<Vuelo> propuestas = entry.getValue();
+            modeloLista.addElement(" Alternativas para vuelo original: " + original.getCodigo());
+            for (Vuelo v : propuestas) {
+                modeloLista.addElement("Vuelo: " + v.getCodigo() + " | Terminal: " + v.getTerminal() + " | Fecha/Hora: " + v.getFecha() + "/" + v.getHora());
+            }
+        }
+    }
 }

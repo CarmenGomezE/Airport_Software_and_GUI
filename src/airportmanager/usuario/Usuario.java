@@ -171,6 +171,7 @@ public abstract class Usuario implements Serializable {
      * 
      * @param criterio Criterio de búsqueda.
      * @param valor    Valor del criterio.
+     * @return Lista de vuelos.
      */
     public List<Vuelo> buscarVuelo(CriterioBusqueda criterio, String valor) {
         List<Vuelo> vuelosEncontrados = new ArrayList<>();
@@ -203,7 +204,12 @@ public abstract class Usuario implements Serializable {
 
         return vuelosEncontrados;
     }
-
+    
+	/**
+	 * Método que busca un vuelo por código.
+	 * @param codigo 	Código que se busca.
+	 * @return Lista de vuelos que cumplen el criterio.
+	 */
     public List<Vuelo> buscarVueloPorCodigo(String codigo) {
         List<Vuelo> vuelosEncontrados = new ArrayList<>();
 
@@ -216,6 +222,11 @@ public abstract class Usuario implements Serializable {
         return vuelosEncontrados;
     }
 
+    /**
+     * Método que busca un vuelo por origen.
+     * @param origen 	Origen que se busca.
+     * @return Lista de vuelos que cumplen el criterio.
+     */
     private List<Vuelo> buscarVueloPorOrigen(String origen) {
         List<Vuelo> vuelosEncontrados = new ArrayList<>();
 
@@ -228,6 +239,11 @@ public abstract class Usuario implements Serializable {
         return vuelosEncontrados;
     }
 
+    /**
+     * Método que busca un vuelo por destino.
+     * @param destino 	Destino que se busca.
+     * @return Lista de vuelos que cumplen el criterio.
+     */
     private List<Vuelo> buscarVueloPorDestino(String destino) {
         List<Vuelo> vuelosEncontrados = new ArrayList<>();
 
@@ -240,6 +256,11 @@ public abstract class Usuario implements Serializable {
         return vuelosEncontrados;
     }
 
+    /**
+     * Método que busca un vuelo por fecha.
+     * @param fecha 	Fecha que se busca.
+     * @return Lista de vuelos que cumplen el criterio.
+     */
     private List<Vuelo> buscarVueloPorFecha(String fecha) {
         List<Vuelo> vuelosEncontrados = new ArrayList<>();
 
@@ -254,6 +275,11 @@ public abstract class Usuario implements Serializable {
         return vuelosEncontrados;
     }
 
+    /**
+     * Método que busca un vuelo por hora de salida.
+     * @param horaSalida 	Hora de salida que se busca.
+     * @return Lista de vuelos que cumplen el criterio.
+     */
     private List<Vuelo> buscarVueloPorHoraSalida(String horaSalida) {
         List<Vuelo> vuelosEncontrados = new ArrayList<>();
 
@@ -268,6 +294,11 @@ public abstract class Usuario implements Serializable {
         return vuelosEncontrados;
     }
 
+    /**
+     * Método que busca un vuelo por hora de llegada.
+     * @param horaLlegada 	Hora de llegada que se busca.
+     * @return Lista de vuelos que cumplen el criterio.
+     */
     private List<Vuelo> buscarVueloPorHoraLlegada(String horaLlegada) {
         List<Vuelo> vuelosEncontrados = new ArrayList<>();
 
@@ -282,6 +313,11 @@ public abstract class Usuario implements Serializable {
         return vuelosEncontrados;
     }
 
+    /**
+     * Método que busca un vuelo por código de terminal.
+     * @param codigoTerminal 	Código de terminal que se busca.
+     * @return Lista de vuelos que cumplen el criterio.
+     */
     private List<Vuelo> buscarVueloPorTerminal(String codigoTerminal) {
         List<Vuelo> vuelosTerminal = new ArrayList<>();
 

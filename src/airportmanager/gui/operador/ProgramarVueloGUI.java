@@ -1,6 +1,7 @@
 package src.airportmanager.gui.operador;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.time.*;
@@ -11,7 +12,6 @@ import src.airportmanager.AirportManager;
 import src.airportmanager.aeropuerto.Aeropuerto;
 import src.airportmanager.avion.Avion;
 import src.airportmanager.gui.ConfiguracionUI;
-import src.airportmanager.usuario.Gestor;
 import src.airportmanager.usuario.Operador;
 import src.airportmanager.vuelo.*;
 
@@ -22,18 +22,35 @@ import src.airportmanager.vuelo.*;
  * @author Carmen Gómez, María Pozo, Claudia Municio.
  */
 public class ProgramarVueloGUI extends JFrame {
+	/** Identificador de versión de clase */
     private static final long serialVersionUID = 1L;
+    /** Interfaz de la ventana principal del operador */
     private final OperadorGUI opGUI;
+    /** Operador */
     private final Operador operador;
+    /** AirportManager */
     private final AirportManager manager;
 
+    /** Panel de días de la semana */
     private JPanel diasPanel;
+    /** ChechBok de dias de las semana */
     private JCheckBox[] diasSemanaChecks;
+    /** Panel para las escalas */
     private JPanel escalaPanel;
+    /** Combo box para seleccionar el aeropuerto */
     private JComboBox<Aeropuerto> comboEscalaAeropuerto;
+    /** Hueco para introducir la hora de llegada de la escala */
     private JTextField campoHoraLlegadaEscala;
+    /** Hueco para introducir la hora de salida de la escala */
     private JTextField campoHoraSalidaEscala;
 
+    /**
+     * Constructor de la clase ProgramarVueloGUI.
+     * 
+     * @param AeManager El objeto AirportManager que gestiona los datos y operaciones.
+     * @param operadorGUI La interfaz gráfica del operador.
+     * @param AeOperador El operador que gestiona los vuelos.
+     */
     public ProgramarVueloGUI(AirportManager AeManager, OperadorGUI operadorGUI, Operador AeOperador) {
         this.opGUI = operadorGUI;
         this.operador = AeOperador;
@@ -220,7 +237,11 @@ public class ProgramarVueloGUI extends JFrame {
 
         setVisible(true);
     }
-
+    /** 
+     * Método que genera campos con label.
+     * 
+     * @return Un nuevo panel.
+     */
     private JPanel crearCampoConLabel(String textoLabel, JComponent campo) {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));

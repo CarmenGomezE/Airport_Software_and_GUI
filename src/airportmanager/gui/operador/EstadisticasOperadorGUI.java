@@ -44,6 +44,13 @@ public class EstadisticasOperadorGUI extends JFrame {
     private ZoneId franjaSeleccionada;
     private Vuelo vueloSeleccionado;
 
+    /**
+     * Constructor de la interfaz gráfica EstadisticasOperadorGUI.
+     * 
+     * @param manager El objeto AirportManager que gestiona los datos y operaciones.
+     * @param operadorGUI La interfaz gráfica del operador.
+     * @param operadorAerolinea El operador que gestiona las aerolíneas.
+     */
     public EstadisticasOperadorGUI(AirportManager manager, OperadorGUI operadorGUI, Operador operadorAerolinea) {
         this.opGUI = operadorGUI;
         this.operador = operadorAerolinea;
@@ -103,6 +110,11 @@ public class EstadisticasOperadorGUI extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Crea los componentes de selección (mes, franja horaria y vuelo) para las estadísticas.
+     * 
+     * @param panel El panel en el que se añaden los componentes de selección.
+     */
     private void crearComponentesDeSeleccion(JPanel panel) {
         JPanel seleccionPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         seleccionPanel.setBackground(ConfiguracionUI.COLOR_FONDO);
@@ -149,6 +161,11 @@ public class EstadisticasOperadorGUI extends JFrame {
         panel.add(seleccionPanel);
     }
 
+    /**
+     * Obtiene los vuelos disponibles para el operador.
+     * 
+     * @return Un array de vuelos disponibles para el operador.
+     */
     private Vuelo[] obtenerVuelosDisponibles() {
         ArrayList<Vuelo> lista = new ArrayList<Vuelo>();
         List<Vuelo> aceptados = manager.getAeropuerto().getVuelosAceptados();
@@ -168,6 +185,11 @@ public class EstadisticasOperadorGUI extends JFrame {
         return array;
     }
 
+    /**
+     * Obtiene las franjas horarias disponibles a partir de los destinos del aeropuerto.
+     * 
+     * @return Un array de franjas horarias disponibles.
+     */
     private ZoneId[] obtenerFranjasHorariasDisponibles() {
         List<AeropuertoDestino> destinos = manager.getAeropuerto().getAeropuertosDestino();
         Set<ZoneId> zonas = new HashSet<ZoneId>();
@@ -186,6 +208,10 @@ public class EstadisticasOperadorGUI extends JFrame {
         return array;
     }
 
+    /**
+     * Actualiza las estadísticas mostradas en la interfaz, incluyendo los tiempos de retraso
+     * y el número de vuelos en hora o retrasados.
+     */
     private void actualizarEstadisticas() {
         model.clear();
 

@@ -1,6 +1,5 @@
 package src.airportmanager.gui.operador;
 
-import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -31,7 +30,7 @@ import src.airportmanager.usuario.Operador;
 import src.airportmanager.vuelo.Vuelo;
 
 /**
- * La clase BuscarVueloOperadorGUI representa la ventana del operador desde la que este busca vuelos 
+ * La clase BuscarVueloOperadorGUI representa la ventana del operador desde la que este busca vuelos
  * por unos determinados criterios.
  * 
  * @author Carmen Gómez, María Pozo, Claudia Municio.
@@ -41,6 +40,13 @@ public class BuscarVueloOperadorGUI extends JFrame {
     private final OperadorGUI opGUI;
     private final Operador operador;
 
+    /**
+     * Constructor de la interfaz gráfica BuscarVueloOperadorGUI.
+     * 
+     * @param manager El objeto AirportManager que gestiona los datos y operaciones.
+     * @param operadorGUI La interfaz gráfica del operador.
+     * @param operadorAerolinea El operador que gestiona los vuelos.
+     */
     public BuscarVueloOperadorGUI(AirportManager manager, OperadorGUI operadorGUI, Operador operadorAerolinea) {
         this.opGUI = operadorGUI;
         this.operador = operadorAerolinea;
@@ -144,6 +150,13 @@ public class BuscarVueloOperadorGUI extends JFrame {
         setVisible(true);
     }
     
+    /**
+     * Convierte un texto seleccionado por el usuario en un criterio de búsqueda.
+     * 
+     * @param texto El texto seleccionado por el usuario.
+     * @return El criterio de búsqueda correspondiente.
+     * @throws IllegalArgumentException Si el texto no corresponde a un criterio válido.
+     */
     private CriterioBusqueda convertirTextoACriterio(String texto) {
         switch (texto) {
             case "Código": return CriterioBusqueda.CODIGO;
@@ -157,4 +170,3 @@ public class BuscarVueloOperadorGUI extends JFrame {
         }
     }
 }
-

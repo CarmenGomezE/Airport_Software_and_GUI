@@ -16,13 +16,26 @@ import src.airportmanager.vuelo.SolicitudVueloCompartido;
  * @author Carmen Gómez, María Pozo, Claudia Municio.
  */
 public class SolicitudesCompartirVueloGUI extends JFrame {
+	/** Identificador de versión de clase */
     private static final long serialVersionUID = 1L;
+    /** Interfaz de la ventana principal del operador */
     private final OperadorGUI opGUI;
+    /** Operador */
     private final Operador operador;
+    /** Lista de solicitudes */
     private DefaultListModel<String> modeloLista;
+    /** Lista de la cadena de solicitudes */
     private JList<String> listaSolicitudes;
+    /** Hueco para introducir el código de vuelo */
     private JTextField campoCodigo;
 
+    /**
+     * Constructor de la clase SolicitudesCompartirVueloGUI.
+     * 
+     * @param manager El objeto AirportManager que gestiona los datos y operaciones.
+     * @param operadorGUI La interfaz gráfica del operador.
+     * @param operadorAerolinea El operador que gestiona los vuelos.
+     */
     public SolicitudesCompartirVueloGUI(AirportManager manager, OperadorGUI operadorGUI, Operador operadorAerolinea) {
         this.opGUI = operadorGUI;
         this.operador = operadorAerolinea;
@@ -170,7 +183,9 @@ public class SolicitudesCompartirVueloGUI extends JFrame {
         /** Hacer la ventana visible */
         setVisible(true);
     }
-
+    /** 
+     * Método que actualiza la lista de solicitudes.
+     */
     private void actualizarLista() {
         modeloLista.clear();
         List<SolicitudVueloCompartido> solicitudes = operador.getSolicitudesRecibidas();
