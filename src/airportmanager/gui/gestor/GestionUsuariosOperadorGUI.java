@@ -23,6 +23,7 @@ import javax.swing.JTextField;
 
 import src.airportmanager.AirportManager;
 import src.airportmanager.avion.Aerolinea;
+import src.airportmanager.exceptions.UsuarioYaExisteException;
 import src.airportmanager.gui.ConfiguracionUI;
 
 import src.airportmanager.usuario.Gestor;
@@ -110,7 +111,11 @@ public class GestionUsuariosOperadorGUI extends JFrame{
 					            JOptionPane.WARNING_MESSAGE);
 					   return;
 				   }
-			   gestor.darDeAltaOperador(nombre, dni, aerolinea);;
+			   try {
+				gestor.darDeAltaOperador(nombre, dni, aerolinea);
+			} catch (UsuarioYaExisteException e1) {
+				e1.printStackTrace();
+			};
 			   JOptionPane.showMessageDialog(null, 
 					    "¡Operador dado de alta correctamente en la aerolínea "+ aerolinea.getNombre() + "!", 
 					    "Éxito", 

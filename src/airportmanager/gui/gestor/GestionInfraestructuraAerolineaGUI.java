@@ -22,6 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import src.airportmanager.AirportManager;
+import src.airportmanager.exceptions.AerolineaYaExisteException;
 import src.airportmanager.gui.ConfiguracionUI;
 import src.airportmanager.usuario.Gestor;
 
@@ -95,7 +96,11 @@ public class GestionInfraestructuraAerolineaGUI extends JFrame{
 				    return;
 				}
 				
-				gestor.darDeAltaAerolinea(nombre, codigo);
+				try {
+					gestor.darDeAltaAerolinea(nombre, codigo);
+				} catch (AerolineaYaExisteException e1) {
+					e1.printStackTrace();
+				}
 				 JOptionPane.showMessageDialog(null, 
 						    "¡Aerolínea " + nombre + " dada de alta correctamente!", 
 						    "Éxito", 

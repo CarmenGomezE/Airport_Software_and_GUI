@@ -13,6 +13,7 @@ import src.airportmanager.exceptions.*;
 import src.airportmanager.usuario.*;
 import src.airportmanager.terminal.*;
 import src.airportmanager.notificacion.*;
+import java.util.Scanner;
 
 import java.io.*;
 import java.time.*;
@@ -1025,107 +1026,129 @@ public class AirportManagerMain {
      * Método que inicia sesión.
      */
 	private static void inicioSesion() throws UsuarioNoEncontradoException, ContrasenaInvalidaException {
-		Operador operadorIberia=(Operador)airportManager.getGestor().buscarUsuarioPorDni("12345678A");
-    	ControladorAereo controladorT1=(ControladorAereo)airportManager.getGestor().buscarUsuarioPorDni("123356789C");
-    	Gestor gestorBarajas= airportManager.getGestor();
-    	
-    	System.out.println("\nIniciando los inicios de sesión de los usuarios.");
-    	try {
-            System.out.println("\nIniciando sesión con DNI y contraseña válidos para el operador Iberia.");
-            operadorIberia.iniciarSesion(operadorIberia.getDni(), operadorIberia.getContrasena());
-            System.out.println("Sesión iniciada correctamente para el operador Iberia.");
-            
-            System.out.println("\nIniciando sesión con DNI y contraseña válidos para el controlador T1.");
-            controladorT1.iniciarSesion(controladorT1.getDni(), controladorT1.getContrasena());
-            System.out.println("Sesión iniciada correctamente para el controlador T1.");
-            
-            System.out.println("\nIniciando sesión con contraseña válida para el gestor Barajas.");
-            gestorBarajas.iniciarSesion(gestorBarajas.getContrasena());
-            System.out.println("Sesión iniciada correctamente para el gestor Barajas.");
-        } catch (Exception e) {
-            System.err.println("Error al iniciar sesión con DNI y contraseña válidos: " + e.getMessage());
-        }
+	    try (Scanner scanner = new Scanner(System.in)) {
+			Operador operadorIberia = (Operador) airportManager.getGestor().buscarUsuarioPorDni("12345678A");
+			ControladorAereo controladorT1 = (ControladorAereo) airportManager.getGestor().buscarUsuarioPorDni("123356789C");
+			Gestor gestorBarajas = airportManager.getGestor();
 
-        /**Con dni inválido*/
-        try {
-            System.out.println("\nIntentando iniciar sesión con DNI inválido para el operador Iberia.");
-            operadorIberia.iniciarSesion("33333333F", operadorIberia.getContrasena());
-        } catch (Exception e) {
-            System.out.println("Error al iniciar sesión con DNI inválido para el operador Iberia: " + e.getMessage());
-        }
-        
-        try {
-            System.out.println("\nIntentando iniciar sesión con DNI inválido para el controlador T1.");
-            controladorT1.iniciarSesion("33333333F", controladorT1.getContrasena());
-        } catch (Exception e) {
-            System.out.println("Error al iniciar sesión con DNI inválido para el controlador T1: " + e.getMessage());
-        }
+			System.out.println("\nIniciando los inicios de sesión de los usuarios."); 
+ 
+			/** Inicio de sesión válido */
+			try {
+			    System.out.println("\nIniciando sesión para el operador Iberia.");
 
-        /**Con contraseñas inválidas*/
-        try {
-            System.out.println("\nIntentando iniciar sesión con contraseña inválida para el operador Iberia.");
-            operadorIberia.iniciarSesion(operadorIberia.getDni(), airportManager.generarContrasena());
-        } catch (Exception e) {
-            System.out.println("Error al iniciar sesión con contraseña inválida para el operador Iberia: " + e.getMessage());
-        }
-        
-        try {
-            System.out.println("\nIntentando iniciar sesión con contraseña inválida para el controlador T1.");
-            controladorT1.iniciarSesion(controladorT1.getDni(), airportManager.generarContrasena());
-        } catch (Exception e) {
-            System.out.println("Error al iniciar sesión con contraseña inválida para el controlador T1: " + e.getMessage());
-        }
+			    if (operadorIberia.isNecesitaEstablecerContrasena()) {
+			        System.out.print("El operador debe establecer una nueva contraseña. Introduce nueva contraseña: ");
+			        String nuevaContrasena = scanner.nextLine();
+			        System.out.print("Confirma la nueva contraseña: ");
+			        String confirmarContrasena = scanner.nextLine();
 
-        try {
-            System.out.println("\nIntentando iniciar sesión con contraseña inválida para el gestor Barajas.");
-            gestorBarajas.iniciarSesion(airportManager.generarContrasena());
-        } catch (Exception e) {
-            System.out.println("Error al iniciar sesión con contraseña inválida para el gestor Barajas: " + e.getMessage());
-        }
+			        if (!nuevaContrasena.equals(confirmarContrasena)) {
+			            System.out.println("Las contraseñas no coinciden. Intenta de nuevo.");
+			            return;
+			        }
 
-        /**Solicitan reestablecer la contraseña*/
-        try {
-            System.out.println("\nSolicitando restablecimiento de contraseña para el operador Iberia.");
-            operadorIberia.heOlvidadoContrasena();
-            System.out.println("Contraseña restablecida para el operador Iberia.");
-        } catch (Exception e) {
-            System.out.println("Error al restablecer contraseña para el operador Iberia: " + e.getMessage());
-        }
+			        operadorIberia.setContrasena(nuevaContrasena);
+			        operadorIberia.setNecesitaEstablecerContrasena(false);
+			        System.out.println("Contraseña establecida correctamente.");
+			    }
 
-        try {
-            System.out.println("\nSolicitando restablecimiento de contraseña para el controlador T1.");
-            controladorT1.heOlvidadoContrasena();
-            System.out.println("Contraseña restablecida para el controlador T1.");
-        } catch (Exception e) {
-            System.out.println("Error al restablecer contraseña para el controlador T1: " + e.getMessage());
-        }
+			    operadorIberia.iniciarSesion(operadorIberia.getDni(), operadorIberia.getContrasena());
+			    System.out.println("Sesión iniciada correctamente para el operador Iberia.");
 
-        try {
-            System.out.println("\nSolicitando restablecimiento de contraseña para el gestor Barajas.");
-            gestorBarajas.heOlvidadoContrasena();
-            System.out.println("Contraseña restablecida para el gestor Barajas.");
-        } catch (Exception e) {
-            System.out.println("Error al restablecer contraseña para el gestor Barajas: " + e.getMessage());
-        }
+			    System.out.println("\nIniciando sesión para el controlador T1.");
+			    controladorT1.iniciarSesion(controladorT1.getDni(), controladorT1.getContrasena());
+			    System.out.println("Sesión iniciada correctamente para el controlador T1.");
 
-        /**Con contraseña y dni nuevos válidos*/
-        try {
-            System.out.println("\nIniciando sesión con DNI y nueva contraseña válidos para el operador Iberia.");
-            operadorIberia.iniciarSesion(operadorIberia.getDni(), operadorIberia.getContrasena());
-            System.out.println("Sesión iniciada correctamente para el operador Iberia.");
-            
-            System.out.println("\nIniciando sesión con DNI y nueva contraseña válidos para el controlador T1.");
-            controladorT1.iniciarSesion(controladorT1.getDni(), controladorT1.getContrasena());
-            System.out.println("Sesión iniciada correctamente para el controlador T1.");
-            
-            System.out.println("\nIniciando sesión con nueva contraseña válida para el gestor Barajas.");
-            gestorBarajas.iniciarSesion(gestorBarajas.getContrasena());
-            System.out.println("Sesión iniciada correctamente para el gestor Barajas.");
-        } catch (Exception e) {
-            System.err.println("Error al iniciar sesión con DNI y nueva contraseña válidos: " + e.getMessage());
-        }
-        System.out.println("Proceso de inicio de sesión finalizado.");
+			    System.out.println("\nIniciando sesión para el gestor Barajas.");
+			    gestorBarajas.iniciarSesion(gestorBarajas.getContrasena());
+			    System.out.println("Sesión iniciada correctamente para el gestor Barajas.");
+			} catch (Exception e) {
+			    System.err.println("Error al iniciar sesión con credenciales válidas: " + e.getMessage());
+			}
+
+			/** Inicio de sesión con DNI inválido */
+			try {
+			    System.out.println("\nIntentando iniciar sesión con DNI inválido para el operador Iberia.");
+			    operadorIberia.iniciarSesion("33333333F", operadorIberia.getContrasena());
+			} catch (Exception e) {
+			    System.out.println("Error al iniciar sesión con DNI inválido para el operador Iberia: " + e.getMessage());
+			}
+
+			try {
+			    System.out.println("\nIntentando iniciar sesión con DNI inválido para el controlador T1.");
+			    controladorT1.iniciarSesion("33333333F", controladorT1.getContrasena());
+			} catch (Exception e) {
+			    System.out.println("Error al iniciar sesión con DNI inválido para el controlador T1: " + e.getMessage());
+			}
+
+			/** Inicio de sesión con contraseña inválida */
+			try {
+			    System.out.println("\nIntentando iniciar sesión con contraseña inválida para el operador Iberia.");
+			    operadorIberia.iniciarSesion(operadorIberia.getDni(), airportManager.generarContrasena());
+			} catch (Exception e) {
+			    System.out.println("Error al iniciar sesión con contraseña inválida para el operador Iberia: " + e.getMessage());
+			}
+
+			try {
+			    System.out.println("\nIntentando iniciar sesión con contraseña inválida para el controlador T1.");
+			    controladorT1.iniciarSesion(controladorT1.getDni(), airportManager.generarContrasena());
+			} catch (Exception e) {
+			    System.out.println("Error al iniciar sesión con contraseña inválida para el controlador T1: " + e.getMessage());
+			}
+
+			try {
+			    System.out.println("\nIntentando iniciar sesión con contraseña inválida para el gestor Barajas.");
+			    gestorBarajas.iniciarSesion(airportManager.generarContrasena());
+			} catch (Exception e) {
+			    System.out.println("Error al iniciar sesión con contraseña inválida para el gestor Barajas: " + e.getMessage());
+			}
+
+			/** Restablecimiento de contraseña */
+			try {
+			    System.out.println("\nSolicitando restablecimiento de contraseña para el operador Iberia.");
+			    operadorIberia.heOlvidadoContrasena();
+			    System.out.println("Contraseña restablecida para el operador Iberia.");
+			} catch (Exception e) {
+			    System.out.println("Error al restablecer contraseña para el operador Iberia: " + e.getMessage());
+			}
+
+			try {
+			    System.out.println("\nSolicitando restablecimiento de contraseña para el controlador T1.");
+			    controladorT1.heOlvidadoContrasena();
+			    System.out.println("Contraseña restablecida para el controlador T1.");
+			} catch (Exception e) {
+			    System.out.println("Error al restablecer contraseña para el controlador T1: " + e.getMessage());
+			}
+
+			try {
+			    System.out.println("\nSolicitando restablecimiento de contraseña para el gestor Barajas.");
+			    gestorBarajas.heOlvidadoContrasena();
+			    System.out.println("Contraseña restablecida para el gestor Barajas.");
+			} catch (Exception e) {
+			    System.out.println("Error al restablecer contraseña para el gestor Barajas: " + e.getMessage());
+			}
+
+			/** Inicio de sesión tras restablecer contraseña */
+			try {
+			    System.out.println("\nIniciando sesión con nueva contraseña para el operador Iberia.");
+			    operadorIberia.iniciarSesion(operadorIberia.getDni(), operadorIberia.getContrasena());
+			    System.out.println("Sesión iniciada correctamente para el operador Iberia.");
+
+			    System.out.println("\nIniciando sesión con nueva contraseña para el controlador T1.");
+			    controladorT1.iniciarSesion(controladorT1.getDni(), controladorT1.getContrasena());
+			    System.out.println("Sesión iniciada correctamente para el controlador T1.");
+
+			    System.out.println("\nIniciando sesión con nueva contraseña para el gestor Barajas.");
+			    gestorBarajas.iniciarSesion(gestorBarajas.getContrasena());
+			    System.out.println("Sesión iniciada correctamente para el gestor Barajas.");
+			} catch (Exception e) {
+			    System.err.println("Error al iniciar sesión con nuevas credenciales: " + e.getMessage());
+			}
+		}
+
+	    System.out.println("Proceso de inicio de sesión finalizado.");
 	}
-	
+
 
 }

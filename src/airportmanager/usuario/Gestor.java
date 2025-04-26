@@ -251,7 +251,6 @@ public class Gestor extends Usuario {
         Operador operador = new Operador(nombre, dni, aerolinea, aeropuerto, this, sistema);
         aerolinea.setOperador(operador);
         aeropuerto.addUsuario(operador);
-        sistema.addCredencial(dni, operador.getContrasena());
     }
 
     /**

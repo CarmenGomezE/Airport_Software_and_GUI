@@ -186,6 +186,13 @@ public class AirportManagerGUI extends JFrame {
 
                             case "Operador de aerolínea":
                                 Operador operador = (Operador) airportManager.getGestor().buscarUsuarioPorDni(dni);
+                                if (operador.isNecesitaEstablecerContrasena()) {
+                                    String nuevaContrasena = solicitarNuevaContrasena();
+                                    operador.setContrasena(nuevaContrasena);
+                                    manager.addCredencial(dni, nuevaContrasena);
+                                    operador.setNecesitaEstablecerContrasena(false);
+                                    JOptionPane.showMessageDialog(AirportManagerGUI.this, "Contraseña establecida exitosamente.");
+                                }
                                 operador.iniciarSesion(dni, passwordStr);
                                 dispose();
                                 new OperadorGUI(AirportManagerGUI.this, manager, operador);
@@ -206,6 +213,37 @@ public class AirportManagerGUI extends JFrame {
         panel.add(panelDerecho, BorderLayout.CENTER);
 
         add(panel);
+    }
+    
+    private String solicitarNuevaContrasena() {
+        JPanel panel = new JPanel(new GridLayout(2, 2));
+        JLabel labelNueva = new JLabel("Nueva contraseña:");
+        JPasswordField passNueva = new JPasswordField();
+        JLabel labelConfirmar = new JLabel("Confirmar contraseña:");
+        JPasswordField passConfirmar = new JPasswordField();
+
+        panel.add(labelNueva);
+        panel.add(passNueva);
+        panel.add(labelConfirmar);
+        panel.add(passConfirmar);
+
+        int result = JOptionPane.showConfirmDialog(this, panel, "Establecer nueva contraseña", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+        if (result == JOptionPane.OK_OPTION) {
+            String nueva = new String(passNueva.getPassword());
+            String confirmar = new String(passConfirmar.getPassword());
+            if (!nueva.equals(confirmar)) {
+                JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden. Inténtalo de nuevo.");
+                return solicitarNuevaContrasena();
+            }
+            if (nueva.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "La contraseña no puede estar vacía.");
+                return solicitarNuevaContrasena();
+            }
+            return nueva;
+        } else {
+            throw new RuntimeException("Se canceló el establecimiento de contraseña.");
+        }
     }
 
     private void validateLogin() {

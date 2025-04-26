@@ -55,6 +55,7 @@ public class Operador extends UsuarioConDni {
 	/** Set de vuelos sobre los que se ha tomado una decisión */
 	private final Set<VueloProgramado> decisionesTomadas;
 	private Map<VueloProgramado, Long> vencimientoPorVuelo;
+	private boolean necesitaEstablecerContrasena = true;
 
     /**
      * Constructor de la clase SolicitudVueloCompartido.
@@ -68,7 +69,7 @@ public class Operador extends UsuarioConDni {
      */
     public Operador(String nombre, String dni, Aerolinea aerolinea, AeropuertoPropio aeropuerto, Gestor gestor, AirportManager sistema) {
         super(nombre, dni, aeropuerto, gestor, sistema);
-        this.contrasena=establecerContrasena();
+        this.necesitaEstablecerContrasena=true;
         this.aerolinea = aerolinea;
         this.solicitudesRecibidas = new ArrayList<>();
         this.solicitudesEnviadas = new ArrayList<>();
@@ -78,8 +79,17 @@ public class Operador extends UsuarioConDni {
         System.out.println("constructor: temporizadoresPorVuelo = " + temporizadoresPorVuelo);
         this.decisionesTomadas = new HashSet<>();
         this.vencimientoPorVuelo = new HashMap<>();
+        
     }
 
+    public boolean isNecesitaEstablecerContrasena() {
+        return necesitaEstablecerContrasena;
+    }
+
+    public void setNecesitaEstablecerContrasena(boolean necesita) {
+        this.necesitaEstablecerContrasena = necesita;
+    }
+    
     /**
      * Método que devuelve la Aerolinea del Operador.
      * 
@@ -732,15 +742,6 @@ public class Operador extends UsuarioConDni {
      */
     private void recibirNotificacionSolicitudVueloCompartido(Vuelo vuelo) {
         recibirNotificacion(new Notificacion("Solicitud para compartir el vuelo con código " + vuelo.getCodigo() + ".", TipoNotificacion.SOLICITUD_COMPARTIR_VUELO));
-    }
-    
-    /**
-     * Método para establecer su contraseña.
-     * 
-     * @return Contraseña
-     */
-    private String establecerContrasena() {
-    	return "SoyOperador";
     }
 
     /**
