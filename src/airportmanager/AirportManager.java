@@ -112,7 +112,7 @@ public class AirportManager implements Serializable {
      * @param archivo Archivo.
      * @return la aplicación.
      */
-    public static AirportManager cargarEstado(String archivo) {
+    public static AirportManager cargarEstado(String archivo) { 
     	if (archivo == null || !new File(archivo).exists()) {
             System.out.println("El archivo no existe o es null. Creando un nuevo archivo...");
             AirportManager nuevoEstado = new AirportManager(); 

@@ -249,7 +249,7 @@ public class Gestor extends Usuario {
      * Método para dar de alta un operador.
      * 
      * @param nombre Nombre del nuevo controlador.
-     * @param dni    Dni del nuevo controlador.
+     * @param dni    Dni del nuevo controlador. 
      * @param aerolinea	Aerolinea.
      * @throws UsuarioYaExisteException Ya existe un usuario con ese dni.
      */
@@ -261,6 +261,7 @@ public class Gestor extends Usuario {
         Operador operador = new Operador(nombre, dni, aerolinea, aeropuerto, this, sistema);
         aerolinea.setOperador(operador);
         aeropuerto.addUsuario(operador);
+        sistema.addCredencial(dni, "");
     }
 
     /**

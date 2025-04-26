@@ -38,7 +38,7 @@ public class GestionEstadoVueloGUI extends JFrame {
 
     public GestionEstadoVueloGUI(AirportManager manager, OperadorGUI operadorGUI, Operador operadorAerolinea) {
         this.opGUI = operadorGUI;
-        this.operador = operadorAerolinea;
+        this.operador = operadorAerolinea; 
         
         setTitle("Panel de gestión de estados de vuelo del Operador");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -87,7 +87,7 @@ public class GestionEstadoVueloGUI extends JFrame {
         panel.add(labelEstado);
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-        String[] estados = {"En preparación para despegar", "Inicio del embarque", "Fin del embarque", "Inicio del desmbarque", "Fin del desembarque"};
+        String[] estados = {"En preparacion para despegar", "Inicio del embarque", "Fin del embarque", "Inicio del desmbarque", "Fin del desembarque"};
         JComboBox<String> comboEstados = new JComboBox<>(estados);
         comboEstados.setMaximumSize(new Dimension(Integer.MAX_VALUE, 35));
         comboEstados.setFont(new Font("Arial", Font.PLAIN, 16));
