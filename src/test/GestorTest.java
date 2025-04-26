@@ -125,7 +125,11 @@ public class GestorTest {
     
     @Test
     void testDarDeAltaAerolinea() {
-        gestor.darDeAltaAerolinea("Vueling", "VY");
+        try {
+			gestor.darDeAltaAerolinea("Vueling", "VY");
+		} catch (AerolineaYaExisteException e) {
+			fail("No debería lanzar excepción.");
+		}
         assertEquals(1, aeropuerto.getAerolineas().size());
     }
 
@@ -134,7 +138,11 @@ public class GestorTest {
     */
     @Test
     void testDarDeAltaControlador() {
-        gestor.darDeAltaControlador("Controlador2", "11111111A", terminal);
+        try {
+			gestor.darDeAltaControlador("Controlador2", "11111111A", terminal);
+		} catch (UsuarioYaExisteException e) {
+			fail("No debería lanzar excepción.");
+		}
         assertEquals(1, terminal.getControladores().size());
         assertTrue(sistema.getCredenciales().containsKey("11111111A"));
     }
@@ -144,7 +152,11 @@ public class GestorTest {
      */
     @Test
     void testDarDeAltaOperador() {
-        gestor.darDeAltaOperador("Operador2", "22222222B", aerolinea);
+        try {
+			gestor.darDeAltaOperador("Operador2", "22222222B", aerolinea);
+		} catch (UsuarioYaExisteException e) {
+			fail("No debería lanzar excepción.");
+		}
         assertEquals(aerolinea.getOperador().getDni(), "22222222B");
         assertTrue(sistema.getCredenciales().containsKey("22222222B"));
     }
@@ -161,7 +173,11 @@ public class GestorTest {
             writer.println("Heathrow;LHR;Londres;Reino Unido;22.5;NORTE;0;2;01/04;08:00-22:00;30/09;01/10;07:00-23:00;31/03");
         }
         
-        gestor.darDeAltaAeropuertoDestino(tempFile.getAbsolutePath());
+        try {
+			gestor.darDeAltaAeropuertoDestino(tempFile.getAbsolutePath());
+		} catch (IOException | TemporadasSolapadasException | AeropuertoYaExisteException e) {
+			fail("No debería lanzar excepción.");
+		}
         assertEquals(1, aeropuerto.getAeropuertosDestino().size());
         
         tempFile.delete();
@@ -204,7 +220,11 @@ public class GestorTest {
         List<PuertaEmbarque> puertas = new ArrayList<>();
         puertas.add(new PuertaEmbarque());
         
-        gestor.darDeAltaTerminal("T1", "Pasajeros", 200, puertas);
+        try {
+			gestor.darDeAltaTerminal("T1", "Pasajeros", 200, puertas);
+		} catch (TerminalYaExisteException e) {
+			fail("No debería lanzar excepción.");
+		}
         assertEquals(1, aeropuerto.getTerminales().size());
         
         assertThrows(IllegalArgumentException.class, () -> 
