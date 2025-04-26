@@ -461,7 +461,12 @@ public class Operador extends UsuarioConDni {
         }
         
         /**Se envian al gestor*/
-        getGestor().recibirProposicionVuelo(vueloPropuestos);
+        try {
+        	 getGestor().recibirProposicionVuelo(vueloPropuestos);
+        } catch (AntelacionInvalidaException e) {
+            System.err.println("Error al proponer el vuelo: " + e.getMessage());
+        } 
+       
         System.out.println("Vuelo propuesto exitosamente.");
     }
     

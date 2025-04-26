@@ -38,6 +38,7 @@ public class AirportManager implements Serializable {
     private static final String CARACTERES = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{}|;:,.<>?/";
     /** Para generar contraseñas */
     private static SecureRandom random = new SecureRandom();
+    private transient Map<Vuelo, Timer> temporizadores = new HashMap<>();
 
     /**
      * Constructor de AirportManager.
@@ -149,77 +150,122 @@ public class AirportManager implements Serializable {
      * Método que actualiza los estados automáticos de los vuelos (A_TIEMPO, RETRASADO, VUELO) teniendo en cuenta la cola de los vuelos en esperando despegue.
      * @param v                             Vuelo al que actualizar sus estados.
      */
-	public void actualizarEstadoVueloAutomatico(Vuelo v) {
-		LocalDateTime ahora = LocalDateTime.now();  
-		LocalDateTime horaVuelo = LocalDateTime.of(LocalDate.now(), v.getHora()); 
+    public void actualizarEstadoVueloAutomatico(Vuelo v) {
+        LocalDateTime ahora = LocalDateTime.now();  
+        LocalDateTime horaVuelo = LocalDateTime.of(LocalDate.now(), v.getHora()); 
 
-		if (v.getTipoVuelo() == TipoVuelo.LLEGADA) {
-		    if (ahora.isBefore(horaVuelo)) {
-		        v.cambiarEstado(EstadoVuelo.A_TIEMPO);
-		    } else if (v.getEstado() != EstadoVuelo.ATERRIZAJE || v.getEstado() != EstadoVuelo.OPERATIVO || v.getEstado() != EstadoVuelo.AVION_A_HANGAR
-		    		|| v.getEstado() != EstadoVuelo.RETRASADO || v.getEstado() == EstadoVuelo.A_TIEMPO){
-		    	double minutosRetraso = (double) Duration.between(horaVuelo, ahora).toMinutes();
-		        v.setRetraso(minutosRetraso);
-		        v.cambiarEstado(EstadoVuelo.RETRASADO);
-				for(ControladorAereo controlador: v.getTerminal().getControladores()) {
-		        	controlador.recibirNotificacionCambioEstado(v);
-		        } 
-		        for (Operador o : v.getOperadores()) {
-		            o.recibirNotificacionCambioEstado(v);
-		        }
-		        gestor.recibirNotificacion(new Notificacion("El vuelo " + v.getCodigo() + " ha cambiado su estado a " + v.getEstado() + ".", TipoNotificacion.CAMBIO_ESTADO_VUELO));
-		    }
-		} else if (v.getTipoVuelo() == TipoVuelo.SALIDA) {
-		    long minutosRestantes = Duration.between(ahora, horaVuelo).toMinutes(); 
-		    if ((v.getEstado() == EstadoVuelo.OPERATIVO || v.getEstado() == EstadoVuelo.ATERRIZAJE || v.getEstado() == EstadoVuelo.ACEPTADO|| 
-		    		v.getEstado() == EstadoVuelo.A_TIEMPO || v.getEstado() == EstadoVuelo.RETRASADO) && minutosRestantes > 45) {
-		    	v.setRetraso(0);
-		        v.cambiarEstado(EstadoVuelo.A_TIEMPO);
-		    } else{
-		        v.cambiarEstado(EstadoVuelo.RETRASADO);
-				for(ControladorAereo controlador: v.getTerminal().getControladores()) {
-		        	controlador.recibirNotificacionCambioEstado(v);
-		        } 
-		        for (Operador o : v.getOperadores()) {
-		            o.recibirNotificacionCambioEstado(v);
-		        }
-		        gestor.recibirNotificacion(new Notificacion("El vuelo " + v.getCodigo() + " ha cambiado su estado a " + v.getEstado() + ".", TipoNotificacion.CAMBIO_ESTADO_VUELO));
-		    }
-		}
-		if(ordenarColaVuelos()!=null) {
-			Vuelo vueloVuela=ordenarColaVuelos();
-			vueloVuela.cambiarEstado(EstadoVuelo.VUELO);
-			
-			for(ControladorAereo controlador: vueloVuela.getTerminal().getControladores()) {
-	        	controlador.recibirNotificacionCambioEstado(vueloVuela);
-	        }
-	        
-	        for (Operador o : vueloVuela.getOperadores()) {
-	            o.recibirNotificacionCambioEstado(vueloVuela);
-	        }
-	        gestor.recibirNotificacion(new Notificacion("El vuelo " + vueloVuela.getCodigo() + " ha cambiado su estado a " + vueloVuela.getEstado() + ".", TipoNotificacion.CAMBIO_ESTADO_VUELO));
-		}	
-	}
+        if (v.getTipoVuelo() == TipoVuelo.LLEGADA) {
+            if (ahora.isBefore(horaVuelo)) {
+                v.cambiarEstado(EstadoVuelo.A_TIEMPO);
+            } else if (v.getEstado() != EstadoVuelo.ATERRIZAJE || v.getEstado() != EstadoVuelo.OPERATIVO || 
+                       v.getEstado() != EstadoVuelo.AVION_A_HANGAR || v.getEstado() != EstadoVuelo.RETRASADO || 
+                       v.getEstado() == EstadoVuelo.A_TIEMPO) {
+                double minutosRetraso = (double) Duration.between(horaVuelo, ahora).toMinutes();
+                v.setRetraso(minutosRetraso);
+                v.cambiarEstado(EstadoVuelo.RETRASADO);
+
+                for (ControladorAereo controlador: v.getTerminal().getControladores()) {
+                    controlador.recibirNotificacionCambioEstado(v);
+                } 
+                for (Operador o : v.getOperadores()) {
+                    o.recibirNotificacionCambioEstado(v);
+                }
+                gestor.recibirNotificacion(new Notificacion("El vuelo " + v.getCodigo() + " ha cambiado su estado a " + v.getEstado() + ".", TipoNotificacion.CAMBIO_ESTADO_VUELO));
+            }
+        } else if (v.getTipoVuelo() == TipoVuelo.SALIDA) {
+            long minutosRestantes = Duration.between(ahora, horaVuelo).toMinutes(); 
+            if ((v.getEstado() == EstadoVuelo.OPERATIVO || v.getEstado() == EstadoVuelo.ATERRIZAJE || 
+                 v.getEstado() == EstadoVuelo.ACEPTADO || v.getEstado() == EstadoVuelo.A_TIEMPO || 
+                 v.getEstado() == EstadoVuelo.RETRASADO) && minutosRestantes > 45) {
+                v.setRetraso(0);
+                v.cambiarEstado(EstadoVuelo.A_TIEMPO);
+            } else {
+                v.cambiarEstado(EstadoVuelo.RETRASADO);
+                
+                for (ControladorAereo controlador: v.getTerminal().getControladores()) {
+                    controlador.recibirNotificacionCambioEstado(v);
+                } 
+                for (Operador o : v.getOperadores()) {
+                    o.recibirNotificacionCambioEstado(v);
+                }
+                gestor.recibirNotificacion(new Notificacion("El vuelo " + v.getCodigo() + " ha cambiado su estado a " + v.getEstado() + ".", TipoNotificacion.CAMBIO_ESTADO_VUELO));
+            }
+        }
+
+        if (ordenarColaVuelos() != null) {
+            Vuelo vueloVuela = ordenarColaVuelos();
+            vueloVuela.cambiarEstado(EstadoVuelo.VUELO);
+            
+            for (ControladorAereo controlador: vueloVuela.getTerminal().getControladores()) {
+                controlador.recibirNotificacionCambioEstado(vueloVuela);
+            }
+            for (Operador o : vueloVuela.getOperadores()) {
+                o.recibirNotificacionCambioEstado(vueloVuela);
+            }
+            gestor.recibirNotificacion(new Notificacion("El vuelo " + vueloVuela.getCodigo() + " ha cambiado su estado a " + vueloVuela.getEstado() + ".", TipoNotificacion.CAMBIO_ESTADO_VUELO));
+        }
+    }
 	
 	/**
-     * Método que actualiza los estados automáticos cada 5 min.
+     * Método que actualiza los estados automáticos cada 5 minutos para un vuelo específico.
      * @param v Vuelo al que actualizar sus estados.
      */
-	public void iniciarActualizacionCada5Min(Vuelo v) {
+    public void iniciarActualizacionCada5Min(Vuelo v) {
         Timer timer = new Timer();
+        temporizadores.put(v, timer);
 
-        TimerTask tarea = new TimerTask(){
+        TimerTask tarea = new TimerTask() {
             @Override
             public void run() {
-                if (LocalTime.now().isAfter(v.getHora())) {
-                    timer.cancel();
-                    System.out.println("El vuelo ha alcanzado el estado VUELO o ATERRIZAJE, deteniendo las actualizaciones.");
-                    return;
-                }
+                LocalDateTime ahora = LocalDateTime.now();
+                LocalDateTime vueloFechaHora = LocalDateTime.of(v.getFecha(), v.getHora());
+
+                boolean vueloYaSalio = ahora.isAfter(vueloFechaHora);
+                boolean estadoFinal = v.getEstado() == EstadoVuelo.VUELO || 
+                                       v.getEstado() == EstadoVuelo.ATERRIZAJE || 
+                                       v.getEstado() == EstadoVuelo.AVION_A_HANGAR;
+
                 actualizarEstadoVueloAutomatico(v);
+
+                if (vueloYaSalio && estadoFinal) {
+                    timer.cancel();
+                    temporizadores.remove(v);
+                    System.out.println("Se cancela el timer del vuelo " + v.getCodigo());
+                }
             }
         };
-        timer.scheduleAtFixedRate(tarea, 0,5 * 60 * 1000);
+        timer.scheduleAtFixedRate(tarea, 0, 5 * 60 * 1000);
+        System.out.println("Temporizador iniciado para el vuelo " + v.getCodigo());
+    }
+    
+    public void activarTimersParaVuelos(List<Vuelo> vuelos) {
+        for (Vuelo v : vuelos) {
+            if (debeTenerTimer(v)) {
+                iniciarActualizacionCada5Min(v);
+                System.out.println("Timer activado para vuelo " + v.getCodigo());
+            } else {
+                System.out.println("No se activa timer para vuelo " + v.getCodigo());
+            }
+        }
+    }
+
+    private boolean debeTenerTimer(Vuelo v) {
+        LocalDateTime ahora = LocalDateTime.now();
+        LocalDateTime fechaHoraVuelo = LocalDateTime.of(v.getFecha(), v.getHora());
+
+        if (v.getTipoVuelo() == TipoVuelo.SALIDA) {
+            long minutosRestantes = Duration.between(ahora, fechaHoraVuelo).toMinutes();
+            boolean cercaDeSalir = minutosRestantes <= 45 && minutosRestantes >= 0;
+            boolean noHaVolado = v.getEstado() != EstadoVuelo.VUELO;
+
+            return cercaDeSalir && noHaVolado;
+        } else if (v.getTipoVuelo() == TipoVuelo.LLEGADA) {
+            boolean esHoraLlegada = !ahora.isBefore(fechaHoraVuelo);
+            boolean noHaAterrizado = v.getEstado() != EstadoVuelo.ATERRIZAJE && v.getEstado() != EstadoVuelo.AVION_A_HANGAR;
+
+            return esHoraLlegada && noHaAterrizado;
+        }
+        return false;
     }
 
      /**

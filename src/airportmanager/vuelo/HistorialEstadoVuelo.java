@@ -2,6 +2,8 @@ package src.airportmanager.vuelo;
 
 import java.io.Serializable;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -50,10 +52,14 @@ public class HistorialEstadoVuelo implements Serializable {
         if (historial.isEmpty()) {
             return null;
         }
+
+        Collection<EstadoVuelo> historialCopia = new ArrayList<>(historial.values());
         EstadoVuelo ultimoEstado = null;
-        for (EstadoVuelo estado : historial.values()) {
+        
+        for (EstadoVuelo estado : historialCopia) {
             ultimoEstado = estado;
         }
+
         return ultimoEstado;
     }
     /**

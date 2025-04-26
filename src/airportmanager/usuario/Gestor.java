@@ -60,7 +60,7 @@ public class Gestor extends Usuario {
     private String mensajeGUI;
     
     /** Dias de anticipación mínima para una propuesta de Vuelo. */
-    private static int diasAnticipacionMinima = 30;
+    private static int diasAnticipacionMinima = 0;
     /** Rango de minutos que como máximo se puede modificar una propuesta de Vuelo.*/
     public static int rangoMinutosMaximoCambioVuelo = 30;
     /** Horas máximas que se puede mover la reprogramación de una propuesta de Vuelo.*/
@@ -72,7 +72,7 @@ public class Gestor extends Usuario {
     /** Coste base de un vuelo de llegada. */
     private static double costeBaseVueloLlegada = 105.3;
     /** Tiempo que tiene el Operador para aceptar una propuesta de Vuelo. */
-    private static int tiempoAceptarPropuesta = 1;
+    private static int tiempoAceptarPropuesta = 60;
     /** Número de alternativa */
     private static int contadorAlternativa=0;
 
@@ -118,9 +118,14 @@ public class Gestor extends Usuario {
      */
     public void emitirFactura(Aerolinea aerolinea) {
         List<Factura> facturas = this.sistemaFacturacion.generarFactura(aerolinea);
+        Aerolinea aerolineaFactura = null;
+        if(facturas==null) {
+        	System.out.println("No hay facturas para la aerolinea.");
+        	return;
+        }
         for(Factura factura: facturas) {
 	        if (factura == null) {
-	            System.out.println("No se generaron vuelos para la factura.");
+	            System.out.println("No se generaron facturas para la aerolinea.");
 	            return;
 	        }
 	
@@ -142,8 +147,13 @@ public class Gestor extends Usuario {
 	        } catch (Exception e) {
 	            System.err.println("Error inesperado al generar la factura: " + e.getMessage());
 	        } 
-	        aerolinea.getOperador().recibirNotificacionFacturaEmitida(factura);
-	        aerolinea.addFactura(factura);
+	        for(Aerolinea a: getAeropuerto().getAerolineas()) {
+	        	if(a.getCodigo()==factura.getAirline()) {
+	        		aerolineaFactura= a;
+	        	}
+	        }
+	        aerolineaFactura.getOperador().recibirNotificacionFacturaEmitida(factura);
+	        aerolineaFactura.addFactura(factura);
         }
     }
 
@@ -555,7 +565,7 @@ public class Gestor extends Usuario {
      * @throws PistaYaExisteException Ya existe una pista con ese código.
      * 
      */
-    public void darDeAltaPista(String codigo, double longitud, TipoPista tipoPista) throws PistaYaExisteException {
+    public void darDeAltaPista(String codigo, double longitud, TipoPista tipoPista) throws PistaYaExisteException {  
     	for (Pista p: aeropuerto.getPistas()) {
     		if (p.getCodigo().equals(codigo)) {
     			throw new PistaYaExisteException("Ya existe una pista con ese código.");
@@ -583,7 +593,7 @@ public class Gestor extends Usuario {
         
     	for (VueloProgramado vuelo : vuelosPropuestosOperador) {
         	if(vuelo!=null) {
-        		if (!vuelo.getFecha().isAfter(LocalDate.now().plusDays(Gestor.diasAnticipacionMinima))) {
+        		if (vuelo.getFecha().isBefore(LocalDate.now().plusDays(Gestor.diasAnticipacionMinima))) {
                 throw new AntelacionInvalidaException(
                         "La propuesta del vuelo " + vuelo.getCodigo() + " no cumple con la antelación mínima de días.");
 	            } else {

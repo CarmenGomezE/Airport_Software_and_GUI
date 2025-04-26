@@ -85,7 +85,7 @@ public class ControladorAereo extends UsuarioConDni {
     /**
      * Método para cambiar el estado de un vuelo.
      * 
-     * @param vuelo  Vuelo al que se le cambia el estado.
+     * @param vuelo  Vuelo al que se le cambia el estado. 
      * @param estado Nuevo estado del vuelo.
      * @throws IllegalArgumentException argumento no válido.
      */

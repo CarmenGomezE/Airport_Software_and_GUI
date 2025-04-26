@@ -11,6 +11,7 @@ import src.airportmanager.AirportManager;
 import src.airportmanager.aeropuerto.Aeropuerto;
 import src.airportmanager.avion.Avion;
 import src.airportmanager.gui.ConfiguracionUI;
+import src.airportmanager.usuario.Gestor;
 import src.airportmanager.usuario.Operador;
 import src.airportmanager.vuelo.*;
 

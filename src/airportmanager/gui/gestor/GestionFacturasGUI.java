@@ -126,7 +126,6 @@ public class GestionFacturasGUI extends JFrame {
         botonEmitirFactura.setAlignmentX(Component.CENTER_ALIGNMENT);
         
         botonEmitirFactura.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Aerolinea aerolinea = gestor.buscarAerolineaPorNombre(aerolineaSeleccionada);
@@ -138,25 +137,20 @@ public class GestionFacturasGUI extends JFrame {
 					return;
 			
 				}
-				
 				gestor.emitirFactura(aerolinea);
 				JOptionPane.showMessageDialog(null, 
 					    "Factura emitida correctamente para la aerolínea " + aerolinea.getNombre(), 
 					    "Éxito", 
 					    JOptionPane.INFORMATION_MESSAGE);
 				verListaFacturas();
-				
-				
 			}
-        	
         });
-        
         
         aerolineaPanel.add(botonEmitirFactura);
         panel.add(aerolineaPanel);
         panel.add(Box.createRigidArea(new Dimension(0, 20)));
 
-		setVisible(true);
+		setVisible(true); 
 	}
 	
 	private void verListaFacturas() {
@@ -170,7 +164,6 @@ public class GestionFacturasGUI extends JFrame {
 	}
 	
 	private void seleccionAerolineas(JPanel aerolineaPanel) {
-
 		List<String> listaAerolineas = new ArrayList<>();
 		for (Aerolinea a : gestor.getAeropuerto().getAerolineas()) {
 			if (a.getNombre() != null) {
@@ -178,7 +171,6 @@ public class GestionFacturasGUI extends JFrame {
 			}
 		}
 		String[] codigosAerolinea = listaAerolineas.toArray(new String[0]);
-
 
 		aerolineaPanel.add(new JLabel("Aerolínea:"));
 		comboAerolineas = new JComboBox<>(codigosAerolinea);
@@ -189,9 +181,7 @@ public class GestionFacturasGUI extends JFrame {
 				aerolineaSeleccionada = (String) comboAerolineas.getSelectedItem();
 			}
 		});
-		
 	}
-	
 }
 	
 		

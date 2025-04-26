@@ -46,63 +46,65 @@ public class SistemaFacturacion implements Serializable {
      * @param aerolinea Aerolinea de la que es la factura.
      * @return Factura mensual de la aerolinea.
      * 
-     */
-    public List<Factura> generarFactura(Aerolinea aerolinea) {
-        List<Vuelo> vuelosMensuales = aerolinea.vuelosMensuales(LocalDate.now().getMonth());
-        List<Factura> facturas=new ArrayList<>();
-        if (vuelosMensuales.isEmpty()) {
-            return null;
-        }
+     */public List<Factura> generarFactura(Aerolinea aerolinea) {
+    	    List<Vuelo> vuelosMensuales = aerolinea.vuelosMensuales(LocalDate.now().getMonth());
+    	    List<Factura> facturas = new ArrayList<>();
+    	    if (vuelosMensuales.isEmpty()) {
+    	        return null;
+    	    }
 
-        List<IResourceUsageInfo> recursos = new ArrayList<>();
-        for (Vuelo vuelo : vuelosMensuales) {
-        	int precioBaseVuelo = 0;
-            int precioRecargoVuelo = 0;
-            if (vuelo.getTipoCarga() == TipoCarga.MERCANCIAS) {
-                recursos.add(new UsoRecursos("Recargo de mercancías", this.recargoAvionMercancias, 1));
-                precioRecargoVuelo += this.recargoAvionMercancias;
-            }
-            if (vuelo.getTipoVuelo() == TipoVuelo.SALIDA) {
-                recursos.add(new UsoRecursos("Vuelo de salida", this.costeBaseVueloSalida, 1));
-                precioBaseVuelo += this.costeBaseVueloSalida;
-            } else if (vuelo.getTipoVuelo() == TipoVuelo.LLEGADA) {
-                recursos.add(new UsoRecursos("Vuelo de llegada", this.costeBaseVueloLlegada, 1));
-                precioBaseVuelo += this.costeBaseVueloLlegada;
-            }
+    	    List<IResourceUsageInfo> recursos = new ArrayList<>();
+    	    for (Vuelo vuelo : vuelosMensuales) {
+    	        int precioBaseVuelo = 0;
+    	        int precioRecargoVuelo = 0;
 
-            if (vuelo.getOperadoresAsignados() != null && !vuelo.getOperadoresAsignados().isEmpty()) {
-                double porcentajeTotal = 0.0;
+    	        // Procesar recargos y costes base según el tipo de vuelo y carga
+    	        if (vuelo.getTipoCarga() == TipoCarga.MERCANCIAS) {
+    	            recursos.add(new UsoRecursos("Recargo de mercancías", this.recargoAvionMercancias, 1));
+    	            precioRecargoVuelo += this.recargoAvionMercancias;
+    	        }
+    	        if (vuelo.getTipoVuelo() == TipoVuelo.SALIDA) {
+    	            recursos.add(new UsoRecursos("Vuelo de salida", this.costeBaseVueloSalida, 1));
+    	            precioBaseVuelo += this.costeBaseVueloSalida;
+    	        } else if (vuelo.getTipoVuelo() == TipoVuelo.LLEGADA) {
+    	            recursos.add(new UsoRecursos("Vuelo de llegada", this.costeBaseVueloLlegada, 1));
+    	            precioBaseVuelo += this.costeBaseVueloLlegada;
+    	        }
 
-                for (Map.Entry<Operador, Double> entry : vuelo.getOperadoresAsignados().entrySet()) {
-                    Operador operador = entry.getKey();
-                    double porcentajeCarga = entry.getValue();
-                    porcentajeTotal += porcentajeCarga;
+    	        if (vuelo.getOperadoresAsignados() != null && !vuelo.getOperadoresAsignados().isEmpty()) {
+    	            double porcentajeTotal = 0.0;
 
-                    if (!operador.getAerolinea().equals(aerolinea)) {
-                        int precioProporcionalBase = (int) (precioBaseVuelo * porcentajeCarga / 100);
-                        int precioProporcionalRecargo = (int) (precioRecargoVuelo * porcentajeCarga / 100);
+    	            for (Map.Entry<Operador, Double> entry : vuelo.getOperadoresAsignados().entrySet()) {
+    	                Operador operador = entry.getKey();
+    	                double porcentajeCarga = entry.getValue();
+    	                porcentajeTotal += porcentajeCarga;
 
-                        facturas.add(new Factura(operador.getAerolinea(),LocalDate.now(),precioProporcionalBase, precioProporcionalRecargo, 
-                                generarCodigoFactura(operador.getAerolinea()), recursos,EstadoFactura.PENDIENTE));
-                    }
-                }
+    	                if (!operador.getAerolinea().equals(aerolinea)) {
+    	                    int precioProporcionalBase = (int) (precioBaseVuelo * porcentajeCarga / 100);
+    	                    int precioProporcionalRecargo = (int) (precioRecargoVuelo * porcentajeCarga / 100);
 
-                if (vuelo.getOperadorPrincipal().getAerolinea().equals(aerolinea)) {
-                    int precioProporcionalBase = (int) (precioBaseVuelo * (100 - porcentajeTotal) / 100);
-                    int precioProporcionalRecargo = (int) (precioRecargoVuelo * (100 - porcentajeTotal) / 100);
-                    facturas.add(new Factura(aerolinea, LocalDate.now(),precioProporcionalBase,
-                            precioProporcionalRecargo,generarCodigoFactura(aerolinea),recursos,EstadoFactura.PENDIENTE));
-                }
-            } else {
-                if (vuelo.getOperadorPrincipal().getAerolinea().equals(aerolinea)) {
-                    facturas.add(new Factura(aerolinea,LocalDate.now(),precioBaseVuelo,precioRecargoVuelo,generarCodigoFactura(aerolinea),
-                    		recursos,EstadoFactura.PENDIENTE));
-                }
-            }
-        }
+    	                    facturas.add(new Factura(operador.getAerolinea(), LocalDate.now(), precioProporcionalBase,
+    	                            precioProporcionalRecargo, generarCodigoFactura(operador.getAerolinea()), recursos,
+    	                            EstadoFactura.PENDIENTE));
+    	                }
+    	            }
 
-        return facturas;
-    }
+    	            if (vuelo.getOperadorPrincipal().getAerolinea().equals(aerolinea)) {
+    	                int precioProporcionalBase = (int) (precioBaseVuelo * (100 - porcentajeTotal) / 100);
+    	                int precioProporcionalRecargo = (int) (precioRecargoVuelo * (100 - porcentajeTotal) / 100);
+    	                facturas.add(new Factura(aerolinea, LocalDate.now(), precioProporcionalBase, precioProporcionalRecargo,
+    	                        generarCodigoFactura(aerolinea), recursos, EstadoFactura.PENDIENTE));
+    	            }
+    	        } else {
+    	            if (vuelo.getOperadorPrincipal().getAerolinea().equals(aerolinea)) {
+    	                facturas.add(new Factura(aerolinea, LocalDate.now(), precioBaseVuelo, precioRecargoVuelo,
+    	                        generarCodigoFactura(aerolinea), recursos, EstadoFactura.PENDIENTE));
+    	            }
+    	        }
+    	    }
+
+    	    return facturas;
+    	}
     
 
     /**
@@ -115,7 +117,7 @@ public class SistemaFacturacion implements Serializable {
         return aerolinea.getCodigo() + String.format("%06d", contadorFactura++);
     }
     
-    /**
+    /** 
      * Método para obtener el coste base de un vuelo de salida.
      * 
      * @return El coste base de un vuelo de salida.
