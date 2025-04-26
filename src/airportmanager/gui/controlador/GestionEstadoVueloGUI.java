@@ -17,6 +17,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import src.airportmanager.AirportManager;
@@ -36,6 +38,7 @@ public class GestionEstadoVueloGUI extends JFrame {
 	private static final long serialVersionUID = 1L;
     private final ControladorGUI conGUI;
     private final ControladorAereo controlador;
+    private JTextArea textAreaMensajes;
     
 	public GestionEstadoVueloGUI(AirportManager manager, ControladorGUI conGUI, ControladorAereo controlador) {
 		this.conGUI = conGUI;
@@ -67,7 +70,7 @@ public class GestionEstadoVueloGUI extends JFrame {
         titulo.setFont(new Font("Arial", Font.BOLD, 28));
         panel.add(titulo);
         panel.add(Box.createRigidArea(new Dimension(0, 40)));
-
+        
         /** CÓDIGO DE VUELO */
         JLabel labelCodigo = new JLabel("Código de vuelo:");
         labelCodigo.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -101,6 +104,31 @@ public class GestionEstadoVueloGUI extends JFrame {
         botonCambiar.setAlignmentX(Component.CENTER_ALIGNMENT);
         panel.add(botonCambiar);
         
+        /** ÁREA DE TEXTO */
+        textAreaMensajes = new JTextArea(5, 30); 
+        textAreaMensajes.setEditable(false);  
+        textAreaMensajes.setLineWrap(true);  
+        textAreaMensajes.setWrapStyleWord(true);
+        
+        JScrollPane scrollPaneMensajes = new JScrollPane(textAreaMensajes);
+        // No usamos setPreferredSize
+        scrollPaneMensajes.setAlignmentX(Component.CENTER_ALIGNMENT);
+        scrollPaneMensajes.setMaximumSize(new Dimension(600, 200)); // ajustable
+        
+        // Contenedor del mensaje
+        JPanel contenedorMensajes = new JPanel();
+        contenedorMensajes.setLayout(new BoxLayout(contenedorMensajes, BoxLayout.Y_AXIS));
+        contenedorMensajes.setOpaque(false);
+        contenedorMensajes.setAlignmentX(Component.CENTER_ALIGNMENT);
+        contenedorMensajes.add(Box.createRigidArea(new Dimension(0, 10)));
+        contenedorMensajes.add(scrollPaneMensajes);
+        contenedorMensajes.setVisible(false);
+        
+        // Añadir al panel principal
+        panel.add(Box.createRigidArea(new Dimension(0, 20))); // espaciado
+        panel.add(contenedorMensajes);
+
+        
         botonCambiar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -128,6 +156,14 @@ public class GestionEstadoVueloGUI extends JFrame {
 
                 try {
                     controlador.cambiarEstadoVuelo(vuelo, nuevoEstado);
+                    String mensaje = controlador.getMensajeGUI();
+                    System.out.println(mensaje);
+                    textAreaMensajes.setText(mensaje);
+                    if (mensaje != null && !mensaje.trim().isEmpty()) {
+                        contenedorMensajes.setVisible(true);
+                        contenedorMensajes.revalidate();
+                        contenedorMensajes.repaint();
+                    }
                     JOptionPane.showMessageDialog(null, "Estado cambiado correctamente.");
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Error al cambiar el estado del vuelo: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
