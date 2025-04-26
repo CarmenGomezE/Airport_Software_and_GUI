@@ -3,6 +3,7 @@ package src.airportmanager.gui.gestor;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,6 +14,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -23,6 +25,7 @@ import javax.swing.ListSelectionModel;
 import src.airportmanager.AirportManager;
 import src.airportmanager.gui.ConfiguracionUI;
 import src.airportmanager.notificacion.Notificacion;
+import src.airportmanager.notificacion.TipoNotificacion;
 import src.airportmanager.usuario.Gestor;
 
 public class NotificacionesGestorGUI extends JFrame {
@@ -30,6 +33,12 @@ public class NotificacionesGestorGUI extends JFrame {
     private final GestorGUI geGUI;
     private final Gestor gestor;
     private DefaultListModel<String> model;
+    private JCheckBox cambioEstadoVuelo;
+    private JCheckBox olvidoContrasena;
+    private JCheckBox solicitudVueloProgramado;
+    private JCheckBox facturaEmitida;
+    private JCheckBox solicitudCompartirVuelo;
+    private JCheckBox opcionesReprogramarVuelo;
 
     public NotificacionesGestorGUI(AirportManager manager, GestorGUI gestorGUI, Gestor gestorAe) {
         this.geGUI = gestorGUI;
@@ -72,6 +81,29 @@ public class NotificacionesGestorGUI extends JFrame {
         scrollPane.setPreferredSize(new Dimension(600, 300));
         panel.add(scrollPane);
 
+
+        /**Seleccionar tipo notificaciones que quiere recibir*/
+        cambioEstadoVuelo = new JCheckBox("Cambio estado vuelo");
+        cambioEstadoVuelo.setSelected(true);
+        olvidoContrasena = new JCheckBox("Olvido contraseña");
+        olvidoContrasena.setSelected(true);
+        solicitudCompartirVuelo = new JCheckBox("Solicitud compartir vuelo");
+        solicitudCompartirVuelo.setSelected(true);
+        facturaEmitida = new JCheckBox("Factura emitida");
+        facturaEmitida.setSelected(true);
+        opcionesReprogramarVuelo = new JCheckBox("Opciones reprogramar vuelo");
+        opcionesReprogramarVuelo.setSelected(true);
+        solicitudVueloProgramado = new JCheckBox("Solicitud vuelo programado");
+        solicitudVueloProgramado.setSelected(true);
+        JPanel panelCheck = new JPanel(new GridLayout(5,1));
+        panelCheck.add(cambioEstadoVuelo);
+        panelCheck.add(olvidoContrasena);
+        panelCheck.add(solicitudCompartirVuelo);
+        panelCheck.add(facturaEmitida);
+        panelCheck.add(opcionesReprogramarVuelo);
+        panelCheck.add(solicitudVueloProgramado);
+        
+
         JPanel botonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         botonPanel.setBackground(ConfiguracionUI.COLOR_FONDO);
         JButton botonRefrescar = new JButton("🔄 Refrescar notificaciones");
@@ -83,8 +115,9 @@ public class NotificacionesGestorGUI extends JFrame {
                 actualizarNotificaciones();
             }
         });
-
+        
         botonPanel.add(botonRefrescar);
+        panel.add(panelCheck);
         panel.add(botonPanel);
 
         setVisible(true);
@@ -93,7 +126,38 @@ public class NotificacionesGestorGUI extends JFrame {
     private void actualizarNotificaciones() {
         model.clear();
         for (Notificacion notificacion : gestor.getNotificaciones()) {
-            model.addElement(notificacion.getMensaje()); 
+            
+            if (solicitudVueloProgramado.isSelected() && 
+                notificacion.getTipoNotificacion() == TipoNotificacion.SOLICITUD_VUELO_PROGRAMADO) {
+                model.addElement(notificacion.getMensaje());
+            }
+            
+            if (cambioEstadoVuelo.isSelected() && 
+                notificacion.getTipoNotificacion() == TipoNotificacion.CAMBIO_ESTADO_VUELO) {
+                model.addElement(notificacion.getMensaje());
+            }
+            
+            if (olvidoContrasena.isSelected() && 
+                notificacion.getTipoNotificacion() == TipoNotificacion.OLVIDO_CONTRASENA) {
+                model.addElement(notificacion.getMensaje());
+            }
+            
+            if (facturaEmitida.isSelected() && 
+                notificacion.getTipoNotificacion() == TipoNotificacion.FACTURA_EMITIDA) {
+                model.addElement(notificacion.getMensaje());
+            }
+            
+            if (solicitudCompartirVuelo.isSelected() && 
+                notificacion.getTipoNotificacion() == TipoNotificacion.SOLICITUD_COMPARTIR_VUELO) {
+                model.addElement(notificacion.getMensaje());
+            }
+            
+            if (opcionesReprogramarVuelo.isSelected() && 
+                notificacion.getTipoNotificacion() == TipoNotificacion.OPCIONES_REPROGRAMAR_VUELO) {
+                model.addElement(notificacion.getMensaje());
+            }
         }
     }
+
 }
+
