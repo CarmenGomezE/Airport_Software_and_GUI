@@ -221,6 +221,8 @@ public class AirportManagerGUI extends JFrame {
                     JOptionPane.showMessageDialog(AirportManagerGUI.this, "Error: " + ex.getMessage(), "Error",
                             JOptionPane.ERROR_MESSAGE);
                 }
+                usuarioField.setText(""); 
+                passwordField.setText("");
             } 
         });
         passwordField.getDocument().addDocumentListener(new DocumentListener() {
