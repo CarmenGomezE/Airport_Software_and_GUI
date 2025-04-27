@@ -37,7 +37,7 @@ public class EstadisticasOperador implements Serializable {
         this.operador = operador;
         this.tiempoMedioRetrasoPorMes = new HashMap<>();
         this.tiempoMedioRetrasoPorFranjaHoraria = new HashMap<>();
-        this.tiempoMedioRetrasoPorVuelo = new HashMap<>();
+        this.tiempoMedioRetrasoPorVuelo = new HashMap<>(); 
     }
 
     /**

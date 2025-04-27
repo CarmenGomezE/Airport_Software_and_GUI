@@ -61,9 +61,9 @@ public class Gestor extends Usuario {
     /** Mensaje de la interfaz. */
     private String mensajeGUI;
     /** Formateador de local date */
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private transient DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     /** Formateador de local time */
-    DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm");
+    private transient DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm");
     
     /** Dias de anticipación mínima para una propuesta de Vuelo. */
     private static int diasAnticipacionMinima = 0;
