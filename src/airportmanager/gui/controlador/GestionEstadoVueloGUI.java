@@ -182,8 +182,8 @@ public class GestionEstadoVueloGUI extends JFrame {
 	 */
 	private EstadoVuelo convertirTextoAEstadoVuelo(String texto) {
         switch (texto) {
-            case "Esperando despegue": return EstadoVuelo.ESPERANDO_DESPEGUE;
-            case "Esperando pista de despegue": return EstadoVuelo.ESPERANDO_PISTA_DE_DESPEGUE;
+            case "Esperando despegue": return EstadoVuelo.ESPERANDO_DESPEGUE; 
+            case "Esperando pista de despegue": return EstadoVuelo.ESPERANDO_PISTA_DE_DESPEGUE;  
             case "Esperando pista de aterrizaje": return EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE;
             case "Esperando aterrizaje": return EstadoVuelo.ESPERANDO_ATERRIZAJE;
             case "Aterrizaje": return EstadoVuelo.ATERRIZAJE;

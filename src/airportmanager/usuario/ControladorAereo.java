@@ -99,6 +99,13 @@ public class ControladorAereo extends UsuarioConDni {
             if (vuelo.getControlador() != this) {
                 throw new VueloNoDelUsuarioException("Este vuelo no está asignado a este usuario.");
             }
+            if(vuelo.getPista()!=null ){
+            	System.out.println("ANTES Código: "+vuelo.getCodigo()+" Pista: "+vuelo.getPista().getCodigo());
+            } else if(vuelo.getPuertaEmbarque()!=null ){
+            	System.out.println("ANTES Código: "+vuelo.getCodigo()+" Puerta: "+vuelo.getPuertaEmbarque().getId());
+            } else if( vuelo.getModoEmbarque()!=null){
+            	System.out.println("ANTES Código: "+vuelo.getCodigo()+" Modo embarque: "+vuelo.getModoEmbarque().getId());
+            }
 
             switch (estado) {
                 case ESPERANDO_DESPEGUE:
@@ -126,27 +133,46 @@ public class ControladorAereo extends UsuarioConDni {
                     throw new EstadoNoDelUsuarioException("Este usuario no puede cambiar a ese estado.");
             }
         } catch (VueloNoDelUsuarioException e) {
+        	 mensajeGUI = "";
             System.out.println("Error: " + e.getMessage());
         } catch (EstadoNoDelUsuarioException e) {
+        	 mensajeGUI = "";
             System.out.println("Error: " + e.getMessage());
         } catch (EstadoEquivocadoException e) {
+        	 mensajeGUI = "";
             System.out.println("Error: " + e.getMessage());
         } catch (NoPistasDisponiblesException e) {
+        	 mensajeGUI = "";
             System.out.println("Error: " + e.getMessage());
         } catch (NoVueloEnMenosDe1HoraException e) {
+        	 mensajeGUI = "";
             System.out.println("Error: " + e.getMessage());
         } catch (VueloEnMenosDe1HoraException e) {
+        	 mensajeGUI = "";
             System.out.println("Error: " + e.getMessage());
         } catch (NoFingerMercanciasException e) {
+        	 mensajeGUI = "";
             System.out.println("Error: " + e.getMessage());
         } catch (NoModosPuertasEmbarqueDisponiblesException e) {
+        	 mensajeGUI = "";
             System.out.println("Error: " + e.getMessage());
         } catch (NoHangaresDisponiblesException e) {
+        	 mensajeGUI = "";
             System.out.println("Error: " + e.getMessage());
         } catch (CargaAvionEquivocadaException e) {
+        	 mensajeGUI = "";
             System.out.println("Error: " + e.getMessage());
         } catch (Exception e) { 
+        	 mensajeGUI = "";
             System.out.println("Error inesperado: " + e.getMessage());
+        }
+        
+        if(vuelo.getPista()!=null ){
+        	System.out.println("DESPUES Código: "+vuelo.getCodigo()+" Pista: "+vuelo.getPista().getCodigo());
+        } else if(vuelo.getPuertaEmbarque()!=null ){
+        	System.out.println("DESPUES Código: "+vuelo.getCodigo()+" Puerta: "+vuelo.getPuertaEmbarque().getId());
+        } else if( vuelo.getModoEmbarque()!=null){
+        	System.out.println("DESPUES Código: "+vuelo.getCodigo()+" Modo embarque: "+vuelo.getModoEmbarque().getId());
         }
     }
     
@@ -427,12 +453,10 @@ public class ControladorAereo extends UsuarioConDni {
             o.recibirNotificacionCambioEstado(vuelo);
         }
         gestor.recibirNotificacion(new Notificacion("El vuelo " + vuelo.getCodigo() + " ha cambiado su estado a " + vuelo.getEstado() + ".", TipoNotificacion.CAMBIO_ESTADO_VUELO));
-
     }
 
     /**
-     * Método auxiliar para cambiar el estado de un vuelo a
-     * ESPERANDO_PISTA_DE_ATERRIZAJE.
+     * Método auxiliar para cambiar el estado de un vuelo a ESPERANDO_PISTA_DE_ATERRIZAJE.
      * 
      * @param vuelo El vuelo al que se le intenta cambiar el estado.
      * 
@@ -540,12 +564,33 @@ public class ControladorAereo extends UsuarioConDni {
      * @param vuelo El vuelo al que se le intenta cambiar el estado.
      * 
      * @throws EstadoEquivocadoException estado equivocado.
+     * @throws NoPistasDisponiblesException no pista.
      */
-    private void cambiarEstadoEsperandoPistaDespegue(Vuelo vuelo) throws EstadoEquivocadoException {
+    private void cambiarEstadoEsperandoPistaDespegue(Vuelo vuelo) throws EstadoEquivocadoException, NoPistasDisponiblesException {
         if (vuelo.getEstado() != EstadoVuelo.FIN_DEL_EMBARQUE && vuelo.getEstado() != EstadoVuelo.A_TIEMPO && vuelo.getEstado() != EstadoVuelo.RETRASADO) {
             throw new EstadoEquivocadoException("El vuelo no está en el estado correcto para cambiar a este estado");
         }
-        mensajeGUI = "";
+        if(vuelo.getModoEmbarque()!=null) {
+        	liberarModoEmbarque(vuelo);
+        }
+        if(vuelo.getPuertaEmbarque()!=null) {
+        	liberarPuertaEmbarque(vuelo);
+        }
+
+        List<Pista> pistas = new ArrayList<>();
+        for (Pista p : aeropuerto.getPistas()) {
+            if (p.getTipoPista() == TipoPista.DESPEGUE) {
+                pistas.add(p);
+            }
+        }
+        Random rand = new Random();
+        Pista pista = pistas.get(rand.nextInt(pistas.size()));
+        asignarPista(pista, vuelo);
+        if (vuelo.getPista() == null) {
+            throw new NoPistasDisponiblesException("No hay pistas disponibles");
+        }
+        mensajeGUI = "Se le ha asignado la pista " + pista.getCodigo() + " al vuelo " + vuelo.getCodigo() + ".";
+        
 
         vuelo.cambiarEstado(EstadoVuelo.ESPERANDO_PISTA_DE_DESPEGUE);
         for(ControladorAereo controlador: vuelo.getTerminal().getControladores()) {
@@ -565,26 +610,13 @@ public class ControladorAereo extends UsuarioConDni {
      * @param vuelo El vuelo al que se le intenta cambiar el estado.
      * 
      * @throws EstadoEquivocadoException estado equivocado.
-     * @throws NoPistasDisponiblesException no pista.
      */
-    private void cambiarEstadoEsperandoDespegue(Vuelo vuelo) throws EstadoEquivocadoException, NoPistasDisponiblesException {
+    private void cambiarEstadoEsperandoDespegue(Vuelo vuelo) throws EstadoEquivocadoException  {
         if (vuelo.getEstado() != EstadoVuelo.ESPERANDO_PISTA_DE_DESPEGUE && vuelo.getEstado()!= EstadoVuelo.A_TIEMPO && vuelo.getEstado() != EstadoVuelo.RETRASADO) {
             throw new EstadoEquivocadoException("El vuelo no está en el estado correcto para cambiar a este estado");
         }
 
-        List<Pista> pistas = new ArrayList<>();
-        for (Pista p : aeropuerto.getPistas()) {
-            if (p.getTipoPista() == TipoPista.DESPEGUE) {
-                pistas.add(p);
-            }
-        }
-        Random rand = new Random();
-        Pista pista = pistas.get(rand.nextInt(pistas.size()));
-        asignarPista(pista, vuelo);
-        if (vuelo.getPista() == null) {
-            throw new NoPistasDisponiblesException("No hay pistas disponibles");
-        }
-        mensajeGUI = "Se le ha asignado la pista " + pista.getCodigo() + " al vuelo " + vuelo.getCodigo() + ".";
+        mensajeGUI = "";
         
         vuelo.cambiarEstado(EstadoVuelo.ESPERANDO_DESPEGUE);
         
@@ -658,7 +690,7 @@ public class ControladorAereo extends UsuarioConDni {
      * 
      * @throws IllegalArgumentException Si el argumentos es nulo.
      */
-    private void liberarPista(Vuelo vuelo) throws IllegalArgumentException {
+    public void liberarPista(Vuelo vuelo) throws IllegalArgumentException {
         if (vuelo == null) {
             throw new IllegalArgumentException("El vuelo no puede ser null");
         }

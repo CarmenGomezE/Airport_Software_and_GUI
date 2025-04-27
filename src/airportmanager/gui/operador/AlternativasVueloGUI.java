@@ -74,7 +74,7 @@ public class AlternativasVueloGUI extends JFrame {
             }
         });
         
-        /** PANEL PRINCIPAL */
+        /** PANEL PRINCIPAL */ 
         JPanel panel = new JPanel(new BorderLayout(10, 10));
         panel.setBorder(BorderFactory.createEmptyBorder(20, 30, 20, 30));
         panel.setBackground(ConfiguracionUI.COLOR_FONDO);

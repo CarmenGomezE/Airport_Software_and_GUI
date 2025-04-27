@@ -195,6 +195,7 @@ public class AirportManager implements Serializable {
         if (ordenarColaVuelos() != null) {
             Vuelo vueloVuela = ordenarColaVuelos();
             vueloVuela.cambiarEstado(EstadoVuelo.VUELO);
+            vueloVuela.getControlador().liberarPista(vueloVuela);
             
             for (ControladorAereo controlador: vueloVuela.getTerminal().getControladores()) {
                 controlador.recibirNotificacionCambioEstado(vueloVuela);
@@ -411,7 +412,7 @@ public class AirportManager implements Serializable {
             pasajeros1 = ((AvionPasajeros) v1.getAvion()).getCapacidadMaxPasajeros();
         }
 
-        if (esPasajero2) {
+        if (esPasajero2) { 
             pasajeros2 = ((AvionPasajeros) v2.getAvion()).getCapacidadMaxPasajeros();
         }
 
