@@ -142,6 +142,14 @@ public class Operador extends UsuarioConDni {
         if (vuelo.getOperadorPrincipal()!=this) {
             throw new VueloNoDelUsuarioException("Este vuelo no está asignado a este usuario");
         }
+        
+        if(vuelo.getPista()!=null ){
+        	System.out.println("ANTES Código: "+vuelo.getCodigo()+" Pista: "+vuelo.getPista().getCodigo());
+        } if(vuelo.getPuertaEmbarque()!=null ){
+        	System.out.println("ANTES Código: "+vuelo.getCodigo()+" Puerta: "+vuelo.getPuertaEmbarque().getId());
+        } if( vuelo.getModoEmbarque()!=null){
+        	System.out.println("ANTES Código: "+vuelo.getCodigo()+" Modo embarque: "+vuelo.getModoEmbarque().getId());
+        } 
 
         switch (estado) {
             case EN_PREPARACION_PARA_DESPEGAR:
@@ -162,22 +170,24 @@ public class Operador extends UsuarioConDni {
             default:
                 throw new EstadoNoDelUsuarioException("Este usuario no puede cambiar a ese estado");
         }
+        
+        if(vuelo.getPista()!=null ){
+        	System.out.println("DESPUES Código: "+vuelo.getCodigo()+" Pista: "+vuelo.getPista().getCodigo());
+        } if(vuelo.getPuertaEmbarque()!=null ){
+        	System.out.println("DESPUES Código: "+vuelo.getCodigo()+" Puerta: "+vuelo.getPuertaEmbarque().getId());
+        } if( vuelo.getModoEmbarque()!=null){
+        	System.out.println("DESPUES Código: "+vuelo.getCodigo()+" Modo embarque: "+vuelo.getModoEmbarque().getId());
+        }
+        System.out.println("\n");
     }
 
     /**
      * Método para cambiar el estado de un vuelo a en preparación para despegar.
      * 
      * @param vuelo Vuelo al que se le cambia el estado.
-     * @throws EstadoEquivocadoException estado no correcto al que cambiar.
      */
-    private void cambiarEstadoEnPreparacionDespegar(Vuelo vuelo) throws EstadoEquivocadoException {
-        if (vuelo.getEstado() != EstadoVuelo.OPERATIVO && vuelo.getEstado() != EstadoVuelo.A_TIEMPO && vuelo.getEstado() != EstadoVuelo.RETRASADO 
-        		&& vuelo.getEstado() != EstadoVuelo.ACEPTADO) {
-        	  throw new EstadoEquivocadoException("El vuelo no está en el estado correcto para cambiar a este estado");
-        }
-        else {
-            vuelo.cambiarEstado(EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR);
-        }
+    private void cambiarEstadoEnPreparacionDespegar(Vuelo vuelo) {
+        vuelo.cambiarEstado(EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR);
         for(ControladorAereo controlador: vuelo.getTerminal().getControladores()) {
         	controlador.recibirNotificacionCambioEstado(vuelo);
         }
@@ -205,8 +215,8 @@ public class Operador extends UsuarioConDni {
             AvionMercancias avion = (AvionMercancias) vuelo.getAvion();
             double capacidadCarga = avion.getCapacidadMaxCarga();
             if (minutosDeDiferencia <= 30 && (capacidadCarga < 10000)
-                    || (minutosDeDiferencia <= 45 && capacidadCarga > 10000)) {
-                if (vuelo.getEstado() != EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR && vuelo.getEstado() != EstadoVuelo.A_TIEMPO && vuelo.getEstado() != EstadoVuelo.RETRASADO) {
+                    || (minutosDeDiferencia <= 45 && capacidadCarga > 10000)) { 
+                if (vuelo.getHistorialEstadoVuelo().getUltimoEstadoManual() != EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR) {
                 	throw new EstadoEquivocadoException("El vuelo no está en el estado correcto para cambiar a este estado");
                 }
                 else {
@@ -218,7 +228,7 @@ public class Operador extends UsuarioConDni {
             int numeroPasajeros = avion.getCapacidadMaxPasajeros();
             if ((minutosDeDiferencia <= 30 && numeroPasajeros < 100)
                     || (minutosDeDiferencia <= 45 && numeroPasajeros > 100)) {
-                if (vuelo.getEstado() != EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR && vuelo.getEstado() != EstadoVuelo.A_TIEMPO && vuelo.getEstado() != EstadoVuelo.RETRASADO) {
+                if (vuelo.getHistorialEstadoVuelo().getUltimoEstadoManual() != EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR ) {
                 	throw new EstadoEquivocadoException("El vuelo no está en el estado correcto para cambiar a este estado");
                 }
                 else {
@@ -246,7 +256,7 @@ public class Operador extends UsuarioConDni {
      * @throws EstadoEquivocadoException estado no correcto al que cambiar.
      */
     private void cambiarEstadoFinEmbarque(Vuelo vuelo) throws EstadoEquivocadoException {
-        if (vuelo.getEstado() != EstadoVuelo.INICIO_DEL_EMBARQUE && vuelo.getEstado() != EstadoVuelo.A_TIEMPO && vuelo.getEstado() != EstadoVuelo.RETRASADO) {
+        if (vuelo.getHistorialEstadoVuelo().getUltimoEstadoManual() != EstadoVuelo.INICIO_DEL_EMBARQUE ) {
         	throw new EstadoEquivocadoException("El vuelo no está en el estado correcto para cambiar a este estado");
         }
         else {
@@ -272,7 +282,7 @@ public class Operador extends UsuarioConDni {
      * @throws EstadoEquivocadoException estado no correcto al que cambiar.
      */
     private void cambiarEstadoInicioDesembarque(Vuelo vuelo) throws EstadoEquivocadoException {
-        if (vuelo.getEstado() != EstadoVuelo.ATERRIZAJE && vuelo.getEstado() != EstadoVuelo.A_TIEMPO && vuelo.getEstado() != EstadoVuelo.RETRASADO) {
+        if (vuelo.getHistorialEstadoVuelo().getUltimoEstadoManual()!= EstadoVuelo.ATERRIZAJE ) {
         	throw new EstadoEquivocadoException("El vuelo no está en el estado correcto para cambiar a este estado");
         }
         else {
@@ -298,7 +308,7 @@ public class Operador extends UsuarioConDni {
      * @throws EstadoEquivocadoException estado no correcto al que cambiar.
      */
     private void cambiarEstadoFinDesembarque(Vuelo vuelo) throws EstadoEquivocadoException {
-        if (vuelo.getEstado() != EstadoVuelo.INICIO_DEL_DESEMBARQUE && vuelo.getEstado() != EstadoVuelo.A_TIEMPO && vuelo.getEstado() != EstadoVuelo.RETRASADO) {
+        if (vuelo.getHistorialEstadoVuelo().getUltimoEstadoManual() != EstadoVuelo.INICIO_DEL_DESEMBARQUE) {
         	throw new EstadoEquivocadoException("El vuelo no está en el estado correcto para cambiar a este estado");
         }
         else {

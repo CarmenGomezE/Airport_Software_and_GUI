@@ -258,7 +258,7 @@ public class OperadorGUI extends JFrame {
             return;
         }
 
-        for (Vuelo v : vuelos) {
+        for (Vuelo v : vuelos) { 
             if (v.getFecha().equals(fecha)) {
                 if (v.getEstado().equals(EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE)) {
                     Duration tiempo = Duration.between(v.getHistorialEstadoVuelo().getHoraCambio(EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE), LocalTime.now());
@@ -276,6 +276,7 @@ public class OperadorGUI extends JFrame {
                     modeloLista.addElement("Vuelo: " + v + " | Hora: " + v.getHora() + " | Estado: " + v.getEstado());
                 }
             }
+            AeManager.verificarYActualizarVuelo(v);
         }
     }
 }

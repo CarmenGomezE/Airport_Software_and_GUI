@@ -241,7 +241,7 @@ public class VueloProgramado implements Serializable {
      */
     public void setAvion(Avion avion) {
     	if (avion == null) {
-	        throw new IllegalArgumentException("EL avion del vuelo no puede ser nula.");
+	        throw new IllegalArgumentException("El avion del vuelo no puede ser nula.");
 	    }
         this.avion = avion;
     }

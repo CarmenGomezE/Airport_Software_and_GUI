@@ -145,7 +145,7 @@ public abstract class Hangar implements Serializable {
      */
     public boolean comprobarTamano(Vuelo vuelo) {
         if (vuelo.getAvion().getDimAlto() <= dimPlazaAlto && vuelo.getAvion().getDimAncho() <= dimPlazaAncho
-                && vuelo.getAvion().getDimLargo() <= dimPlazaLargo) {
+                && vuelo.getAvion().getDimLargo() <= dimPlazaLargo) { 
             return true;
         }
 
@@ -184,4 +184,5 @@ public abstract class Hangar implements Serializable {
      * @throws CargaAvionEquivocadaException  carga no válida. 
      */
     public abstract void sacarAvion(Avion avion) throws CargaAvionEquivocadaException;
+
 }

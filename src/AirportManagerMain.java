@@ -70,7 +70,7 @@ public class AirportManagerMain {
         } else {
             System.out.println("Estado cargado correctamente.");
         }
-        airportManager.iniciarAplicacion();
+        airportManager.iniciarAplicacion();  
         
         System.out.println("\n*********************************************************************************************************************");
         System.out.println("\n1.- Dar de alta elementos del aeropuerto.");
@@ -278,8 +278,8 @@ public class AirportManagerMain {
 
     	/** Hangares */
     	System.out.println("Dando de alta hangares para las terminales:");
-    	airportManager.getGestor().darDeAltaHangar("Pasajeros", 6, 25.0, 15.0, 40.0, 1000.0, false);
-    	airportManager.getGestor().darDeAltaHangar("Mercancías", 3, 28.0, 17.0, 43.0, 1000.0, true);
+    	airportManager.getGestor().darDeAltaHangar("Pasajeros", 6, 2500, 1500, 4000, 1000.0, false);
+    	airportManager.getGestor().darDeAltaHangar("Mercancías", 3, 2800, 1700, 4300, 1000.0, true);
     	System.out.println("Hangar de Pasajeros y Hangar de Mercancías dados de alta.");
     	
     	PuertaEmbarque puerta1T1= airportManager.getAeropuerto().getTerminales().get(0).getPuertasEmbarque().get(0);
@@ -803,7 +803,7 @@ public class AirportManagerMain {
 		Terminal terminalT1= airportManager.getAeropuerto().getTerminales().get(0);
     	Terminal terminalT2=airportManager.getAeropuerto().getTerminales().get(1);
 		ControladorAereo controladorT1= terminalT1.getControladores().get(0);
-    	ControladorAereo controladorT2= terminalT2.getControladores().get(0);
+    	ControladorAereo controladorT2= terminalT2.getControladores().get(0); 
     	
     	Vuelo vueloFRK2234= airportManager.getAeropuerto().getVuelosAceptados().get(9);
 		Vuelo vueloFRK8103= airportManager.getAeropuerto().getVuelosAceptados().get(10);
@@ -1028,7 +1028,7 @@ public class AirportManagerMain {
 	private static void inicioSesion() throws UsuarioNoEncontradoException, ContrasenaInvalidaException {
 	    try (Scanner scanner = new Scanner(System.in)) {
 			Operador operadorIberia = (Operador) airportManager.getGestor().buscarUsuarioPorDni("12345678A");
-			ControladorAereo controladorT1 = (ControladorAereo) airportManager.getGestor().buscarUsuarioPorDni("123356789C");
+			ControladorAereo controladorT1 = (ControladorAereo) airportManager.getGestor().buscarUsuarioPorDni("12335678C");
 			Gestor gestorBarajas = airportManager.getGestor();
 
 			System.out.println("\nIniciando los inicios de sesión de los usuarios."); 

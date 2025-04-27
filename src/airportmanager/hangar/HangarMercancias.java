@@ -64,7 +64,7 @@ public class HangarMercancias extends Hangar {
      */
     @Override
     public void sacarAvion(Avion avion) {
-        aviones.remove((AvionMercancias)avion);
+        aviones.remove((AvionMercancias)avion); 
     }
 
     /**

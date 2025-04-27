@@ -222,6 +222,7 @@ public class ControladorGUI extends JFrame {
                 	modeloLista.addElement("Vuelo: "+v+" | Hora: "+v.getHora()+" | Estado: "+ v.getEstado());
                 }
             }  
+            AeManager.verificarYActualizarVuelo(v);
         }
 	}
 }

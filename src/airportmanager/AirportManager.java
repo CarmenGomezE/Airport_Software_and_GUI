@@ -215,6 +215,23 @@ public class AirportManager implements Serializable {
             gestor.recibirNotificacion(new Notificacion("El vuelo " + vueloVuela.getCodigo() + " ha cambiado su estado a " + vueloVuela.getEstado() + ".", TipoNotificacion.CAMBIO_ESTADO_VUELO));
         }
     }
+    
+    public void verificarYActualizarVuelo(Vuelo vuelo) {
+    	LocalTime ahora = LocalTime.now();
+        LocalTime hora = vuelo.getHora();
+        long minutos= Duration.between(ahora, hora).toMinutes();
+        boolean iniciar=false;
+        
+        if(vuelo.getTipoVuelo()==TipoVuelo.LLEGADA) {
+            iniciar = minutos <= 45;
+        } else {
+        	iniciar= minutos<=0;
+        }
+
+        if (iniciar==true) {
+        	iniciarActualizacionCada5Min(vuelo);
+        }
+    }
 	
 	/**
      * Método que actualiza los estados automáticos cada 5 minutos para un vuelo específico.
@@ -358,7 +375,7 @@ public class AirportManager implements Serializable {
         Vuelo v1, v2;
 
         for (Vuelo vuelo : aeropuerto.getVuelosAceptados()) {
-            if (vuelo.getEstado() == EstadoVuelo.ESPERANDO_DESPEGUE) {
+            if (vuelo.getHistorialEstadoVuelo().getUltimoEstadoManual() == EstadoVuelo.ESPERANDO_DESPEGUE) {
                 vuelosEnEspera.add(vuelo);
             }
         }

@@ -25,7 +25,7 @@ public abstract class ModoEmbarque implements Serializable {
     private Vuelo vuelo;
 
     /** Contador para el identificador de la zona de aparcamiento */
-    private static int contador = 1;
+    private static int contador = 1; 
 
     /**
      * Constructor de la clase ModoEmbarque
