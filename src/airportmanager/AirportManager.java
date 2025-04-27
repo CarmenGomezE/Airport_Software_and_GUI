@@ -43,7 +43,7 @@ public class AirportManager implements Serializable {
     /**
      * Constructor de AirportManager.
      */
-    public AirportManager() {
+    public AirportManager() { 
     	this.usuarios = new ArrayList<>();
         this.aeropuerto = null;
         this.gestor=null;
@@ -155,11 +155,14 @@ public class AirportManager implements Serializable {
         LocalDateTime horaVuelo = LocalDateTime.of(LocalDate.now(), v.getHora()); 
 
         if (v.getTipoVuelo() == TipoVuelo.LLEGADA) {
-            if (ahora.isBefore(horaVuelo)) {
+        	/** Si todavia no deberia haber llegado y no estaba ya puesto a tiempo, cambiamos*/
+            if (ahora.isBefore(horaVuelo) && v.getHistorialEstadoVuelo().getUltimoEstadoAutomatico()!=EstadoVuelo.A_TIEMPO) {
                 v.cambiarEstado(EstadoVuelo.A_TIEMPO);
-            } else if (v.getEstado() != EstadoVuelo.ATERRIZAJE || v.getEstado() != EstadoVuelo.OPERATIVO || 
-                       v.getEstado() != EstadoVuelo.AVION_A_HANGAR || v.getEstado() != EstadoVuelo.RETRASADO || 
-                       v.getEstado() == EstadoVuelo.A_TIEMPO) {
+            } 
+            /** Si no está en el aeropuerto y debería, y no estaba ya puesto retrasado, cambiamos*/
+            else if (ahora.isBefore(horaVuelo) && v.getHistorialEstadoVuelo().getUltimoEstadoAutomatico()!=EstadoVuelo.RETRASADO
+            		&& v.getHistorialEstadoVuelo().getUltimoEstadoManual()!=EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE && 
+            		v.getHistorialEstadoVuelo().getUltimoEstadoManual()!=EstadoVuelo.ESPERANDO_ATERRIZAJE) {
                 double minutosRetraso = (double) Duration.between(horaVuelo, ahora).toMinutes();
                 v.setRetraso(minutosRetraso);
                 v.cambiarEstado(EstadoVuelo.RETRASADO);
@@ -174,12 +177,18 @@ public class AirportManager implements Serializable {
             }
         } else if (v.getTipoVuelo() == TipoVuelo.SALIDA) {
             long minutosRestantes = Duration.between(ahora, horaVuelo).toMinutes(); 
-            if ((v.getEstado() == EstadoVuelo.OPERATIVO || v.getEstado() == EstadoVuelo.ATERRIZAJE || 
-                 v.getEstado() == EstadoVuelo.ACEPTADO || v.getEstado() == EstadoVuelo.A_TIEMPO || 
-                 v.getEstado() == EstadoVuelo.RETRASADO) && minutosRestantes > 45) {
+            /** Si quedan mas de 45 min para que despegue, y no estaba a tiempo, lo cambiamos*/
+            if (v.getHistorialEstadoVuelo().getUltimoEstadoAutomatico()!=EstadoVuelo.A_TIEMPO && minutosRestantes > 45) {
                 v.setRetraso(0);
                 v.cambiarEstado(EstadoVuelo.A_TIEMPO);
-            } else {
+            } 
+            /** Si no está o quedan menos de 45 min para que despegue, y no estaba retrasado, lo cambiamos*/
+            else if (v.getHistorialEstadoVuelo().getUltimoEstadoAutomatico()!=EstadoVuelo.RETRASADO && minutosRestantes <= 45
+            		&& v.getHistorialEstadoVuelo().getUltimoEstadoManual()!=EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR && 
+            		v.getHistorialEstadoVuelo().getUltimoEstadoManual()!=EstadoVuelo.INICIO_DEL_EMBARQUE
+            		&& v.getHistorialEstadoVuelo().getUltimoEstadoManual()!=EstadoVuelo.FIN_DEL_EMBARQUE && 
+            		v.getHistorialEstadoVuelo().getUltimoEstadoManual()!=EstadoVuelo.ESPERANDO_DESPEGUE
+            		&& v.getHistorialEstadoVuelo().getUltimoEstadoManual()!=EstadoVuelo.ESPERANDO_PISTA_DE_DESPEGUE){
                 v.cambiarEstado(EstadoVuelo.RETRASADO);
                 
                 for (ControladorAereo controlador: v.getTerminal().getControladores()) {
@@ -222,9 +231,7 @@ public class AirportManager implements Serializable {
                 LocalDateTime vueloFechaHora = LocalDateTime.of(v.getFecha(), v.getHora());
 
                 boolean vueloYaSalio = ahora.isAfter(vueloFechaHora);
-                boolean estadoFinal = v.getEstado() == EstadoVuelo.VUELO || 
-                                       v.getEstado() == EstadoVuelo.ATERRIZAJE || 
-                                       v.getEstado() == EstadoVuelo.AVION_A_HANGAR;
+                boolean estadoFinal = v.getHistorialEstadoVuelo().contains(EstadoVuelo.VUELO) || v.getHistorialEstadoVuelo().contains(EstadoVuelo.ATERRIZAJE);
 
                 actualizarEstadoVueloAutomatico(v);
 
@@ -257,12 +264,12 @@ public class AirportManager implements Serializable {
         if (v.getTipoVuelo() == TipoVuelo.SALIDA) {
             long minutosRestantes = Duration.between(ahora, fechaHoraVuelo).toMinutes();
             boolean cercaDeSalir = minutosRestantes <= 45 && minutosRestantes >= 0;
-            boolean noHaVolado = v.getEstado() != EstadoVuelo.VUELO;
+            boolean noHaVolado = !v.getHistorialEstadoVuelo().contains(EstadoVuelo.VUELO);
 
             return cercaDeSalir && noHaVolado;
         } else if (v.getTipoVuelo() == TipoVuelo.LLEGADA) {
             boolean esHoraLlegada = !ahora.isBefore(fechaHoraVuelo);
-            boolean noHaAterrizado = v.getEstado() != EstadoVuelo.ATERRIZAJE && v.getEstado() != EstadoVuelo.AVION_A_HANGAR;
+            boolean noHaAterrizado = !v.getHistorialEstadoVuelo().contains(EstadoVuelo.ATERRIZAJE);
 
             return esHoraLlegada && noHaAterrizado;
         }
@@ -346,7 +353,6 @@ public class AirportManager implements Serializable {
      * @return el vuelo que sale de la cola.
      */
     public Vuelo ordenarColaVuelos() {
-
         List<Vuelo> vuelosEnEspera = new ArrayList<>();
         int n, i, j;
         Vuelo v1, v2;
