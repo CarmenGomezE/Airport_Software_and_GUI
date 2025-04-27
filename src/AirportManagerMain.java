@@ -165,7 +165,7 @@ public class AirportManagerMain {
     	System.out.println("Dando de alta el operador Francisco Gonzalez para la aerolínea Iberia.");
     	try {
 			airportManager.getGestor().darDeAltaOperador("Francisco Gonzalez", "12345678A", airportManager.getAeropuerto().getAerolineas().get(0));
-		} catch (UsuarioYaExisteException e) {
+		} catch (UsuarioYaExisteException | FormatoDniIncorrectoException e) {
 			System.err.println("Error al dar de alta operador: " + e.getMessage());
 		}
     	
@@ -191,7 +191,7 @@ public class AirportManagerMain {
     	System.out.println("Dando de alta el operador Danielle Abbadie para la aerolínea Air France.");
     	try {
 			airportManager.getGestor().darDeAltaOperador("Danielle Abbadie", "87654321B", airportManager.getAeropuerto().getAerolineas().get(1));
-		} catch (UsuarioYaExisteException e) {
+		} catch (UsuarioYaExisteException | FormatoDniIncorrectoException e) {
 			System.err.println("Error al dar de alta operador: " + e.getMessage());
 		}
     	
@@ -249,28 +249,28 @@ public class AirportManagerMain {
     	/** Controladores */
     	System.out.println("Dando de alta los controladores para las terminales:");
     	try {
-			airportManager.getGestor().darDeAltaControlador("Ana Gómez", "123456789L", terminalT1);
-		} catch (UsuarioYaExisteException e) {
+			airportManager.getGestor().darDeAltaControlador("Ana Gómez", "12345678L", terminalT1);
+		} catch (UsuarioYaExisteException | FormatoDniIncorrectoException e) {
 			System.err.println("Error al dar de alta controlador: " + e.getMessage());
 		}
     	try {
-			airportManager.getGestor().darDeAltaControlador("Victoria Ramirez", "123356789C", terminalT1);
-		} catch (UsuarioYaExisteException e) {
+			airportManager.getGestor().darDeAltaControlador("Victoria Ramirez", "12335678C", terminalT1);
+		} catch (UsuarioYaExisteException | FormatoDniIncorrectoException e) {
 			System.err.println("Error al dar de alta controlador: " + e.getMessage());
 		}
     	try {
-			airportManager.getGestor().darDeAltaControlador("Alfonso Ruiz", "123456239T", terminalT2);
-		} catch (UsuarioYaExisteException e) {
+			airportManager.getGestor().darDeAltaControlador("Alfonso Ruiz", "12345623T", terminalT2);
+		} catch (UsuarioYaExisteException | FormatoDniIncorrectoException e) {
 			System.err.println("Error al dar de alta controlador: " + e.getMessage());
 		}
     	try {
-			airportManager.getGestor().darDeAltaControlador("Charles Green", "174456789F", terminalT2);
-		} catch (UsuarioYaExisteException e) {
+			airportManager.getGestor().darDeAltaControlador("Charles Green", "17445678F", terminalT2);
+		} catch (UsuarioYaExisteException | FormatoDniIncorrectoException e) {
 			System.err.println("Error al dar de alta controlador: " + e.getMessage());
 		}
     	try {
-			airportManager.getGestor().darDeAltaControlador("Marta Sanz", "123126789K", terminalT2);
-		} catch (UsuarioYaExisteException e) {
+			airportManager.getGestor().darDeAltaControlador("Marta Sanz", "12312678K", terminalT2);
+		} catch (UsuarioYaExisteException | FormatoDniIncorrectoException e) {
 			System.err.println("Error al dar de alta controlador: " + e.getMessage());
 		}
     	System.out.println("Controladores Ana Gómez y Victoria Ramirez dados de alta para la Terminal T1.");
@@ -586,7 +586,7 @@ public class AirportManagerMain {
 		}
     	try {
 			airportManager.getGestor().darDeAltaOperador("Eustaquio Hernandez", "50738890L", airportManager.getAeropuerto().getAerolineas().get(2));
-		} catch (UsuarioYaExisteException e) {
+		} catch (UsuarioYaExisteException | FormatoDniIncorrectoException e) {
 			System.err.println("Error al dar de alta operador: " + e.getMessage());
 		}
     	Operador operadorRyanair=airportManager.getAeropuerto().getAerolineas().get(2).getOperador();   
@@ -867,7 +867,7 @@ public class AirportManagerMain {
      */
 	private static void recibirNotificaciones() {
 		Operador operadorAirFrance=(Operador)airportManager.getGestor().buscarUsuarioPorDni("87654321B");
-    	ControladorAereo controladorT2=(ControladorAereo)airportManager.getGestor().buscarUsuarioPorDni("123126789K");
+    	ControladorAereo controladorT2=(ControladorAereo)airportManager.getGestor().buscarUsuarioPorDni("12312678K");
     	Gestor gestorBarajas= airportManager.getGestor();
     	
     	Notificacion notificacionCambioEstado = new Notificacion("El vuelo AF123 ha cambiado su estado a 'Embarcando'.", TipoNotificacion.CAMBIO_ESTADO_VUELO);
@@ -944,7 +944,7 @@ public class AirportManagerMain {
      */
 	private static void buscarVuelos() {
 		Operador operadorAirFrance=(Operador)airportManager.getGestor().buscarUsuarioPorDni("87654321B");
-    	ControladorAereo controladorT2=(ControladorAereo)airportManager.getGestor().buscarUsuarioPorDni("123126789K");
+    	ControladorAereo controladorT2=(ControladorAereo)airportManager.getGestor().buscarUsuarioPorDni("12312678K");
     	Gestor gestorBarajas= airportManager.getGestor();
     	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
  
@@ -1006,7 +1006,7 @@ public class AirportManagerMain {
      */
 	private static void cierreSesion() {
 		Operador operadorIberia=(Operador)airportManager.getGestor().buscarUsuarioPorDni("12345678A");
-    	ControladorAereo controladorT1=(ControladorAereo)airportManager.getGestor().buscarUsuarioPorDni("123356789C");
+    	ControladorAereo controladorT1=(ControladorAereo)airportManager.getGestor().buscarUsuarioPorDni("12335678C");
     	Gestor gestorBarajas= airportManager.getGestor();
     	
     	System.out.println("\nIniciando los cierres de sesión de los usuarios.");

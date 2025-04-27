@@ -15,6 +15,7 @@ import src.airportmanager.exceptions.AvionNoValidoException;
 import src.airportmanager.exceptions.EscalaInvalidaException;
 import src.airportmanager.exceptions.EstadoEquivocadoException;
 import src.airportmanager.exceptions.EstadoNoDelUsuarioException;
+import src.airportmanager.exceptions.FormatoDniIncorrectoException;
 import src.airportmanager.exceptions.OperacionInvalidaException;
 import src.airportmanager.exceptions.SolicitudInvalidaExcepcion;
 import src.airportmanager.exceptions.VueloNoDelUsuarioException;
@@ -68,8 +69,9 @@ public class Operador extends UsuarioConDni {
      * @param aeropuerto        Aeropuerto propio del operador.
      * @param gestor            Gestor del operador.
      * @param sistema           Sistema.
+     * @throws FormatoDniIncorrectoException Formato del dni incorrecto.
      */
-    public Operador(String nombre, String dni, Aerolinea aerolinea, AeropuertoPropio aeropuerto, Gestor gestor, AirportManager sistema) {
+    public Operador(String nombre, String dni, Aerolinea aerolinea, AeropuertoPropio aeropuerto, Gestor gestor, AirportManager sistema) throws FormatoDniIncorrectoException {
         super(nombre, dni, aeropuerto, gestor, sistema);
         this.necesitaEstablecerContrasena=true;
         this.aerolinea = aerolinea;

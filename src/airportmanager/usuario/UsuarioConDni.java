@@ -6,6 +6,7 @@ import src.airportmanager.exceptions.CargaAvionEquivocadaException;
 import src.airportmanager.exceptions.ContrasenaInvalidaException;
 import src.airportmanager.exceptions.EstadoEquivocadoException;
 import src.airportmanager.exceptions.EstadoNoDelUsuarioException;
+import src.airportmanager.exceptions.FormatoDniIncorrectoException;
 import src.airportmanager.exceptions.NoFingerMercanciasException;
 import src.airportmanager.exceptions.NoHangaresDisponiblesException;
 import src.airportmanager.exceptions.NoModosEmbarqueDisponiblesException;
@@ -41,9 +42,13 @@ public abstract class UsuarioConDni extends Usuario {
      * @param aeropuerto Aeropuerto en el que trabaja el usuario con dni.
      * @param gestor     Gestor del usuario con dni.
      * @param sistema    Sistema.
+     * @throws FormatoDniIncorrectoException Formato del deni incorrecto.
      */
-    public UsuarioConDni(String nombre, String dni, AeropuertoPropio aeropuerto, Gestor gestor, AirportManager sistema) {
+    public UsuarioConDni(String nombre, String dni, AeropuertoPropio aeropuerto, Gestor gestor, AirportManager sistema) throws FormatoDniIncorrectoException {
         super(nombre, aeropuerto, sistema);
+        if (!dni.matches("\\d{8}[A-Z]")) {
+            throw new FormatoDniIncorrectoException("DNI inválido. Debe tener 8 números seguidos de una letra mayúscula.");
+        }
         this.dni = dni;
         this.gestor = gestor;
     }
@@ -57,9 +62,13 @@ public abstract class UsuarioConDni extends Usuario {
      * @param aeropuerto Aeropuerto en el que trabaja el usuario con dni.
      *  @param gestor     Gestor del usuario con dni.
      * @param sistema    Sistema.
+     * @throws FormatoDniIncorrectoException Formato de dni incorrecto.
      */
-    public UsuarioConDni(String nombre, String contrasena, String dni, AeropuertoPropio aeropuerto, Gestor gestor, AirportManager sistema) {
+    public UsuarioConDni(String nombre, String contrasena, String dni, AeropuertoPropio aeropuerto, Gestor gestor, AirportManager sistema) throws FormatoDniIncorrectoException {
         super(nombre, contrasena, aeropuerto, sistema);
+        if (!dni.matches("\\d{8}[A-Z]")) {
+            throw new FormatoDniIncorrectoException("DNI inválido. Debe tener 8 números seguidos de una letra mayúscula.");
+        }
         this.dni = dni;
         this.gestor = gestor;
     }
