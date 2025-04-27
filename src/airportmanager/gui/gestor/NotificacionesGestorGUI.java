@@ -71,7 +71,6 @@ public class NotificacionesGestorGUI extends JFrame {
         panel.add(Box.createRigidArea(new Dimension(0, 40)));
 
         model = new DefaultListModel<>();
-        actualizarNotificaciones();
 
         JList<String> listaNotificaciones = new JList<>(model);
         listaNotificaciones.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -95,13 +94,14 @@ public class NotificacionesGestorGUI extends JFrame {
         opcionesReprogramarVuelo.setSelected(true);
         solicitudVueloProgramado = new JCheckBox("Solicitud vuelo programado");
         solicitudVueloProgramado.setSelected(true);
-        JPanel panelCheck = new JPanel(new GridLayout(5,1));
+        JPanel panelCheck = new JPanel(new GridLayout(6,1));
         panelCheck.add(cambioEstadoVuelo);
         panelCheck.add(olvidoContrasena);
         panelCheck.add(solicitudCompartirVuelo);
         panelCheck.add(facturaEmitida);
         panelCheck.add(opcionesReprogramarVuelo);
         panelCheck.add(solicitudVueloProgramado);
+        panelCheck.setBackground(ConfiguracionUI.COLOR_FONDO);
         
 
         JPanel botonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -118,7 +118,10 @@ public class NotificacionesGestorGUI extends JFrame {
         
         botonPanel.add(botonRefrescar);
         panel.add(panelCheck);
+        panel.add(Box.createRigidArea(new Dimension(0, 20)));
         panel.add(botonPanel);
+        
+        actualizarNotificaciones();
 
         setVisible(true);
     }
