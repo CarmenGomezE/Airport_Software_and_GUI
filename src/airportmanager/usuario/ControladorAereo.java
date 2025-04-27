@@ -9,6 +9,7 @@ import src.airportmanager.avion.*;
 import src.airportmanager.exceptions.CargaAvionEquivocadaException;
 import src.airportmanager.exceptions.EstadoEquivocadoException;
 import src.airportmanager.exceptions.EstadoNoDelUsuarioException;
+import src.airportmanager.exceptions.FormatoDniIncorrectoException;
 import src.airportmanager.exceptions.NoFingerMercanciasException;
 import src.airportmanager.exceptions.NoHangaresDisponiblesException;
 import src.airportmanager.exceptions.NoModosPuertasEmbarqueDisponiblesException;
@@ -53,11 +54,12 @@ public class ControladorAereo extends UsuarioConDni {
      * @param contrasena Contraseña del controlador aéreo.
      * @param gestor     Gestor del controlador aéreo.
      * @param terminal   Terminal del controlador aéreo.
-     * @param aeropuerto   Aeropuerto.
-     * @param sistema   Sistema.
+     * @param aeropuerto Aeropuerto.
+     * @param sistema    Sistema.
+     * @throws FormatoDniIncorrectoException Formato del dni incorrecto.
      */
     public ControladorAereo(String nombre, String dni, String contrasena, AeropuertoPropio aeropuerto, Gestor gestor,
-            Terminal terminal, AirportManager sistema) {
+            Terminal terminal, AirportManager sistema) throws FormatoDniIncorrectoException {
         super(nombre, contrasena, dni, aeropuerto, gestor, sistema);
         this.terminal = terminal;
         this.mensajeGUI = "";

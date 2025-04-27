@@ -15,6 +15,7 @@ import src.airportmanager.exceptions.AerolineaYaExisteException;
 import src.airportmanager.exceptions.AeropuertoYaExisteException;
 import src.airportmanager.exceptions.AntelacionInvalidaException;
 import src.airportmanager.exceptions.ContrasenaInvalidaException;
+import src.airportmanager.exceptions.FormatoDniIncorrectoException;
 import src.airportmanager.exceptions.PistaYaExisteException;
 import src.airportmanager.exceptions.TemporadasSolapadasException;
 import src.airportmanager.exceptions.TerminalYaExisteException;
@@ -233,8 +234,9 @@ public class Gestor extends Usuario {
      * @param dni        Dni del nuevo controlador.
      * @param terminal   Terminal del nuevo controlador.
      * @throws UsuarioYaExisteException Ya existe un usuario con ese dni.
+     * @throws FormatoDniIncorrectoException Formato del dni incorrecto.
      */
-    public void darDeAltaControlador(String nombre, String dni, Terminal terminal) throws UsuarioYaExisteException {
+    public void darDeAltaControlador(String nombre, String dni, Terminal terminal) throws UsuarioYaExisteException, FormatoDniIncorrectoException {
     	if (sistema.getCredenciales().containsKey(dni)) {
     		throw new UsuarioYaExisteException("Ya existe un usuario con ese dni.");
     	}
@@ -252,8 +254,9 @@ public class Gestor extends Usuario {
      * @param dni    Dni del nuevo controlador. 
      * @param aerolinea	Aerolinea.
      * @throws UsuarioYaExisteException Ya existe un usuario con ese dni.
+     * @throws FormatoDniIncorrectoException Formato dni incorrecto.
      */
-    public void darDeAltaOperador(String nombre, String dni, Aerolinea aerolinea) throws UsuarioYaExisteException {
+    public void darDeAltaOperador(String nombre, String dni, Aerolinea aerolinea) throws UsuarioYaExisteException, FormatoDniIncorrectoException {
     	if (sistema.getCredenciales().containsKey(dni)) {
     		throw new UsuarioYaExisteException("Ya existe un usuario con ese dni.");
     	}
