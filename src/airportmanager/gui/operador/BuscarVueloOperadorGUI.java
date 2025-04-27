@@ -36,8 +36,11 @@ import src.airportmanager.vuelo.Vuelo;
  * @author Carmen Gómez, María Pozo, Claudia Municio.
  */
 public class BuscarVueloOperadorGUI extends JFrame {
+	/** Identificador de versión de clase */
     private static final long serialVersionUID = 1L;
+    /** Interfaz principal del operador */
     private final OperadorGUI opGUI;
+    /** Operador que accede */
     private final Operador operador;
 
     /**

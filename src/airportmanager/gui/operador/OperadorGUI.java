@@ -33,6 +33,7 @@ public class OperadorGUI extends JFrame {
     private JList<String> listaVuelos;
     /** Airport manager */
     private AirportManager AeManager;
+    /** Formateador de date time */
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
     /**

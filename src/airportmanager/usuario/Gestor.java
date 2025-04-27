@@ -612,6 +612,12 @@ public class Gestor extends Usuario {
         }
     }
     
+    /**
+     * Método que devuelve los vuelos aceptados y las alternativas.
+     * 
+     * @param vuelo    Vuelo del que son las alternativas.
+     * @return Lista de vuelos.
+     */
     public List<Vuelo> getVuelosAceptadosMasAlternativas(VueloProgramado vuelo){
     	List<Vuelo> vuelos= new ArrayList<>();
     	vuelos.addAll(getAeropuerto().getVuelosAceptados());
@@ -624,8 +630,7 @@ public class Gestor extends Usuario {
     /**
      * Método para gestionar vuelos.
      * 
-     * @param vuelosGestionar    Vuelos que le propone el Operador.
-     * 
+     * @param vueloGestionar    Vuelos que le propone el Operador.
      */
     public void gestionarVuelos(VueloProgramado vueloGestionar) {
 	    if (getVuelosAceptadosMasAlternativas(vueloGestionar).isEmpty()) {
@@ -945,7 +950,7 @@ public class Gestor extends Usuario {
      * Método que inicia sesión del gestor.
      * 
      * @param contrasena Contraseña.
-     * 
+     * @throws ContrasenaInvalidaException contrasena invalida.
      */
     public void iniciarSesion(String contrasena)  throws ContrasenaInvalidaException {
         if (!this.contrasena.equals(contrasena)) {
@@ -1119,58 +1124,82 @@ public class Gestor extends Usuario {
 		diasAnticipacionMinima=i;
 	}
 
+	/**
+	 * Busca un vuelo propuesto en la lista de vuelos programados a partir de su código.
+	 * 
+	 * @param codigo El código del vuelo que se busca.
+	 * @return El vuelo programado con el código especificado, o null si no se encuentra.
+	 */
 	public VueloProgramado buscarVueloPropuestoPorCodigo(String codigo) {
-		VueloProgramado vueloBuscado = null;
-		for(VueloProgramado v: vuelosPropuestos) {
-			if(v.getCodigo().equals(codigo)) {
-				vueloBuscado=v;
-				break;
-			}
-		}
-		return vueloBuscado;
+	    VueloProgramado vueloBuscado = null;
+	    for (VueloProgramado v: vuelosPropuestos) {
+	        if (v.getCodigo().equals(codigo)) {
+	            vueloBuscado = v; 
+	            break; 
+	        }
+	    }
+	    return vueloBuscado; 
 	}
 
-	public Aerolinea buscarAerolineaPorNombre(String nombreAerolinea) {
-		
-		Aerolinea aerolinea = null;
-		
-		for (Aerolinea a : getAeropuerto().getAerolineas()) {
-			if (a.getNombre().equals(nombreAerolinea)) {
-				aerolinea = a;
-				break;
-			}
-		}
-		
-		return aerolinea;
-	
+	/**
+	 * Busca una aerolínea en el aeropuerto por su nombre.
+	 * 
+	 * @param nombreAerolinea El nombre de la aerolínea a buscar.
+	 * @return La aerolínea con el nombre especificado, o null si no se encuentra.
+	 */
+	public Aerolinea buscarAerolineaPorNombre(String nombreAerolinea) {        
+	    Aerolinea aerolinea = null;
+	    for (Aerolinea a : getAeropuerto().getAerolineas()) {
+	        if (a.getNombre().equals(nombreAerolinea)) {
+	            aerolinea = a; 
+	            break; 
+	        }
+	    }
+	    return aerolinea;
 	}
 
-	public Terminal buscarTerminalPorCodigo (String codigo) {
-		Terminal terminal = null;
-		for (Terminal t: getAeropuerto().getTerminales()) {
-			if (t.getCodigo().equals(codigo)) {
-				terminal = t;
-				break;
-			}
-		}
-		
-		return terminal;
+	/**
+	 * Busca una terminal en el aeropuerto por su código.
+	 * 
+	 * @param codigo El código de la terminal que se busca.
+	 * @return La terminal con el código especificado, o null si no se encuentra.
+	 */
+	public Terminal buscarTerminalPorCodigo(String codigo) {
+	    Terminal terminal = null;
+	    for (Terminal t: getAeropuerto().getTerminales()) {
+	        if (t.getCodigo().equals(codigo)) {
+	            terminal = t; 
+	            break; 
+	        }
+	    }
+	    return terminal; 
 	}
-	
+
+	/**
+	 * Obtiene una puerta de embarque a partir de su ID.
+	 * 
+	 * @param id El ID de la puerta de embarque que se busca.
+	 * @return La puerta de embarque con el ID especificado, o null si no se encuentra.
+	 */
 	public PuertaEmbarque obtenerPuertaEmbarquePorId(int id) {
-		PuertaEmbarque puerta = null;
-		for (PuertaEmbarque p: getAeropuerto().getPuertasEmbarque()) {
-			if (p.getId() == id) {
-				puerta = p;
-				break;
-			}
-		}
-		
-		return puerta;
+	    PuertaEmbarque puerta = null;
+	    for (PuertaEmbarque p: getAeropuerto().getPuertasEmbarque()) {
+	        if (p.getId() == id) {
+	            puerta = p;
+	            break; 
+	        }
+	    }
+	    return puerta; 
 	}
 
-	public static void setHorasMaxReprogramacionVuelo (int i) {
-		horasMaximasReprogramacion = i;
+	/**
+	 * Establece las horas máximas permitidas para la reprogramación de un vuelo.
+	 * 
+	 * @param i El número de horas máximas para la reprogramación de vuelos.
+	 */
+	public static void setHorasMaxReprogramacionVuelo(int i) {
+	    horasMaximasReprogramacion = i; 
 	}
+
 
 }

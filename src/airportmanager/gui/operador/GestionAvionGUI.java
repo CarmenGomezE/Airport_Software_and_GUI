@@ -18,10 +18,20 @@ import src.airportmanager.usuario.Operador;
  * @author Carmen Gómez, María Pozo, Claudia Municio.
  */
 public class GestionAvionGUI extends JFrame {
+	/** Identificador de versión de clase */
     private static final long serialVersionUID = 1L;
+    /** Interfaz de la ventana principal del operador */
     private final OperadorGUI opGUI;
+    /** Operador */
     private final Operador operador;
 
+    /**
+     * Constructor de la ventana para gestionar los estados de los vuelos.
+     * 
+     * @param manager				AirportManager.
+     * @param operadorGUI			Ventana principal del operador.
+     * @param operadorAerolinea		Operador.
+     */
     public GestionAvionGUI(AirportManager manager, OperadorGUI operadorGUI, Operador operadorAerolinea) {
         this.opGUI = operadorGUI;
         this.operador = operadorAerolinea;
@@ -172,7 +182,9 @@ public class GestionAvionGUI extends JFrame {
         setVisible(true);
     }
 
-    // 🔧 Método auxiliar para crear campo con etiqueta encima
+    /** 
+     * Método que crea campos con título.
+     */
     private JPanel crearCampoConLabel(String textoLabel, JComponent campo) {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -186,6 +198,9 @@ public class GestionAvionGUI extends JFrame {
         return panel;
     }
     
+    /** 
+     * Método que crea campos de texto.
+     */
     private JTextField crearCampoTexto() {
         JTextField campo = new JTextField();
         campo.setPreferredSize(new Dimension(200, 30));

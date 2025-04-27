@@ -32,10 +32,20 @@ import src.airportmanager.vuelo.Vuelo;
  * @author Carmen Gómez, María Pozo, Claudia Municio.
  */
 public class GestionEstadoVueloGUI extends JFrame {
+	/** Identificador de versión de clase */
     private static final long serialVersionUID = 1L;
+    /** Interfaz de la ventana principal del operador */
     private final OperadorGUI opGUI;
+    /** Operador */
     private final Operador operador;
 
+    /**
+     * Constructor de la ventana para gestionar los estados de los vuelos.
+     * 
+     * @param manager				AirportManager.
+     * @param operadorGUI			Ventana principal del operador.
+     * @param operadorAerolinea		Operador.
+     */
     public GestionEstadoVueloGUI(AirportManager manager, OperadorGUI operadorGUI, Operador operadorAerolinea) {
         this.opGUI = operadorGUI;
         this.operador = operadorAerolinea; 

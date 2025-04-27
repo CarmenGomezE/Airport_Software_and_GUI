@@ -1,1 +1,16 @@
+src
+src.airportmanager
+src.airportmanager.aeropuerto
+src.airportmanager.avion
+src.airportmanager.estadisticas
+src.airportmanager.exceptions
+src.airportmanager.factura
 src.airportmanager.gui
+src.airportmanager.gui.operador
+src.airportmanager.hangar
+src.airportmanager.notificacion
+src.airportmanager.pista
+src.airportmanager.terminal
+src.airportmanager.usuario
+src.airportmanager.vuelo
+src.test

@@ -32,11 +32,22 @@ import src.airportmanager.usuario.Operador;
  * @author Carmen Gómez, María Pozo, Claudia Municio.
  */
 public class NotificacionesOperadorGUI extends JFrame {
+	/** Identificador de versión de clase */
     private static final long serialVersionUID = 1L;
+    /** Interfaz de la ventana principal del operador */
     private final OperadorGUI opGUI;
+    /** Operador */
     private final Operador operador;
+    /** Modelo de lista por defecto */
     private DefaultListModel<String> model;
 
+    /**
+     * Constructor de la ventana para gestionar los estados de los vuelos.
+     * 
+     * @param manager				AirportManager.
+     * @param operadorGUI			Ventana principal del operador.
+     * @param operadorAerolinea		Operador.
+     */
     public NotificacionesOperadorGUI(AirportManager manager, OperadorGUI operadorGUI, Operador operadorAerolinea) {
         this.opGUI = operadorGUI;
         this.operador = operadorAerolinea;
@@ -96,6 +107,9 @@ public class NotificacionesOperadorGUI extends JFrame {
         setVisible(true);
     }
 
+    /** 
+     * Método que actualiza la lista de notificaciones.
+     */
     private void actualizarNotificaciones() {
         model.clear();
         for (Notificacion notificacion : operador.getNotificaciones()) {

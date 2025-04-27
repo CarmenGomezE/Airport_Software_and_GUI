@@ -30,18 +30,29 @@ import src.airportmanager.usuario.Operador;
  * @author Carmen Gómez, María Pozo, Claudia Municio.
  */
 public class EstadisticasOperadorGUI extends JFrame {
+	/** Identificador de versión de clase */
     private static final long serialVersionUID = 1L;
+    /** Interfaz de la ventana principal del operador */
     private final OperadorGUI opGUI;
+    /** Operador */
     private final Operador operador;
+    /** AirportManager */
     private final AirportManager manager;
 
+    /** Modelo de lista por defecto */
     private DefaultListModel<String> model;
+    /** Combo box de meses */
     private JComboBox<Month> mesComboBox;
+    /** Combo box de franjas horarias */
     private JComboBox<ZoneId> franjaComboBox;
+    /** Combo box de vuelos */
     private JComboBox<Vuelo> vueloComboBox;
 
+    /** Mes seleccionado */
     private Month mesSeleccionado;
+    /** Franja horaria seleccionada */
     private ZoneId franjaSeleccionada;
+    /** Vuelo seleccionado */
     private Vuelo vueloSeleccionado;
 
     /**

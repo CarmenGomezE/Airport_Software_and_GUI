@@ -9,9 +9,33 @@ import java.io.IOException;
 
 import javax.swing.SwingUtilities;
 
-public class Main {
-    private static final String ARCHIVO_ESTADO = "resources/estado_airport_manager.dat";
 
+/**
+ * La clase principal del programa. Es el punto de entrada de la aplicación.
+ * 
+ * Se encarga de cargar el estado del aeropuerto desde un archivo, iniciar
+ * la aplicación y mostrar la interfaz gráfica de usuario. También asegura
+ * que el estado del aeropuerto se guarde automáticamente cuando la aplicación
+ * se cierra.
+ * 
+ * @author Carmen Gómez, Claudia Municio, María Pozo.
+ */
+public class Main {
+	/** Ruta al archivo donde se guarda el estado del aeropuerto */
+    private static final String ARCHIVO_ESTADO = "resources/estado_airport_manager.dat";
+    
+    /**
+     * Constructor de la clase principal.
+     */
+    public Main(){
+    	/** Constructor vacío*/
+    }
+
+    /**
+     * Método principal que ejecuta la aplicación.
+     * 
+     * @param args Argumentos de línea de comandos.
+     */
     public static void main(String[] args) {
         try {
             /**vaciarArchivo(ARCHIVO_ESTADO);*/
@@ -43,6 +67,14 @@ public class Main {
         }
     }
 
+    /**
+     * Método para vaciar el archivo de estado del aeropuerto.
+     * 
+     * Este método elimina el contenido del archivo especificado, pero no
+     * elimina el archivo en sí. Útil para reiniciar el estado de la aplicación.
+     * 
+     * @param archivo Ruta del archivo que se desea vaciar.
+     */
     public static void vaciarArchivo(String archivo) {
         try {
             File file = new File(archivo);
