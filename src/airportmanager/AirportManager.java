@@ -217,6 +217,11 @@ public class AirportManager implements Serializable {
         }
     }
     
+    /**
+     * Método que verifica si se debe asignar un temporizador a un vuelo.
+     * 
+     * @param vuelo Vuelo que se verifica.
+     */
     public void verificarYActualizarVuelo(Vuelo vuelo) {
     	LocalTime ahora = LocalTime.now();
         LocalTime hora = vuelo.getHora();

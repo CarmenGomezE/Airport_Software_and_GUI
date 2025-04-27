@@ -606,6 +606,8 @@ public class Operador extends UsuarioConDni {
      * Método para leer objetos.
      * 
      * @param in Input stream.
+     * @throws IOException io exception.
+     * @throws ClassNotFoundException la clase no existe.
      */
     private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();

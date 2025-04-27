@@ -1,6 +1,9 @@
 package src.airportmanager.gui;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,14 +21,26 @@ import src.airportmanager.usuario.*;
  * @author Carmen Gómez, María Pozo, Claudia Municio.
  */
 public class AirportManagerGUI extends JFrame {
+	/** Identificador de versión de clase */
     private static final long serialVersionUID = 1L;
+    /** Combo box de usuarios */
     private JComboBox<String> comboBox;
+    /** HUeco para introducir el usuario */
     private JTextField usuarioField;
+    /** Hueco para introducir la contraseña*/
     private JPasswordField passwordField;
+    /** Botón log in */
     private JButton botonLogin;
+    /** Botón restablecer la contraseña */
     private JButton botonRestablecer;
+    /** Airport manager */
     private AirportManager airportManager;
 
+    /**
+     * Constructor de la ventana principal del programa.
+     * 
+     * @param manager	Airport manager.
+     */
     public AirportManagerGUI(AirportManager manager) {
         this.airportManager = manager;
         ConfiguracionUI.applyLookAndFeel();
@@ -208,13 +223,34 @@ public class AirportManagerGUI extends JFrame {
                 }
             } 
         });
+        passwordField.getDocument().addDocumentListener(new DocumentListener() {
+        	@Override
+            public void insertUpdate(DocumentEvent e) {
+                validateLogin();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                validateLogin();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                validateLogin();
+            }
+        });
 
         panel.add(panelIzquierdo, BorderLayout.WEST);
         panel.add(panelDerecho, BorderLayout.CENTER);
 
         add(panel);
     }
-    
+
+    /**
+     * Método para solicitar una nueva contraseña.
+     * 
+     * @return String de la contraseña.
+     */
     private String solicitarNuevaContrasena() {
         JPanel panel = new JPanel(new GridLayout(2, 2));
         JLabel labelNueva = new JLabel("Nueva contraseña:");
@@ -246,6 +282,9 @@ public class AirportManagerGUI extends JFrame {
         }
     }
 
+    /**
+     * Método para validar el usuaurio del log in
+     */
     private void validateLogin() {
         String selectedRole = (String) comboBox.getSelectedItem();
         boolean enable = passwordField.getPassword().length > 0;

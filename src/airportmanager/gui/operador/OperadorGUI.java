@@ -23,12 +23,24 @@ import src.airportmanager.vuelo.Vuelo;
  * @author Carmen Gómez, María Pozo, Claudia Municio.
  */
 public class OperadorGUI extends JFrame {
+	/** Identificador de versión de clase */
     private static final long serialVersionUID = 1L;
+    /** Operador del que es la ventana */
     private final Operador operadorAerolinea;
+    /** Modelo de lista */
     private DefaultListModel<String> modeloLista;
+    /** Lista de los vuelos diarios */
     private JList<String> listaVuelos;
+    /** Airport manager */
     private AirportManager AeManager;
 
+    /**
+     * Constructor de la clase OperadorGUI.
+     * 
+     * @param AirportGUI 	Ventana principal.
+     * @param manager 		Airport manager
+     * @param operador		Operador que abre la ventana.
+     */
     public OperadorGUI(AirportManagerGUI AirportGUI, AirportManager manager, Operador operador) {
         operadorAerolinea = operador;
         AeManager = manager;
@@ -248,6 +260,9 @@ public class OperadorGUI extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Método que actualiza la lista de vuelos diarios.
+     */
     private void actualizarLista() {
         modeloLista.clear();
         List<Vuelo> vuelos = AeManager.getAeropuerto().getVuelosAceptados();
