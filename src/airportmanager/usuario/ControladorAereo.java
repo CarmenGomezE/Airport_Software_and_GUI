@@ -135,37 +135,26 @@ public class ControladorAereo extends UsuarioConDni {
                     throw new EstadoNoDelUsuarioException("Este usuario no puede cambiar a ese estado.");
             }
         } catch (VueloNoDelUsuarioException e) {
-        	 mensajeGUI = "";
             System.out.println("Error: " + e.getMessage()); 
         } catch (EstadoNoDelUsuarioException e) {
-        	 mensajeGUI = "";
             System.out.println("Error: " + e.getMessage());
         } catch (EstadoEquivocadoException e) {
-        	 mensajeGUI = "";
             System.out.println("Error: " + e.getMessage());
         } catch (NoPistasDisponiblesException e) {
-        	 mensajeGUI = "";
             System.out.println("Error: " + e.getMessage());
         } catch (NoVueloEnMenosDe1HoraException e) {
-        	 mensajeGUI = "";
             System.out.println("Error: " + e.getMessage());
         } catch (VueloEnMenosDe1HoraException e) {
-        	 mensajeGUI = "";
             System.out.println("Error: " + e.getMessage());
         } catch (NoFingerMercanciasException e) {
-        	 mensajeGUI = "";
             System.out.println("Error: " + e.getMessage());
         } catch (NoModosPuertasEmbarqueDisponiblesException e) {
-        	 mensajeGUI = "";
             System.out.println("Error: " + e.getMessage());
         } catch (NoHangaresDisponiblesException e) {
-        	 mensajeGUI = "";
             System.out.println("Error: " + e.getMessage());
         } catch (CargaAvionEquivocadaException e) {
-        	 mensajeGUI = "";
             System.out.println("Error: " + e.getMessage());
         } catch (Exception e) { 
-        	 mensajeGUI = "";
             System.out.println("Error inesperado: " + e.getMessage());  
         }
         

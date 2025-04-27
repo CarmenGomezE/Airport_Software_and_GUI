@@ -238,7 +238,7 @@ public class GestionVueloGUI extends JFrame{
             panelDerecho.revalidate();
             panelDerecho.repaint();
         });
-
+ 
         cambiarTiempoAceptarPropuesta.addActionListener(e -> {
             tiempoAceptarPropuesta.setVisible(cambiarTiempoAceptarPropuesta.isSelected());
             panelDerecho.revalidate();

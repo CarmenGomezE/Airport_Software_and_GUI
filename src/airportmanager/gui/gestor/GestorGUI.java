@@ -383,7 +383,7 @@ public class GestorGUI extends JFrame {
             	} else {
                 	modeloLista.addElement("Vuelo: "+v+" | Hora: "+v.getHora()+" | Estado: "+ v.getEstado());
                 }
-            	AeManager.verificarYActualizarVuelo(v);
+            	AeManager.verificarYActualizarVuelo(v); 
             }  
         }
 	}
