@@ -40,6 +40,7 @@ import src.airportmanager.vuelo.*;
 import java.util.*;
 import java.io.*;
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 
 /**
  * La clase Gestor representa al gestor del AeropuertoPropio.
@@ -59,6 +60,10 @@ public class Gestor extends Usuario {
     private List<VueloProgramado> vuelosPropuestos;
     /** Mensaje de la interfaz. */
     private String mensajeGUI;
+    /** Formateador de local date */
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    /** Formateador de local time */
+    DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm");
     
     /** Dias de anticipación mínima para una propuesta de Vuelo. */
     private static int diasAnticipacionMinima = 0;
@@ -801,7 +806,7 @@ public class Gestor extends Usuario {
         if (!alternativas.isEmpty()) {
             mensajeGUI="El vuelo " + vueloMover.getCodigo() + " no ha podido ser movido, se han generado alternativas:";
             for(Vuelo v:alternativas) {
-            	mensajeGUI+= "\nAlternativa al vuelo: "+v.getCodigo()+"\nFecha/Hora: "+v.getFecha()+"/"+v.getHora()+" Terminal: "+v.getTerminal()+ " Controlador: "+ v.getControlador().getNombre();
+            	mensajeGUI+= "\nAlternativa al vuelo: "+v.getCodigo()+"\nFecha/Hora: "+v.getFecha().format(formatter)+"/"+v.getHora().format(format)+" Terminal: "+v.getTerminal()+ " Controlador: "+ v.getControlador().getNombre();
             }
             return alternativas;
         } else {
