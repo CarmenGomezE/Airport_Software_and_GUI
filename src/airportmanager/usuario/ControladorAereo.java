@@ -615,8 +615,9 @@ public class ControladorAereo extends UsuarioConDni {
         }
 
         mensajeGUI = "";
-        
-        vuelo.cambiarEstado(EstadoVuelo.ESPERANDO_DESPEGUE);
+        if(vuelo.getPista()!=null) {
+        	vuelo.cambiarEstado(EstadoVuelo.ESPERANDO_DESPEGUE);
+        }
         
         for(ControladorAereo controlador: vuelo.getTerminal().getControladores()) {
         	controlador.recibirNotificacionCambioEstado(vuelo);
@@ -695,7 +696,9 @@ public class ControladorAereo extends UsuarioConDni {
 
         Pista pista = vuelo.getPista();
         vuelo.setPista(null);
-        pista.removeVuelo(vuelo);
+        if(pista!=null) {
+        	pista.removeVuelo(vuelo);
+        }
     }
 
     /**

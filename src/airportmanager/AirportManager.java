@@ -205,6 +205,7 @@ public class AirportManager implements Serializable {
             Vuelo vueloVuela = ordenarColaVuelos();
             vueloVuela.cambiarEstado(EstadoVuelo.VUELO);
             vueloVuela.getControlador().liberarPista(vueloVuela);
+            getAeropuerto().getVuelosAceptados().remove(vueloVuela);
             
             for (ControladorAereo controlador: vueloVuela.getTerminal().getControladores()) {
                 controlador.recibirNotificacionCambioEstado(vueloVuela);
@@ -222,14 +223,20 @@ public class AirportManager implements Serializable {
         long minutos= Duration.between(ahora, hora).toMinutes();
         boolean iniciar=false;
         
-        if(vuelo.getTipoVuelo()==TipoVuelo.LLEGADA) {
+        if(vuelo.getTipoVuelo()==TipoVuelo.SALIDA) {
             iniciar = minutos <= 45;
-        } else {
-        	iniciar= minutos<=0;
+        } else if (vuelo.getTipoVuelo()==TipoVuelo.LLEGADA){
+        	if(ahora.isAfter(hora)) { 
+        		iniciar=true;
+        	}
         }
 
         if (iniciar==true) {
         	iniciarActualizacionCada5Min(vuelo);
+        }
+        if (iniciar && !temporizadores.containsKey(vuelo) && vuelo.getHistorialEstadoVuelo().getUltimoEstadoAutomatico()!=EstadoVuelo.VUELO && 
+        		(vuelo.getHistorialEstadoVuelo().getUltimoEstadoManual()!=EstadoVuelo.OPERATIVO || vuelo.getHistorialEstadoVuelo().getUltimoEstadoManual()!=EstadoVuelo.AVION_A_HANGAR)) {
+            iniciarActualizacionCada5Min(vuelo);
         }
     }
 	
@@ -239,6 +246,9 @@ public class AirportManager implements Serializable {
      */
     public void iniciarActualizacionCada5Min(Vuelo v) {
         Timer timer = new Timer();
+        if (temporizadores == null) {
+            temporizadores = new HashMap<>();
+        }
         temporizadores.put(v, timer);
 
         TimerTask tarea = new TimerTask() {
@@ -248,11 +258,12 @@ public class AirportManager implements Serializable {
                 LocalDateTime vueloFechaHora = LocalDateTime.of(v.getFecha(), v.getHora());
 
                 boolean vueloYaSalio = ahora.isAfter(vueloFechaHora);
-                boolean estadoFinal = v.getHistorialEstadoVuelo().contains(EstadoVuelo.VUELO) || v.getHistorialEstadoVuelo().contains(EstadoVuelo.ATERRIZAJE);
+                boolean estadoFinal = v.getHistorialEstadoVuelo().getUltimoEstadoAutomatico()!=EstadoVuelo.VUELO && 
+                		(v.getHistorialEstadoVuelo().getUltimoEstadoManual()!=EstadoVuelo.OPERATIVO || v.getHistorialEstadoVuelo().getUltimoEstadoManual()!=EstadoVuelo.AVION_A_HANGAR);
 
                 actualizarEstadoVueloAutomatico(v);
 
-                if (vueloYaSalio && estadoFinal) {
+                if (vueloYaSalio || estadoFinal) {
                     timer.cancel();
                     temporizadores.remove(v);
                     System.out.println("Se cancela el timer del vuelo " + v.getCodigo());
@@ -261,36 +272,6 @@ public class AirportManager implements Serializable {
         };
         timer.scheduleAtFixedRate(tarea, 0, 5 * 60 * 1000);
         System.out.println("Temporizador iniciado para el vuelo " + v.getCodigo());
-    }
-    
-    public void activarTimersParaVuelos(List<Vuelo> vuelos) {
-        for (Vuelo v : vuelos) {
-            if (debeTenerTimer(v)) {
-                iniciarActualizacionCada5Min(v);
-                System.out.println("Timer activado para vuelo " + v.getCodigo());
-            } else {
-                System.out.println("No se activa timer para vuelo " + v.getCodigo());
-            }
-        }
-    }
-
-    private boolean debeTenerTimer(Vuelo v) {
-        LocalDateTime ahora = LocalDateTime.now();
-        LocalDateTime fechaHoraVuelo = LocalDateTime.of(v.getFecha(), v.getHora());
-
-        if (v.getTipoVuelo() == TipoVuelo.SALIDA) {
-            long minutosRestantes = Duration.between(ahora, fechaHoraVuelo).toMinutes();
-            boolean cercaDeSalir = minutosRestantes <= 45 && minutosRestantes >= 0;
-            boolean noHaVolado = !v.getHistorialEstadoVuelo().contains(EstadoVuelo.VUELO);
-
-            return cercaDeSalir && noHaVolado;
-        } else if (v.getTipoVuelo() == TipoVuelo.LLEGADA) {
-            boolean esHoraLlegada = !ahora.isBefore(fechaHoraVuelo);
-            boolean noHaAterrizado = !v.getHistorialEstadoVuelo().contains(EstadoVuelo.ATERRIZAJE);
-
-            return esHoraLlegada && noHaAterrizado;
-        }
-        return false;
     }
 
      /**

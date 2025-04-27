@@ -866,7 +866,7 @@ public class AirportManagerMain {
      * Método que recibe notificaciones.
      */
 	private static void recibirNotificaciones() {
-		Operador operadorAirFrance=(Operador)airportManager.getGestor().buscarUsuarioPorDni("87654321B");
+		Operador operadorAirFrance=(Operador)airportManager.getGestor().buscarUsuarioPorDni("87654321B");  
     	ControladorAereo controladorT2=(ControladorAereo)airportManager.getGestor().buscarUsuarioPorDni("12312678K");
     	Gestor gestorBarajas= airportManager.getGestor();
     	
