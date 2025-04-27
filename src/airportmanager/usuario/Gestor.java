@@ -1161,4 +1161,8 @@ public class Gestor extends Usuario {
 		return puerta;
 	}
 
+	public static void setHorasMaxReprogramacionVuelo (int i) {
+		horasMaximasReprogramacion = i;
+	}
+
 }
