@@ -2,26 +2,25 @@ package src.airportmanager.vuelo;
 
 import java.io.Serializable;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.NavigableMap;
+import java.util.TreeMap;
 
 /**
  * Clase que almacena el historial de cambios de estado de un vuelo.
  */
 public class HistorialEstadoVuelo implements Serializable {
 
-	/** Número de versión de la clase */
-	private static final long serialVersionUID = 1L;
-	/** Historial de vuelo */
-    private Map<LocalTime, EstadoVuelo> historial;
+    /** Número de versión de la clase */
+    private static final long serialVersionUID = 1L;
+    /** Historial de vuelo */
+    private NavigableMap<LocalTime, EstadoVuelo> historial;
 
     /**
      * Constructor de la clase HistorialEstadoVuelo.
      */
     public HistorialEstadoVuelo() {
-        this.historial = new LinkedHashMap<>();
+        this.historial = new TreeMap<>();
     }
 
     /**
@@ -52,25 +51,53 @@ public class HistorialEstadoVuelo implements Serializable {
         if (historial.isEmpty()) {
             return null;
         }
-
-        Collection<EstadoVuelo> historialCopia = new ArrayList<>(historial.values());
-        EstadoVuelo ultimoEstado = null;
-        
-        for (EstadoVuelo estado : historialCopia) {
-            ultimoEstado = estado;
-        }
-
-        return ultimoEstado;
+        return historial.lastEntry().getValue();
     }
+
+    /**
+     * Obtiene el último estado MANUAL del vuelo.
+     * 
+     * @return Último estado manual registrado o null si no hay.
+     */
+    public EstadoVuelo getUltimoEstadoManual() {
+        if (historial.isEmpty()) {
+            return null;
+        }
+        
+        for (Map.Entry<LocalTime, EstadoVuelo> entry : historial.descendingMap().entrySet()) {
+            if (!entry.getValue().esAutomatico()) {
+                return entry.getValue();
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Obtiene el último estado AUTOMÁTICO del vuelo.
+     * 
+     * @return Último estado automático registrado o null si no hay.
+     */
+    public EstadoVuelo getUltimoEstadoAutomatico() {
+        if (historial.isEmpty()) {
+            return null;
+        }
+        // Iterar de último a primero
+        for (Map.Entry<LocalTime, EstadoVuelo> entry : historial.descendingMap().entrySet()) {
+            if (entry.getValue().esAutomatico()) {
+                return entry.getValue();
+            }
+        }
+        return null;
+    }
+
     /**
      * Obtiene la hora exacta en la que se cambió a un estado específico.
      * 
      * @param estado Estado del vuelo a buscar.
-     * @return La hora en la que el vuelo cambió a ese estado, o null si no se
-     *         encontró.
+     * @return La hora en la que el vuelo cambió a ese estado, o null si no se encontró.
      */
     public LocalTime getHoraCambio(EstadoVuelo estado) {
-    	LocalTime ultimaHora = null;
+        LocalTime ultimaHora = null;
         for (Map.Entry<LocalTime, EstadoVuelo> entry : historial.entrySet()) {
             if (entry.getValue() == estado) {
                 ultimaHora = entry.getKey(); 
