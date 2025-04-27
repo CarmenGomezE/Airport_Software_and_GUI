@@ -104,7 +104,7 @@ public class GestionEstadoVueloGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String codigo = campoCodigo.getText().trim();
-                String estadoSeleccionado = (String) comboEstados.getSelectedItem();
+                String estadoSeleccionado = (String) comboEstados.getSelectedItem(); 
 
                 if (codigo.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Por favor, introduce un código de vuelo.", "Error", JOptionPane.ERROR_MESSAGE);

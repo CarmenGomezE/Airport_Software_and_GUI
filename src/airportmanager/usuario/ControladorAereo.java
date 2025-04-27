@@ -11,7 +11,6 @@ import src.airportmanager.exceptions.EstadoEquivocadoException;
 import src.airportmanager.exceptions.EstadoNoDelUsuarioException;
 import src.airportmanager.exceptions.NoFingerMercanciasException;
 import src.airportmanager.exceptions.NoHangaresDisponiblesException;
-import src.airportmanager.exceptions.NoModosEmbarqueDisponiblesException;
 import src.airportmanager.exceptions.NoModosPuertasEmbarqueDisponiblesException;
 import src.airportmanager.exceptions.NoPistasDisponiblesException;
 import src.airportmanager.exceptions.NoVueloEnMenosDe1HoraException;
@@ -113,7 +112,7 @@ public class ControladorAereo extends UsuarioConDni {
                     break;
                 case ESPERANDO_ATERRIZAJE:
                     cambiarEstadoEsperandoAterrizaje(vuelo);
-                    break;
+                    break; 
                 case ATERRIZAJE:
                     cambiarEstadoAterrizaje(vuelo);
                     break;
@@ -341,6 +340,7 @@ public class ControladorAereo extends UsuarioConDni {
                     break;
                 }
             }
+            mensajeGUI = "Se le han asignado el hangar " + h.getId() +" al vuelo " + vuelo.getCodigo() + ".";
 
         }
         if (vuelo.getAvion() != null) {
@@ -377,6 +377,8 @@ public class ControladorAereo extends UsuarioConDni {
         vuelo.cambiarEstado(EstadoVuelo.ATERRIZAJE);
         liberarPista(vuelo);
         
+        mensajeGUI = "";
+        
         for(ControladorAereo controlador: vuelo.getTerminal().getControladores()) {
         	controlador.recibirNotificacionCambioEstado(vuelo);
         }
@@ -408,6 +410,8 @@ public class ControladorAereo extends UsuarioConDni {
                 ocupada = 1;
             }
         }
+        
+        mensajeGUI = "";
 
         if (ocupada == 0) {
             vuelo.cambiarEstado(EstadoVuelo.ESPERANDO_ATERRIZAJE);
@@ -452,7 +456,7 @@ public class ControladorAereo extends UsuarioConDni {
         }
         Random rand = new Random();
         Pista pista = pistaAterrizaje.get(rand.nextInt(pistaAterrizaje.size()));
-        asignarPista(pista, vuelo);
+        asignarPista(pista, vuelo); 
         if (vuelo.getPista() == null) {
             throw new NoPistasDisponiblesException("No hay pistas disponibles");
         }
@@ -518,7 +522,6 @@ public class ControladorAereo extends UsuarioConDni {
         }
 
         vuelo.cambiarEstado(EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE);
-        sistema.iniciarActualizacionCada5Min(vuelo);
         for(ControladorAereo controlador: vuelo.getTerminal().getControladores()) {
         	controlador.recibirNotificacionCambioEstado(vuelo);
         }
@@ -542,6 +545,7 @@ public class ControladorAereo extends UsuarioConDni {
         if (vuelo.getEstado() != EstadoVuelo.FIN_DEL_EMBARQUE && vuelo.getEstado() != EstadoVuelo.A_TIEMPO && vuelo.getEstado() != EstadoVuelo.RETRASADO) {
             throw new EstadoEquivocadoException("El vuelo no está en el estado correcto para cambiar a este estado");
         }
+        mensajeGUI = "";
 
         vuelo.cambiarEstado(EstadoVuelo.ESPERANDO_PISTA_DE_DESPEGUE);
         for(ControladorAereo controlador: vuelo.getTerminal().getControladores()) {

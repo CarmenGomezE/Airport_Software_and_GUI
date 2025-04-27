@@ -134,7 +134,7 @@ public class Operador extends UsuarioConDni {
     public void cambiarEstadoVuelo(Vuelo vuelo, EstadoVuelo estado)
             throws VueloNoDelUsuarioException, EstadoNoDelUsuarioException, EstadoEquivocadoException {
         if (vuelo == null || estado == null) {
-            throw new IllegalArgumentException("El vuelo y el nuevo estado no pueden ser null");
+            throw new IllegalArgumentException("El vuelo y el nuevo estado no pueden ser null"); 
         }
 
         if (vuelo.getOperadorPrincipal()!=this) {
@@ -175,7 +175,6 @@ public class Operador extends UsuarioConDni {
         }
         else {
             vuelo.cambiarEstado(EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR);
-            sistema.iniciarActualizacionCada5Min(vuelo);
         }
         for(ControladorAereo controlador: vuelo.getTerminal().getControladores()) {
         	controlador.recibirNotificacionCambioEstado(vuelo);

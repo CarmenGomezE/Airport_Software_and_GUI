@@ -112,11 +112,10 @@ public class GestionEstadoVueloGUI extends JFrame {
         textAreaMensajes.setWrapStyleWord(true);
         
         JScrollPane scrollPaneMensajes = new JScrollPane(textAreaMensajes);
-        // No usamos setPreferredSize
+
         scrollPaneMensajes.setAlignmentX(Component.CENTER_ALIGNMENT);
-        scrollPaneMensajes.setMaximumSize(new Dimension(600, 200)); // ajustable
+        scrollPaneMensajes.setMaximumSize(new Dimension(600, 200)); 
         
-        // Contenedor del mensaje
         JPanel contenedorMensajes = new JPanel();
         contenedorMensajes.setLayout(new BoxLayout(contenedorMensajes, BoxLayout.Y_AXIS));
         contenedorMensajes.setOpaque(false);
@@ -125,8 +124,7 @@ public class GestionEstadoVueloGUI extends JFrame {
         contenedorMensajes.add(scrollPaneMensajes);
         contenedorMensajes.setVisible(false);
         
-        // Añadir al panel principal
-        panel.add(Box.createRigidArea(new Dimension(0, 20))); // espaciado
+        panel.add(Box.createRigidArea(new Dimension(0, 20))); 
         panel.add(contenedorMensajes);
 
         
@@ -162,7 +160,7 @@ public class GestionEstadoVueloGUI extends JFrame {
                     textAreaMensajes.setText(mensaje);
                     if (mensaje != null && !mensaje.trim().isEmpty()) {
                         contenedorMensajes.setVisible(true);
-                        contenedorMensajes.revalidate();
+                        contenedorMensajes.revalidate(); 
                         contenedorMensajes.repaint();
                     }
                     JOptionPane.showMessageDialog(null, "Estado cambiado correctamente.");
