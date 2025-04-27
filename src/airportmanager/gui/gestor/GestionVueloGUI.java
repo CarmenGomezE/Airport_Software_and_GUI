@@ -43,9 +43,11 @@ public class GestionVueloGUI extends JFrame{
     private JCheckBox cambiarRangoMinutos;
     private JCheckBox cambiarHorasMaxReprogramacion;
     private JCheckBox cambiarTiempoAceptarPropuesta;
+    private JCheckBox cambiarDiasMinAntelacion;
     private int rangoMinutosVuelo;
     private int horasMaxReprogramacionVuelo;
     private int tiempoAceptarPropuestaVuelo;
+    private int diasAntelacionMinVuelo;
 	
 	public GestionVueloGUI(AirportManager manager, GestorGUI gestorGUI, Gestor gestor) {
 		this.gestor = gestor;
@@ -197,6 +199,21 @@ public class GestionVueloGUI extends JFrame{
         JTextField campoTiempoAceptarPropuesta = new JTextField();
         campoTiempoAceptarPropuesta.setMaximumSize(new Dimension(300, 30));
         tiempoAceptarPropuesta.add(campoTiempoAceptarPropuesta);
+        
+        cambiarDiasMinAntelacion = new JCheckBox("Cambiar días mínimos de antelación");
+        cambiarDiasMinAntelacion.setOpaque(false); 
+        cambiarDiasMinAntelacion.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JPanel diasMinAntelacion = new JPanel();
+        diasMinAntelacion.setLayout(new BoxLayout(diasMinAntelacion, BoxLayout.Y_AXIS));
+        diasMinAntelacion.setOpaque(false);
+        diasMinAntelacion.setAlignmentX(Component.CENTER_ALIGNMENT);
+        diasMinAntelacion.setVisible(false);
+
+        JTextField campoDiasMinAntelacion = new JTextField();
+        campoDiasMinAntelacion.setMaximumSize(new Dimension(300, 30));
+        diasMinAntelacion.add(campoDiasMinAntelacion);
+        
 
         panelDerecho.add(cambiarRangoMinutos);
         panelDerecho.add(rangoMinutos);
@@ -206,6 +223,9 @@ public class GestionVueloGUI extends JFrame{
 
         panelDerecho.add(cambiarTiempoAceptarPropuesta);
         panelDerecho.add(tiempoAceptarPropuesta);
+        
+        panelDerecho.add(cambiarDiasMinAntelacion);
+        panelDerecho.add(diasMinAntelacion);
 
         cambiarRangoMinutos.addActionListener(e -> {
             rangoMinutos.setVisible(cambiarRangoMinutos.isSelected());
@@ -224,6 +244,12 @@ public class GestionVueloGUI extends JFrame{
             panelDerecho.revalidate();
             panelDerecho.repaint();
         });
+        
+        cambiarDiasMinAntelacion.addActionListener(e -> {
+            diasMinAntelacion.setVisible(cambiarDiasMinAntelacion.isSelected());
+            panelDerecho.revalidate();
+            panelDerecho.repaint();
+        });
        
 
         /** Acción aceptar */
@@ -234,6 +260,7 @@ public class GestionVueloGUI extends JFrame{
                 String rangoMinutosTexto = campoRangoMinutos.getText().trim();
                 String horasMaxReprogramacionTexto = campoHorasMaxReprogramacion.getText().trim();
                 String tiempoAceptarPropuestaTexto = campoTiempoAceptarPropuesta.getText().trim();
+                String diasMinAntelacionTexto = campoDiasMinAntelacion.getText().trim();
                 
                 if (codigo.isEmpty()) {
                     JOptionPane.showMessageDialog(GestionVueloGUI.this, "Introduce un código de vuelo.");
@@ -281,6 +308,18 @@ public class GestionVueloGUI extends JFrame{
                         tiempoAceptarPropuestaVuelo = Integer.parseInt(tiempoAceptarPropuestaTexto);
                         gestor.setTiempoAceptarPropuesta(tiempoAceptarPropuestaVuelo);
                     }
+                    
+                    if (cambiarDiasMinAntelacion.isSelected()) {
+                        if (diasMinAntelacionTexto.isEmpty()) {
+                            JOptionPane.showMessageDialog(null, 
+                                "Por favor, escribe los días mínimos de antelación que tiene el operador para proponer un vuelo", 
+                                "Campos vacíos", 
+                                JOptionPane.WARNING_MESSAGE);
+                            return;
+                        }
+                        diasAntelacionMinVuelo = Integer.parseInt(diasMinAntelacionTexto);
+                        Gestor.setAntelacionMinimaDias(diasAntelacionMinVuelo);
+                    }
 
                     gestor.gestionarVuelos(vuelo);
                     String mensaje = gestor.getMensajeGUI();
@@ -321,3 +360,5 @@ public class GestionVueloGUI extends JFrame{
             modeloLista.addElement("Vuelo: " + v.getCodigo() + " | Aerolinea: " + v.getAvion().getAerolinea().getNombre() + " | Fecha/Hora: " + v.getFecha() + "/" + v.getHora());
             }
 	}
+	
+}
