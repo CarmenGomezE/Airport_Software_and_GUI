@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import src.airportmanager.AirportManager;
 import src.airportmanager.avion.Aerolinea;
+import src.airportmanager.exceptions.FormatoDniIncorrectoException;
 import src.airportmanager.exceptions.SolicitudInvalidaExcepcion;
 import src.airportmanager.usuario.Operador;
 import src.airportmanager.vuelo.*;
@@ -35,9 +36,10 @@ public class SolicitudVueloCompartidoTest {
 	
     /**
      * Crea objetos
+     * @throws FormatoDniIncorrectoException 
      */
     @BeforeEach
-    void setUp() {
+    void setUp() throws FormatoDniIncorrectoException {
     	sistema = new AirportManager();
     	sistema.iniciarAplicacion();
     	

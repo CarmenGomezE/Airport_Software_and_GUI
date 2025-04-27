@@ -57,7 +57,7 @@ class OperadorTest {
     private AvionPasajeros avionPasajeros;
     
     @BeforeEach
-    void setUp() { 
+    void setUp() throws FormatoDniIncorrectoException { 
         aeropuertoPropio = new AeropuertoPropio("Barajas", "MAD", "Madrid", "España", 64.9, ZoneOffset.UTC, 2, DireccionRelativaCiudad.ESTE);
         
         puertasList = new ArrayList<>();
@@ -270,12 +270,18 @@ class OperadorTest {
 
     @Test
     void testRecibirSolicitud() {
-        Operador operadorReceptor = new Operador("Receptor", "11223344B", aerolinea1, aeropuertoPropio, gestor, sistema);
-        SolicitudVueloCompartido solicitud = new SolicitudVueloCompartido(vuelo1, operador, operadorReceptor, 30.0);
-        
-        operadorReceptor.recibirSolicitud(solicitud);
-        
-        assertTrue(operadorReceptor.getSolicitudesRecibidas().contains(solicitud));
+        Operador operadorReceptor;
+		try {
+			operadorReceptor = new Operador("Receptor", "11223344B", aerolinea1, aeropuertoPropio, gestor, sistema);
+			
+			SolicitudVueloCompartido solicitud = new SolicitudVueloCompartido(vuelo1, operador, operadorReceptor, 30.0);
+	        
+	        operadorReceptor.recibirSolicitud(solicitud);
+	        
+	        assertTrue(operadorReceptor.getSolicitudesRecibidas().contains(solicitud));
+		} catch (FormatoDniIncorrectoException e) {
+			fail();
+		}
     }
 
     @Test
@@ -336,10 +342,5 @@ class OperadorTest {
         operadorPrincipal.recibirNotificacionCambioEstado(vuelo1);
         
         assertTrue(outContent.toString().contains("Nueva notificación:"));
-    }
-    
-    @Test
-    void testEstablecerContrasena() {
-        assertEquals("SoyOperador", operador.getContrasena());
     }
 }

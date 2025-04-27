@@ -19,6 +19,7 @@ import src.airportmanager.aeropuerto.DireccionRelativaCiudad;
 import src.airportmanager.avion.Aerolinea;
 import src.airportmanager.avion.Avion;
 import src.airportmanager.avion.AvionPasajeros;
+import src.airportmanager.exceptions.FormatoDniIncorrectoException;
 import src.airportmanager.usuario.*;
 import src.airportmanager.vuelo.Periodicidad;
 import src.airportmanager.vuelo.TipoCarga;
@@ -55,7 +56,7 @@ public class AerolineaTest {
 	}
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws FormatoDniIncorrectoException {
         
         calendar = Calendar.getInstance();
         calendar.set(2024, Calendar.JANUARY, 22);

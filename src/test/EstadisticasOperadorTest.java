@@ -12,6 +12,7 @@ import src.airportmanager.aeropuerto.*;
 import src.airportmanager.avion.Aerolinea;
 import src.airportmanager.avion.Avion;
 import src.airportmanager.estadisticas.*;
+import src.airportmanager.exceptions.FormatoDniIncorrectoException;
 import src.airportmanager.exceptions.TemporadasSolapadasException;
 import src.airportmanager.usuario.*;
 import src.airportmanager.vuelo.*;
@@ -38,9 +39,10 @@ public class EstadisticasOperadorTest {
     /**
      * Crea objetos
      * @throws TemporadasSolapadasException
+     * @throws FormatoDniIncorrectoException 
      */
     @BeforeEach
-    void setUp() throws TemporadasSolapadasException {
+    void setUp() throws TemporadasSolapadasException, FormatoDniIncorrectoException {
     	sistema = new AirportManager();
     	sistema.iniciarAplicacion();
     	

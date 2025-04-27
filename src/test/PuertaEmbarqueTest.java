@@ -18,6 +18,7 @@ import src.airportmanager.aeropuerto.DireccionRelativaCiudad;
 import src.airportmanager.avion.Aerolinea;
 import src.airportmanager.avion.Avion;
 import src.airportmanager.avion.AvionPasajeros;
+import src.airportmanager.exceptions.FormatoDniIncorrectoException;
 import src.airportmanager.terminal.*;
 import src.airportmanager.usuario.*;
 import src.airportmanager.vuelo.Escala;
@@ -200,7 +201,11 @@ public class PuertaEmbarqueTest {
         sistema = new AirportManager();
         gestor = new Gestor("Miguel", "P8NOKYW", aeropuertoPropio, sistema);
         aerolinea = new Aerolinea("Ryanair", "RT2");
-        operador = new Operador("Jesus", "5648274K", aerolinea, aeropuertoPropio, gestor, sistema);
+        try {
+			operador = new Operador("Jesus", "56482784K", aerolinea, aeropuertoPropio, gestor, sistema);
+		} catch (FormatoDniIncorrectoException e) {
+			fail();
+		}
         aeropuertoDestino = new AeropuertoDestino("Fuimicino", "FCO", "Roma", "Italia", 30.0, zone, 2, DireccionRelativaCiudad.NORTE);
         escala = new Escala(aeropuertoPropio, aeropuertoDestino, hora, h);
         avion = new AvionPasajeros("AIRBUS", "C42", 50.00, 50.0, 50.0, 60.000, 2020, revision, "JLN2000", 0);

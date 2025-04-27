@@ -19,6 +19,7 @@ import src.airportmanager.pista.TipoPista;
 import src.airportmanager.usuario.*;
 import src.airportmanager.vuelo.*;
 import src.airportmanager.avion.*;
+import src.airportmanager.exceptions.FormatoDniIncorrectoException;
 import src.airportmanager.exceptions.TemporadasSolapadasException;
 
 /**
@@ -60,9 +61,10 @@ class AeropuertoPropioTest {
 	}
 	/**
 	 * Crea objetos
+	 * @throws FormatoDniIncorrectoException 
 	 */
 	@BeforeEach
-	void setUp() { 
+	void setUp() throws FormatoDniIncorrectoException { 
 		aeropuertoPropio = new AeropuertoPropio("Barajas", "MAD", "Madrid", "España", 64.9, ZoneOffset.UTC, 2, DireccionRelativaCiudad.ESTE);
 		
 		

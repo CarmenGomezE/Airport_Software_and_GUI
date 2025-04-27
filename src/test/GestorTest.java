@@ -45,9 +45,10 @@ public class GestorTest {
     /**
      * CreaObjetos
      * @throws TemporadasSolapadasException
+     * @throws FormatoDniIncorrectoException 
      */
     @BeforeEach
-    void setUp() throws TemporadasSolapadasException {
+    void setUp() throws TemporadasSolapadasException, FormatoDniIncorrectoException {
         sistema = new AirportManager();
         aeropuerto = new AeropuertoPropio("Barajas", "MAD", "Madrid", "España", 
             10.5, ZoneOffset.UTC, 2, DireccionRelativaCiudad.ESTE);
@@ -140,7 +141,7 @@ public class GestorTest {
     void testDarDeAltaControlador() {
         try {
 			gestor.darDeAltaControlador("Controlador2", "11111111A", terminal);
-		} catch (UsuarioYaExisteException e) {
+		} catch (UsuarioYaExisteException | FormatoDniIncorrectoException e) {
 			fail("No debería lanzar excepción.");
 		}
         assertEquals(1, terminal.getControladores().size());
@@ -154,7 +155,7 @@ public class GestorTest {
     void testDarDeAltaOperador() {
         try {
 			gestor.darDeAltaOperador("Operador2", "22222222B", aerolinea);
-		} catch (UsuarioYaExisteException e) {
+		} catch (UsuarioYaExisteException | FormatoDniIncorrectoException e) {
 			fail("No debería lanzar excepción.");
 		}
         assertEquals(aerolinea.getOperador().getDni(), "22222222B");

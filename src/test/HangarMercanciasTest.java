@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import src.airportmanager.*;
 import src.airportmanager.avion.*;
 import src.airportmanager.exceptions.CargaAvionEquivocadaException;
+import src.airportmanager.exceptions.FormatoDniIncorrectoException;
 import src.airportmanager.vuelo.*;
 import src.airportmanager.aeropuerto.*;
 import src.airportmanager.usuario.*;
@@ -224,7 +225,11 @@ class HangarMercanciasTest{
         sistema = new AirportManager();
         gestor = new Gestor("Miguel", "P8NOKYW", aeropuertoPropio, sistema);
         aerolinea = new Aerolinea("Ryanair", "RT2");
-        operador = new Operador("Jesus", "5648274K", aerolinea, aeropuertoPropio, gestor, sistema);
+        try {
+			operador = new Operador("Jesus", "52648274K", aerolinea, aeropuertoPropio, gestor, sistema);
+		} catch (FormatoDniIncorrectoException e) {
+			fail();
+		}
         aeropuertoDestino = new AeropuertoDestino("Fuimicino", "FCO", "Roma", "Italia", 30.0, zone, 2, DireccionRelativaCiudad.NORTE);
         escala = new Escala(aeropuertoPropio, aeropuertoDestino, hora, h);
         avion = new AvionPasajeros("AIRBUS", "C42", 30.00, 30.0, 30.0, 60.000, 2020, revision, "JLN2000", 0);

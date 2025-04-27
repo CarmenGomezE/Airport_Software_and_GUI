@@ -12,6 +12,7 @@ import src.airportmanager.terminal.*;
 import src.airportmanager.usuario.Gestor;
 import src.airportmanager.usuario.Operador;
 import src.airportmanager.avion.*;
+import src.airportmanager.exceptions.FormatoDniIncorrectoException;
 import src.airportmanager.vuelo.*;
 import java.time.*;
 import java.util.*;
@@ -94,7 +95,11 @@ class ZonaAparcamientoTest{
         sistema = new AirportManager();
         gestor = new Gestor("Miguel", "P8NOKYW", aeropuertoPropio, sistema);
         aerolinea = new Aerolinea("Ryanair", "RT2");
-        operador = new Operador("Jesus", "5648274K", aerolinea, aeropuertoPropio, gestor, sistema);
+        try {
+			operador = new Operador("Jesus", "56482743K", aerolinea, aeropuertoPropio, gestor, sistema);
+		} catch (FormatoDniIncorrectoException e) {
+			fail();
+		}
         aeropuertoDestino = new AeropuertoDestino("Fuimicino", "FCO", "Roma", "Italia", 30.0, zone, 2, DireccionRelativaCiudad.NORTE);
         escala = new Escala(aeropuertoPropio, aeropuertoDestino, hora, h);
         avion = new AvionPasajeros("AIRBUS", "AIR7", 3.0, 7.9, 4.2, 900000, 2021, new Date(), "PSJWU78", 150);

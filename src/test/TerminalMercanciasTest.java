@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import src.airportmanager.aeropuerto.AeropuertoPropio;
 import src.airportmanager.aeropuerto.DireccionRelativaCiudad;
+import src.airportmanager.exceptions.FormatoDniIncorrectoException;
 import src.airportmanager.terminal.*;
 import src.airportmanager.usuario.*;
 
@@ -36,9 +37,10 @@ public class TerminalMercanciasTest {
 	
     /**
      * Crea objetos
+     * @throws FormatoDniIncorrectoException 
      */
     @BeforeEach
-    void setUp() {
+    void setUp() throws FormatoDniIncorrectoException {
 
         zone = ZoneOffset.ofHours((+1));
         puerta = new PuertaEmbarque();
@@ -47,7 +49,7 @@ public class TerminalMercanciasTest {
         terminal = new TerminalMercancias("T1", puertas);
         aeropuertoPropio = new AeropuertoPropio("Barajas", "MAD", "Madrid", "España", 35.0, zone, 3, DireccionRelativaCiudad.ESTE);
         gestor = new Gestor("Pedro", "Pedrito10", aeropuertoPropio, null);
-        controlador = new ControladorAereo("Juan", "5638746T", "juanito87", aeropuertoPropio, gestor, terminal, null);
+        controlador = new ControladorAereo("Juan", "56387476T", "juanito87", aeropuertoPropio, gestor, terminal, null);
         aeropuertoPropio.addTerminal(terminal);
         aeropuertoPropio.getUsuarios().add(gestor);
         aeropuertoPropio.getUsuarios().add(controlador);

@@ -40,14 +40,15 @@ public class AirportManagerTest {
     /**
      * CreaObjetis
      * @throws TemporadasSolapadasException
+     * @throws FormatoDniIncorrectoException 
      */
     @BeforeEach
-    void setUp() throws TemporadasSolapadasException {
+    void setUp() throws TemporadasSolapadasException, FormatoDniIncorrectoException {
     	airportManager = new AirportManager();
         avionPasajeros = new AvionPasajeros("Boeing", "747", 70.6, 19.4, 70.6, 
             397000, 2020, new Date(), "ABC123", 416);
         
-        operador = new Operador("nombre", "dni", aerolinea, airportManager.getAeropuerto(), airportManager.getGestor(), airportManager);
+        operador = new Operador("nombre", "12345678O", aerolinea, airportManager.getAeropuerto(), airportManager.getGestor(), airportManager);
         
         vueloSalida = new Vuelo("IB123", LocalDate.now(), null, null, 
             LocalTime.now().plusHours(1), null, TipoCarga.PASAJEROS, 

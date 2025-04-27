@@ -25,6 +25,7 @@ import src.airportmanager.vuelo.Vuelo;
 import src.airportmanager.AirportManager;
 import src.airportmanager.aeropuerto.*;
 import src.airportmanager.avion.*;
+import src.airportmanager.exceptions.FormatoDniIncorrectoException;
 import src.airportmanager.pista.Pista;
 import src.airportmanager.pista.TipoPista;
 import src.airportmanager.terminal.Finger;
@@ -70,7 +71,7 @@ class VueloTest {
 	}
 	
 	@BeforeEach
-	void setUp() {
+	void setUp() throws FormatoDniIncorrectoException {
 		
 		calendar = Calendar.getInstance();
 		calendar.set(Calendar.YEAR, 2021);
@@ -102,8 +103,8 @@ class VueloTest {
 		sistema = new AirportManager();
 		gestor = new Gestor("Juan Pablo", "JuanPa89", aeropuertoPropio, sistema);
 		controlador = new ControladorAereo("Santiago", "56537209L", "Santi67", aeropuertoPropio, gestor, terminal, sistema);
-		operador = new Operador("Juan Carlos", "567086H", aerolinea, aeropuertoPropio, gestor, sistema);
-		operadorSecundario = new Operador("Pablo", "673292Ñ", aerolinea2, aeropuertoPropio, gestor, sistema);
+		operador = new Operador("Juan Carlos", "56708687H", aerolinea, aeropuertoPropio, gestor, sistema);
+		operadorSecundario = new Operador("Pablo", "67329212P", aerolinea2, aeropuertoPropio, gestor, sistema);
 		escala = new Escala(aeropuertoDestino, aeropuertoDestino, LocalTime.of(12, 30), LocalTime.of(13, 30));
 		vuelo = new Vuelo("V123", LocalDate.of(2023, 5, 12), null, null, LocalTime.of(7, 30), null, TipoCarga.PASAJEROS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO, Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avion, aeropuertoDestino, aeropuertoPropio, null, operador);
 		vuelo2 = new Vuelo("V231", LocalDate.of(2024, 4, 17), LocalDate.of(2024, 4, 17), LocalDate.of(2024, 9, 17), LocalTime.of(11, 30),dias, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER, Periodicidad.RECURRENTE, TipoVuelo.LLEGADA, avion, aeropuertoDestino, aeropuertoPropio, escala, operador);
@@ -310,8 +311,8 @@ class VueloTest {
 		
 		vuelo.agregarOperadorSecundario(operadorSecundario, 23.2);
 		operadores = new ArrayList<>();
-		operadores.add(operadorSecundario);
 		operadores.add(operador);
+		operadores.add(operadorSecundario);
 		assertEquals(operadores, vuelo.getOperadores(), "Error: La lista de operadores asignados no coincide con la esperada.");
 	}
 

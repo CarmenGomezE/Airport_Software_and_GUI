@@ -21,6 +21,7 @@ import src.airportmanager.aeropuerto.DireccionRelativaCiudad;
 import src.airportmanager.avion.Aerolinea;
 import src.airportmanager.avion.Avion;
 import src.airportmanager.avion.AvionPasajeros;
+import src.airportmanager.exceptions.FormatoDniIncorrectoException;
 import src.airportmanager.pista.Pista;
 import src.airportmanager.pista.TipoPista;
 import src.airportmanager.usuario.Gestor;
@@ -61,9 +62,10 @@ class PistaTest {
 	}
 	/**
 	 * Crea objetos necesarios
+	 * @throws FormatoDniIncorrectoException 
 	 */
 	@BeforeEach
-	void setUp() {
+	void setUp() throws FormatoDniIncorrectoException {
 		
 
         pista1 = new Pista("P123", 3500.0, TipoPista.DESPEGUE);
@@ -84,7 +86,7 @@ class PistaTest {
         sistema = new AirportManager();
         gestor = new Gestor("Miguel", "P8NOKYW", aeropuertoPropio, sistema);
         aerolinea = new Aerolinea("Ryanair", "RT2");
-        operador = new Operador("Jesus", "5648274K", aerolinea, aeropuertoPropio, gestor, sistema);
+        operador = new Operador("Jesus", "56438274K", aerolinea, aeropuertoPropio, gestor, sistema);
         aeropuertoDestino = new AeropuertoDestino("Fuimicino", "FCO", "Roma", "Italia", 30.0, zone, 2, DireccionRelativaCiudad.NORTE);
         escala = new Escala(aeropuertoPropio, aeropuertoDestino, hora, h);
         avion = new AvionPasajeros("AIRBUS", "AIR7", 87.0, 67.9, 54.2, 900000, 2021, new Date(), "PSJWU78", 150);

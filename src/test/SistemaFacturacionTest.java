@@ -16,6 +16,7 @@ import src.airportmanager.aeropuerto.AeropuertoPropio;
 import src.airportmanager.aeropuerto.DireccionRelativaCiudad;
 import src.airportmanager.avion.Aerolinea;
 import src.airportmanager.avion.AvionPasajeros;
+import src.airportmanager.exceptions.FormatoDniIncorrectoException;
 import src.airportmanager.factura.*;
 import src.airportmanager.terminal.PuertaEmbarque;
 import src.airportmanager.terminal.TerminalPasajeros;
@@ -50,9 +51,10 @@ class SistemaFacturacionTest {
 	}
     /**
      * Crea objetos
+     * @throws FormatoDniIncorrectoException 
      */
     @BeforeEach
-    void setUp() {
+    void setUp() throws FormatoDniIncorrectoException {
         
         sistemaFacturacion = new SistemaFacturacion(1.6, 20.7, 43.9);
 
@@ -82,38 +84,41 @@ class SistemaFacturacionTest {
     @Test
     void testGenerarFactura() {
        
-        Operador operadorAeroTest = new Operador("Test Operator", "12345678T", aerolinea, aeropuertoPropio, gestor, sistema);
-        aerolinea.setOperador(operadorAeroTest);
-        aerolinea.agregarAvion(avion);
-        
-      
-        LocalDate now = LocalDate.now();
-        Vuelo vueloTest1 = new Vuelo("V123", now.withDayOfMonth(1), 
-            null, null, LocalTime.of(7, 30), null, TipoCarga.PASAJEROS, 
-            TipoModoEmbarque.ZONA_DE_APARCAMIENTO, Periodicidad.PUNTUAL, 
-            TipoVuelo.SALIDA, avion, aeropuertoDestino, aeropuertoPropio, 
-            null, operadorAeroTest);
-        
-        operadorAeroTest.getAeropuerto().getVuelosAceptados().add(vueloTest1);
-        
-        
-        List<Factura> facturas = sistemaFacturacion.generarFactura(aerolinea);
-        
-       
-        System.out.println("Airline code: " + aerolinea.getCodigo());
-        if (!facturas.isEmpty()) {
-            System.out.println("First invoice code: " + facturas.get(0).getInvoiceIdentifier());
-        }
-       
-        assertNotNull(facturas, "La lista de facturas no debería ser null");
-        assertFalse(facturas.isEmpty(), "Debería generarse al menos una factura");
-        
-        Factura factura = facturas.get(0);
-        assertTrue(factura.getInvoiceIdentifier().startsWith(aerolinea.getCodigo()), 
-            "El código de factura debería comenzar con '" + aerolinea.getCodigo() + "' pero fue '" + 
-            factura.getInvoiceIdentifier() + "'");
-        
-        
+        Operador operadorAeroTest;
+		try {
+			operadorAeroTest = new Operador("Test Operator", "12345678T", aerolinea, aeropuertoPropio, gestor, sistema);
+			aerolinea.setOperador(operadorAeroTest);
+	        aerolinea.agregarAvion(avion);
+	        
+	      
+	        LocalDate now = LocalDate.now();
+	        Vuelo vueloTest1 = new Vuelo("V123", now.withDayOfMonth(1), 
+	            null, null, LocalTime.of(7, 30), null, TipoCarga.PASAJEROS, 
+	            TipoModoEmbarque.ZONA_DE_APARCAMIENTO, Periodicidad.PUNTUAL, 
+	            TipoVuelo.SALIDA, avion, aeropuertoDestino, aeropuertoPropio, 
+	            null, operadorAeroTest);
+	        
+	        operadorAeroTest.getAeropuerto().getVuelosAceptados().add(vueloTest1);
+	        
+	        
+	        List<Factura> facturas = sistemaFacturacion.generarFactura(aerolinea);
+	        
+	       
+	        System.out.println("Airline code: " + aerolinea.getCodigo());
+	        if (!facturas.isEmpty()) {
+	            System.out.println("First invoice code: " + facturas.get(0).getInvoiceIdentifier());
+	        }
+	       
+	        assertNotNull(facturas, "La lista de facturas no debería ser null");
+	        assertFalse(facturas.isEmpty(), "Debería generarse al menos una factura");
+	        
+	        Factura factura = facturas.get(0);
+	        assertTrue(factura.getInvoiceIdentifier().startsWith(aerolinea.getCodigo()), 
+	            "El código de factura debería comenzar con '" + aerolinea.getCodigo() + "' pero fue '" + 
+	            factura.getInvoiceIdentifier() + "'");
+		} catch (FormatoDniIncorrectoException e) {
+			fail();
+		}
     }
 
     /**

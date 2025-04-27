@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import src.airportmanager.*;
 import src.airportmanager.avion.*;
+import src.airportmanager.exceptions.FormatoDniIncorrectoException;
 import src.airportmanager.terminal.*;
 import src.airportmanager.vuelo.*;
 import src.airportmanager.aeropuerto.*;
@@ -96,15 +97,17 @@ class FingerTest{
         sistema = new AirportManager();
         gestor = new Gestor("Miguel", "P8NOKYW", aeropuertoPropio, sistema);
         aerolinea = new Aerolinea("Ryanair", "RT2");
-        operador = new Operador("Jesus", "5648274K", aerolinea, aeropuertoPropio, gestor, sistema);
-        aeropuertoDestino = new AeropuertoDestino("Fuimicino", "FCO", "Roma", "Italia", 30.0, zone, 2, DireccionRelativaCiudad.NORTE);
-        escala = new Escala(aeropuertoPropio, aeropuertoDestino, hora, h);
-        avion = new AvionPasajeros("AIRBUS", "AIR7", 5.5, 6.9, 4.2, 900000, 2021, new Date(), "PSJWU78", 150);
-        vueloPequeno = new Vuelo("V123", fecha, null, null, hora, null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER, Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avion, aeropuertoDestino, aeropuertoPropio, escala, operador);
+        try {
+			operador = new Operador("Jesus", "56482714K", aerolinea, aeropuertoPropio, gestor, sistema);
+			
+			aeropuertoDestino = new AeropuertoDestino("Fuimicino", "FCO", "Roma", "Italia", 30.0, zone, 2, DireccionRelativaCiudad.NORTE);
+	        escala = new Escala(aeropuertoPropio, aeropuertoDestino, hora, h);
+	        avion = new AvionPasajeros("AIRBUS", "AIR7", 5.5, 6.9, 4.2, 900000, 2021, new Date(), "PSJWU78", 150);
+	        vueloPequeno = new Vuelo("V123", fecha, null, null, hora, null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER, Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avion, aeropuertoDestino, aeropuertoPropio, escala, operador);
 
-        assertTrue(finger.comprobarTamano(vueloPequeno), "Error. El avion debería caber");
-    
-}
-
-
+	        assertTrue(finger.comprobarTamano(vueloPequeno), "Error. El avion debería caber");
+		} catch (FormatoDniIncorrectoException e) {
+			fail();
+		}
+   }
 }
