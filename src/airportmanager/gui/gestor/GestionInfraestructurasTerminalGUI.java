@@ -58,41 +58,26 @@ public class GestionInfraestructurasTerminalGUI extends JFrame{
             }
 	    });
 	    
-	    JPanel panelPrincipal = new JPanel(new BorderLayout());
-        panelPrincipal.setBorder(BorderFactory.createEmptyBorder(20, 60, 20, 60));
-        panelPrincipal.setBackground(ConfiguracionUI.COLOR_FONDO);
+	    JPanel panelPrincipal = ConfiguracionUI.crearPanelPrincipal();
         
         /** TÍTULO */
-        JLabel titulo = new JLabel("Gestión infraestructura: terminal", JLabel.CENTER);
-        titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
-        titulo.setFont(new Font("Arial", Font.BOLD, 28));
-        
-        JPanel cabecera = new JPanel();
-        cabecera.setLayout(new BoxLayout(cabecera, BoxLayout.Y_AXIS));
-        cabecera.setBackground(ConfiguracionUI.COLOR_FONDO);
-        cabecera.add(titulo);
-        cabecera.add(Box.createRigidArea(new Dimension(0, 20)));
+        JLabel titulo = ConfiguracionUI.crearTitulo("Gestión de infraestructura: Terminal");
+        JPanel cabecera = ConfiguracionUI.crearCabeceraPanel(titulo);
 
         panelPrincipal.add(cabecera, BorderLayout.NORTH);
         
-        JPanel formulario = new JPanel(new GridLayout(7, 2, 20, 30));
-        formulario.setBackground(ConfiguracionUI.COLOR_FONDO);
+        JPanel formulario = ConfiguracionUI.crearPanelTipoFormulario();
        
         String[] tipos = { "Pasajeros", "Mercancías" };
         JComboBox<String> tipoTerminal = new JComboBox<>(tipos);
       
-        
-       JTextField campoCodigo =crearCampoTexto();
-       campoCodigo.setPreferredSize(new Dimension(250, 5));
-       JTextField campoAforo = crearCampoTexto();
-       campoAforo.setPreferredSize(new Dimension(250,5));
-       JTextField campoPuertasEmbarque = crearCampoTexto();
-       campoPuertasEmbarque.setPreferredSize(new Dimension(250,5));
+       JTextField campoCodigo = ConfiguracionUI.crearCampoTexto();
+       JTextField campoAforo = ConfiguracionUI.crearCampoTexto();
+       JTextField campoPuertasEmbarque = ConfiguracionUI.crearCampoTexto();
        
-       
-       formulario.add(crearCampoConLabel("Código", campoCodigo));
-       formulario.add(crearCampoConLabel("Tipo", tipoTerminal));
-       formulario.add(crearCampoConLabel("Puertas de embarque", campoPuertasEmbarque));
+       formulario.add(ConfiguracionUI.crearCampoConLabel("Código", campoCodigo));
+       formulario.add(ConfiguracionUI.crearCampoConLabel("Tipo", tipoTerminal));
+       formulario.add(ConfiguracionUI.crearCampoConLabel("Puertas de embarque", campoPuertasEmbarque));
   
        JPanel panelOpcional = new JPanel();
        panelOpcional.setLayout(new BoxLayout(panelOpcional, BoxLayout.Y_AXIS));
@@ -100,32 +85,27 @@ public class GestionInfraestructurasTerminalGUI extends JFrame{
        panelOpcional.setPreferredSize(new Dimension(250, 100));
        formulario.add(panelOpcional); 
        
-       
        tipoTerminal.addActionListener(new ActionListener() {
     	    @Override
     	    public void actionPerformed(ActionEvent e) {
     	        tipoSeleccionado = (String) tipoTerminal.getSelectedItem();
     	        
-    	        // Limpia el panel opcional antes de añadir cosas nuevas
     	        panelOpcional.removeAll();
 
     	        if (tipoSeleccionado.equals("Pasajeros")) {
-    	            panelOpcional.add(crearCampoConLabel("Aforo", campoAforo));
+    	            panelOpcional.add(ConfiguracionUI.crearCampoConLabel("Aforo", campoAforo));
     	          
     	        }
 
-    	        // Actualiza la interfaz
     	        panelOpcional.revalidate();
     	        panelOpcional.repaint();
     	    }
     	});
 
       
-       JButton botonAgregarHangar = new JButton("Agregar terminal");
-       botonAgregarHangar.setFont(new Font("Arial", Font.BOLD, 16));
-       botonAgregarHangar.setAlignmentX(Component.CENTER_ALIGNMENT);
-       
-       botonAgregarHangar.addActionListener(new ActionListener() {
+       JButton botonAgregarTerminal = ConfiguracionUI.crearBotonCentrado("Agregar terminal");
+      
+       botonAgregarTerminal.addActionListener(new ActionListener() {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -216,7 +196,7 @@ public class GestionInfraestructurasTerminalGUI extends JFrame{
        });
 	
        panelPrincipal.add(formulario);
-       panelPrincipal.add(botonAgregarHangar, BorderLayout.SOUTH);
+       panelPrincipal.add(botonAgregarTerminal, BorderLayout.SOUTH);
       
        add(panelPrincipal);
 	     
@@ -224,25 +204,7 @@ public class GestionInfraestructurasTerminalGUI extends JFrame{
 		
 	}
 	
-	
-	private JPanel crearCampoConLabel(String textoLabel, JComponent campo) {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBackground(ConfiguracionUI.COLOR_FONDO);
-        JLabel label = new JLabel(textoLabel);
-        label.setAlignmentX(Component.LEFT_ALIGNMENT);
-        campo.setAlignmentX(Component.LEFT_ALIGNMENT);
-        panel.add(label);
-        panel.add(Box.createVerticalStrut(5));
-        panel.add(campo);
-        return panel;
-    }
 
-	private JTextField crearCampoTexto() {
-		JTextField campo = new JTextField();
-		campo.setPreferredSize(new Dimension(200, 30));
-		return campo;
-	}
 	
 	 
 }
