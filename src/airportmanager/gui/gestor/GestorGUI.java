@@ -337,7 +337,7 @@ public class GestorGUI extends JFrame {
             }
         });
 
-        JButton botonVuelosAceptados = new JButton("Ver vuelos aceptados");
+        JButton botonVuelosAceptados = new JButton("Ver información del aeropuerto propio");
         panelDerecho.add(botonVuelosAceptados);
         botonVuelosAceptados.addActionListener(new ActionListener() {
             @Override
@@ -376,7 +376,7 @@ public class GestorGUI extends JFrame {
                         modeloLista.addElement("Vuelo: " + v + " | Hora: " + v.getHora() + " | Estado: " + v.getEstado()
                                 + " | Esperando pista durante más de 10 min");
                     }
-                } else if (v.getEstado().equals(EstadoVuelo.RETRASADO)) {
+                } else if (v.getEstado().equals(EstadoVuelo.RETRASADO)) {  
                     modeloLista.addElement(
                             "Vuelo: " + v + " | Hora: " + v.getHora() + " | Estado: " + v.getEstado() + " | Retrasado");
                 } else if (v.getEstado().equals(EstadoVuelo.OPERATIVO)) {
