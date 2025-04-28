@@ -749,6 +749,21 @@ public class ControladorAereo extends UsuarioConDni {
         return false;
     }
     
+    /**
+     * Método to string.
+     * 
+     * @return cadena que respresenta al controlador.
+     */
+    @Override
+    public String toString() {
+    	return "Controlador: "+super.nombre;
+    }
+    
+    /**
+     * Método para recibir una notificación de su terminal.
+     * 
+     * @param notificacion Notificación que se recibe.
+     */
     @Override
     public void recibirNotificacion(Notificacion notificacion) {
     	

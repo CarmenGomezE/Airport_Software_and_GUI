@@ -20,10 +20,6 @@ import src.airportmanager.vuelo.Vuelo;
 public class BuscarVueloControladorGUI extends JFrame {
 	/** Número de versión de la clase */
     private static final long serialVersionUID = 1L;
-    /** Interfaz principal del controlador */
-    private final ControladorGUI conGUI;
-    /** Controlador de la interfaz */
-    private final ControladorAereo controlador;
 
     /**
      * Constructor de la clase BuscarVueloControladorGUI.
@@ -33,9 +29,6 @@ public class BuscarVueloControladorGUI extends JFrame {
      * @param controlador 	Controlador de la interfaz.
      */
     public BuscarVueloControladorGUI(AirportManager manager, ControladorGUI conGUI, ControladorAereo controlador) {
-        this.conGUI = conGUI;
-        this.controlador = controlador;
-
         setTitle("Panel de buscar vuelos del Controlador");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -80,7 +73,7 @@ public class BuscarVueloControladorGUI extends JFrame {
         filaBusqueda.add(comboCriterios);
         filaBusqueda.add(Box.createRigidArea(new Dimension(20, 0)));
 
-        JTextField campoValor = new JTextField();
+        JTextField campoValor = new JTextField(); 
         campoValor.setFont(new Font("Arial", Font.PLAIN, 16));
         campoValor.setMaximumSize(new Dimension(300, 35));
         filaBusqueda.add(campoValor);

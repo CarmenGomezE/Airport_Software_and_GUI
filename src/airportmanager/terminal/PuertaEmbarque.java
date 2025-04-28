@@ -145,4 +145,14 @@ public class PuertaEmbarque implements Serializable {
     public boolean contieneZonaAparcamiento(ZonaAparcamiento zona) {
         return zonasAparcamiento.contains(zona);
     }
+    
+    /**
+     * Método to string.
+     * 
+     * @return cadena que respresenta una puerta de embarque.
+     */
+    @Override
+    public String toString() {
+    	return "Puerta: "+id;
+    }
 }

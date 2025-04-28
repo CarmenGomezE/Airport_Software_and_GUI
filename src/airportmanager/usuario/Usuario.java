@@ -23,7 +23,7 @@ public abstract class Usuario implements Serializable {
     /** Número de versión de la clase */
     private static final long serialVersionUID = 1L;
     /** Nombre del usuario */
-    private String nombre;
+    protected String nombre;
     /** Contraseña del usuario */
     protected String contrasena;
     /** Notificaciones del usuario */
