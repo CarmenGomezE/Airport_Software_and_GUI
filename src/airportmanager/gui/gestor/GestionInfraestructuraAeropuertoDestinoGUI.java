@@ -30,12 +30,21 @@ import src.airportmanager.exceptions.TemporadasSolapadasException;
 import src.airportmanager.gui.ConfiguracionUI;
 import src.airportmanager.usuario.Gestor;
 
+/**
+ * La clase GestionInfraestructuraAeropuertoDestinoGUI representa la ventana de gestión de la infraestructura: Aeropuerto Destino
+ */
 public class GestionInfraestructuraAeropuertoDestinoGUI extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 	private final GestorGUI gestorGUI;
 	private final Gestor gestor;
 	
+	/**
+	 * Constructor de la clase GestionInfraestructuraAeropuertoDestinoGUI
+	 * @param manager el manager
+	 * @param gestorGUI el gestorGUI
+	 * @param gestor el gestor
+	 */
 	public GestionInfraestructuraAeropuertoDestinoGUI(AirportManager manager, GestorGUI gestorGUI, Gestor gestor) {
 		this.gestor = gestor;
 		this.gestorGUI = gestorGUI;
@@ -53,33 +62,21 @@ public class GestionInfraestructuraAeropuertoDestinoGUI extends JFrame {
             }
 	    });
 	    
-	    JPanel panel = new JPanel(new BorderLayout());
-        panel.setBorder(BorderFactory.createEmptyBorder(20, 60, 20, 60));
-        panel.setBackground(ConfiguracionUI.COLOR_FONDO);
+	    JPanel panel = ConfiguracionUI.crearPanelPrincipal();
         
         /** TÍTULO */
-        JLabel titulo = new JLabel("Gestión infraestructura: Aeropuerto de destino", JLabel.CENTER);
-        titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
-        titulo.setFont(new Font("Arial", Font.BOLD, 28));
+        JLabel titulo = ConfiguracionUI.crearTitulo("Gestión de infraestructura: Aeropuerto Destino");
         
-        JPanel cabecera = new JPanel();
-        cabecera.setLayout(new BoxLayout(cabecera, BoxLayout.Y_AXIS));
-        cabecera.setBackground(ConfiguracionUI.COLOR_FONDO);
-        cabecera.add(titulo);
-        cabecera.add(Box.createRigidArea(new Dimension(0, 20)));
-
+        JPanel cabecera = ConfiguracionUI.crearCabeceraPanel(titulo);
         panel.add(cabecera, BorderLayout.NORTH);
         
-        JPanel formulario = new JPanel(new GridLayout(7, 2, 20, 30));
-        formulario.setBackground(ConfiguracionUI.COLOR_FONDO);
+        JPanel formulario = ConfiguracionUI.crearPanelTipoFormulario();
         
-        JTextField campoNombreFichero = crearCampoTexto();
+        JTextField campoNombreFichero = ConfiguracionUI.crearCampoTexto();
         campoNombreFichero.setPreferredSize(new Dimension(250, 5));
-        formulario.add(crearCampoConLabel("Nombre fichero", campoNombreFichero));
+        formulario.add(ConfiguracionUI.crearCampoConLabel("Nombre fichero", campoNombreFichero));
         
-        JButton botonAgregarAeropuertoDestino= new JButton("Agregar aeropuerto destino");
-        botonAgregarAeropuertoDestino.setFont(new Font("Arial", Font.BOLD, 16));
-        botonAgregarAeropuertoDestino.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JButton botonAgregarAeropuertoDestino = ConfiguracionUI.crearBotonCentrado("Agregar aeropuerto destino");
         
         botonAgregarAeropuertoDestino.addActionListener(new ActionListener() {
 
@@ -132,25 +129,6 @@ public class GestionInfraestructuraAeropuertoDestinoGUI extends JFrame {
  	     
 	    setVisible(true);
 
-	}
-	
-	private JPanel crearCampoConLabel(String textoLabel, JComponent campo) {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBackground(ConfiguracionUI.COLOR_FONDO);
-        JLabel label = new JLabel(textoLabel);
-        label.setAlignmentX(Component.LEFT_ALIGNMENT);
-        campo.setAlignmentX(Component.LEFT_ALIGNMENT);
-        panel.add(label);
-        panel.add(Box.createVerticalStrut(5));
-        panel.add(campo);
-        return panel;
-    }
-
-	private JTextField crearCampoTexto() {
-		JTextField campo = new JTextField();
-		campo.setPreferredSize(new Dimension(200, 30));
-		return campo;
 	}
 	
 }

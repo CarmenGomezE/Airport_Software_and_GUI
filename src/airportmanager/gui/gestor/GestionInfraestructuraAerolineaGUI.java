@@ -26,12 +26,21 @@ import src.airportmanager.exceptions.AerolineaYaExisteException;
 import src.airportmanager.gui.ConfiguracionUI;
 import src.airportmanager.usuario.Gestor;
 
+/**
+ * La clase GestioNinfraestructuraAerolineaGUI representa la ventana de gestión de infraestructuras: Aerolínea del gestor.
+ */
 public class GestionInfraestructuraAerolineaGUI extends JFrame{
 	
 	private static final long serialVersionUID = 1L;
 	private final GestorGUI gestorGUI;
 	private final Gestor gestor;
 
+	/**
+	 * Constructor de la clase GestionInfraestructuraAerolineaGUI
+	 * @param manager el manager
+	 * @param gestorGUI el gestorGUI
+	 * @param gestor el gestor
+	 */
 	public GestionInfraestructuraAerolineaGUI(AirportManager manager, GestorGUI gestorGUI, Gestor gestor) {
 		this.gestor = gestor;
 		this.gestorGUI = gestorGUI;
@@ -49,38 +58,24 @@ public class GestionInfraestructuraAerolineaGUI extends JFrame{
 	            }
 	     });
 	     
-	     JPanel panelPrincipal = new JPanel(new BorderLayout());
-         panelPrincipal.setBorder(BorderFactory.createEmptyBorder(20, 60, 20, 60));
-         panelPrincipal.setBackground(ConfiguracionUI.COLOR_FONDO);
-         
+	     JPanel panelPrincipal = ConfiguracionUI.crearPanelPrincipal();
          /** TÍTULO */
-         JLabel titulo = new JLabel("Gestión de infraestructuras: Aerolínea", JLabel.CENTER);
-         titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
-         titulo.setFont(new Font("Arial", Font.BOLD, 28));
+         JLabel titulo = ConfiguracionUI.crearTitulo("Gestión de infraestructura: Aerolinea");
          
-         JPanel cabecera = new JPanel();
-         cabecera.setLayout(new BoxLayout(cabecera, BoxLayout.Y_AXIS));
-         cabecera.setBackground(ConfiguracionUI.COLOR_FONDO);
-         cabecera.add(titulo);
-         cabecera.add(Box.createRigidArea(new Dimension(0, 20)));
-
+         JPanel cabecera = ConfiguracionUI.crearCabeceraPanel(titulo);
          panelPrincipal.add(cabecera, BorderLayout.NORTH);
          
-         JPanel formulario = new JPanel(new GridLayout(7, 2, 20, 30));
-         formulario.setBackground(ConfiguracionUI.COLOR_FONDO);
+         JPanel formulario = ConfiguracionUI.crearPanelTipoFormulario();
          
-         JTextField campoNombre =crearCampoTexto();
+         JTextField campoNombre =ConfiguracionUI.crearCampoTexto();
          campoNombre.setPreferredSize(new Dimension(250, 5));
-         JTextField campoCodigo = crearCampoTexto();
+         JTextField campoCodigo = ConfiguracionUI.crearCampoTexto();
          campoCodigo.setPreferredSize(new Dimension(250,5));
         
-         formulario.add(crearCampoConLabel("Nombre", campoNombre));
-         formulario.add(crearCampoConLabel("Código", campoCodigo));
+         formulario.add(ConfiguracionUI.crearCampoConLabel("Nombre", campoNombre));
+         formulario.add(ConfiguracionUI.crearCampoConLabel("Código", campoCodigo));
          
-         JButton botonAgregarAerolinea = new JButton("Agregar aerolínea");
-         botonAgregarAerolinea.setFont(new Font("Arial", Font.BOLD, 16));
-         botonAgregarAerolinea.setAlignmentX(Component.CENTER_ALIGNMENT);
-         
+         JButton botonAgregarAerolinea = ConfiguracionUI.crearBotonCentrado("Agregar aerolínea");
          botonAgregarAerolinea.addActionListener(new ActionListener() {
 
 			@Override
@@ -122,25 +117,4 @@ public class GestionInfraestructuraAerolineaGUI extends JFrame{
          
 	}
 	
-	private JPanel crearCampoConLabel(String textoLabel, JComponent campo) {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBackground(ConfiguracionUI.COLOR_FONDO);
-        JLabel label = new JLabel(textoLabel);
-        label.setAlignmentX(Component.LEFT_ALIGNMENT);
-        campo.setAlignmentX(Component.LEFT_ALIGNMENT);
-        panel.add(label);
-        panel.add(Box.createVerticalStrut(5));
-        panel.add(campo);
-        return panel;
-    }
-
-	private JTextField crearCampoTexto() {
-		JTextField campo = new JTextField();
-		campo.setPreferredSize(new Dimension(200, 30));
-		return campo;
-	}
-
-
-
 }

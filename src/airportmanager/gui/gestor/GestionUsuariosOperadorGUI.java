@@ -23,16 +23,26 @@ import javax.swing.JTextField;
 
 import src.airportmanager.AirportManager;
 import src.airportmanager.avion.Aerolinea;
+import src.airportmanager.exceptions.FormatoDniIncorrectoException;
 import src.airportmanager.exceptions.UsuarioYaExisteException;
 import src.airportmanager.gui.ConfiguracionUI;
 
 import src.airportmanager.usuario.Gestor;
 
+/**
+ * La clase GestionUsuariosOperadorGUI representa la ventana de gstión de usuarios (Operador de la aerolínea) del gestor
+ */
 public class GestionUsuariosOperadorGUI extends JFrame{
 	private static final long serialVersionUID = 1L;
 	private final GestorGUI gestorGUI;
 	private final Gestor gestor;
 
+	/**
+	 * Constructor de la clase GestionUsuariosOperadorGUI
+	 * @param manager el manager
+	 * @param gestorGUI el gestorGUI
+	 * @param gestor el gestor
+	 */
 	public GestionUsuariosOperadorGUI(AirportManager manager, GestorGUI gestorGUI, Gestor gestor) {
 		this.gestor = gestor;
 		this.gestorGUI = gestorGUI;
@@ -50,40 +60,28 @@ public class GestionUsuariosOperadorGUI extends JFrame{
 	            }
 	     });
 	     
-	     JPanel panelPrincipal = new JPanel(new BorderLayout());
-         panelPrincipal.setBorder(BorderFactory.createEmptyBorder(20, 60, 20, 60));
-         panelPrincipal.setBackground(ConfiguracionUI.COLOR_FONDO);
+	     JPanel panelPrincipal = ConfiguracionUI.crearPanelPrincipal();
          
          /** TÍTULO */
-         JLabel titulo = new JLabel("Gestión de usuarios: Operador de la aerolínea ", JLabel.CENTER);
-         titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
-         titulo.setFont(new Font("Arial", Font.BOLD, 28));
+         JLabel titulo = ConfiguracionUI.crearTitulo("Gestión de usuarios: Operador");
          
-         JPanel cabecera = new JPanel();
-         cabecera.setLayout(new BoxLayout(cabecera, BoxLayout.Y_AXIS));
-         cabecera.setBackground(ConfiguracionUI.COLOR_FONDO);
-         cabecera.add(titulo);
-         cabecera.add(Box.createRigidArea(new Dimension(0, 20)));
-
+         JPanel cabecera = ConfiguracionUI.crearCabeceraPanel(titulo);
          panelPrincipal.add(cabecera, BorderLayout.NORTH);
          
-         JPanel formulario = new JPanel(new GridLayout(7, 2, 20, 30));
-         formulario.setBackground(ConfiguracionUI.COLOR_FONDO);
+         JPanel formulario = ConfiguracionUI.crearPanelTipoFormulario();
          
-         JTextField campoNombre = crearCampoTexto();
+         JTextField campoNombre = ConfiguracionUI.crearCampoTexto();
          campoNombre.setPreferredSize(new Dimension(250, 5));
-         JTextField campoDni =crearCampoTexto();
+         JTextField campoDni =ConfiguracionUI.crearCampoTexto();
          campoDni.setPreferredSize(new Dimension(250, 5));
-         JTextField campoAerolinea = crearCampoTexto();
+         JTextField campoAerolinea = ConfiguracionUI.crearCampoTexto();
          campoAerolinea.setPreferredSize(new Dimension(250,5));
          
-         formulario.add(crearCampoConLabel("Nombre:", campoNombre));
-         formulario.add(crearCampoConLabel("Dni:", campoDni));
-         formulario.add(crearCampoConLabel("Aerolínea", campoAerolinea));
+         formulario.add(ConfiguracionUI.crearCampoConLabel("Nombre:", campoNombre));
+         formulario.add(ConfiguracionUI.crearCampoConLabel("Dni:", campoDni));
+         formulario.add(ConfiguracionUI.crearCampoConLabel("Aerolínea", campoAerolinea));
          
-         JButton botonAgregarControlador = new JButton("Agregar operador de la aerolínea");
-         botonAgregarControlador.setFont(new Font("Arial", Font.BOLD, 16));
-         botonAgregarControlador.setAlignmentX(Component.CENTER_ALIGNMENT);
+         JButton botonAgregarControlador = ConfiguracionUI.crearBotonCentrado("Agregar operador de la aerolínea");
             
          botonAgregarControlador.addActionListener( new ActionListener() {
 
@@ -119,7 +117,15 @@ public class GestionUsuariosOperadorGUI extends JFrame{
                         "Error: el operador ya está dado de alta en el sistema.", 
                         "Operador ya existente", 
                         JOptionPane.ERROR_MESSAGE);
-			};
+			}catch(FormatoDniIncorrectoException e1) {
+				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, 
+                        "Error: el dni del operador tiene que tener 8 dígitos y una letra.", 
+                        "Formato de dni incorrecto", 
+                        JOptionPane.ERROR_MESSAGE);
+			}
+			
+			
 			   JOptionPane.showMessageDialog(null, 
 					    "¡Operador dado de alta correctamente en la aerolínea "+ aerolinea.getNombre() + "!", 
 					    "Éxito", 
@@ -135,25 +141,5 @@ public class GestionUsuariosOperadorGUI extends JFrame{
          setVisible(true);
 
 	}
-	
-
-	 private JPanel crearCampoConLabel(String textoLabel, JComponent campo) {
-	        JPanel panel = new JPanel();
-	        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-	        panel.setBackground(ConfiguracionUI.COLOR_FONDO);
-	        JLabel label = new JLabel(textoLabel);
-	        label.setAlignmentX(Component.LEFT_ALIGNMENT);
-	        campo.setAlignmentX(Component.LEFT_ALIGNMENT);
-	        panel.add(label);
-	        panel.add(Box.createVerticalStrut(5));
-	        panel.add(campo);
-	        return panel;
-	    }
-	
-	private JTextField crearCampoTexto() {
-       JTextField campo = new JTextField();
-       campo.setPreferredSize(new Dimension(200, 30));
-       return campo;
-   }
 
 }

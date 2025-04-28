@@ -34,6 +34,9 @@ import src.airportmanager.gui.ConfiguracionUI;
 import src.airportmanager.terminal.PuertaEmbarque;
 import src.airportmanager.usuario.Gestor;
 
+/**
+ * La clase GestionInfraestructurasTerminalGUI representa la ventana de infraestructura (terminal) del gestor
+ */
 public class GestionInfraestructurasTerminalGUI extends JFrame{
 	private static final long serialVersionUID = 1L;
 	private final GestorGUI gestorGUI;
@@ -41,6 +44,12 @@ public class GestionInfraestructurasTerminalGUI extends JFrame{
 	private JCheckBox mercaPeligrosa;
 	private String tipoSeleccionado;
 
+	/**
+	 * Constructor de la clase GestionInfraestructuraTerminalGUI
+	 * @param manager el manager
+	 * @param gestorGUI el gestorGUI
+	 * @param gestor el gestor
+	 */
 	public GestionInfraestructurasTerminalGUI(AirportManager manager, GestorGUI gestorGUI, Gestor gestor) {
 		this.gestor = gestor;
 		this.gestorGUI = gestorGUI;
