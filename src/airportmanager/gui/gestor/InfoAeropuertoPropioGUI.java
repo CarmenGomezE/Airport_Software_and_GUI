@@ -15,7 +15,7 @@ import src.airportmanager.usuario.Gestor;
 import src.airportmanager.vuelo.Vuelo;
 import src.airportmanager.terminal.*;
 
-public class VuelosAceptadosGUI extends JFrame {
+public class InfoAeropuertoPropioGUI extends JFrame {
     private static final long serialVersionUID = 1L;
     private final GestorGUI geGUI;
     private final AirportManager manager;
@@ -23,7 +23,7 @@ public class VuelosAceptadosGUI extends JFrame {
     private JList<String> listaDatos;
     private JComboBox<String> selector;
 
-    public VuelosAceptadosGUI(AirportManager manager, GestorGUI gestorGUI, Gestor gestorAe) {
+    public InfoAeropuertoPropioGUI(AirportManager manager, GestorGUI gestorGUI, Gestor gestorAe) {
         this.geGUI = gestorGUI;
         this.manager = manager;
         setTitle("Panel de información del Gestor");
@@ -55,8 +55,8 @@ public class VuelosAceptadosGUI extends JFrame {
 
         /** SELECTOR */
         selector = new JComboBox<>(new String[] {
-            "Vuelos Aceptados", "Hangares", "Terminales", "Modos de Embarque", 
-            "Pistas", "Aerolíneas", "Aeropuertos de Destino", "Usuarios"
+                "Vuelos Aceptados", "Hangares", "Terminales", "Modos de Embarque",
+                "Pistas", "Aerolíneas", "Aeropuertos de Destino", "Usuarios"
         });
         selector.setMaximumSize(new Dimension(300, 30));
         selector.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -112,81 +112,76 @@ public class VuelosAceptadosGUI extends JFrame {
         }
 
         String seleccion = (String) selector.getSelectedItem();
-        if (seleccion == null) return;
+        if (seleccion == null)
+            return;
 
         switch (seleccion) {
             case "Vuelos Aceptados":
                 if (manager.getAeropuerto().getVuelosAceptados() != null) {
                     for (Vuelo vuelo : manager.getAeropuerto().getVuelosAceptados()) {
                         model.addElement("Vuelo: " + vuelo.toString() +
-                                         " | Fecha: " + vuelo.getFecha() +
-                                         " | Hora: " + vuelo.getHora() +
-                                         " | Estado: " + vuelo.getEstado());
+                                " | Fecha: " + vuelo.getFecha() +
+                                " | Hora: " + vuelo.getHora() +
+                                " | Estado: " + vuelo.getEstado());
                     }
                 }
                 break;
 
             case "Hangares":
                 if (manager.getAeropuerto().getHangares() != null) {
-                    manager.getAeropuerto().getHangares().forEach(hangar ->
-                        model.addElement("Hangar: "+hangar.getId()+" con "+hangar.getNumeroMaxAviones()+" plazas")
-                    );
+                    manager.getAeropuerto().getHangares().forEach(hangar -> model.addElement(
+                            "Hangar: " + hangar.getId() + " con " + hangar.getNumeroMaxAviones() + " plazas"));
                 }
                 break;
 
             case "Terminales":
                 if (manager.getAeropuerto().getTerminales() != null) {
-                    manager.getAeropuerto().getTerminales().forEach(terminal ->
-                        model.addElement("Terminal: "+terminal.toString()+ " con controladores: "+terminal.getControladores()+" y con puertas: "+ terminal.getPuertasEmbarque())
-                    );
+                    manager.getAeropuerto().getTerminales()
+                            .forEach(terminal -> model.addElement("Terminal: " + terminal.toString()
+                                    + " con controladores: " + terminal.getControladores() + " y con puertas: "
+                                    + terminal.getPuertasEmbarque()));
                 }
                 break;
 
             case "Modos de Embarque":
-            	List<ModoEmbarque> modos = new ArrayList<>();
-            	if (manager.getAeropuerto().getFingers() != null) {
-            	    modos.addAll(manager.getAeropuerto().getFingers());
-            	}
-            	if (manager.getAeropuerto().getZonasAparcamiento() != null) {
-            	    modos.addAll(manager.getAeropuerto().getZonasAparcamiento());
-            	}
+                List<ModoEmbarque> modos = new ArrayList<>();
+                if (manager.getAeropuerto().getFingers() != null) {
+                    modos.addAll(manager.getAeropuerto().getFingers());
+                }
+                if (manager.getAeropuerto().getZonasAparcamiento() != null) {
+                    modos.addAll(manager.getAeropuerto().getZonasAparcamiento());
+                }
 
-            	if (!modos.isEmpty()) {
-            	    modos.forEach(modo ->
-            	        model.addElement("Modo de embarque: "+modo.getId()));
-            	} else {
-            	    model.addElement("No hay modos de embarque disponibles.");
-            	}
+                if (!modos.isEmpty()) {
+                    modos.forEach(modo -> model.addElement("Modo de embarque: " + modo.getId()));
+                } else {
+                    model.addElement("No hay modos de embarque disponibles.");
+                }
 
             case "Pistas":
                 if (manager.getAeropuerto().getPistas() != null) {
-                    manager.getAeropuerto().getPistas().forEach(pista ->
-                        model.addElement("Pista: "+pista.getCodigo()+" de longitud: "+pista.getLongitud()+" y tipo: "+pista.getTipoPista())
-                    );
+                    manager.getAeropuerto().getPistas().forEach(pista -> model.addElement("Pista: " + pista.getCodigo()
+                            + " de longitud: " + pista.getLongitud() + " y tipo: " + pista.getTipoPista()));
                 }
                 break;
 
             case "Aerolíneas":
                 if (manager.getAeropuerto().getAerolineas() != null) {
-                    manager.getAeropuerto().getAerolineas().forEach(aerolinea ->
-                        model.addElement("Aerolinea: "+aerolinea.getNombre()+" con código: "+aerolinea.getCodigo())
-                    );
+                    manager.getAeropuerto().getAerolineas().forEach(aerolinea -> model.addElement(
+                            "Aerolinea: " + aerolinea.getNombre() + " con código: " + aerolinea.getCodigo()));
                 }
                 break;
 
             case "Aeropuertos de Destino":
                 if (manager.getAeropuerto().getAeropuertosDestino() != null) {
-                    manager.getAeropuerto().getAeropuertosDestino().forEach(destino ->
-                        model.addElement("Aeropuerto de destino: "+destino.toString())
-                    );
+                    manager.getAeropuerto().getAeropuertosDestino()
+                            .forEach(destino -> model.addElement("Aeropuerto de destino: " + destino.toString()));
                 }
                 break;
 
             case "Usuarios":
                 if (manager.getUsuarios() != null) {
-                    manager.getUsuarios().forEach(usuario ->
-                        model.addElement("Usuario: "+usuario.getNombre())
-                    );
+                    manager.getUsuarios().forEach(usuario -> model.addElement("Usuario: " + usuario.getNombre()));
                 }
                 break;
 

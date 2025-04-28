@@ -30,7 +30,6 @@ public class GestorGUI extends JFrame {
     private String usuarioSeleccionado;
     private String infraestructuraSeleccionada;
 
-
     public GestorGUI(AirportManagerGUI AirportGUI, AirportManager manager, Gestor gestor) {
         this.AeGestor = gestor;
         this.AeManager = manager;
@@ -40,11 +39,11 @@ public class GestorGUI extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setResizable(false);
         setLocationRelativeTo(null);
-        
+
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
-            	AirportGUI.setVisible(true);
+                AirportGUI.setVisible(true);
             }
         });
 
@@ -67,17 +66,18 @@ public class GestorGUI extends JFrame {
         listaVuelosTitulo.setFont(new Font("Arial", Font.BOLD, 24));
         panelIzquierdo.add(listaVuelosTitulo, BorderLayout.NORTH);
         /** Lista de vuelos */
-        modeloLista = new DefaultListModel<>(); 
+        modeloLista = new DefaultListModel<>();
         actualizarLista();
 
         listaVuelos = new JList<>(modeloLista);
         listaVuelos.setCellRenderer(new DefaultListCellRenderer() {
             private static final long serialVersionUID = 1L;
 
-			@Override
+            @Override
             public Component getListCellRendererComponent(JList<?> list, Object value, int index,
-                                                          boolean isSelected, boolean cellHasFocus) {
-                JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                    boolean isSelected, boolean cellHasFocus) {
+                JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected,
+                        cellHasFocus);
                 String texto = value.toString();
 
                 if (texto.contains("Esperando pista durante más de 10 min")) {
@@ -159,90 +159,90 @@ public class GestorGUI extends JFrame {
         subPanelBotones.setBackground(ConfiguracionUI.COLOR_FONDO);
         panelDerecho.add(subPanelBotones);
 
-        JPanel subPanelInfraestructura = new JPanel(new GridLayout(1,2,10,10));
+        JPanel subPanelInfraestructura = new JPanel(new GridLayout(1, 2, 10, 10));
         JButton botonGestionInfraestructura = new JButton("Gestión de infraestructura");
         subPanelInfraestructura.add(botonGestionInfraestructura);
-        
-        String[] infras = {"Hangar", "Terminal", "Finger", "Zona de aparcamiento", "Pista de despegue", "Pista de aterrizaje", "Aerolínea", "Aeropuerto de destino"};
+
+        String[] infras = { "Hangar", "Terminal", "Finger", "Zona de aparcamiento", "Pista de despegue",
+                "Pista de aterrizaje", "Aerolínea", "Aeropuerto de destino" };
         comboInfra = new JComboBox<>(infras);
         comboInfra.addActionListener(new ActionListener() {
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				infraestructuraSeleccionada = (String) comboInfra.getSelectedItem();
-				
-			}
-        	
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                infraestructuraSeleccionada = (String) comboInfra.getSelectedItem();
+
+            }
+
         });
-        
+
         subPanelInfraestructura.add(comboInfra);
         subPanelInfraestructura.setBackground(ConfiguracionUI.COLOR_FONDO);
         panelDerecho.add(subPanelInfraestructura);
         botonGestionInfraestructura.addActionListener(new ActionListener() {
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (infraestructuraSeleccionada == null) {
-					JOptionPane.showMessageDialog(null, 
-				            "Por favor, selecciona la infraestructura que desea gestionar.", 
-				            "Campos vacíos", 
-				            JOptionPane.WARNING_MESSAGE);
-					return;
-				}
-				switch(infraestructuraSeleccionada) {
-				
-					case "Terminal":
-						setVisible(true);
-						new GestionInfraestructurasTerminalGUI(manager, GestorGUI.this, gestor);
-						break;
-						
-					case "Hangar":
-						setVisible(true);
-						new GestionInfraestructurasHangarGUI(manager, GestorGUI.this, gestor);
-						break;
-						
-					case "Finger":
-						setVisible(true);
-						new GestionInfraestructurasFingerGUI(manager, GestorGUI.this, gestor);
-						break;
-						
-					case "Zona de aparcamiento":
-						setVisible(true);
-						new GestionInfraestructurasZonaAparcamientoGUI(manager, GestorGUI.this, gestor);
-						break;
-						
-					case "Pista de despegue":
-						setVisible(true);
-						new GestionInfraestructuraPistaDespegueGUI(manager, GestorGUI.this, gestor);
-						break;
-						
-					case "Pista de aterrizaje":
-						setVisible(true);
-						new GestionInfraestructuraPistaAterrizajeGUI(manager, GestorGUI.this, gestor);
-						break;
-						
-					case "Aerolínea":
-						setVisible(true);
-						new GestionInfraestructuraAerolineaGUI(manager, GestorGUI.this, gestor);
-						break;
-						
-					case "Aeropuerto de destino":
-						setVisible(true);
-						new GestionInfraestructuraAeropuertoDestinoGUI(manager, GestorGUI.this, gestor);
-						break;
-						
-					default:
-						JOptionPane.showMessageDialog(null, 
-					            "Por favor, selecciona la infraestructura que desea gestionar.", 
-					            "Campos vacíos", 
-					            JOptionPane.WARNING_MESSAGE);
-						return;
-						
-					
-				}
-				
-			}
-        	
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (infraestructuraSeleccionada == null) {
+                    JOptionPane.showMessageDialog(null,
+                            "Por favor, selecciona la infraestructura que desea gestionar.",
+                            "Campos vacíos",
+                            JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                switch (infraestructuraSeleccionada) {
+
+                    case "Terminal":
+                        setVisible(true);
+                        new GestionInfraestructurasTerminalGUI(manager, GestorGUI.this, gestor);
+                        break;
+
+                    case "Hangar":
+                        setVisible(true);
+                        new GestionInfraestructurasHangarGUI(manager, GestorGUI.this, gestor);
+                        break;
+
+                    case "Finger":
+                        setVisible(true);
+                        new GestionInfraestructurasFingerGUI(manager, GestorGUI.this, gestor);
+                        break;
+
+                    case "Zona de aparcamiento":
+                        setVisible(true);
+                        new GestionInfraestructurasZonaAparcamientoGUI(manager, GestorGUI.this, gestor);
+                        break;
+
+                    case "Pista de despegue":
+                        setVisible(true);
+                        new GestionInfraestructuraPistaDespegueGUI(manager, GestorGUI.this, gestor);
+                        break;
+
+                    case "Pista de aterrizaje":
+                        setVisible(true);
+                        new GestionInfraestructuraPistaAterrizajeGUI(manager, GestorGUI.this, gestor);
+                        break;
+
+                    case "Aerolínea":
+                        setVisible(true);
+                        new GestionInfraestructuraAerolineaGUI(manager, GestorGUI.this, gestor);
+                        break;
+
+                    case "Aeropuerto de destino":
+                        setVisible(true);
+                        new GestionInfraestructuraAeropuertoDestinoGUI(manager, GestorGUI.this, gestor);
+                        break;
+
+                    default:
+                        JOptionPane.showMessageDialog(null,
+                                "Por favor, selecciona la infraestructura que desea gestionar.",
+                                "Campos vacíos",
+                                JOptionPane.WARNING_MESSAGE);
+                        return;
+
+                }
+
+            }
+
         });
 
         JButton botonConfiguracionAeropuerto = new JButton("Configuración del aeropuerto");
@@ -258,55 +258,55 @@ public class GestorGUI extends JFrame {
         JPanel subPanelUsuarios = new JPanel(new GridLayout(1, 2, 10, 10));
         JButton botonGestionUsuarios = new JButton("Gestión usuarios");
         subPanelUsuarios.add(botonGestionUsuarios);
-        
-        String[] usuarios = {"Controlador", "Operador de la aerolínea"};
+
+        String[] usuarios = { "Controlador", "Operador de la aerolínea" };
         comboUsuarios = new JComboBox<>(usuarios);
         comboUsuarios.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				usuarioSeleccionado = (String) comboUsuarios.getSelectedItem();
-			}
-		});
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                usuarioSeleccionado = (String) comboUsuarios.getSelectedItem();
+            }
+        });
         subPanelUsuarios.add(comboUsuarios);
         subPanelUsuarios.setBackground(ConfiguracionUI.COLOR_FONDO);
         panelDerecho.add(subPanelUsuarios);
         botonGestionUsuarios.addActionListener(new ActionListener() {
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				if (usuarioSeleccionado == null) {
-					JOptionPane.showMessageDialog(null, 
-				            "Por favor, selecciona el usuario que desea gestionar.", 
-				            "Campos vacíos", 
-				            JOptionPane.WARNING_MESSAGE);
-					return;
-				}
-				
-				switch(usuarioSeleccionado) {
-				
-					case "Controlador": 
-						setVisible(true);
-						new GestionUsuariosControladorGUI(manager, GestorGUI.this, gestor);
-						break;
-						
-					case "Operador de la aerolínea":
-						setVisible(true);
-						new GestionUsuariosOperadorGUI(manager, GestorGUI.this, gestor);
-						break;
-						
-					default:
-						JOptionPane.showMessageDialog(null, 
-					            "Por favor, selecciona el usuario que desea gestionar.", 
-					            "Campos vacíos", 
-					            JOptionPane.WARNING_MESSAGE);
-						return;
-					
-				}	
-			}
-        	
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                if (usuarioSeleccionado == null) {
+                    JOptionPane.showMessageDialog(null,
+                            "Por favor, selecciona el usuario que desea gestionar.",
+                            "Campos vacíos",
+                            JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                switch (usuarioSeleccionado) {
+
+                    case "Controlador":
+                        setVisible(true);
+                        new GestionUsuariosControladorGUI(manager, GestorGUI.this, gestor);
+                        break;
+
+                    case "Operador de la aerolínea":
+                        setVisible(true);
+                        new GestionUsuariosOperadorGUI(manager, GestorGUI.this, gestor);
+                        break;
+
+                    default:
+                        JOptionPane.showMessageDialog(null,
+                                "Por favor, selecciona el usuario que desea gestionar.",
+                                "Campos vacíos",
+                                JOptionPane.WARNING_MESSAGE);
+                        return;
+
+                }
+            }
+
         });
-		
+
         JButton botonEstadisticas = new JButton("Estadísticas de la infraestructura");
         panelDerecho.add(botonEstadisticas);
         botonEstadisticas.addActionListener(new ActionListener() {
@@ -343,7 +343,7 @@ public class GestorGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(true);
-                new VuelosAceptadosGUI(manager, GestorGUI.this, gestor);
+                new InfoAeropuertoPropioGUI(manager, GestorGUI.this, gestor);
             }
         });
         panelDerecho.add(Box.createVerticalStrut(10));
@@ -357,34 +357,39 @@ public class GestorGUI extends JFrame {
     }
 
     private void actualizarLista() {
-	    modeloLista.clear();
-	    List<Vuelo> vuelos = AeManager.getAeropuerto().getVuelosAceptados();
-	    LocalDate fecha = LocalDate.now();
+        modeloLista.clear();
+        List<Vuelo> vuelos = AeManager.getAeropuerto().getVuelosAceptados();
+        LocalDate fecha = LocalDate.now();
 
-	    if (vuelos.isEmpty()) {
-	        modeloLista.addElement("No hay vuelos programados.");
-	        return;
-	    }
-        
+        if (vuelos.isEmpty()) {
+            modeloLista.addElement("No hay vuelos programados.");
+            return;
+        }
+
         for (Vuelo v : vuelos) {
             if (v.getFecha().equals(fecha)) {
-            	if (v.getEstado().equals(EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE)) {
-            		Duration tiempo = Duration.between(v.getHistorialEstadoVuelo().getHoraCambio(EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE), LocalTime.now());
-            		if (tiempo.toMinutes() >= 10) {
-            			modeloLista.addElement("Vuelo: "+v+" | Hora: "+v.getHora()+" | Estado: "+ v.getEstado()+" | Esperando pista durante más de 10 min");
-            		}
-            	} else if (v.getEstado().equals(EstadoVuelo.RETRASADO)) {
-                	modeloLista.addElement("Vuelo: "+v+" | Hora: "+v.getHora()+" | Estado: "+ v.getEstado() +" | Retrasado");
-            	} else if (v.getEstado().equals(EstadoVuelo.OPERATIVO)) {
-            		Duration tiempo = Duration.between(LocalTime.now(), v.getHora());
-            		if (tiempo.toMinutes() <= 60) {
-            			modeloLista.addElement("Vuelo: "+v+" | Hora: "+v.getHora()+" | Estado: "+ v.getEstado()+" | Salida en menos de 1 hora");
-            		}
-            	} else {
-                	modeloLista.addElement("Vuelo: "+v+" | Hora: "+v.getHora()+" | Estado: "+ v.getEstado());
+                if (v.getEstado().equals(EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE)) {
+                    Duration tiempo = Duration.between(
+                            v.getHistorialEstadoVuelo().getHoraCambio(EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE),
+                            LocalTime.now());
+                    if (tiempo.toMinutes() >= 10) {
+                        modeloLista.addElement("Vuelo: " + v + " | Hora: " + v.getHora() + " | Estado: " + v.getEstado()
+                                + " | Esperando pista durante más de 10 min");
+                    }
+                } else if (v.getEstado().equals(EstadoVuelo.RETRASADO)) {
+                    modeloLista.addElement(
+                            "Vuelo: " + v + " | Hora: " + v.getHora() + " | Estado: " + v.getEstado() + " | Retrasado");
+                } else if (v.getEstado().equals(EstadoVuelo.OPERATIVO)) {
+                    Duration tiempo = Duration.between(LocalTime.now(), v.getHora());
+                    if (tiempo.toMinutes() <= 60) {
+                        modeloLista.addElement("Vuelo: " + v + " | Hora: " + v.getHora() + " | Estado: " + v.getEstado()
+                                + " | Salida en menos de 1 hora");
+                    }
+                } else {
+                    modeloLista.addElement("Vuelo: " + v + " | Hora: " + v.getHora() + " | Estado: " + v.getEstado());
                 }
-            	AeManager.verificarYActualizarVuelo(v); 
-            }  
+                AeManager.verificarYActualizarVuelo(v);
+            }
         }
-	}
+    }
 }
