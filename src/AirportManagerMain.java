@@ -766,13 +766,29 @@ public class AirportManagerMain {
     	
     	operadorRyanair.darDeAltaAvionPasajeros("Boeing", "787", 12.5, 30.5, 40.0, 3500, 2020, new Date(), "FR_HGR", 180);
     	operadorRyanair.darDeAltaAvionMercancias("Boeing", "737", 16.0, 45.0, 60.0, 8000, 2010, new Date(), "FR_HGS", 8000, true, true);
+    	operadorRyanair.darDeAltaAvionMercancias("Boeing", "767", 16.0, 45.0, 60.0, 8000, 2010, new Date(), "FR_HGT", 8000, true, true);
+    	operadorRyanair.darDeAltaAvionPasajeros("Boeing", "757", 12.5, 30.5, 40.0, 3500, 2020, new Date(), "FR_HGU", 180);
+    	operadorRyanair.darDeAltaAvionMercancias("Boeing", "747", 16.0, 45.0, 60.0, 8000, 2010, new Date(), "FR_HGP", 8000, true, true);
+    	operadorRyanair.darDeAltaAvionPasajeros("Boeing", "707", 12.5, 30.5, 40.0, 3500, 2020, new Date(), "FR_HGC", 180);
+    	operadorRyanair.darDeAltaAvionMercancias("Boeing", "797", 16.0, 45.0, 60.0, 8000, 2010, new Date(), "FR_HGM", 8000, true, true);
+    	operadorRyanair.darDeAltaAvionPasajeros("Boeing", "717", 12.5, 30.5, 40.0, 3500, 2020, new Date(), "FR_HGQ", 180);
 
     	Avion avionFR_HGR= airportManager.getAeropuerto().getAerolineas().get(2).getAviones().get(0);
     	Avion avionFR_HGS= airportManager.getAeropuerto().getAerolineas().get(2).getAviones().get(1);
+    	Avion avionFR_HGT= airportManager.getAeropuerto().getAerolineas().get(2).getAviones().get(2);
+    	Avion avionFR_HGU= airportManager.getAeropuerto().getAerolineas().get(2).getAviones().get(3);
+    	Avion avionFR_HGP= airportManager.getAeropuerto().getAerolineas().get(2).getAviones().get(4);
+    	Avion avionFR_HGC= airportManager.getAeropuerto().getAerolineas().get(2).getAviones().get(5);
+    	Avion avionFR_HGM= airportManager.getAeropuerto().getAerolineas().get(2).getAviones().get(6);
+    	Avion avionFR_HGQ= airportManager.getAeropuerto().getAerolineas().get(2).getAviones().get(7);
     	
     	AeropuertoPropio aePropio= airportManager.getAeropuerto();
     	Aeropuerto aeTokio= airportManager.getAeropuerto().getAeropuertosDestino().get(6);
     	Aeropuerto aeMallorca= airportManager.getAeropuerto().getAeropuertosDestino().get(2);
+    	Aeropuerto aeCairo= airportManager.getAeropuerto().getAeropuertosDestino().get(8);
+    	Aeropuerto aeFKennedy= airportManager.getAeropuerto().getAeropuertosDestino().get(3);
+    	Aeropuerto aeMalaga= airportManager.getAeropuerto().getAeropuertosDestino().get(0);
+
     	
 		Vuelo vueloFRK2234= new Vuelo("FRK2234", LocalDate.now(), LocalDate.now(), LocalDate.now(),
 				LocalTime.now().plusMinutes(42), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
@@ -780,6 +796,47 @@ public class AirportManagerMain {
 		Vuelo vueloFRK8103= new Vuelo("FRK8103", LocalDate.now(), LocalDate.now(), LocalDate.now(),
 	            LocalTime.now().plusMinutes(28), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
 	            Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionFR_HGS, aePropio, aeMallorca, null, operadorRyanair);
+		Vuelo vueloFRK4152= new Vuelo("FRK4152", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+	            LocalTime.now().plusMinutes(145), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
+	            Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionFR_HGS, aePropio, aeCairo, null, operadorRyanair);
+		Vuelo vueloFRK8104= new Vuelo("FRK8104", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+	            LocalTime.now().plusMinutes(98), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
+	            Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionFR_HGU, aeTokio, aePropio, null, operadorRyanair);
+		Vuelo vueloFRK8105= new Vuelo("FRK8105", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+	            LocalTime.now().plusMinutes(130), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
+	            Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionFR_HGT, aePropio, aeFKennedy, null, operadorRyanair);
+		Vuelo vueloFRK8106= new Vuelo("FRK8106", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+	            LocalTime.now().plusMinutes(345), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
+	            Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionFR_HGS, aePropio, aeCairo, null, operadorRyanair);
+		Vuelo vueloFRK8107= new Vuelo("FRK8107", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+	            LocalTime.now().plusMinutes(654), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
+	            Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionFR_HGP, aePropio, aeMallorca, null, operadorRyanair);
+		Vuelo vueloFRK8108= new Vuelo("FRK8108", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+	            LocalTime.now().plusMinutes(64), null, TipoCarga.PASAJEROS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
+	            Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionFR_HGC, aeMallorca, aePropio, null, operadorRyanair);
+		Vuelo vueloFRK8109= new Vuelo("FRK8109", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+	            LocalTime.now().plusMinutes(12), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
+	            Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionFR_HGT, aeCairo, aePropio, null, operadorRyanair);
+		Vuelo vueloFRK8110= new Vuelo("FRK8110", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+	            LocalTime.now().plusMinutes(85), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
+	            Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionFR_HGQ, aeMalaga, aePropio, null, operadorRyanair);
+		Vuelo vueloFRK8111= new Vuelo("FRK8111", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+	            LocalTime.now().plusMinutes(37), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
+	            Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionFR_HGP, aeMalaga, aePropio, null, operadorRyanair);
+		Vuelo vueloFRK8112= new Vuelo("FRK8112", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+	            LocalTime.now().plusMinutes(520), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
+	            Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionFR_HGU, aePropio, aeMalaga, null, operadorRyanair);
+		Vuelo vueloFRK8113= new Vuelo("FRK8113", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+	            LocalTime.now().plusMinutes(46), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
+	            Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionFR_HGM, aePropio, aeFKennedy, null, operadorRyanair);
+		Vuelo vueloFRK8114= new Vuelo("FRK8114", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+	            LocalTime.now().plusMinutes(189), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
+	            Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionFR_HGM, aePropio, aeFKennedy, null, operadorRyanair);
+		Vuelo vueloFRK8115= new Vuelo("FRK8115", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+	            LocalTime.now().plusMinutes(267), null, TipoCarga.PASAJEROS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
+	            Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionFR_HGC, aePropio, aeFKennedy, null, operadorRyanair);
+		
+		
 		operadorIberia.solicitarCompartirVuelo(vueloFRK8103, operadorRyanair, 30);
 		
 		Terminal terminalT1= airportManager.getAeropuerto().getTerminales().get(0);
@@ -789,9 +846,21 @@ public class AirportManagerMain {
     	ControladorAereo controladorT2= terminalT2.getControladores().get(0);
     	
 		airportManager.getGestor().aceptarVuelo(vueloFRK2234, terminalT1, controladorT1);
+		airportManager.getGestor().aceptarVuelo(vueloFRK8104, terminalT1, controladorT1);
+		airportManager.getGestor().aceptarVuelo(vueloFRK8106, terminalT1, controladorT1);
+		airportManager.getGestor().aceptarVuelo(vueloFRK8108, terminalT1, controladorT1);
+		airportManager.getGestor().aceptarVuelo(vueloFRK8110, terminalT1, controladorT1);
+		airportManager.getGestor().aceptarVuelo(vueloFRK8112, terminalT1, controladorT1);
+		airportManager.getGestor().aceptarVuelo(vueloFRK8115, terminalT1, controladorT1);
+
 		airportManager.getGestor().aceptarVuelo(vueloFRK8103, terminalT2, controladorT2);
-		
-		
+		airportManager.getGestor().aceptarVuelo(vueloFRK4152, terminalT2, controladorT2);
+		airportManager.getGestor().aceptarVuelo(vueloFRK8105, terminalT2, controladorT2);
+		airportManager.getGestor().aceptarVuelo(vueloFRK8107, terminalT2, controladorT2);
+		airportManager.getGestor().aceptarVuelo(vueloFRK8109, terminalT2, controladorT2);
+		airportManager.getGestor().aceptarVuelo(vueloFRK8111, terminalT2, controladorT2);
+		airportManager.getGestor().aceptarVuelo(vueloFRK8113, terminalT2, controladorT2);
+		airportManager.getGestor().aceptarVuelo(vueloFRK8114, terminalT2, controladorT2);
 
 	}
 
@@ -806,7 +875,7 @@ public class AirportManagerMain {
     	ControladorAereo controladorT2= terminalT2.getControladores().get(0); 
     	
     	Vuelo vueloFRK2234= airportManager.getAeropuerto().getVuelosAceptados().get(10);
-		Vuelo vueloFRK8103= airportManager.getAeropuerto().getVuelosAceptados().get(11);
+		Vuelo vueloFRK8103= airportManager.getAeropuerto().getVuelosAceptados().get(17);
 		
 		System.out.println("\nIniciando el proceso de cambio de estados de vuelos.");
 		System.out.println("Comenzamos con los estados de un vuelo de salida:");
