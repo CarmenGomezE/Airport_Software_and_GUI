@@ -20,8 +20,8 @@ import src.airportmanager.vuelo.*;
  */
 public abstract class Usuario implements Serializable {
 
-	/** Número de versión de la clase */
-	private static final long serialVersionUID = 1L;
+    /** Número de versión de la clase */
+    private static final long serialVersionUID = 1L;
     /** Nombre del usuario */
     private String nombre;
     /** Contraseña del usuario */
@@ -33,8 +33,8 @@ public abstract class Usuario implements Serializable {
     /** Sistema */
     protected AirportManager sistema;
 
-    private static final DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    private static final DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm");
+    private static final transient DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static final transient DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm");
 
     /**
      * Constructor sin contraseña de la clase Usuario.
@@ -134,19 +134,22 @@ public abstract class Usuario implements Serializable {
      */
     public void verListaVuelos() {
         LocalDate fecha = LocalDate.now();
-        System.out.printf("LISTA DE VUELOS DEL DÍA %s%n", fecha.format(formatoFecha)); 
+        System.out.printf("LISTA DE VUELOS DEL DÍA %s%n", fecha.format(formatoFecha));
         System.out.println("+----------------------+----------------------+");
         System.out.println("| Código de Vuelo      | Estado del Vuelo     |");
         System.out.println("+----------------------+----------------------+");
 
         for (Vuelo v : getAeropuerto().getVuelosAceptados()) {
             if (v.getFecha().equals(fecha)) {
-            	if(v.getEstado().equals(EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE)) {
-            		Duration tiempo = Duration.between(v.getHistorialEstadoVuelo().getHoraCambio(EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE), LocalTime.now());
-            		if (tiempo.toMinutes() >= 10) {
-                        System.out.printf("| %-20s | %-20s |Esperando pista durante más de 10min\n", v.getCodigo(), v.getEstado());
-            		}
-            	}
+                if (v.getEstado().equals(EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE)) {
+                    Duration tiempo = Duration.between(
+                            v.getHistorialEstadoVuelo().getHoraCambio(EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE),
+                            LocalTime.now());
+                    if (tiempo.toMinutes() >= 10) {
+                        System.out.printf("| %-20s | %-20s |Esperando pista durante más de 10min\n", v.getCodigo(),
+                                v.getEstado());
+                    }
+                }
             } else {
                 System.out.printf("| %-20s | %-20s |\n", v.getCodigo(), v.getEstado());
             }
@@ -154,16 +157,16 @@ public abstract class Usuario implements Serializable {
 
         System.out.println("+----------------------+----------------------+");
     }
-    
+
     /**
      * Método para recargar la lista de vuelos del usuario con sus estados.
      */
     public void recargarListaVuelos() {
-    	System.out.println("Refrescando lista de vuelos...");
-		 for (Vuelo v : aeropuerto.getVuelosAceptados()) {
-		        sistema.actualizarEstadoVueloAutomatico(v);
-		    }
-    	verListaVuelos();
+        System.out.println("Refrescando lista de vuelos...");
+        for (Vuelo v : aeropuerto.getVuelosAceptados()) {
+            sistema.actualizarEstadoVueloAutomatico(v);
+        }
+        verListaVuelos();
     }
 
     /**
@@ -204,12 +207,13 @@ public abstract class Usuario implements Serializable {
 
         return vuelosEncontrados;
     }
-    
-	/**
-	 * Método que busca un vuelo por código.
-	 * @param codigo 	Código que se busca.
-	 * @return Lista de vuelos que cumplen el criterio.
-	 */
+
+    /**
+     * Método que busca un vuelo por código.
+     * 
+     * @param codigo Código que se busca.
+     * @return Lista de vuelos que cumplen el criterio.
+     */
     public List<Vuelo> buscarVueloPorCodigo(String codigo) {
         List<Vuelo> vuelosEncontrados = new ArrayList<>();
 
@@ -224,7 +228,8 @@ public abstract class Usuario implements Serializable {
 
     /**
      * Método que busca un vuelo por origen.
-     * @param origen 	Origen que se busca.
+     * 
+     * @param origen Origen que se busca.
      * @return Lista de vuelos que cumplen el criterio.
      */
     private List<Vuelo> buscarVueloPorOrigen(String origen) {
@@ -241,7 +246,8 @@ public abstract class Usuario implements Serializable {
 
     /**
      * Método que busca un vuelo por destino.
-     * @param destino 	Destino que se busca.
+     * 
+     * @param destino Destino que se busca.
      * @return Lista de vuelos que cumplen el criterio.
      */
     private List<Vuelo> buscarVueloPorDestino(String destino) {
@@ -258,7 +264,8 @@ public abstract class Usuario implements Serializable {
 
     /**
      * Método que busca un vuelo por fecha.
-     * @param fecha 	Fecha que se busca.
+     * 
+     * @param fecha Fecha que se busca.
      * @return Lista de vuelos que cumplen el criterio.
      */
     private List<Vuelo> buscarVueloPorFecha(String fecha) {
@@ -277,7 +284,8 @@ public abstract class Usuario implements Serializable {
 
     /**
      * Método que busca un vuelo por hora de salida.
-     * @param horaSalida 	Hora de salida que se busca.
+     * 
+     * @param horaSalida Hora de salida que se busca.
      * @return Lista de vuelos que cumplen el criterio.
      */
     private List<Vuelo> buscarVueloPorHoraSalida(String horaSalida) {
@@ -296,7 +304,8 @@ public abstract class Usuario implements Serializable {
 
     /**
      * Método que busca un vuelo por hora de llegada.
-     * @param horaLlegada 	Hora de llegada que se busca.
+     * 
+     * @param horaLlegada Hora de llegada que se busca.
      * @return Lista de vuelos que cumplen el criterio.
      */
     private List<Vuelo> buscarVueloPorHoraLlegada(String horaLlegada) {
@@ -315,7 +324,8 @@ public abstract class Usuario implements Serializable {
 
     /**
      * Método que busca un vuelo por código de terminal.
-     * @param codigoTerminal 	Código de terminal que se busca.
+     * 
+     * @param codigoTerminal Código de terminal que se busca.
      * @return Lista de vuelos que cumplen el criterio.
      */
     private List<Vuelo> buscarVueloPorTerminal(String codigoTerminal) {
@@ -353,11 +363,11 @@ public abstract class Usuario implements Serializable {
             System.out.println(n);
         }
     }
-    
+
     /**
      * Método para cerrar sesión.
      */
     public void cerrarSesion() {
-    	System.out.println("El usuario ha cerrado sesión.");
+        System.out.println("El usuario ha cerrado sesión.");
     }
 }

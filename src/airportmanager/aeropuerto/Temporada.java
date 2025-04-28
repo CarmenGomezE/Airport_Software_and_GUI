@@ -14,8 +14,8 @@ import java.time.format.DateTimeFormatter;
  */
 public class Temporada implements Serializable {
 
-	/** Número de versión de la clase */
-	private static final long serialVersionUID = 1L;
+    /** Número de versión de la clase */
+    private static final long serialVersionUID = 1L;
     /** Fecha de inicio de la temporada */
     private LocalDate fechaInicio;
     /** Horario de apertura de la temporada */
@@ -25,8 +25,8 @@ public class Temporada implements Serializable {
     /** Fecha de fin de la temporada */
     private LocalDate fechaFin;
 
-    private static final DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM");
-    private static final DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm");
+    private static final transient DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM");
+    private static final transient DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm");
 
     /**
      * Contructor de la clase Temporada.
@@ -37,10 +37,10 @@ public class Temporada implements Serializable {
      * @param fechaFin        Fecha de fin de la temporada
      */
     public Temporada(String fechaInicio, String horarioApertura, String horarioCierre, String fechaFin) {
-    	int thisYear = LocalDate.now().getYear(); 
+        int thisYear = LocalDate.now().getYear();
         this.fechaInicio = MonthDay.parse(fechaInicio, formatoFecha).atYear(thisYear);
         this.fechaFin = MonthDay.parse(fechaFin, formatoFecha).atYear(thisYear);
-        
+
         this.horarioApertura = LocalTime.parse(horarioApertura, formatoHora);
         this.horarioCierre = LocalTime.parse(horarioCierre, formatoHora);
     }

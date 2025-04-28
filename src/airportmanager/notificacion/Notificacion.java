@@ -12,10 +12,10 @@ import java.time.format.DateTimeFormatter;
  */
 public class Notificacion implements Serializable {
     /** Formato de la fecha y hora de la notificación */
-    private static final DateTimeFormatter formatoFechaHora = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+    private static final transient DateTimeFormatter formatoFechaHora = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
-	/** Número de versión de la clase */
-	private static final long serialVersionUID = 1L;
+    /** Número de versión de la clase */
+    private static final long serialVersionUID = 1L;
 
     /** Mensaje de la notificación */
     private String mensaje;
@@ -27,8 +27,8 @@ public class Notificacion implements Serializable {
     /**
      * Constructor de la clase Notificacion.
      * 
-     * @param mensaje          	Mensaje de la notificación.
-     * @param tipoNotificacion  Fecha de la notificación.
+     * @param mensaje          Mensaje de la notificación.
+     * @param tipoNotificacion Fecha de la notificación.
      */
     public Notificacion(String mensaje, TipoNotificacion tipoNotificacion) {
         this.mensaje = mensaje;
@@ -62,12 +62,12 @@ public class Notificacion implements Serializable {
     public TipoNotificacion getTipoNotificacion() {
         return this.tipoNotificacion;
     }
-    
+
     /**
      * Método para imprimir una notificación.
      */
     public String toString() {
-    	return "Notificación de " + tipoNotificacion + " a las " + fecha.format(formatoFechaHora) + ":\n" + mensaje;
+        return "Notificación de " + tipoNotificacion + " a las " + fecha.format(formatoFechaHora) + ":\n" + mensaje;
     }
-    
+
 }
