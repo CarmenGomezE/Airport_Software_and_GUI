@@ -772,6 +772,15 @@ public class AirportManagerMain {
     	operadorRyanair.darDeAltaAvionPasajeros("Boeing", "707", 12.5, 30.5, 40.0, 3500, 2020, new Date(), "FR_HGC", 180);
     	operadorRyanair.darDeAltaAvionMercancias("Boeing", "797", 16.0, 45.0, 60.0, 8000, 2010, new Date(), "FR_HGM", 8000, true, true);
     	operadorRyanair.darDeAltaAvionPasajeros("Boeing", "717", 12.5, 30.5, 40.0, 3500, 2020, new Date(), "FR_HGQ", 180);
+    	
+    	operadorIberia.darDeAltaAvionPasajeros("Boeing", "787", 12.5, 30.5, 40.0, 3500, 2020, new Date(), "IB_HGR", 180);
+    	operadorIberia.darDeAltaAvionMercancias("Boeing", "737", 16.0, 45.0, 60.0, 8000, 2010, new Date(), "IB_HGS", 8000, true, true);
+    	operadorIberia.darDeAltaAvionMercancias("Boeing", "767", 16.0, 45.0, 60.0, 8000, 2010, new Date(), "IB_HGT", 8000, true, true);
+    	operadorIberia.darDeAltaAvionPasajeros("Boeing", "757", 12.5, 30.5, 40.0, 3500, 2020, new Date(), "IB_HGU", 180);
+    	operadorIberia.darDeAltaAvionMercancias("Boeing", "747", 16.0, 45.0, 60.0, 8000, 2010, new Date(), "IB_HGP", 8000, true, true);
+    	operadorIberia.darDeAltaAvionPasajeros("Boeing", "707", 12.5, 30.5, 40.0, 3500, 2020, new Date(), "IB_HGC", 180);
+    	operadorIberia.darDeAltaAvionMercancias("Boeing", "797", 16.0, 45.0, 60.0, 8000, 2010, new Date(), "IB_HGM", 8000, true, true);
+    	operadorIberia.darDeAltaAvionPasajeros("Boeing", "717", 12.5, 30.5, 40.0, 3500, 2020, new Date(), "IB_HGQ", 180);
 
     	Avion avionFR_HGR= airportManager.getAeropuerto().getAerolineas().get(2).getAviones().get(0);
     	Avion avionFR_HGS= airportManager.getAeropuerto().getAerolineas().get(2).getAviones().get(1);
@@ -782,13 +791,21 @@ public class AirportManagerMain {
     	Avion avionFR_HGM= airportManager.getAeropuerto().getAerolineas().get(2).getAviones().get(6);
     	Avion avionFR_HGQ= airportManager.getAeropuerto().getAerolineas().get(2).getAviones().get(7);
     	
+    	Avion avionIB_HGR= airportManager.getAeropuerto().getAerolineas().get(0).getAviones().get(0);
+    	Avion avionIB_HGS= airportManager.getAeropuerto().getAerolineas().get(0).getAviones().get(1);
+    	Avion avionIB_HGT= airportManager.getAeropuerto().getAerolineas().get(0).getAviones().get(2);
+    	Avion avionIB_HGU= airportManager.getAeropuerto().getAerolineas().get(0).getAviones().get(3);
+    	Avion avionIB_HGP= airportManager.getAeropuerto().getAerolineas().get(0).getAviones().get(4);
+    	Avion avionIB_HGC= airportManager.getAeropuerto().getAerolineas().get(0).getAviones().get(5);
+    	Avion avionIB_HGM= airportManager.getAeropuerto().getAerolineas().get(0).getAviones().get(6);
+    	Avion avionIB_HGQ= airportManager.getAeropuerto().getAerolineas().get(0).getAviones().get(7);
+    	
     	AeropuertoPropio aePropio= airportManager.getAeropuerto();
     	Aeropuerto aeTokio= airportManager.getAeropuerto().getAeropuertosDestino().get(6);
     	Aeropuerto aeMallorca= airportManager.getAeropuerto().getAeropuertosDestino().get(2);
     	Aeropuerto aeCairo= airportManager.getAeropuerto().getAeropuertosDestino().get(8);
     	Aeropuerto aeFKennedy= airportManager.getAeropuerto().getAeropuertosDestino().get(3);
     	Aeropuerto aeMalaga= airportManager.getAeropuerto().getAeropuertosDestino().get(0);
-
     	
 		Vuelo vueloFRK2234= new Vuelo("FRK2234", LocalDate.now(), LocalDate.now(), LocalDate.now(),
 				LocalTime.now().plusMinutes(42), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
@@ -836,6 +853,52 @@ public class AirportManagerMain {
 	            LocalTime.now().plusMinutes(267), null, TipoCarga.PASAJEROS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
 	            Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionFR_HGC, aePropio, aeFKennedy, null, operadorRyanair);
 		
+		Vuelo vueloIBE2234= new Vuelo("IBE2234", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+				LocalTime.now().plusMinutes(42), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
+	            Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionIB_HGR, aeTokio, aePropio, null, operadorRyanair);
+		Vuelo vueloIBE8103= new Vuelo("IBE8103", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+	            LocalTime.now().plusMinutes(28), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
+	            Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionIB_HGS, aePropio, aeMallorca, null, operadorRyanair);
+		Vuelo vueloIBE4152= new Vuelo("IBE4152", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+	            LocalTime.now().plusMinutes(145), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
+	            Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionIB_HGS, aePropio, aeCairo, null, operadorRyanair);
+		Vuelo vueloIBE8104= new Vuelo("IBE8104", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+	            LocalTime.now().plusMinutes(98), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
+	            Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionIB_HGU, aeTokio, aePropio, null, operadorRyanair);
+		Vuelo vueloIBE8105= new Vuelo("IBE8105", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+	            LocalTime.now().plusMinutes(130), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
+	            Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionIB_HGT, aePropio, aeFKennedy, null, operadorRyanair);
+		Vuelo vueloIBE8106= new Vuelo("IBE8106", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+	            LocalTime.now().plusMinutes(345), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
+	            Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionIB_HGS, aePropio, aeCairo, null, operadorRyanair);
+		Vuelo vueloIBE8107= new Vuelo("IBE8107", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+	            LocalTime.now().plusMinutes(654), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
+	            Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionIB_HGP, aePropio, aeMallorca, null, operadorRyanair);
+		Vuelo vueloIBE8108= new Vuelo("IBE8108", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+	            LocalTime.now().plusMinutes(64), null, TipoCarga.PASAJEROS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
+	            Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionIB_HGC, aeMallorca, aePropio, null, operadorRyanair);
+		Vuelo vueloIBE8109= new Vuelo("IBE8109", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+	            LocalTime.now().plusMinutes(12), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
+	            Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionIB_HGT, aeCairo, aePropio, null, operadorRyanair);
+		Vuelo vueloIBE8110= new Vuelo("IBE8110", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+	            LocalTime.now().plusMinutes(85), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
+	            Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionIB_HGQ, aeMalaga, aePropio, null, operadorRyanair);
+		Vuelo vueloIBE8111= new Vuelo("IBE8111", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+	            LocalTime.now().plusMinutes(37), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
+	            Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionIB_HGP, aeMalaga, aePropio, null, operadorRyanair);
+		Vuelo vueloIBE8112= new Vuelo("IBE8112", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+	            LocalTime.now().plusMinutes(520), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
+	            Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionIB_HGU, aePropio, aeMalaga, null, operadorRyanair);
+		Vuelo vueloIBE8113= new Vuelo("IBE8113", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+	            LocalTime.now().plusMinutes(46), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
+	            Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionIB_HGM, aePropio, aeFKennedy, null, operadorRyanair);
+		Vuelo vueloIBE8114= new Vuelo("IBE8114", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+	            LocalTime.now().plusMinutes(189), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
+	            Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionIB_HGM, aePropio, aeFKennedy, null, operadorRyanair);
+		Vuelo vueloIBE8115= new Vuelo("IBE8115", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+	            LocalTime.now().plusMinutes(267), null, TipoCarga.PASAJEROS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
+	            Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionIB_HGC, aePropio, aeFKennedy, null, operadorRyanair);
+		
 		
 		operadorIberia.solicitarCompartirVuelo(vueloFRK8103, operadorRyanair, 30);
 		
@@ -861,6 +924,23 @@ public class AirportManagerMain {
 		airportManager.getGestor().aceptarVuelo(vueloFRK8111, terminalT2, controladorT2);
 		airportManager.getGestor().aceptarVuelo(vueloFRK8113, terminalT2, controladorT2);
 		airportManager.getGestor().aceptarVuelo(vueloFRK8114, terminalT2, controladorT2);
+		
+		airportManager.getGestor().aceptarVuelo(vueloIBE2234, terminalT1, controladorT1);
+		airportManager.getGestor().aceptarVuelo(vueloIBE8104, terminalT1, controladorT1);
+		airportManager.getGestor().aceptarVuelo(vueloIBE8106, terminalT1, controladorT1);
+		airportManager.getGestor().aceptarVuelo(vueloIBE8108, terminalT1, controladorT1);
+		airportManager.getGestor().aceptarVuelo(vueloIBE8110, terminalT1, controladorT1);
+		airportManager.getGestor().aceptarVuelo(vueloIBE8112, terminalT1, controladorT1);
+		airportManager.getGestor().aceptarVuelo(vueloIBE8115, terminalT1, controladorT1);
+
+		airportManager.getGestor().aceptarVuelo(vueloIBE8103, terminalT2, controladorT2);
+		airportManager.getGestor().aceptarVuelo(vueloIBE4152, terminalT2, controladorT2);
+		airportManager.getGestor().aceptarVuelo(vueloIBE8105, terminalT2, controladorT2);
+		airportManager.getGestor().aceptarVuelo(vueloIBE8107, terminalT2, controladorT2);
+		airportManager.getGestor().aceptarVuelo(vueloIBE8109, terminalT2, controladorT2);
+		airportManager.getGestor().aceptarVuelo(vueloIBE8111, terminalT2, controladorT2);
+		airportManager.getGestor().aceptarVuelo(vueloIBE8113, terminalT2, controladorT2);
+		airportManager.getGestor().aceptarVuelo(vueloIBE8114, terminalT2, controladorT2);
 
 	}
 
