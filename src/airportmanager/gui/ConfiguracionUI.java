@@ -110,7 +110,6 @@ public class ConfiguracionUI {
     
     public static JButton crearBotonCentrado(String mensajeBoton) {
     	JButton boton = new JButton(mensajeBoton);
-    	boton.setFont(new Font("Arial", Font.BOLD, 16));
     	boton.setAlignmentX(Component.CENTER_ALIGNMENT);
     	return boton;
     }
