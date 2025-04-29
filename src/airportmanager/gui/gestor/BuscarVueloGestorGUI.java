@@ -12,11 +12,20 @@ import src.airportmanager.usuario.Gestor;
 import src.airportmanager.usuario.CriterioBusqueda;
 import src.airportmanager.vuelo.Vuelo;
 
+/**
+ * La clase BuscarVuelosGestorGUI representa la ventana de buscar vuelos del gestor.
+ */
 public class BuscarVueloGestorGUI extends JFrame {
     private static final long serialVersionUID = 1L;
     private final GestorGUI gesGUI;
     private final Gestor gestor;
 
+    /**
+     * Constructor de la clase BuscarVueloGestorGUI
+     * @param manager el manager
+     * @param gesGUI el gestorGUI
+     * @param gestor el gestor
+     */
     public BuscarVueloGestorGUI(AirportManager manager, GestorGUI gesGUI, Gestor gestor) {
         this.gesGUI = gesGUI;
         this.gestor = gestor;
@@ -42,9 +51,7 @@ public class BuscarVueloGestorGUI extends JFrame {
         add(panel);
 
         /** TÍTULO */
-        JLabel titulo = new JLabel("Buscar en la lista de vuelos");
-        titulo.setFont(new Font("Arial", Font.BOLD, 28));
-        titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JLabel titulo = ConfiguracionUI.crearTitulo("Buscar en la lista de vuelos");
         panel.add(titulo);
         panel.add(Box.createRigidArea(new Dimension(0, 40)));
 
@@ -71,8 +78,7 @@ public class BuscarVueloGestorGUI extends JFrame {
         filaBusqueda.add(campoValor);
         filaBusqueda.add(Box.createRigidArea(new Dimension(20, 0)));
 
-        JButton botonBuscar = new JButton("🔎 Buscar");
-        botonBuscar.setFont(new Font("Arial", Font.BOLD, 16));
+        JButton botonBuscar = ConfiguracionUI.crearBotonCentrado("🔎 Buscar");
         filaBusqueda.add(botonBuscar);
 
         panel.add(filaBusqueda);
@@ -120,6 +126,11 @@ public class BuscarVueloGestorGUI extends JFrame {
         setVisible(true);
     }
     
+    /**
+     * Método auxiliar para convertir el texto a criterio.
+     * @param texto el texto que hay que convertir a criterio.
+     * @return el criterio correspondiente al texto.
+     */
     private CriterioBusqueda convertirTextoACriterio(String texto) {
         switch (texto) {
             case "Código": return CriterioBusqueda.CODIGO;
