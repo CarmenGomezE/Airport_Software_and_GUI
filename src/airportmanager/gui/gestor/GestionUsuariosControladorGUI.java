@@ -47,6 +47,7 @@ public class GestionUsuariosControladorGUI extends JFrame{
 		this.gestor = gestor;
 		this.gestorGUI = gestorGUI;
 		
+		
 		 setTitle("Panel de gestión de usuarios (Controlador) del Gestor");
 	     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	     setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -83,7 +84,7 @@ public class GestionUsuariosControladorGUI extends JFrame{
          formulario.add(ConfiguracionUI.crearCampoConLabel("Nombre:", campoNombre));
          formulario.add(ConfiguracionUI.crearCampoConLabel("Dni:", campoDni));
          formulario.add(ConfiguracionUI.crearCampoConLabel("Contraseña:", campoContrasena));
-         formulario.add(ConfiguracionUI.crearCampoConLabel("Terminal:", campoTerminal)); 
+         formulario.add(ConfiguracionUI.crearCampoConLabel("Terminal:", campoTerminal));
          
          JButton botonAgregarControlador = ConfiguracionUI.crearBotonCentrado("Agregar controlador");
             
@@ -95,7 +96,7 @@ public class GestionUsuariosControladorGUI extends JFrame{
 				String nombre = campoNombre.getText().trim();
 				String dni = campoDni.getText().trim();
 				String contrasena = campoContrasena.getText().trim();
-				String terminalCodigo = campoDni.getText().trim();
+				String terminalCodigo = campoTerminal.getText().trim();
 
 				if (nombre.isEmpty() || dni.isEmpty() || contrasena.isEmpty() || terminalCodigo.isEmpty()) { 
 
@@ -116,6 +117,11 @@ public class GestionUsuariosControladorGUI extends JFrame{
 			   
 			   try {
 				gestor.darDeAltaControlador(nombre, dni, terminal);
+				JOptionPane.showMessageDialog(null, 
+				        "¡Controlador dado de alta correctamente!", 
+				        "Éxito", 
+				        JOptionPane.INFORMATION_MESSAGE);
+
 			} catch (UsuarioYaExisteException e1) {
 				
 				e1.printStackTrace();
@@ -132,11 +138,6 @@ public class GestionUsuariosControladorGUI extends JFrame{
                         JOptionPane.ERROR_MESSAGE);
 				
 			}
-			   
-			   JOptionPane.showMessageDialog(null, 
-					    "¡Controlador dado de alta correctamente!", 
-					    "Éxito", 
-					    JOptionPane.INFORMATION_MESSAGE);
 			
 			}
         	 
