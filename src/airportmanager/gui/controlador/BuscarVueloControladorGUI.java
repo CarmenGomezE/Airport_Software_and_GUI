@@ -53,9 +53,8 @@ public class BuscarVueloControladorGUI extends JFrame {
         add(panel);
 
         /** TÍTULO */
-        JLabel titulo = new JLabel("Buscar en la lista de vuelos");
-        titulo.setFont(new Font("Arial", Font.BOLD, 28));
-        titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JLabel titulo = ConfiguracionUI.crearTitulo("Buscar en la lista de vuelos");
+        
         panel.add(titulo);
         panel.add(Box.createRigidArea(new Dimension(0, 40)));
 
@@ -82,8 +81,8 @@ public class BuscarVueloControladorGUI extends JFrame {
         filaBusqueda.add(campoValor);
         filaBusqueda.add(Box.createRigidArea(new Dimension(20, 0)));
 
-        JButton botonBuscar = new JButton("🔎 Buscar");
-        botonBuscar.setFont(new Font("Arial", Font.BOLD, 16));
+        JButton botonBuscar = ConfiguracionUI.crearBotonCentrado("🔎 Buscar");
+     
         filaBusqueda.add(botonBuscar);
 
         panel.add(filaBusqueda);
@@ -131,6 +130,11 @@ public class BuscarVueloControladorGUI extends JFrame {
         setVisible(true);
     }
     
+    /**
+     * Método que convierte el texto en criterio de búsqueda.
+     * @param texto texto que hay que convertir en criterio de búsqueda
+     * @return el criterio de búsqueda
+     */
     private CriterioBusqueda convertirTextoACriterio(String texto) {
         switch (texto) {
             case "Código": return CriterioBusqueda.CODIGO;

@@ -78,7 +78,7 @@ public class ControladorGUI extends JFrame {
         String formattedDate = LocalDate.now().format(formatter);
 
         /** Titulo de la lista de vuelos */
-        JLabel listaVuelosTitulo = new JLabel("Lista de vuelos (" + formattedDate + ")", JLabel.CENTER);
+        JLabel listaVuelosTitulo = ConfiguracionUI.crearTitulo("Lista de vuelos (" + formattedDate + ")");
         listaVuelosTitulo.setFont(new Font("Arial", Font.BOLD, 24));
         panelIzquierdo.add(listaVuelosTitulo, BorderLayout.NORTH);
 
@@ -118,7 +118,7 @@ public class ControladorGUI extends JFrame {
 
         /** Botones de la lista */
         JPanel panelBotones = new JPanel(new GridLayout(1, 2, 10, 10));
-        JButton botonBuscarVuelos=new JButton("🔎 Buscar vuelos");
+        JButton botonBuscarVuelos=ConfiguracionUI.crearBotonCentrado("🔎 Buscar vuelos");
         panelBotones.add(botonBuscarVuelos);
         botonBuscarVuelos.addActionListener(new ActionListener() {
             @Override
@@ -128,7 +128,7 @@ public class ControladorGUI extends JFrame {
             }
         });
      
-        JButton botonRefrescar= new JButton("🔄 Refrescar vuelos");
+        JButton botonRefrescar= ConfiguracionUI.crearBotonCentrado("🔄 Refrescar vuelos");
         panelBotones.add(botonRefrescar);
         panelBotones.add(botonRefrescar);
         botonRefrescar.addActionListener(new ActionListener() {
@@ -146,13 +146,13 @@ public class ControladorGUI extends JFrame {
         panelDerecho.setBackground(ConfiguracionUI.COLOR_FONDO);
 
         /** Título del operador */
-        JLabel titulo = new JLabel("Controlador de la Terminal 1", JLabel.CENTER);
-        titulo.setFont(new Font("Arial", Font.BOLD, 22));
+        JLabel titulo = ConfiguracionUI.crearTitulo("Controlador de la Terminal 1");
+       
         panelDerecho.add(titulo);
 
         /** Botones */
         JPanel subPanelBotones = new JPanel(new GridLayout(1, 2, 10, 10));
-        JButton botonNotificaciones = new JButton("🔔 Notificaciones");
+        JButton botonNotificaciones = ConfiguracionUI.crearBotonCentrado("🔔 Notificaciones");
         subPanelBotones.add(botonNotificaciones);
         botonNotificaciones.addActionListener(new ActionListener() {
             @Override
@@ -162,7 +162,7 @@ public class ControladorGUI extends JFrame {
             }
         });
         
-        JButton botonCerrarSesion = new JButton("Cerrar sesión");
+        JButton botonCerrarSesion = ConfiguracionUI.crearBotonCentrado("Cerrar sesión");
         subPanelBotones.add(botonCerrarSesion);
         botonCerrarSesion.addActionListener(new ActionListener() {
             @Override
@@ -181,7 +181,7 @@ public class ControladorGUI extends JFrame {
         subPanelBotones.setBackground(ConfiguracionUI.COLOR_FONDO);
         panelDerecho.add(subPanelBotones);
 
-        JButton botonGestionEstadoVuelo = new JButton("Gestión de estados de los vuelos");
+        JButton botonGestionEstadoVuelo = ConfiguracionUI.crearBotonCentrado("Gestión de estados de los vuelos");
         panelDerecho.add(botonGestionEstadoVuelo);
         botonGestionEstadoVuelo.addActionListener(new ActionListener() {
             @Override
@@ -201,6 +201,9 @@ public class ControladorGUI extends JFrame {
         setVisible(true);
     }
     
+    /**
+     * Método que actualiza la lista de vuelos.
+     */
     private void actualizarLista() {
 	    modeloLista.clear();
 	    List<Vuelo> vuelos = AeManager.getAeropuerto().getVuelosAceptados();
