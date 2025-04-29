@@ -314,5 +314,18 @@ public class Vuelo extends VueloProgramado {
         return (int) minutos;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false; 
+        }
+        Vuelo otroVuelo = (Vuelo) obj; 
+        return this.codigo.equals(otroVuelo.codigo) && 
+               this.fecha.equals(otroVuelo.fecha) &&
+               this.hora.equals(otroVuelo.hora);
+    }
 
 }

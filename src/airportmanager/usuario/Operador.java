@@ -135,7 +135,7 @@ public class Operador extends UsuarioConDni {
     @Override
     public void cambiarEstadoVuelo(Vuelo vuelo, EstadoVuelo estado)
             throws VueloNoDelUsuarioException, EstadoNoDelUsuarioException, EstadoEquivocadoException {
-        if (vuelo == null || estado == null) {
+        if (vuelo == null || estado == null) { 
             throw new IllegalArgumentException("El vuelo y el nuevo estado no pueden ser null"); 
         }
 
@@ -197,7 +197,7 @@ public class Operador extends UsuarioConDni {
         		o.recibirNotificacionCambioEstado(vuelo);
         	}
         }
-        gestor.recibirNotificacion(new Notificacion("El vuelo " + vuelo.getCodigo() + " ha cambiado su estado a " + vuelo.getEstado() + ".", TipoNotificacion.CAMBIO_ESTADO_VUELO));
+        gestor.recibirNotificacion(new Notificacion("El vuelo " + vuelo.getCodigo() + " ha cambiado su estado a " + vuelo.getHistorialEstadoVuelo().getUltimoEstadoManual() + ".", TipoNotificacion.CAMBIO_ESTADO_VUELO));
 
     }
 
@@ -245,7 +245,7 @@ public class Operador extends UsuarioConDni {
         		o.recibirNotificacionCambioEstado(vuelo);
         	}
         }
-        gestor.recibirNotificacion(new Notificacion("El vuelo " + vuelo.getCodigo() + " ha cambiado su estado a " + vuelo.getEstado() + ".", TipoNotificacion.CAMBIO_ESTADO_VUELO));
+        gestor.recibirNotificacion(new Notificacion("El vuelo " + vuelo.getCodigo() + " ha cambiado su estado a " + vuelo.getHistorialEstadoVuelo().getUltimoEstadoManual() + ".", TipoNotificacion.CAMBIO_ESTADO_VUELO));
 
     }
 
@@ -271,7 +271,7 @@ public class Operador extends UsuarioConDni {
         		o.recibirNotificacionCambioEstado(vuelo);
         	}
         }
-        gestor.recibirNotificacion(new Notificacion("El vuelo " + vuelo.getCodigo() + " ha cambiado su estado a " + vuelo.getEstado() + ".", TipoNotificacion.CAMBIO_ESTADO_VUELO));
+        gestor.recibirNotificacion(new Notificacion("El vuelo " + vuelo.getCodigo() + " ha cambiado su estado a " + vuelo.getHistorialEstadoVuelo().getUltimoEstadoManual() + ".", TipoNotificacion.CAMBIO_ESTADO_VUELO));
 
     }
 
@@ -297,7 +297,7 @@ public class Operador extends UsuarioConDni {
         		o.recibirNotificacionCambioEstado(vuelo);
         	}
         }
-        gestor.recibirNotificacion(new Notificacion("El vuelo " + vuelo.getCodigo() + " ha cambiado su estado a " + vuelo.getEstado() + ".", TipoNotificacion.CAMBIO_ESTADO_VUELO));
+        gestor.recibirNotificacion(new Notificacion("El vuelo " + vuelo.getCodigo() + " ha cambiado su estado a " + vuelo.getHistorialEstadoVuelo().getUltimoEstadoManual() + ".", TipoNotificacion.CAMBIO_ESTADO_VUELO));
 
     }
 
@@ -323,7 +323,7 @@ public class Operador extends UsuarioConDni {
         		o.recibirNotificacionCambioEstado(vuelo);
         	}
         }
-        gestor.recibirNotificacion(new Notificacion("El vuelo " + vuelo.getCodigo() + " ha cambiado su estado a " + vuelo.getEstado() + ".", TipoNotificacion.CAMBIO_ESTADO_VUELO));
+        gestor.recibirNotificacion(new Notificacion("El vuelo " + vuelo.getCodigo() + " ha cambiado su estado a " + vuelo.getHistorialEstadoVuelo().getUltimoEstadoManual() + ".", TipoNotificacion.CAMBIO_ESTADO_VUELO));
 
     }
 

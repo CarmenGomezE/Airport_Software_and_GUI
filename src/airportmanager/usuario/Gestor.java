@@ -124,44 +124,48 @@ public class Gestor extends Usuario {
      */
     public void emitirFactura(Aerolinea aerolinea) {
         List<Factura> facturas = this.sistemaFacturacion.generarFactura(aerolinea);
-        Aerolinea aerolineaFactura = null;
-        if(facturas==null) {
-        	System.out.println("No hay facturas para la aerolinea.");
-        	return;
+        
+        if (facturas == null || facturas.isEmpty()) {
+            System.out.println("No hay facturas para la aerolínea.");
+            return;
         }
-        for(Factura factura: facturas) {
-	        if (factura == null) {
-	            System.out.println("No se generaron facturas para la aerolinea.");
-	            return;
-	        }
-	
-	        try {
-	        	String facturaDir = "/Users/carmen/git/padsoft/facturas/";
-	            File directorio = new File(facturaDir);
-	            if (!directorio.exists() && !directorio.mkdirs()) {
-	                System.err.println("Error: No se pudo crear el directorio de facturas.");
-	                return;
-	            }
+        
+        for (Factura factura : facturas) {
+            if (factura == null) {
+                System.out.println("No se generaron facturas para la aerolínea.");
+                return;
+            }
 
-	            String filePath = facturaDir + "Factura_" + factura.getInvoiceIdentifier() + ".pdf";
-	            InvoiceSystem.createInvoice(factura, filePath);
-	            System.out.println("Factura generada en: " + new File(filePath).getAbsolutePath());
-	        } catch (NonExistentFileException e) {
-	            System.err.println("Error: El archivo o directorio no existe. " + e.getMessage());
-	        } catch (UnsupportedImageTypeException e) {
-	            System.err.println("Error: Tipo de imagen no soportado en la factura. " + e.getMessage());
-	        } catch (Exception e) {
-	            System.err.println("Error inesperado al generar la factura: " + e.getMessage());
-	        } 
-	        for(Aerolinea a: getAeropuerto().getAerolineas()) {
-	        	if(a.getCodigo()==factura.getAirline()) {
-	        		aerolineaFactura= a;
-	        	}
-	        }
-	        aerolineaFactura.getOperador().recibirNotificacionFacturaEmitida(factura);
-	        aerolineaFactura.addFactura(factura);
+            try {
+                String facturaDir = "/Users/carmen/git/padsoft/facturas/";
+                File directorio = new File(facturaDir);
+                
+                if (!directorio.exists() && !directorio.mkdirs()) {
+                    System.err.println("Error: No se pudo crear el directorio de facturas.");
+                    return;
+                }
+
+                String filePath = facturaDir + "Factura_" + factura.getInvoiceIdentifier() + ".pdf";
+                InvoiceSystem.createInvoice(factura, filePath);
+                System.out.println("Factura generada en: " + new File(filePath).getAbsolutePath());
+            } catch (NonExistentFileException e) {
+                System.err.println("Error: El archivo o directorio no existe. " + e.getMessage());
+            } catch (UnsupportedImageTypeException e) {
+                System.err.println("Error: Tipo de imagen no soportado en la factura. " + e.getMessage());
+            } catch (Exception e) {
+                System.err.println("Error inesperado al generar la factura: " + e.getMessage());
+            }
+
+            if (!factura.getAirline().equals(aerolinea.getCodigo())) {
+                continue;
+            }
+
+            aerolinea.getOperador().recibirNotificacionFacturaEmitida(factura);
+
+            aerolinea.addFactura(factura);
         }
     }
+
 
     /**
      * Método para consultar el estado de una factura.

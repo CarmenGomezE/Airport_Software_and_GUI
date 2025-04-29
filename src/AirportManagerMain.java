@@ -15,6 +15,8 @@ import src.airportmanager.terminal.*;
 import src.airportmanager.notificacion.*;
 import java.util.Scanner;
 
+import es.uam.eps.padsof.invoices.IResourceUsageInfo;
+
 import java.io.*;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -680,16 +682,30 @@ public class AirportManagerMain {
     	}
 		
 		System.out.println("\nIniciando el proceso de creación de facturas.");
-		System.out.println("Generando factura para la aerolínea Iberia...");
+		System.out.println("Generando factura para la aerolínea Ryanair...");
 		gestorBarajas.emitirFactura(Ryanair);
-		System.out.println("Factura generada para Iberia.");
+		System.out.println("Factura generada para Ryanair.");
 
-		System.out.println("Obteniendo la primera factura de Iberia...");
-		Factura facturaIberia = Ryanair.getFacturas().get(0);
+		System.out.println("Obteniendo la primera factura de Ryanair...");
+		 Factura facturaRyanair=null;
+		for (Factura f : Ryanair.getFacturas()) {
+		    System.out.println("Factura para aerolínea: " + f.getAirline());
+		    System.out.println("Código: " + f.getInvoiceIdentifier());
+		    System.out.println("Fecha: " + f.getInvoiceDate());
+		    System.out.println("Base: " + f.getBasePrice());
+		    System.out.println("Recargo: " + f.getSurcharge());
+		    System.out.println("Recursos:");
+		    for (IResourceUsageInfo recurso : f.getResourcePrices()) { 
+		        System.out.println(" - " + recurso.getResourceDescription() + ": " +
+		                           recurso.getPrice());
+		    }
+		    System.out.println("----------------------");
+		    facturaRyanair=f;
+		}
 
 		String numeroTarjeta = "1234567891234567";
-		System.out.println("Iniciando pago de la factura " + facturaIberia.getInvoiceIdentifier() + " con tarjeta de crédito: " + numeroTarjeta);
-		operadorRyanair.pagarFactura(facturaIberia, numeroTarjeta);
+		System.out.println("Iniciando pago de la factura " + facturaRyanair.getInvoiceIdentifier() + " con tarjeta de crédito: " + numeroTarjeta);
+		operadorRyanair.pagarFactura(facturaRyanair, numeroTarjeta);
 		System.out.println("Pago de la factura realizado con éxito.");
 		gestorBarajas.verFacturas();
 		
@@ -832,7 +848,7 @@ public class AirportManagerMain {
 	            LocalTime.now().plusMinutes(42), null, TipoCarga.PASAJEROS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
 	            Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionFR_HGC, aeMallorca, aePropio, null, operadorRyanair);
 		VueloProgramado vueloFRK8109= new Vuelo("FRK8109", LocalDate.now(), LocalDate.now(), LocalDate.now(),
-	            LocalTime.now().plusMinutes(42), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
+	            LocalTime.now().plusMinutes(40), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
 	            Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionFR_HGT, aeCairo, aePropio, null, operadorRyanair);
 		VueloProgramado vueloFRK8110= new Vuelo("FRK8110", LocalDate.now(), LocalDate.now(), LocalDate.now(),
 	            LocalTime.now().plusMinutes(42), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
@@ -958,6 +974,16 @@ public class AirportManagerMain {
     	Vuelo vueloFRK2234= airportManager.getAeropuerto().getVuelosAceptados().get(10);
 		Vuelo vueloFRK8103= airportManager.getAeropuerto().getVuelosAceptados().get(17);
 		
+		System.out.println(operadorRyanair.getSolicitudesRecibidas());
+
+		try {
+			operadorIberia.solicitarCompartirVuelo(vueloFRK2234, operadorRyanair, 30);
+		} catch (SolicitudInvalidaExcepcion | OperacionInvalidaException e) {
+			e.printStackTrace();
+		}
+		
+		operadorRyanair.aceptarSolicitud(operadorRyanair.getSolicitudesRecibidas().get(0));
+		
 		Vuelo vueloFRK8104= airportManager.getAeropuerto().getVuelosAceptados().get(11);
 		Vuelo vueloFRK8106= airportManager.getAeropuerto().getVuelosAceptados().get(12);
 		Vuelo vueloFRK8108= airportManager.getAeropuerto().getVuelosAceptados().get(13);
@@ -1038,10 +1064,11 @@ public class AirportManagerMain {
 		}
 
 		System.out.println("\nHistorial de vuelo FRK8103:");
-		for (Entry<LocalTime, EstadoVuelo> entry : vueloFRK8103.getHistorialEstadoVuelo().getHistorial().entrySet()) {
+		for (Entry<LocalTime, EstadoVuelo> entry : vueloFRK8103.getHistorialEstadoVuelo().getHistorial().entrySet()) { 
 		    System.out.println("  - " + entry.getKey().format(formatter) + " → " + entry.getValue());
 		}
 		
+		/**
 
 		try {
 			operadorRyanair.cambiarEstadoVuelo(vueloFRK8104, EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR);  
@@ -1071,16 +1098,16 @@ public class AirportManagerMain {
 			operadorRyanair.cambiarEstadoVuelo(vueloFRK8111, EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR);
 			operadorRyanair.cambiarEstadoVuelo(vueloFRK8111, EstadoVuelo.INICIO_DEL_EMBARQUE);
 			operadorRyanair.cambiarEstadoVuelo(vueloFRK8111, EstadoVuelo.FIN_DEL_EMBARQUE);
-			controladorT1.cambiarEstadoVuelo(vueloFRK8111, EstadoVuelo.ESPERANDO_PISTA_DE_DESPEGUE);
-			controladorT1.cambiarEstadoVuelo(vueloFRK8111, EstadoVuelo.ESPERANDO_DESPEGUE);
+			controladorT2.cambiarEstadoVuelo(vueloFRK8111, EstadoVuelo.ESPERANDO_PISTA_DE_DESPEGUE);
+			controladorT2.cambiarEstadoVuelo(vueloFRK8111, EstadoVuelo.ESPERANDO_DESPEGUE);
 			
-			controladorT2.cambiarEstadoVuelo(vueloFRK8106, EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE);
-			controladorT2.cambiarEstadoVuelo(vueloFRK8106, EstadoVuelo.ESPERANDO_ATERRIZAJE);
-			controladorT2.cambiarEstadoVuelo(vueloFRK8106, EstadoVuelo.ATERRIZAJE);
+			controladorT1.cambiarEstadoVuelo(vueloFRK8106, EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE);
+			controladorT1.cambiarEstadoVuelo(vueloFRK8106, EstadoVuelo.ESPERANDO_ATERRIZAJE);
+			controladorT1.cambiarEstadoVuelo(vueloFRK8106, EstadoVuelo.ATERRIZAJE);
 			operadorRyanair.cambiarEstadoVuelo(vueloFRK8106, EstadoVuelo.INICIO_DEL_DESEMBARQUE);
 			operadorRyanair.cambiarEstadoVuelo(vueloFRK8106, EstadoVuelo.FIN_DEL_DESEMBARQUE);
-			controladorT2.cambiarEstadoVuelo(vueloFRK8106, EstadoVuelo.OPERATIVO);
-			controladorT2.cambiarEstadoVuelo(vueloFRK8106, EstadoVuelo.AVION_A_HANGAR);
+			controladorT1.cambiarEstadoVuelo(vueloFRK8106, EstadoVuelo.OPERATIVO);
+			controladorT1.cambiarEstadoVuelo(vueloFRK8106, EstadoVuelo.AVION_A_HANGAR);
 			
 			controladorT2.cambiarEstadoVuelo(vueloFRK4152, EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE);
 			controladorT2.cambiarEstadoVuelo(vueloFRK4152, EstadoVuelo.ESPERANDO_ATERRIZAJE);
@@ -1114,13 +1141,13 @@ public class AirportManagerMain {
 			controladorT2.cambiarEstadoVuelo(vueloFRK8113, EstadoVuelo.OPERATIVO);
 			controladorT2.cambiarEstadoVuelo(vueloFRK8113, EstadoVuelo.AVION_A_HANGAR);
 			
-			controladorT2.cambiarEstadoVuelo(vueloFRK8112, EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE);
-			controladorT2.cambiarEstadoVuelo(vueloFRK8112, EstadoVuelo.ESPERANDO_ATERRIZAJE);
-			controladorT2.cambiarEstadoVuelo(vueloFRK8112, EstadoVuelo.ATERRIZAJE);
+			controladorT1.cambiarEstadoVuelo(vueloFRK8112, EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE);
+			controladorT1.cambiarEstadoVuelo(vueloFRK8112, EstadoVuelo.ESPERANDO_ATERRIZAJE);
+			controladorT1.cambiarEstadoVuelo(vueloFRK8112, EstadoVuelo.ATERRIZAJE);
 			operadorRyanair.cambiarEstadoVuelo(vueloFRK8112, EstadoVuelo.INICIO_DEL_DESEMBARQUE);
 			operadorRyanair.cambiarEstadoVuelo(vueloFRK8112, EstadoVuelo.FIN_DEL_DESEMBARQUE);
-			controladorT2.cambiarEstadoVuelo(vueloFRK8112, EstadoVuelo.OPERATIVO);
-			controladorT2.cambiarEstadoVuelo(vueloFRK8112, EstadoVuelo.AVION_A_HANGAR);
+			controladorT1.cambiarEstadoVuelo(vueloFRK8112, EstadoVuelo.OPERATIVO);
+			controladorT1.cambiarEstadoVuelo(vueloFRK8112, EstadoVuelo.AVION_A_HANGAR);
 			
 			controladorT2.cambiarEstadoVuelo(vueloFRK8114, EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE);
 			controladorT2.cambiarEstadoVuelo(vueloFRK8114, EstadoVuelo.ESPERANDO_ATERRIZAJE);
@@ -1130,13 +1157,13 @@ public class AirportManagerMain {
 			controladorT2.cambiarEstadoVuelo(vueloFRK8114, EstadoVuelo.OPERATIVO);
 			controladorT2.cambiarEstadoVuelo(vueloFRK8114, EstadoVuelo.AVION_A_HANGAR);
 			
-			controladorT2.cambiarEstadoVuelo(vueloFRK8115, EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE);
-			controladorT2.cambiarEstadoVuelo(vueloFRK8115, EstadoVuelo.ESPERANDO_ATERRIZAJE);
-			controladorT2.cambiarEstadoVuelo(vueloFRK8115, EstadoVuelo.ATERRIZAJE);
+			controladorT1.cambiarEstadoVuelo(vueloFRK8115, EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE);
+			controladorT1.cambiarEstadoVuelo(vueloFRK8115, EstadoVuelo.ESPERANDO_ATERRIZAJE);
+			controladorT1.cambiarEstadoVuelo(vueloFRK8115, EstadoVuelo.ATERRIZAJE);
 			operadorRyanair.cambiarEstadoVuelo(vueloFRK8115, EstadoVuelo.INICIO_DEL_DESEMBARQUE);
 			operadorRyanair.cambiarEstadoVuelo(vueloFRK8115, EstadoVuelo.FIN_DEL_DESEMBARQUE);
-			controladorT2.cambiarEstadoVuelo(vueloFRK8115, EstadoVuelo.OPERATIVO);
-			controladorT2.cambiarEstadoVuelo(vueloFRK8115, EstadoVuelo.AVION_A_HANGAR);
+			controladorT1.cambiarEstadoVuelo(vueloFRK8115, EstadoVuelo.OPERATIVO);
+			controladorT1.cambiarEstadoVuelo(vueloFRK8115, EstadoVuelo.AVION_A_HANGAR);
 			
 			operadorRyanair.cambiarEstadoVuelo(vueloIBE2234, EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR);  
 			operadorRyanair.cambiarEstadoVuelo(vueloIBE2234, EstadoVuelo.INICIO_DEL_EMBARQUE);
@@ -1153,8 +1180,8 @@ public class AirportManagerMain {
 			operadorIberia.cambiarEstadoVuelo(vueloIBE8109, EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR);
 			operadorIberia.cambiarEstadoVuelo(vueloIBE8109, EstadoVuelo.INICIO_DEL_EMBARQUE);
 			operadorIberia.cambiarEstadoVuelo(vueloIBE8109, EstadoVuelo.FIN_DEL_EMBARQUE);
-			controladorT1.cambiarEstadoVuelo(vueloIBE8109, EstadoVuelo.ESPERANDO_PISTA_DE_DESPEGUE);
-			controladorT1.cambiarEstadoVuelo(vueloIBE8109, EstadoVuelo.ESPERANDO_DESPEGUE);
+			controladorT2.cambiarEstadoVuelo(vueloIBE8109, EstadoVuelo.ESPERANDO_PISTA_DE_DESPEGUE);
+			controladorT2.cambiarEstadoVuelo(vueloIBE8109, EstadoVuelo.ESPERANDO_DESPEGUE);
 			
 			operadorIberia.cambiarEstadoVuelo(vueloIBE8108, EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR);
 			operadorIberia.cambiarEstadoVuelo(vueloIBE8108, EstadoVuelo.INICIO_DEL_EMBARQUE);
@@ -1171,16 +1198,16 @@ public class AirportManagerMain {
 			operadorIberia.cambiarEstadoVuelo(vueloIBE8111, EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR);
 			operadorIberia.cambiarEstadoVuelo(vueloIBE8111, EstadoVuelo.INICIO_DEL_EMBARQUE);
 			operadorIberia.cambiarEstadoVuelo(vueloIBE8111, EstadoVuelo.FIN_DEL_EMBARQUE);
-			controladorT1.cambiarEstadoVuelo(vueloIBE8111, EstadoVuelo.ESPERANDO_PISTA_DE_DESPEGUE);
-			controladorT1.cambiarEstadoVuelo(vueloIBE8111, EstadoVuelo.ESPERANDO_DESPEGUE);
+			controladorT2.cambiarEstadoVuelo(vueloIBE8111, EstadoVuelo.ESPERANDO_PISTA_DE_DESPEGUE);
+			controladorT2.cambiarEstadoVuelo(vueloIBE8111, EstadoVuelo.ESPERANDO_DESPEGUE);
 			
-			controladorT2.cambiarEstadoVuelo(vueloIBE8106, EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE);
-			controladorT2.cambiarEstadoVuelo(vueloIBE8106, EstadoVuelo.ESPERANDO_ATERRIZAJE);
-			controladorT2.cambiarEstadoVuelo(vueloIBE8106, EstadoVuelo.ATERRIZAJE);
+			controladorT1.cambiarEstadoVuelo(vueloIBE8106, EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE);
+			controladorT1.cambiarEstadoVuelo(vueloIBE8106, EstadoVuelo.ESPERANDO_ATERRIZAJE);
+			controladorT1.cambiarEstadoVuelo(vueloIBE8106, EstadoVuelo.ATERRIZAJE);
 			operadorIberia.cambiarEstadoVuelo(vueloIBE8106, EstadoVuelo.INICIO_DEL_DESEMBARQUE);
 			operadorIberia.cambiarEstadoVuelo(vueloIBE8106, EstadoVuelo.FIN_DEL_DESEMBARQUE);
-			controladorT2.cambiarEstadoVuelo(vueloIBE8106, EstadoVuelo.OPERATIVO);
-			controladorT2.cambiarEstadoVuelo(vueloIBE8106, EstadoVuelo.AVION_A_HANGAR);
+			controladorT1.cambiarEstadoVuelo(vueloIBE8106, EstadoVuelo.OPERATIVO);
+			controladorT1.cambiarEstadoVuelo(vueloIBE8106, EstadoVuelo.AVION_A_HANGAR);
 			
 			controladorT2.cambiarEstadoVuelo(vueloIBE4152, EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE);
 			controladorT2.cambiarEstadoVuelo(vueloIBE4152, EstadoVuelo.ESPERANDO_ATERRIZAJE);
@@ -1214,29 +1241,29 @@ public class AirportManagerMain {
 			controladorT2.cambiarEstadoVuelo(vueloIBE8113, EstadoVuelo.OPERATIVO);
 			controladorT2.cambiarEstadoVuelo(vueloIBE8113, EstadoVuelo.AVION_A_HANGAR);
 			
-			controladorT2.cambiarEstadoVuelo(vueloIBE8112, EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE);
-			controladorT2.cambiarEstadoVuelo(vueloIBE8112, EstadoVuelo.ESPERANDO_ATERRIZAJE);
-			controladorT2.cambiarEstadoVuelo(vueloIBE8112, EstadoVuelo.ATERRIZAJE);
+			controladorT1.cambiarEstadoVuelo(vueloIBE8112, EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE);
+			controladorT1.cambiarEstadoVuelo(vueloIBE8112, EstadoVuelo.ESPERANDO_ATERRIZAJE);
+			controladorT1.cambiarEstadoVuelo(vueloIBE8112, EstadoVuelo.ATERRIZAJE);
 			operadorIberia.cambiarEstadoVuelo(vueloIBE8112, EstadoVuelo.INICIO_DEL_DESEMBARQUE);
 			operadorIberia.cambiarEstadoVuelo(vueloIBE8112, EstadoVuelo.FIN_DEL_DESEMBARQUE);
-			controladorT2.cambiarEstadoVuelo(vueloIBE8112, EstadoVuelo.OPERATIVO);
-			controladorT2.cambiarEstadoVuelo(vueloIBE8112, EstadoVuelo.AVION_A_HANGAR);
+			controladorT1.cambiarEstadoVuelo(vueloIBE8112, EstadoVuelo.OPERATIVO);
+			controladorT1.cambiarEstadoVuelo(vueloIBE8112, EstadoVuelo.AVION_A_HANGAR);
 			
-			controladorT2.cambiarEstadoVuelo(vueloIBE8114, EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE);
-			controladorT2.cambiarEstadoVuelo(vueloIBE8114, EstadoVuelo.ESPERANDO_ATERRIZAJE);
-			controladorT2.cambiarEstadoVuelo(vueloIBE8114, EstadoVuelo.ATERRIZAJE);
+			controladorT1.cambiarEstadoVuelo(vueloIBE8114, EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE);
+			controladorT1.cambiarEstadoVuelo(vueloIBE8114, EstadoVuelo.ESPERANDO_ATERRIZAJE);
+			controladorT1.cambiarEstadoVuelo(vueloIBE8114, EstadoVuelo.ATERRIZAJE);
 			operadorIberia.cambiarEstadoVuelo(vueloIBE8114, EstadoVuelo.INICIO_DEL_DESEMBARQUE);
 			operadorIberia.cambiarEstadoVuelo(vueloIBE8114, EstadoVuelo.FIN_DEL_DESEMBARQUE);
-			controladorT2.cambiarEstadoVuelo(vueloIBE8114, EstadoVuelo.OPERATIVO);
-			controladorT2.cambiarEstadoVuelo(vueloIBE8114, EstadoVuelo.AVION_A_HANGAR);
+			controladorT1.cambiarEstadoVuelo(vueloIBE8114, EstadoVuelo.OPERATIVO);
+			controladorT1.cambiarEstadoVuelo(vueloIBE8114, EstadoVuelo.AVION_A_HANGAR);
 			
-			controladorT2.cambiarEstadoVuelo(vueloIBE8115, EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE);
-			controladorT2.cambiarEstadoVuelo(vueloIBE8115, EstadoVuelo.ESPERANDO_ATERRIZAJE);
-			controladorT2.cambiarEstadoVuelo(vueloIBE8115, EstadoVuelo.ATERRIZAJE);
+			controladorT1.cambiarEstadoVuelo(vueloIBE8115, EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE);
+			controladorT1.cambiarEstadoVuelo(vueloIBE8115, EstadoVuelo.ESPERANDO_ATERRIZAJE);
+			controladorT1.cambiarEstadoVuelo(vueloIBE8115, EstadoVuelo.ATERRIZAJE);
 			operadorIberia.cambiarEstadoVuelo(vueloIBE8115, EstadoVuelo.INICIO_DEL_DESEMBARQUE);
 			operadorIberia.cambiarEstadoVuelo(vueloIBE8115, EstadoVuelo.FIN_DEL_DESEMBARQUE);
-			controladorT2.cambiarEstadoVuelo(vueloIBE8115, EstadoVuelo.OPERATIVO);
-			controladorT2.cambiarEstadoVuelo(vueloIBE8115, EstadoVuelo.AVION_A_HANGAR);
+			controladorT1.cambiarEstadoVuelo(vueloIBE8115, EstadoVuelo.OPERATIVO);
+			controladorT1.cambiarEstadoVuelo(vueloIBE8115, EstadoVuelo.AVION_A_HANGAR);
 			
 			controladorT2.cambiarEstadoVuelo(vueloIBE8103, EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE);
 			controladorT2.cambiarEstadoVuelo(vueloIBE8103, EstadoVuelo.ESPERANDO_ATERRIZAJE);
@@ -1249,7 +1276,7 @@ public class AirportManagerMain {
 			
 		} catch (VueloNoDelUsuarioException | EstadoNoDelUsuarioException | EstadoEquivocadoException e) {
 			e.printStackTrace();
-		}
+		}*/
 		
 		System.out.println("\nProcedimiento de cambio de estados de vuelos finalizado.");
 	}

@@ -26,7 +26,7 @@ public class Aerolinea implements Serializable {
     /** Operador de la aerolínea */
     private Operador operador;
     /** Facturas de la aerolínea */
-    private List<Factura> facturas;
+    private Set<Factura> facturas;
     /** Aviones de la aerolínea */
     private List<Avion> aviones;
 
@@ -40,7 +40,7 @@ public class Aerolinea implements Serializable {
         this.nombre = nombre;
         this.codigo = codigo;
         this.operador = null;
-        this.facturas = new ArrayList<>();
+        this.facturas = new HashSet<>();
         this.aviones = new ArrayList<>();
     }
 
@@ -118,7 +118,7 @@ public class Aerolinea implements Serializable {
      * 
      * @return Facturas de la aerolinea.
      */
-    public List<Factura> getFacturas() {
+    public Set<Factura> getFacturas() {
         return this.facturas;
     }
 

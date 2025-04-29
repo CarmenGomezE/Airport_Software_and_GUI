@@ -46,66 +46,76 @@ public class SistemaFacturacion implements Serializable {
      * @param aerolinea Aerolinea de la que es la factura.
      * @return Factura mensual de la aerolinea.
      * 
-     */public List<Factura> generarFactura(Aerolinea aerolinea) {
-    	    List<Vuelo> vuelosMensuales = aerolinea.vuelosMensuales(LocalDate.now().getMonth());
-    	    List<Factura> facturas = new ArrayList<>();
-    	    if (vuelosMensuales.isEmpty()) {
-    	        return null;
-    	    }
-
-    	    List<IResourceUsageInfo> recursos = new ArrayList<>();
-    	    for (Vuelo vuelo : vuelosMensuales) {
-    	        int precioBaseVuelo = 0;
-    	        int precioRecargoVuelo = 0;
-
-    	        // Procesar recargos y costes base según el tipo de vuelo y carga
-    	        if (vuelo.getTipoCarga() == TipoCarga.MERCANCIAS) {
-    	            recursos.add(new UsoRecursos("Recargo de mercancías", this.recargoAvionMercancias, 1));
-    	            precioRecargoVuelo += this.recargoAvionMercancias;
-    	        }
-    	        if (vuelo.getTipoVuelo() == TipoVuelo.SALIDA) {
-    	            recursos.add(new UsoRecursos("Vuelo de salida", this.costeBaseVueloSalida, 1));
-    	            precioBaseVuelo += this.costeBaseVueloSalida;
-    	        } else if (vuelo.getTipoVuelo() == TipoVuelo.LLEGADA) {
-    	            recursos.add(new UsoRecursos("Vuelo de llegada", this.costeBaseVueloLlegada, 1));
-    	            precioBaseVuelo += this.costeBaseVueloLlegada;
-    	        }
-
-    	        if (vuelo.getOperadoresAsignados() != null && !vuelo.getOperadoresAsignados().isEmpty()) {
-    	            double porcentajeTotal = 0.0;
-
-    	            for (Map.Entry<Operador, Double> entry : vuelo.getOperadoresAsignados().entrySet()) {
-    	                Operador operador = entry.getKey();
-    	                double porcentajeCarga = entry.getValue();
-    	                porcentajeTotal += porcentajeCarga;
-
-    	                if (!operador.getAerolinea().equals(aerolinea)) {
-    	                    int precioProporcionalBase = (int) (precioBaseVuelo * porcentajeCarga / 100);
-    	                    int precioProporcionalRecargo = (int) (precioRecargoVuelo * porcentajeCarga / 100);
-
-    	                    facturas.add(new Factura(operador.getAerolinea(), LocalDate.now(), precioProporcionalBase,
-    	                            precioProporcionalRecargo, generarCodigoFactura(operador.getAerolinea()), recursos,
-    	                            EstadoFactura.PENDIENTE));
-    	                }
-    	            }
-
-    	            if (vuelo.getOperadorPrincipal().getAerolinea().equals(aerolinea)) {
-    	                int precioProporcionalBase = (int) (precioBaseVuelo * (100 - porcentajeTotal) / 100);
-    	                int precioProporcionalRecargo = (int) (precioRecargoVuelo * (100 - porcentajeTotal) / 100);
-    	                facturas.add(new Factura(aerolinea, LocalDate.now(), precioProporcionalBase, precioProporcionalRecargo,
-    	                        generarCodigoFactura(aerolinea), recursos, EstadoFactura.PENDIENTE));
-    	            }
-    	        } else {
-    	            if (vuelo.getOperadorPrincipal().getAerolinea().equals(aerolinea)) {
-    	                facturas.add(new Factura(aerolinea, LocalDate.now(), precioBaseVuelo, precioRecargoVuelo,
-    	                        generarCodigoFactura(aerolinea), recursos, EstadoFactura.PENDIENTE));
-    	            }
-    	        }
-    	    }
-
-    	    return facturas;
-    	}
-    
+     */
+    public List<Factura> generarFactura(Aerolinea aerolinea) {
+		List<Vuelo> vuelosMensuales = aerolinea.vuelosMensuales(LocalDate.now().getMonth());
+		if (vuelosMensuales.isEmpty()) return null;
+		
+		Map<Aerolinea, Integer> totalBasePorAerolinea = new HashMap<>();
+		Map<Aerolinea, Integer> totalRecargoPorAerolinea = new HashMap<>();
+		Map<Aerolinea, List<IResourceUsageInfo>> recursosPorAerolinea = new HashMap<>();
+		
+		for (Vuelo vuelo : vuelosMensuales) {
+		    int precioBase = 0;
+		    int precioRecargo = 0;
+		    List<IResourceUsageInfo> recursosVuelo = new ArrayList<>();
+		
+		    if (vuelo.getTipoCarga() == TipoCarga.MERCANCIAS) {
+		        recursosVuelo.add(new UsoRecursos("Recargo de mercancías", recargoAvionMercancias, 1));
+		        precioRecargo += recargoAvionMercancias;
+		    }
+		    if (vuelo.getTipoVuelo() == TipoVuelo.SALIDA) {
+		        recursosVuelo.add(new UsoRecursos("Vuelo de salida", costeBaseVueloSalida, 1));
+		        precioBase += costeBaseVueloSalida;
+		    } else if (vuelo.getTipoVuelo() == TipoVuelo.LLEGADA) {
+		        recursosVuelo.add(new UsoRecursos("Vuelo de llegada", costeBaseVueloLlegada, 1));
+		        precioBase += costeBaseVueloLlegada;
+		    }
+		
+		    Map<Aerolinea, Double> porcentajePorAerolinea = new HashMap<>();
+		
+		    if (vuelo.getOperadoresAsignados() != null) {
+		        for (Map.Entry<Operador, Double> entry : vuelo.getOperadoresAsignados().entrySet()) {
+		            Aerolinea aero = entry.getKey().getAerolinea();
+		            porcentajePorAerolinea.put(aero,
+		                porcentajePorAerolinea.getOrDefault(aero, 0.0) + entry.getValue());
+		        }
+		    }
+		
+		    Aerolinea principal = vuelo.getOperadorPrincipal().getAerolinea();
+		    double restante = 100.0 - porcentajePorAerolinea.values().stream().mapToDouble(Double::doubleValue).sum();
+		    porcentajePorAerolinea.put(principal,
+		        porcentajePorAerolinea.getOrDefault(principal, 0.0) + restante);
+		
+		    for (Map.Entry<Aerolinea, Double> entry : porcentajePorAerolinea.entrySet()) {
+		        Aerolinea aero = entry.getKey();
+		        double porcentaje = entry.getValue();
+		
+		        int base = (int) Math.round(precioBase * porcentaje / 100);
+		        int recargo = (int) (precioRecargo * porcentaje / 100);
+		
+		        totalBasePorAerolinea.put(aero,
+		            totalBasePorAerolinea.getOrDefault(aero, 0) + base);
+		        totalRecargoPorAerolinea.put(aero,
+		            totalRecargoPorAerolinea.getOrDefault(aero, 0) + recargo);
+		
+		        recursosPorAerolinea
+		            .computeIfAbsent(aero, k -> new ArrayList<>())
+		            .addAll(recursosVuelo);
+		    }
+		}
+		
+		List<Factura> facturas = new ArrayList<>();
+		for (Aerolinea aero : totalBasePorAerolinea.keySet()) {
+		    int base = totalBasePorAerolinea.get(aero);
+		    int recargo = totalRecargoPorAerolinea.getOrDefault(aero, 0);
+		    List<IResourceUsageInfo> recursos = recursosPorAerolinea.getOrDefault(aero, new ArrayList<>());
+		
+		    facturas.add(new Factura(aero,LocalDate.now(),base,recargo,generarCodigoFactura(aero),new ArrayList<>(recursos),EstadoFactura.PENDIENTE));
+		    }
+		
+		return facturas;
+	}
 
     /**
      * Método que crea códigos de Facturas.
