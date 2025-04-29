@@ -16,6 +16,9 @@ import src.airportmanager.AirportManager;
 import src.airportmanager.gui.ConfiguracionUI;
 import src.airportmanager.usuario.Gestor;
 
+/**
+ * La clase EstadisticasGestorGUI representa la ventana de las estadísticas del aeropuerto del gestor.
+ */
 public class EstadisticasGestorGUI extends JFrame{
 
 	private final Gestor gestor;
@@ -24,6 +27,12 @@ public class EstadisticasGestorGUI extends JFrame{
 	private DefaultListModel<String> model;
 	private JButton botonRefrescar; 
 
+	/**
+	 * Constructor de la clase EstadisticasGestorGUI
+	 * @param manager el manager
+	 * @param gestorGUI el gestorGUI
+	 * @param gestor el gestor
+	 */
 	public EstadisticasGestorGUI(AirportManager manager, GestorGUI gestorGUI, Gestor gestor) {
 		this.gestorGUI = gestorGUI;
 		this.gestor = gestor; 
@@ -48,9 +57,7 @@ public class EstadisticasGestorGUI extends JFrame{
 		panel.setBackground(ConfiguracionUI.COLOR_FONDO);
 		add(panel);
 
-		JLabel titulo = new JLabel("Estadísticas del Aeropuerto", JLabel.CENTER);
-		titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
-		titulo.setFont(new Font("Arial", Font.BOLD, 28));
+		JLabel titulo = ConfiguracionUI.crearTitulo("Estadísticas del aeropuerto");
 		panel.add(titulo);
 		panel.add(Box.createRigidArea(new Dimension(0, 40)));
 
@@ -68,9 +75,8 @@ public class EstadisticasGestorGUI extends JFrame{
 		/**Boton refrescar*/
 		JPanel botonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		botonPanel.setBackground(ConfiguracionUI.COLOR_FONDO);
-		botonRefrescar = new JButton("🔄 Refrescar estadísticas"); 
-		botonRefrescar.setBackground(ConfiguracionUI.COLOR_FONDO);
-		botonRefrescar.setFont(botonRefrescar.getFont().deriveFont(16f));
+		botonRefrescar = ConfiguracionUI.crearBotonCentrado("🔄 Refrescar estadísticas"); 
+		
 		botonRefrescar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -93,7 +99,10 @@ public class EstadisticasGestorGUI extends JFrame{
 
 		setVisible(true);
 	}
-
+	
+	/**
+	 * Método auxiliar para actualizar las estadísticas
+	 */
 	private void actualizarEstadisticas() {
 
 		model.clear();
