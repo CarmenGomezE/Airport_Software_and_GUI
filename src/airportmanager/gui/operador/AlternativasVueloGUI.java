@@ -86,8 +86,8 @@ public class AlternativasVueloGUI extends JFrame {
         panelIzquierdo.setPreferredSize(new Dimension(500, 600));
         panelIzquierdo.setBackground(ConfiguracionUI.COLOR_FONDO);
 
-        JLabel listaAlternativasTitulo = new JLabel("Alternativas a los vuelos propuestos", JLabel.CENTER);
-        listaAlternativasTitulo.setFont(new Font("Arial", Font.BOLD, 24));
+        JLabel listaAlternativasTitulo = ConfiguracionUI.crearTitulo("Alternativas a los vuelos propuestos");
+        
         panelIzquierdo.add(listaAlternativasTitulo, BorderLayout.NORTH);
 
         modeloLista = new DefaultListModel<>();
@@ -100,7 +100,7 @@ public class AlternativasVueloGUI extends JFrame {
         JPanel panelBotones = new JPanel(new GridLayout(1, 2, 10, 10));
         panelBotones.setBackground(ConfiguracionUI.COLOR_FONDO);
 
-        JButton botonRefrescar = new JButton("🔄 Refrescar alternativas");
+        JButton botonRefrescar = ConfiguracionUI.crearBotonCentrado("🔄 Refrescar alternativas");
         panelBotones.add(botonRefrescar);
         botonRefrescar.addActionListener(new ActionListener() {
             @Override
@@ -117,9 +117,8 @@ public class AlternativasVueloGUI extends JFrame {
         panelDerecho.setPreferredSize(new Dimension(500, 600));
         panelDerecho.setBackground(ConfiguracionUI.COLOR_FONDO);
 
-        JLabel titulo = new JLabel("Operador: " + operador.getNombre(), JLabel.CENTER);
-        titulo.setFont(new Font("Arial", Font.BOLD, 22));
-        titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JLabel titulo = ConfiguracionUI.crearTitulo("Operador: " + operador.getNombre());
+       
         panelDerecho.add(titulo);
 
         panelDerecho.add(Box.createRigidArea(new Dimension(0, 10)));
@@ -135,14 +134,12 @@ public class AlternativasVueloGUI extends JFrame {
 
         panelDerecho.add(Box.createRigidArea(new Dimension(0, 20)));
 
-        JButton botonAceptar = new JButton("✅ Aceptar alternativa");
-        botonAceptar.setMaximumSize(new Dimension(1000, 800));
-        botonAceptar.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JButton botonAceptar = ConfiguracionUI.crearBotonCentrado("✅ Aceptar alternativa");
+        
         panelDerecho.add(botonAceptar);
 
-        JButton botonRechazar = new JButton("❌ Rechazar alternativa");
-        botonRechazar.setMaximumSize(new Dimension(1000, 800));
-        botonRechazar.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JButton botonRechazar = ConfiguracionUI.crearBotonCentrado("❌ Rechazar alternativa");
+        
         panelDerecho.add(botonRechazar);
 
         panelDerecho.add(Box.createVerticalGlue());

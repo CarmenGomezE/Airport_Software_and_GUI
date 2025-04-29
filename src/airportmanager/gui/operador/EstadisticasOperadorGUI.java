@@ -86,9 +86,8 @@ public class EstadisticasOperadorGUI extends JFrame {
         panel.setBackground(ConfiguracionUI.COLOR_FONDO);
         add(panel);
 
-        JLabel titulo = new JLabel("Estadísticas para " + operador.getNombre() + ":", JLabel.CENTER);
-        titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
-        titulo.setFont(new Font("Arial", Font.BOLD, 28));
+        JLabel titulo = ConfiguracionUI.crearTitulo("Estadísticas para " + operador.getNombre() + ":");
+        
         panel.add(titulo);
         panel.add(Box.createRigidArea(new Dimension(0, 40)));
 
@@ -106,9 +105,8 @@ public class EstadisticasOperadorGUI extends JFrame {
 
         JPanel botonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         botonPanel.setBackground(ConfiguracionUI.COLOR_FONDO);
-        JButton botonRefrescar = new JButton("🔄 Refrescar estadísticas");
-        botonRefrescar.setBackground(ConfiguracionUI.COLOR_FONDO);
-        botonRefrescar.setFont(botonRefrescar.getFont().deriveFont(16f));
+        JButton botonRefrescar = ConfiguracionUI.crearBotonCentrado("🔄 Refrescar estadísticas");
+        
         botonRefrescar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

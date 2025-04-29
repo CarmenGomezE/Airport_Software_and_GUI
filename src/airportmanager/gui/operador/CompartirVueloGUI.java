@@ -69,9 +69,8 @@ public class CompartirVueloGUI extends JFrame {
         add(panel);
 
         /** TÍTULO */
-        JLabel titulo = new JLabel("Solicitar compartir un vuelo", JLabel.CENTER);
-        titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
-        titulo.setFont(new Font("Arial", Font.BOLD, 28));
+        JLabel titulo = ConfiguracionUI.crearTitulo("Solicitar compartir un vuelo");
+       
         panel.add(titulo);
         panel.add(Box.createRigidArea(new Dimension(0, 40)));
 
@@ -84,7 +83,7 @@ public class CompartirVueloGUI extends JFrame {
 
         JTextField campoCodigo1 = new JTextField();
         campoCodigo1.setMaximumSize(new Dimension(Integer.MAX_VALUE, 35));
-        campoCodigo1.setFont(new Font("Arial", Font.PLAIN, 16));
+        campoCodigo1.setFont(new Font("Arial", Font.PLAIN, 18));
         panel.add(campoCodigo1);
         panel.add(Box.createRigidArea(new Dimension(0, 30)));
 
@@ -97,14 +96,13 @@ public class CompartirVueloGUI extends JFrame {
 
         JTextField campoCodigo2 = new JTextField();
         campoCodigo2.setMaximumSize(new Dimension(Integer.MAX_VALUE, 35));
-        campoCodigo2.setFont(new Font("Arial", Font.PLAIN, 16));
+        campoCodigo2.setFont(new Font("Arial", Font.PLAIN, 18));
         panel.add(campoCodigo2);
         panel.add(Box.createRigidArea(new Dimension(0, 30)));
 
         /** BOTÓN CAMBIAR ESTADO */
-        JButton botonCambiar = new JButton("Solicitar compartir el vuelo");
-        botonCambiar.setFont(new Font("Arial", Font.BOLD, 18));
-        botonCambiar.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JButton botonCambiar = ConfiguracionUI.crearBotonCentrado("Solicitar compartir el vuelo");
+        
         panel.add(botonCambiar);
 
         botonCambiar.addActionListener(new ActionListener() {
