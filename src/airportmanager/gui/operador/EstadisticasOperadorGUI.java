@@ -226,22 +226,23 @@ public class EstadisticasOperadorGUI extends JFrame {
     private void actualizarEstadisticas() {
         model.clear();
 
+        operador.getEstadisticasOperador().cargarDatosEstadisticasTiempoMedio();
         model.addElement("Número de vuelos en hora: " + operador.getEstadisticasOperador().numeroVuelosEnHora());
         model.addElement("Número de vuelos retrasados: " + operador.getEstadisticasOperador().numeroVuelosRetrasados());
 
         if (mesSeleccionado != null) {
             double tiempoMes = operador.getEstadisticasOperador().getTiempoMedioRetrasoPorMes(mesSeleccionado);
-            model.addElement("Tiempo medio de retraso en " + mesSeleccionado.name() + ": " + tiempoMes + " minutos");
+            model.addElement(String.format("Tiempo medio de retraso en %s: %.2f minutos", mesSeleccionado.name(), tiempoMes));
         }
 
         if (franjaSeleccionada != null) {
             double tiempoFranja = operador.getEstadisticasOperador().getTiempoMedioRetrasoPorFranjaHoraria(franjaSeleccionada);
-            model.addElement("Tiempo medio de retraso en franja horaria " + franjaSeleccionada + ": " + tiempoFranja + " minutos");
+            model.addElement(String.format("Tiempo medio de retraso en %s: %.2f minutos", franjaSeleccionada.getId(), tiempoFranja));
         }
 
         if (vueloSeleccionado != null) {
             double tiempoVuelo = operador.getEstadisticasOperador().getTiempoMedioRetrasoPorVuelo(vueloSeleccionado);
-            model.addElement("Tiempo medio de retraso para vuelo " + vueloSeleccionado + ": " + tiempoVuelo + " minutos");
+            model.addElement(String.format("Tiempo medio de retraso en %s: %.2f minutos", vueloSeleccionado.getCodigo(), tiempoVuelo));
         }
     }
 }

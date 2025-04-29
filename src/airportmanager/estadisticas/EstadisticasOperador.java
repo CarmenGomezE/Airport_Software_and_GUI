@@ -50,26 +50,28 @@ public class EstadisticasOperador implements Serializable {
         Map<Vuelo, List<Double>> retrasosPorVuelo = new HashMap<>();
 
         for (Vuelo vuelo : operador.getGestor().getAeropuerto().getVuelosAceptados()) {
-            Month mes = vuelo.getFecha().getMonth();
-            ZoneId franjaHoraria = vuelo.getAeropuertoDestino().getDiferenciaHoraria();
-            double retraso = vuelo.getRetraso();
-            
-            if (retraso >= 0) {
-                if (!retrasosPorMes.containsKey(mes)) {
-                    retrasosPorMes.put(mes, new ArrayList<>());
-                }
-                retrasosPorMes.get(mes).add(retraso);
-
-                if (!retrasosPorFranjaHoraria.containsKey(franjaHoraria)) {
-                    retrasosPorFranjaHoraria.put(franjaHoraria, new ArrayList<>());
-                }
-                retrasosPorFranjaHoraria.get(franjaHoraria).add(retraso);
-
-                if (!retrasosPorVuelo.containsKey(vuelo)) {
-                    retrasosPorVuelo.put(vuelo, new ArrayList<>());
-                }
-                retrasosPorVuelo.get(vuelo).add(retraso);
-            }
+        	if(operador.getAerolinea().getVuelos().contains(vuelo)) {
+        		Month mes = vuelo.getFecha().getMonth();
+	            ZoneId franjaHoraria = vuelo.getAeropuertoDestino().getDiferenciaHoraria();
+	            double retraso = vuelo.getRetraso();
+	            
+	            if (retraso >= 0) {
+	                if (!retrasosPorMes.containsKey(mes)) {
+	                    retrasosPorMes.put(mes, new ArrayList<>());
+	                }
+	                retrasosPorMes.get(mes).add(retraso);
+	
+	                if (!retrasosPorFranjaHoraria.containsKey(franjaHoraria)) {
+	                    retrasosPorFranjaHoraria.put(franjaHoraria, new ArrayList<>());
+	                }
+	                retrasosPorFranjaHoraria.get(franjaHoraria).add(retraso);
+	
+	                if (!retrasosPorVuelo.containsKey(vuelo)) {
+	                    retrasosPorVuelo.put(vuelo, new ArrayList<>());
+	                }
+	                retrasosPorVuelo.get(vuelo).add(retraso);
+	            }
+        	}
         }
 
         if (!retrasosPorMes.isEmpty()) {
@@ -118,8 +120,9 @@ public class EstadisticasOperador implements Serializable {
     public int numeroVuelosEnHora() {
         int count = 0;
         for (Vuelo vuelo : operador.getAerolinea().getVuelos()) {
-            if (vuelo.getRetraso() == 0) {
+            if (vuelo.getRetraso() <= 0) {
                 count++;
+                System.out.println("Vuelo: " + vuelo.getCodigo() + " | Retraso: " + vuelo.getRetraso() + " minutos");
             }
         }
         return count;
@@ -136,6 +139,7 @@ public class EstadisticasOperador implements Serializable {
         for (Vuelo vuelo : operador.getAerolinea().getVuelos()) {
             if (vuelo.getRetraso() > 0) {
                 count++;
+                System.out.println("Vuelo: " + vuelo.getCodigo() + " | Retraso: " + vuelo.getRetraso() + " minutos");
             }
         }
         return count;

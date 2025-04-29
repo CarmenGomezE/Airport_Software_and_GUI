@@ -66,7 +66,7 @@ public class Vuelo extends VueloProgramado {
         super(codigo, fecha, fechaInicio, fechaFinal, hora, diasRecurrente, tipoCarga, tipoModoEmbarque, periodicidad,
                 tipoVuelo, avion, aeropuertoDestino, aeropuertoSalida, escala);
         this.historialEstadoVuelo = new HistorialEstadoVuelo();
-        this.tiempoRetraso = -1;
+        this.tiempoRetraso = 0;
         this.puertaEmbarque = null;
         this.terminal = null;
         this.controladorAereo = null;

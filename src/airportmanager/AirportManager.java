@@ -160,7 +160,7 @@ public class AirportManager implements Serializable {
                 v.cambiarEstado(EstadoVuelo.A_TIEMPO);
             } 
             /** Si no está en el aeropuerto y debería, y no estaba ya puesto retrasado, cambiamos*/
-            else if (ahora.isBefore(horaVuelo) && v.getHistorialEstadoVuelo().getUltimoEstadoAutomatico()!=EstadoVuelo.RETRASADO
+            else if (ahora.isAfter(horaVuelo) && v.getHistorialEstadoVuelo().getUltimoEstadoAutomatico()!=EstadoVuelo.RETRASADO
             		&& v.getHistorialEstadoVuelo().getUltimoEstadoManual()!=EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE && 
             		v.getHistorialEstadoVuelo().getUltimoEstadoManual()!=EstadoVuelo.ESPERANDO_ATERRIZAJE) {
                 double minutosRetraso = (double) Duration.between(horaVuelo, ahora).toMinutes();
@@ -183,12 +183,13 @@ public class AirportManager implements Serializable {
                 v.cambiarEstado(EstadoVuelo.A_TIEMPO);
             } 
             /** Si no está o quedan menos de 45 min para que despegue, y no estaba retrasado, lo cambiamos*/
-            else if (v.getHistorialEstadoVuelo().getUltimoEstadoAutomatico()!=EstadoVuelo.RETRASADO && minutosRestantes <= 45
+            else if (minutosRestantes <= 45 && v.getHistorialEstadoVuelo().getUltimoEstadoAutomatico()!=EstadoVuelo.RETRASADO && minutosRestantes <= 45
             		&& v.getHistorialEstadoVuelo().getUltimoEstadoManual()!=EstadoVuelo.EN_PREPARACION_PARA_DESPEGAR && 
             		v.getHistorialEstadoVuelo().getUltimoEstadoManual()!=EstadoVuelo.INICIO_DEL_EMBARQUE
             		&& v.getHistorialEstadoVuelo().getUltimoEstadoManual()!=EstadoVuelo.FIN_DEL_EMBARQUE && 
             		v.getHistorialEstadoVuelo().getUltimoEstadoManual()!=EstadoVuelo.ESPERANDO_DESPEGUE
             		&& v.getHistorialEstadoVuelo().getUltimoEstadoManual()!=EstadoVuelo.ESPERANDO_PISTA_DE_DESPEGUE){
+            	v.setRetraso(Math.max(0, 45 - minutosRestantes));
                 v.cambiarEstado(EstadoVuelo.RETRASADO);
                 
                 for (ControladorAereo controlador: v.getTerminal().getControladores()) {

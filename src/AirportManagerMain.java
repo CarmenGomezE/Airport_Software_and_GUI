@@ -824,10 +824,10 @@ public class AirportManagerMain {
     	Aeropuerto aeMalaga= airportManager.getAeropuerto().getAeropuertosDestino().get(0);
     	
 		VueloProgramado vueloFRK2234= new Vuelo("FRK2234", LocalDate.now(), LocalDate.now(), LocalDate.now(),
-				LocalTime.now().plusMinutes(42), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
+				LocalTime.now().minusMinutes(42), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
 	            Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionFR_HGR, aeTokio, aePropio, null, operadorRyanair);
 		VueloProgramado vueloFRK8103= new Vuelo("FRK8103", LocalDate.now(), LocalDate.now(), LocalDate.now(),
-	            LocalTime.now().plusMinutes(28), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
+	            LocalTime.now().minusMinutes(28), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
 	            Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionFR_HGS, aePropio, aeMallorca, null, operadorRyanair);
 		VueloProgramado vueloFRK4152= new Vuelo("FRK4152", LocalDate.now(), LocalDate.now(), LocalDate.now(),
 	            LocalTime.now().plusMinutes(28), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
@@ -1015,7 +1015,7 @@ public class AirportManagerMain {
 		Vuelo vueloIBE8113= airportManager.getAeropuerto().getVuelosAceptados().get(38);
 		Vuelo vueloIBE8114= airportManager.getAeropuerto().getVuelosAceptados().get(39);
 		
-		
+		/**
 		System.out.println("\nIniciando el proceso de cambio de estados de vuelos.");
 		System.out.println("Comenzamos con los estados de un vuelo de salida:");
 		System.out.println("Vuelo FRK2234: Estado cambiado a EN_PREPARACION_PARA_DESPEGAR");
