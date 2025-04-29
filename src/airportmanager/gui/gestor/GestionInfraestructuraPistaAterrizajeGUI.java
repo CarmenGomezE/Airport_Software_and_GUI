@@ -97,6 +97,10 @@ public class GestionInfraestructuraPistaAterrizajeGUI extends JFrame{
 				
 				try {
 					gestor.darDeAltaPista(codigo, longitud, TipoPista.ATERRIZAJE);
+					JOptionPane.showMessageDialog(null, 
+						    "¡Pista de aterrizaje dada de alta correctamente!", 
+						    "Éxito", 
+						    JOptionPane.INFORMATION_MESSAGE);
 				} catch (PistaYaExisteException e1) {
 					
 					e1.printStackTrace();
@@ -104,13 +108,7 @@ public class GestionInfraestructuraPistaAterrizajeGUI extends JFrame{
 	                        "Error: la pista de aterrizaje ya existe.", 
 	                        "Pista de aterrizaje ya existente", 
 	                        JOptionPane.ERROR_MESSAGE);
-				}
-				
-				 JOptionPane.showMessageDialog(null, 
-						    "¡Pista de aterrizaje dada de alta correctamente!", 
-						    "Éxito", 
-						    JOptionPane.INFORMATION_MESSAGE);
-				
+				}	
 			}
         	 
          });
