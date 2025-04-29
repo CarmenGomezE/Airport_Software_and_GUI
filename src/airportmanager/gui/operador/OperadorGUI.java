@@ -292,7 +292,9 @@ public class OperadorGUI extends JFrame {
                 } else {
                     modeloLista.addElement("Vuelo: " + v + " | Hora: " + v.getHora().format(formatter) + " | Estado: " + v.getEstado());
                 }
-                AeManager.verificarYActualizarVuelo(v);
+                if(v.getHistorialEstadoVuelo().getUltimoEstadoAutomatico()!=EstadoVuelo.VUELO) {
+                	AeManager.verificarYActualizarVuelo(v);
+                }
             }
         }
     }

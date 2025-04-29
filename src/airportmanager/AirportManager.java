@@ -206,7 +206,6 @@ public class AirportManager implements Serializable {
             Vuelo vueloVuela = ordenarColaVuelos();
             vueloVuela.cambiarEstado(EstadoVuelo.VUELO);
             vueloVuela.getControlador().liberarPista(vueloVuela);
-            getAeropuerto().getVuelosAceptados().remove(vueloVuela);
             
             for (ControladorAereo controlador: vueloVuela.getTerminal().getControladores()) {
                 controlador.recibirNotificacionCambioEstado(vueloVuela);

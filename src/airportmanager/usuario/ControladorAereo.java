@@ -370,7 +370,6 @@ public class ControladorAereo extends UsuarioConDni {
 
         liberarModoEmbarque(vuelo);
         liberarPuertaEmbarque(vuelo);
-        hangar.addHorasUso(1);
         vuelo.cambiarEstado(EstadoVuelo.AVION_A_HANGAR);
         
         for(ControladorAereo controlador: vuelo.getTerminal().getControladores()) {
@@ -634,7 +633,6 @@ public class ControladorAereo extends UsuarioConDni {
 
         modo.setVuelo(vuelo);
         vuelo.setModoEmbarque(modo);
-        modo.addHorasUso(1);
     }
 
     /**
@@ -705,7 +703,6 @@ public class ControladorAereo extends UsuarioConDni {
 
         puerta.setVuelo(vuelo);
         vuelo.setPuertaEmbarque(puerta);
-        puerta.addHorasUso(1);
     }
 
     /**
@@ -749,7 +746,7 @@ public class ControladorAereo extends UsuarioConDni {
         return false;
     }
     
-    /**
+    /**  
      * Método to string.
      * 
      * @return cadena que respresenta al controlador.

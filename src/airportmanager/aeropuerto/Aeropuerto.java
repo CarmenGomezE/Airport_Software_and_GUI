@@ -48,7 +48,7 @@ public abstract class Aeropuerto implements Serializable {
      * @param direccionCiudad   Dirección relativa a la ciudad más cercana del
      *                          aeropuerto.
      */
-    public Aeropuerto(String nombre, String codigo, String ciudad, String pais, double distanciaCiudad,
+    public Aeropuerto(String nombre, String codigo, String ciudad, String pais, double distanciaCiudad, 
             ZoneOffset diferenciaHoraria, int numTemporadas, DireccionRelativaCiudad direccionCiudad) {
         this.nombre = nombre;
         this.codigo = codigo;
