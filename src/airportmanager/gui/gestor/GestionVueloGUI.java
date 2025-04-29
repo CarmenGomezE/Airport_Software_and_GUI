@@ -32,6 +32,9 @@ import src.airportmanager.gui.ConfiguracionUI;
 import src.airportmanager.usuario.Gestor;
 import src.airportmanager.vuelo.VueloProgramado;
 
+/**
+ * La clase GestionVueloGUI representa la ventana de gestion de vuelos de gestor.
+ */
 public class GestionVueloGUI extends JFrame{ 
 	private static final long serialVersionUID = 1L;
 	private final GestorGUI geGUI;
@@ -49,6 +52,12 @@ public class GestionVueloGUI extends JFrame{
     private int tiempoAceptarPropuestaVuelo;
     private int diasAntelacionMinVuelo;
 	
+    /**
+     * Constructor de la clase GestionVuelosGUI
+     * @param manager el manager
+     * @param gestorGUI el gestorGUI
+     * @param gestor el gestor
+     */
 	public GestionVueloGUI(AirportManager manager, GestorGUI gestorGUI, Gestor gestor) {
 		this.gestor = gestor;
 		this.geGUI = gestorGUI;
@@ -77,8 +86,7 @@ public class GestionVueloGUI extends JFrame{
         panelIzquierdo.setPreferredSize(new Dimension(500, 600));
         panelIzquierdo.setBackground(ConfiguracionUI.COLOR_FONDO);
 
-        JLabel listaVuelosTitulo = new JLabel("Propuestas de vuelo recibidas", JLabel.CENTER);
-        listaVuelosTitulo.setFont(new Font("Arial", Font.BOLD, 24));
+        JLabel listaVuelosTitulo = ConfiguracionUI.crearTitulo("Propuestas de vuelo recibidas");
         panelIzquierdo.add(listaVuelosTitulo, BorderLayout.NORTH);
 
         modeloLista = new DefaultListModel<>();
@@ -108,9 +116,7 @@ public class GestionVueloGUI extends JFrame{
         panelDerecho.setPreferredSize(new Dimension(500, 600));
         panelDerecho.setBackground(ConfiguracionUI.COLOR_FONDO);
 
-        JLabel titulo = new JLabel("Gestor: " + gestor.getNombre(), JLabel.CENTER);
-        titulo.setFont(new Font("Arial", Font.BOLD, 22));
-        titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JLabel titulo = ConfiguracionUI.crearTitulo("Gestor: " +gestor.getNombre());
         panelDerecho.add(titulo);
 
         panelDerecho.add(Box.createRigidArea(new Dimension(0, 10)));
@@ -348,6 +354,9 @@ public class GestionVueloGUI extends JFrame{
         setVisible(true);
     }
 
+	/**
+	 * Método auxiliar para actualiar la lista de vuelos propuestos
+	 */
 	private void actualizarLista() {
 	    modeloLista.clear();
 	    List<VueloProgramado> vuelos = gestor.getVuelosPropuestos();

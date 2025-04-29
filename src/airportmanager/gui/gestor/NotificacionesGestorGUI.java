@@ -28,6 +28,9 @@ import src.airportmanager.notificacion.Notificacion;
 import src.airportmanager.notificacion.TipoNotificacion;
 import src.airportmanager.usuario.Gestor;
 
+/**
+ * La clase NotificacionesGestorGUI representa la ventana de las notificaciones del gestor.
+ */
 public class NotificacionesGestorGUI extends JFrame {
     private static final long serialVersionUID = 1L;
     private final GestorGUI geGUI;
@@ -40,6 +43,12 @@ public class NotificacionesGestorGUI extends JFrame {
     private JCheckBox solicitudCompartirVuelo;
     private JCheckBox opcionesReprogramarVuelo;
 
+    /**
+     * Constructor de la clase NotificacionesGestorGUI
+     * @param manager el manager
+     * @param gestorGUI el gestorGUI
+     * @param gestorAe gestor del aeropuerto
+     */
     public NotificacionesGestorGUI(AirportManager manager, GestorGUI gestorGUI, Gestor gestorAe) {
         this.geGUI = gestorGUI;
         this.gestor = gestorAe;
@@ -64,9 +73,7 @@ public class NotificacionesGestorGUI extends JFrame {
         add(panel);
 
         /** TÍTULO */
-        JLabel titulo = new JLabel("Notificaciones de " + gestor.getNombre() + ":", JLabel.CENTER);
-        titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
-        titulo.setFont(new Font("Arial", Font.BOLD, 28));
+        JLabel titulo = ConfiguracionUI.crearTitulo("Notificaciones de " + gestor.getNombre() + ":");
         panel.add(titulo);
         panel.add(Box.createRigidArea(new Dimension(0, 40)));
 
@@ -106,9 +113,8 @@ public class NotificacionesGestorGUI extends JFrame {
 
         JPanel botonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         botonPanel.setBackground(ConfiguracionUI.COLOR_FONDO);
-        JButton botonRefrescar = new JButton("🔄 Refrescar notificaciones");
-        botonRefrescar.setBackground(ConfiguracionUI.COLOR_FONDO);
-        botonRefrescar.setFont(botonRefrescar.getFont().deriveFont(16f));
+        JButton botonRefrescar = ConfiguracionUI.crearBotonCentrado("🔄 Refrescar notificaciones");
+       
         botonRefrescar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -126,6 +132,9 @@ public class NotificacionesGestorGUI extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Método auxiliar para actualizar las notificaciones
+     */
     private void actualizarNotificaciones() {
         model.clear();
         for (Notificacion notificacion : gestor.getNotificaciones()) {
