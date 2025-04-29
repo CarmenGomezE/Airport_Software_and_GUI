@@ -3,7 +3,6 @@ package src.airportmanager.gui.gestor;
 import java.util.*;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.FlowLayout;
 import java.awt.event.*;
 
@@ -196,7 +195,7 @@ public class InfoAeropuertoPropioGUI extends JFrame {
 
             case "Usuarios":
                 if (manager.getUsuarios() != null) {
-                    manager.getUsuarios().forEach(usuario -> model.addElement("Usuario: " + usuario.getNombre()));
+                    manager.getAeropuerto().getUsuarios().forEach(usuario -> model.addElement("Usuario: " + usuario.getNombre()));
                 }
                 break;
 

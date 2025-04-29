@@ -110,28 +110,28 @@ public class EstadisticasGestorGUI extends JFrame{
 		/**FINGERS*/
 		model.addElement("FINGERS");
 		gestor.getAeropuerto().getFingers().forEach(f -> {
-			model.addElement("FING" + f.getId() + " - " + String.format("%.1f", gestor.getEstadisticasAeropuerto().getUsoMedioDiarioFinger(f)) + " horas");
+			model.addElement("FING" + f.getId() + " - " + String.format("%.1f", gestor.getEstadisticasAeropuerto().getUsoMensualFinger(f)) + " horas");
 		});
 		model.addElement("\n");
 
 		/**PUERTAS DE EMBARQUE*/
 		model.addElement("PUERTAS DE EMBARQUE");
 		gestor.getAeropuerto().getPuertasEmbarque().forEach(p -> {
-			model.addElement("EMB" + p.getId() + " - " + String.format("%.1f", gestor.getEstadisticasAeropuerto().getUsoMedioDiarioPuertaEmbarque(p)) + " horas");
+			model.addElement("EMB" + p.getId() + " - " + String.format("%.1f", gestor.getEstadisticasAeropuerto().getUsoMensualPuertaEmbarque(p)) + " horas");
 		});
 		model.addElement("\n");
 
 		/**ZONAS DE APARCAMIENTO*/
 		model.addElement("ZONAS DE APARCAMIENTO");
-		gestor.getAeropuerto().getZonasAparcamiento().forEach(z -> {
-			model.addElement("ZON" + z.getId() + "-" + String.format("%.1f", gestor.getEstadisticasAeropuerto().getUsoMedioDiarioZonaAparcamiento(z)) + " horas");
+		gestor.getAeropuerto().getZonasAparcamiento().forEach(z -> { 
+			model.addElement("ZON" + z.getId() + "-" + String.format("%.1f", gestor.getEstadisticasAeropuerto().getUsoMensualZonaAparcamiento(z)) + " horas");
 		});
 		model.addElement("\n");
 
 		/**HANGARES*/
 		model.addElement("HANGARES");
 		gestor.getAeropuerto().getHangares().forEach(h -> {
-			model.addElement("HANG" + h.getId() + "-" + String.format("%.1f", gestor.getEstadisticasAeropuerto().getUsoMedioDiarioHangar(h)) + " horas");
+			model.addElement("HANG" + h.getId() + "-" + String.format("%.1f", gestor.getEstadisticasAeropuerto().getUsoMensualHangar(h)) + " horas");
 		});
 		model.addElement("\n");
 	}
