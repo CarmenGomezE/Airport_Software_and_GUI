@@ -78,9 +78,8 @@ public class BuscarVueloOperadorGUI extends JFrame {
         add(panel);
 
         /** TÍTULO */
-        JLabel titulo = new JLabel("Buscar en la lista de vuelos");
-        titulo.setFont(new Font("Arial", Font.BOLD, 28));
-        titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JLabel titulo = ConfiguracionUI.crearTitulo("Buscar en la lista de vuelos");
+       
         panel.add(titulo);
         panel.add(Box.createRigidArea(new Dimension(0, 40)));
 
@@ -107,8 +106,8 @@ public class BuscarVueloOperadorGUI extends JFrame {
         filaBusqueda.add(campoValor);
         filaBusqueda.add(Box.createRigidArea(new Dimension(20, 0)));
 
-        JButton botonBuscar = new JButton("🔎 Buscar");
-        botonBuscar.setFont(new Font("Arial", Font.BOLD, 16));
+        JButton botonBuscar = ConfiguracionUI.crearBotonCentrado("🔎 Buscar");
+        
         filaBusqueda.add(botonBuscar);
 
         panel.add(filaBusqueda);

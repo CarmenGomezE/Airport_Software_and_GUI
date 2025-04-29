@@ -74,8 +74,8 @@ public class OperadorGUI extends JFrame {
         String formattedDate = LocalDate.now().format(formatter);
 
         /** Titulo de la lista de vuelos */
-        JLabel listaVuelosTitulo = new JLabel("Lista de vuelos (" + formattedDate + ")", JLabel.CENTER);
-        listaVuelosTitulo.setFont(new Font("Arial", Font.BOLD, 24));
+        JLabel listaVuelosTitulo = ConfiguracionUI.crearTitulo("Lista de vuelos (" + formattedDate + ")");
+        
         panelIzquierdo.add(listaVuelosTitulo, BorderLayout.NORTH);
 
         /** Lista de vuelos */
@@ -110,7 +110,7 @@ public class OperadorGUI extends JFrame {
 
         /** Botones de la lista */
         JPanel panelBotones = new JPanel(new GridLayout(1, 2, 10, 10));
-        JButton botonBuscarVuelos = new JButton("🔎 Buscar vuelos");
+        JButton botonBuscarVuelos = ConfiguracionUI.crearBotonCentrado("🔎 Buscar vuelos");
         panelBotones.add(botonBuscarVuelos);
         botonBuscarVuelos.addActionListener(new ActionListener() {
             @Override
@@ -120,7 +120,7 @@ public class OperadorGUI extends JFrame {
             }
         });
 
-        JButton botonRefrescar = new JButton("🔄 Refrescar vuelos");
+        JButton botonRefrescar = ConfiguracionUI.crearBotonCentrado("🔄 Refrescar vuelos");
         panelBotones.add(botonRefrescar);
         botonRefrescar.addActionListener(new ActionListener() {
             @Override
@@ -137,13 +137,13 @@ public class OperadorGUI extends JFrame {
         panelDerecho.setBackground(ConfiguracionUI.COLOR_FONDO);
 
         /** Título del operador */
-        JLabel titulo = new JLabel("Operador de la aerolínea " + operador.getAerolinea().getNombre(), JLabel.CENTER);
+        JLabel titulo = ConfiguracionUI.crearTitulo("Operador de la aerolínea " + operador.getAerolinea().getNombre());
         titulo.setFont(new Font("Arial", Font.BOLD, 22));
         panelDerecho.add(titulo);
 
         /** Botones */
         JPanel subPanelBotones = new JPanel(new GridLayout(1, 2, 10, 10));
-        JButton botonNotificaciones = new JButton("🔔 Notificaciones");
+        JButton botonNotificaciones = ConfiguracionUI.crearBotonCentrado("🔔 Notificaciones");
         subPanelBotones.add(botonNotificaciones);
         botonNotificaciones.addActionListener(new ActionListener() {
             @Override
@@ -153,7 +153,7 @@ public class OperadorGUI extends JFrame {
             }
         });
 
-        JButton botonCerrarSesion = new JButton("Cerrar sesión");
+        JButton botonCerrarSesion = ConfiguracionUI.crearBotonCentrado("Cerrar sesión");
         subPanelBotones.add(botonCerrarSesion);
         botonCerrarSesion.addActionListener(new ActionListener() {
             @Override
@@ -172,7 +172,7 @@ public class OperadorGUI extends JFrame {
         subPanelBotones.setBackground(ConfiguracionUI.COLOR_FONDO);
         panelDerecho.add(subPanelBotones);
 
-        JButton botonGestionEstadoVuelo = new JButton("Gestión de estados de los vuelos");
+        JButton botonGestionEstadoVuelo = ConfiguracionUI.crearBotonCentrado("Gestión de estados de los vuelos");
         panelDerecho.add(botonGestionEstadoVuelo);
         botonGestionEstadoVuelo.addActionListener(new ActionListener() {
             @Override
@@ -182,7 +182,7 @@ public class OperadorGUI extends JFrame {
             }
         });
 
-        JButton botonGestionAviones = new JButton("Gestión de aviones");
+        JButton botonGestionAviones = ConfiguracionUI.crearBotonCentrado("Gestión de aviones");
         panelDerecho.add(botonGestionAviones);
         botonGestionAviones.addActionListener(new ActionListener() {
             @Override
@@ -192,7 +192,7 @@ public class OperadorGUI extends JFrame {
             }
         });
 
-        JButton botonProgramarVuelo = new JButton("Programar un vuelo");
+        JButton botonProgramarVuelo = ConfiguracionUI.crearBotonCentrado("Programar un vuelo");
         panelDerecho.add(botonProgramarVuelo);
         botonProgramarVuelo.addActionListener(new ActionListener() {
             @Override
@@ -202,7 +202,7 @@ public class OperadorGUI extends JFrame {
             }
         });
 
-        JButton botonCompartirVuelo = new JButton("Compartir un vuelo");
+        JButton botonCompartirVuelo = ConfiguracionUI.crearBotonCentrado("Compartir un vuelo");
         panelDerecho.add(botonCompartirVuelo);
         botonCompartirVuelo.addActionListener(new ActionListener() {
             @Override
@@ -212,7 +212,7 @@ public class OperadorGUI extends JFrame {
             }
         });
 
-        JButton botonVerCompartirVuelo = new JButton("Gestionar solicitudes de vuelos compartidos");
+        JButton botonVerCompartirVuelo = ConfiguracionUI.crearBotonCentrado("Gestionar solicitudes de vuelos compartidos");
         panelDerecho.add(botonVerCompartirVuelo);
         botonVerCompartirVuelo.addActionListener(new ActionListener() {
             @Override
@@ -222,7 +222,7 @@ public class OperadorGUI extends JFrame {
             }
         });
 
-        JButton botonEstadisticas = new JButton("Estadísticas de vuelos");
+        JButton botonEstadisticas = ConfiguracionUI.crearBotonCentrado("Estadísticas de vuelos");
         panelDerecho.add(botonEstadisticas);
         botonEstadisticas.addActionListener(new ActionListener() {
             @Override
@@ -232,7 +232,7 @@ public class OperadorGUI extends JFrame {
             }
         });
 
-        JButton botonAlternativas = new JButton("Alternativas a los vuelos");
+        JButton botonAlternativas = ConfiguracionUI.crearBotonCentrado("Alternativas a los vuelos");
         panelDerecho.add(botonAlternativas);
         botonAlternativas.addActionListener(new ActionListener() {
             @Override
@@ -242,7 +242,7 @@ public class OperadorGUI extends JFrame {
             }
         });
 
-        JButton botonFacturacion = new JButton("Pagar facturas aerolínea");
+        JButton botonFacturacion = ConfiguracionUI.crearBotonCentrado("Pagar facturas aerolínea");
         panelDerecho.add(botonFacturacion);
         botonFacturacion.addActionListener(new ActionListener() {
             @Override
