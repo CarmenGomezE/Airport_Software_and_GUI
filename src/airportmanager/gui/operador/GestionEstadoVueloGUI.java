@@ -71,9 +71,8 @@ public class GestionEstadoVueloGUI extends JFrame {
         add(panel);
         
         /** TÍTULO */
-        JLabel titulo = new JLabel("Gestionar el estado de los vuelos", JLabel.CENTER);
-        titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
-        titulo.setFont(new Font("Arial", Font.BOLD, 28));
+        JLabel titulo = ConfiguracionUI.crearTitulo("Gestionar el estado de los vuelos");
+       
         panel.add(titulo);
         panel.add(Box.createRigidArea(new Dimension(0, 40)));
 
@@ -86,7 +85,7 @@ public class GestionEstadoVueloGUI extends JFrame {
 
         JTextField campoCodigo = new JTextField();
         campoCodigo.setMaximumSize(new Dimension(Integer.MAX_VALUE, 35));
-        campoCodigo.setFont(new Font("Arial", Font.PLAIN, 16));
+        campoCodigo.setFont(new Font("Arial", Font.PLAIN, 18));
         panel.add(campoCodigo);
         panel.add(Box.createRigidArea(new Dimension(0, 30)));
 
@@ -105,9 +104,8 @@ public class GestionEstadoVueloGUI extends JFrame {
         panel.add(Box.createRigidArea(new Dimension(0, 40)));
 
         /** BOTÓN CAMBIAR ESTADO */
-        JButton botonCambiar = new JButton("Cambiar estado");
-        botonCambiar.setFont(new Font("Arial", Font.BOLD, 18));
-        botonCambiar.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JButton botonCambiar = ConfiguracionUI.crearBotonCentrado("Cambiar estado");
+       
         panel.add(botonCambiar);
         
         botonCambiar.addActionListener(new ActionListener() {

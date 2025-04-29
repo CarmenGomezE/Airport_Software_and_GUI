@@ -73,34 +73,34 @@ public class ProgramarVueloGUI extends JFrame {
         panel.setBackground(ConfiguracionUI.COLOR_FONDO);
         add(panel);
 
-        JLabel titulo = new JLabel("Proponer un vuelo de " + operador.getAerolinea().getNombre(), JLabel.CENTER);
-        titulo.setFont(new Font("Arial", Font.BOLD, 28));
+        JLabel titulo = ConfiguracionUI.crearTitulo("Proponer un vuelo de " + operador.getAerolinea().getNombre());
+      
         panel.add(titulo, BorderLayout.NORTH);
 
         JPanel izquierda = new JPanel();
         izquierda.setLayout(new BoxLayout(izquierda, BoxLayout.Y_AXIS));
         izquierda.setBackground(ConfiguracionUI.COLOR_FONDO);
 
-        JTextField campoCodigo = new JTextField();
-        JTextField campoFecha = new JTextField();
-        JTextField campoFechaInicio = new JTextField();
-        JTextField campoFechaFin = new JTextField();
-        JTextField campoHora = new JTextField();
+        JTextField campoCodigo = ConfiguracionUI.crearCampoTexto();
+        JTextField campoFecha = ConfiguracionUI.crearCampoTexto();
+        JTextField campoFechaInicio = ConfiguracionUI.crearCampoTexto();
+        JTextField campoFechaFin = ConfiguracionUI.crearCampoTexto();
+        JTextField campoHora = ConfiguracionUI.crearCampoTexto();
 
         JComboBox<TipoCarga> comboCarga = new JComboBox<>(TipoCarga.values());
         JComboBox<TipoModoEmbarque> comboEmbarque = new JComboBox<>(TipoModoEmbarque.values());
         JComboBox<Periodicidad> comboPeriodicidad = new JComboBox<>(Periodicidad.values());
         JComboBox<TipoVuelo> comboTipo = new JComboBox<>(TipoVuelo.values());
 
-        izquierda.add(crearCampoConLabel("Código:", campoCodigo));
-        izquierda.add(crearCampoConLabel("Fecha (YYYY-MM-DD):", campoFecha));
-        izquierda.add(crearCampoConLabel("Fecha Inicio (YYYY-MM-DD):", campoFechaInicio));
-        izquierda.add(crearCampoConLabel("Fecha Fin (YYYY-MM-DD):", campoFechaFin));
-        izquierda.add(crearCampoConLabel("Hora (HH:mm):", campoHora));
-        izquierda.add(crearCampoConLabel("Tipo de Carga:", comboCarga));
-        izquierda.add(crearCampoConLabel("Modo Embarque:", comboEmbarque));
-        izquierda.add(crearCampoConLabel("Periodicidad:", comboPeriodicidad));
-        izquierda.add(crearCampoConLabel("Tipo de Vuelo:", comboTipo));
+        izquierda.add(ConfiguracionUI.crearCampoConLabel("Código:", campoCodigo));
+        izquierda.add(ConfiguracionUI.crearCampoConLabel("Fecha (YYYY-MM-DD):", campoFecha));
+        izquierda.add(ConfiguracionUI.crearCampoConLabel("Fecha Inicio (YYYY-MM-DD):", campoFechaInicio));
+        izquierda.add(ConfiguracionUI.crearCampoConLabel("Fecha Fin (YYYY-MM-DD):", campoFechaFin));
+        izquierda.add(ConfiguracionUI.crearCampoConLabel("Hora (HH:mm):", campoHora));
+        izquierda.add(ConfiguracionUI.crearCampoConLabel("Tipo de Carga:", comboCarga));
+        izquierda.add(ConfiguracionUI.crearCampoConLabel("Modo Embarque:", comboEmbarque));
+        izquierda.add(ConfiguracionUI.crearCampoConLabel("Periodicidad:", comboPeriodicidad));
+        izquierda.add(ConfiguracionUI.crearCampoConLabel("Tipo de Vuelo:", comboTipo));
 
         JPanel derecha = new JPanel();
         derecha.setLayout(new BoxLayout(derecha, BoxLayout.Y_AXIS));
@@ -109,8 +109,8 @@ public class ProgramarVueloGUI extends JFrame {
         JComboBox<Avion> comboAvion = new JComboBox<>(operador.getAerolinea().getAviones().toArray(new Avion[0]));
         JComboBox<Aeropuerto> comboAeropuerto = new JComboBox<>(manager.getAeropuerto().getAeropuertosDestino().toArray(new Aeropuerto[0]));
 
-        derecha.add(crearCampoConLabel("Avión:", comboAvion));
-        derecha.add(crearCampoConLabel("Aeropuerto Salida/Llegada:", comboAeropuerto));
+        derecha.add(ConfiguracionUI.crearCampoConLabel("Avión:", comboAvion));
+        derecha.add(ConfiguracionUI.crearCampoConLabel("Aeropuerto Salida/Llegada:", comboAeropuerto));
 
         diasPanel = new JPanel(new GridLayout(2, 4));
         diasPanel.setBackground(ConfiguracionUI.COLOR_FONDO);
@@ -144,8 +144,8 @@ public class ProgramarVueloGUI extends JFrame {
         escalaPanel.setBorder(BorderFactory.createTitledBorder("Escala (opcional)"));
 
         comboEscalaAeropuerto = new JComboBox<>(manager.getAeropuerto().getAeropuertosDestino().toArray(new Aeropuerto[0]));
-        campoHoraLlegadaEscala = new JTextField();
-        campoHoraSalidaEscala = new JTextField();
+        campoHoraLlegadaEscala = ConfiguracionUI.crearCampoTexto();
+        campoHoraSalidaEscala = ConfiguracionUI.crearCampoTexto();
 
         escalaPanel.add(new JLabel("Aeropuerto Escala:"));
         escalaPanel.add(comboEscalaAeropuerto);
@@ -177,8 +177,8 @@ public class ProgramarVueloGUI extends JFrame {
         splitPane.setBorder(null);
         panel.add(splitPane, BorderLayout.CENTER);
 
-        JButton boton = new JButton("✅ Programar Vuelo");
-        boton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JButton boton = ConfiguracionUI.crearBotonCentrado("✅ Programar Vuelo");
+       
         panel.add(boton, BorderLayout.SOUTH);
 
         boton.addActionListener(new ActionListener() {
@@ -237,28 +237,5 @@ public class ProgramarVueloGUI extends JFrame {
 
         setVisible(true);
     }
-    /** 
-     * Método que genera campos con label.
-     * 
-     * @return Un nuevo panel.
-     */
-    private JPanel crearCampoConLabel(String textoLabel, JComponent campo) {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBackground(ConfiguracionUI.COLOR_FONDO);
-
-        JLabel label = new JLabel(textoLabel);
-        label.setFont(new Font("Arial", Font.PLAIN, 18));
-        label.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-        campo.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
-        campo.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-        panel.add(label);
-        panel.add(Box.createRigidArea(new Dimension(0, 5)));
-        panel.add(campo);
-        panel.add(Box.createRigidArea(new Dimension(0, 15)));
-
-        return panel;
-    }
+  
 }

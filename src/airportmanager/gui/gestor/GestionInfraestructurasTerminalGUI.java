@@ -173,8 +173,11 @@ public class GestionInfraestructurasTerminalGUI extends JFrame{
 				int aforo = Integer.parseInt(aforoTexto);
 				try {
 					gestor.darDeAltaTerminal(codigo, "Pasajeros", aforo, puertas);
+					JOptionPane.showMessageDialog(null, 
+						    "¡Terminal dada de alta correctamente!", 
+						    "Éxito", 
+						    JOptionPane.INFORMATION_MESSAGE);
 				} catch (TerminalYaExisteException e1) {
-					
 					e1.printStackTrace();
 					JOptionPane.showMessageDialog(null, 
 	                        "Error: la terminal ya existe.", 
@@ -187,6 +190,10 @@ public class GestionInfraestructurasTerminalGUI extends JFrame{
 				
 				try {
 					gestor.darDeAltaTerminal(codigo, "Mercancías", 0, puertas);
+					JOptionPane.showMessageDialog(null, 
+						    "¡Terminal dada de alta correctamente!", 
+						    "Éxito", 
+						    JOptionPane.INFORMATION_MESSAGE);
 				} catch (TerminalYaExisteException e1) {
 					
 					e1.printStackTrace();
@@ -196,14 +203,7 @@ public class GestionInfraestructurasTerminalGUI extends JFrame{
 	                        JOptionPane.ERROR_MESSAGE);
 				}
 				
-			}
-			
-			
-			JOptionPane.showMessageDialog(null, 
-				    "¡Terminal dada de alta correctamente!", 
-				    "Éxito", 
-				    JOptionPane.INFORMATION_MESSAGE);
-			
+			}			
 		}
     	   
        });

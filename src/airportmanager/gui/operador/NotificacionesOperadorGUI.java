@@ -72,9 +72,8 @@ public class NotificacionesOperadorGUI extends JFrame {
         add(panel);
 
         /** TÍTULO */
-        JLabel titulo = new JLabel("Notificaciones de " + operador.getNombre() + ":", JLabel.CENTER);
-        titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
-        titulo.setFont(new Font("Arial", Font.BOLD, 28));
+        JLabel titulo = ConfiguracionUI.crearTitulo("Notificaciones de " + operador.getNombre() + ":");
+       
         panel.add(titulo);
         panel.add(Box.createRigidArea(new Dimension(0, 40)));
 
@@ -91,9 +90,8 @@ public class NotificacionesOperadorGUI extends JFrame {
 
         JPanel botonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         botonPanel.setBackground(ConfiguracionUI.COLOR_FONDO);
-        JButton botonRefrescar = new JButton("🔄 Refrescar notificaciones");
-        botonRefrescar.setBackground(ConfiguracionUI.COLOR_FONDO);
-        botonRefrescar.setFont(botonRefrescar.getFont().deriveFont(16f));
+        JButton botonRefrescar = ConfiguracionUI.crearBotonCentrado("🔄 Refrescar notificaciones");
+       
         botonRefrescar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
