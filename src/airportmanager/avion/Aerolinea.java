@@ -9,6 +9,7 @@ import src.airportmanager.vuelo.Vuelo;
 
 import java.io.Serializable;
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 
 /**
  * La clase Aerolinea representa una aerolinea que opera en el aeropuerto.
@@ -93,6 +94,25 @@ public class Aerolinea implements Serializable {
      * @param factura Factura que se quiere añadir.
      */
     public void addFactura(Factura factura) {
+    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate fechaNueva = LocalDate.parse(factura.getInvoiceDate(), formatter);
+        YearMonth mesNueva = YearMonth.from(fechaNueva);
+
+        boolean yaExiste = false;
+        for (Factura f : facturas) {
+            LocalDate fechaExistente = LocalDate.parse(f.getInvoiceDate(), formatter);
+            YearMonth mesExistente = YearMonth.from(fechaExistente);
+            if (mesExistente.equals(mesNueva)) {
+                yaExiste = true;
+                break;
+            }
+        }
+
+        if (yaExiste) {
+            System.out.println("Ya existe una factura para el mes: " + mesNueva);
+            return;
+        }
+
         this.facturas.add(factura);
     }
 
