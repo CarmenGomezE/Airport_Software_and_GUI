@@ -107,11 +107,15 @@ public class GestionInfraestructurasTerminalGUI extends JFrame{
     	        }
 
     	        panelOpcional.revalidate();
-    	        panelOpcional.repaint(); 
+    	        panelOpcional.repaint();
     	    }
     	});
 
       
+       JPanel panelBotones = new JPanel();
+       panelBotones.setLayout(new BoxLayout(panelBotones, BoxLayout.Y_AXIS));
+       panelBotones.setBackground(ConfiguracionUI.COLOR_FONDO);
+       
        JButton botonAgregarTerminal = ConfiguracionUI.crearBotonCentrado("Agregar terminal");
       
        botonAgregarTerminal.addActionListener(new ActionListener() {
@@ -203,9 +207,36 @@ public class GestionInfraestructurasTerminalGUI extends JFrame{
 		}
     	   
        });
+      
+       JButton botonCrearPuerta = new JButton("Crear puerta");
+       botonCrearPuerta.setMaximumSize(new Dimension(150, 30));
+       botonCrearPuerta.setAlignmentX(Component.CENTER_ALIGNMENT);
+    
+   
+       botonCrearPuerta.addActionListener( new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			PuertaEmbarque p = new PuertaEmbarque();
+			
+			JOptionPane.showMessageDialog(null, 
+				    "¡Puerta con id: "+ p.getId() + " creada correctamente" , 
+				    "Éxito", 
+				    JOptionPane.INFORMATION_MESSAGE);
+		}
+    	   
+       });
 	
+       panelBotones.add(Box.createVerticalStrut(10));
+       panelBotones.add(botonCrearPuerta);
+       panelBotones.add(Box.createVerticalStrut(10));
+       panelBotones.add(botonAgregarTerminal);
+       panelBotones.add(Box.createVerticalStrut(10));
+       
        panelPrincipal.add(formulario);
-       panelPrincipal.add(botonAgregarTerminal, BorderLayout.SOUTH);
+       panelPrincipal.add(panelBotones, BorderLayout.SOUTH);
+    
       
        add(panelPrincipal);
 	     
