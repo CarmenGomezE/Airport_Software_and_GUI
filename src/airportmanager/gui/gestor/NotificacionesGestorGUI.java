@@ -1,8 +1,6 @@
 package src.airportmanager.gui.gestor;
 
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -32,16 +30,26 @@ import src.airportmanager.usuario.Gestor;
  * La clase NotificacionesGestorGUI representa la ventana de las notificaciones del gestor.
  */
 public class NotificacionesGestorGUI extends JFrame {
-    private static final long serialVersionUID = 1L;
-    private final GestorGUI geGUI;
-    private final Gestor gestor;
-    private DefaultListModel<String> model;
-    private JCheckBox cambioEstadoVuelo;
-    private JCheckBox olvidoContrasena;
-    private JCheckBox solicitudVueloProgramado;
-    private JCheckBox facturaEmitida;
-    private JCheckBox solicitudCompartirVuelo;
-    private JCheckBox opcionesReprogramarVuelo;
+	/** Identificador único para la serialización del objeto */
+	private static final long serialVersionUID = 1L;
+	/** Referencia al gestor de la interfaz gráfica */
+	private final GestorGUI geGUI;
+	/** Gestor principal de la lógica de la aplicación */
+	private final Gestor gestor;
+	/** Modelo de datos para representar la lista de notificaciones */
+	private DefaultListModel<String> model;
+	/** Checkbox para habilitar o deshabilitar notificaciones de cambio de estado de vuelo */
+	private JCheckBox cambioEstadoVuelo;
+	/** Checkbox para habilitar o deshabilitar notificaciones de olvido de contraseña */
+	private JCheckBox olvidoContrasena;
+	/** Checkbox para habilitar o deshabilitar notificaciones de solicitud de vuelo programado */
+	private JCheckBox solicitudVueloProgramado;
+	/** Checkbox para habilitar o deshabilitar notificaciones de facturas emitidas */
+	private JCheckBox facturaEmitida;
+	/** Checkbox para habilitar o deshabilitar notificaciones de solicitudes de compartir vuelo */
+	private JCheckBox solicitudCompartirVuelo;
+	/** Checkbox para habilitar o deshabilitar notificaciones de opciones para reprogramar vuelo */
+	private JCheckBox opcionesReprogramarVuelo;
 
     /**
      * Constructor de la clase NotificacionesGestorGUI

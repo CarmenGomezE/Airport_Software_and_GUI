@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -36,21 +35,36 @@ import src.airportmanager.vuelo.VueloProgramado;
  * La clase GestionVueloGUI representa la ventana de gestion de vuelos de gestor.
  */
 public class GestionVueloGUI extends JFrame{ 
+	/** Identificador único para la serialización del objeto */
 	private static final long serialVersionUID = 1L;
+	/** Referencia al gestor de la interfaz gráfica (GUI) */
 	private final GestorGUI geGUI;
+	/** Referencia al gestor principal de lógica del sistema */
 	private final Gestor gestor;
+	/** Modelo de datos para la lista de vuelos */
 	private DefaultListModel<String> modeloLista;
-    private JList<String> listaVuelos;
-    private JTextField campoCodigo;
-    private JTextArea textAreaMensajes;
-    private JCheckBox cambiarRangoMinutos;
-    private JCheckBox cambiarHorasMaxReprogramacion;
-    private JCheckBox cambiarTiempoAceptarPropuesta;
-    private JCheckBox cambiarDiasMinAntelacion;
-    private int rangoMinutosVuelo;
-    private int horasMaxReprogramacionVuelo;
-    private int tiempoAceptarPropuestaVuelo;
-    private int diasAntelacionMinVuelo;
+	/** Componente gráfico que muestra la lista de vuelos */
+	private JList<String> listaVuelos;
+	/** Campo de texto para ingresar el código del vuelo */
+	private JTextField campoCodigo;
+	/** Área de texto para mostrar mensajes al usuario */
+	private JTextArea textAreaMensajes;
+	/** Checkbox para indicar si se desea cambiar el rango de minutos entre vuelos */
+	private JCheckBox cambiarRangoMinutos;
+	/** Checkbox para indicar si se desea cambiar las horas máximas de reprogramación */
+	private JCheckBox cambiarHorasMaxReprogramacion;
+	/** Checkbox para indicar si se desea cambiar el tiempo para aceptar una propuesta */
+	private JCheckBox cambiarTiempoAceptarPropuesta;
+	/** Checkbox para indicar si se desea cambiar los días mínimos de antelación para vuelos */
+	private JCheckBox cambiarDiasMinAntelacion;
+	/** Valor actual del rango mínimo de minutos entre vuelos */
+	private int rangoMinutosVuelo;
+	/** Valor actual de las horas máximas permitidas para reprogramar un vuelo */
+	private int horasMaxReprogramacionVuelo;
+	/** Tiempo actual (en minutos) disponible para aceptar una propuesta de reprogramación */
+	private int tiempoAceptarPropuestaVuelo;
+	/** Días mínimos de antelación requeridos para programar un vuelo */
+	private int diasAntelacionMinVuelo;
 	
     /**
      * Constructor de la clase GestionVuelosGUI
@@ -146,11 +160,9 @@ public class GestionVueloGUI extends JFrame{
         textAreaMensajes.setWrapStyleWord(true); 
 
         JScrollPane scrollPaneMensajes = new JScrollPane(textAreaMensajes);
-        // No usamos setPreferredSize
         scrollPaneMensajes.setAlignmentX(Component.CENTER_ALIGNMENT);
-        scrollPaneMensajes.setMaximumSize(new Dimension(600, 200)); // ajustable
+        scrollPaneMensajes.setMaximumSize(new Dimension(600, 200));
 
-        // Contenedor del mensaje
         JPanel contenedorMensajes = new JPanel();
         contenedorMensajes.setLayout(new BoxLayout(contenedorMensajes, BoxLayout.Y_AXIS));
         contenedorMensajes.setOpaque(false);
@@ -159,8 +171,7 @@ public class GestionVueloGUI extends JFrame{
         contenedorMensajes.add(scrollPaneMensajes);
         contenedorMensajes.setVisible(false);
 
-        // Añadir al panel derecho
-        panelDerecho.add(Box.createRigidArea(new Dimension(0, 20))); // espaciado
+        panelDerecho.add(Box.createRigidArea(new Dimension(0, 20)));
         panelDerecho.add(contenedorMensajes);
         
         /**Cambiar rangos y tiempos */

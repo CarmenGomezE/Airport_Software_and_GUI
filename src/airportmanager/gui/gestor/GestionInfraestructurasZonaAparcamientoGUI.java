@@ -1,10 +1,7 @@
 package src.airportmanager.gui.gestor;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -23,10 +20,8 @@ import src.airportmanager.usuario.Gestor;
  * La clase GestionInfraestructurasZonaAparcamiento representa la ventana gestión de infraestructura (Zona de aparcamiento) de gestor
  */
 public class GestionInfraestructurasZonaAparcamientoGUI extends JFrame{
-
+	/** Identificador de versión de clase */
 	private static final long serialVersionUID = 1L;
-	private final GestorGUI gestorGUI;
-	private final Gestor gestor;
 	
 	/**
 	 * Constructor de la clase GestionInfraestructuraZonaAparcamientoGUI
@@ -35,9 +30,6 @@ public class GestionInfraestructurasZonaAparcamientoGUI extends JFrame{
 	 * @param gestor el gestor
 	 */
 	public GestionInfraestructurasZonaAparcamientoGUI(AirportManager manager, GestorGUI gestorGUI, Gestor gestor) {
-		this.gestor = gestor;
-		this.gestorGUI = gestorGUI;
-		
 		 setTitle("Panel de gestión de infraestructuras (Zona de aparcamiento) del Gestor");
 	     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	     setExtendedState(JFrame.MAXIMIZED_BOTH);

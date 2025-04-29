@@ -1,7 +1,6 @@
 package src.airportmanager.gui.gestor;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -23,10 +22,8 @@ import src.airportmanager.usuario.Gestor;
  * La clase ConfiguracionAeropuertoGUI representa la ventana de la configuración del aeropuerto del gestor.
  */
 public class ConfiguracionAeropuertoGUI extends JFrame {
+	/** Identificador de versión de clase */
     private static final long serialVersionUID = 1L;
-    private final GestorGUI gestorGUI;
-    private final Gestor gestor;
-
     /**
      * Constructor de la clase ConfiguracionAeropuertoGUI
      * @param manager el manager
@@ -34,9 +31,6 @@ public class ConfiguracionAeropuertoGUI extends JFrame {
      * @param gestor el gestor
      */
     public ConfiguracionAeropuertoGUI(AirportManager manager, GestorGUI gestorGUI, Gestor gestor) {
-        this.gestor = gestor;
-        this.gestorGUI = gestorGUI;
-
         setTitle("Panel de configuración del aeropuerto del Gestor");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -81,7 +75,6 @@ public class ConfiguracionAeropuertoGUI extends JFrame {
         scroll.setBorder(null);
         scroll.getVerticalScrollBar().setUnitIncrement(16);
 
-        // Panel para los campos de temporada (inicialmente oculto)
         JTextField campoInicio = ConfiguracionUI.crearCampoTexto();
         JTextField campoFin = ConfiguracionUI.crearCampoTexto();
         JTextField campoApertura = ConfiguracionUI.crearCampoTexto();

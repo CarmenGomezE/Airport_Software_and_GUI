@@ -18,12 +18,18 @@ import src.airportmanager.terminal.*;
  * La clase InfoAeropuertoPropioGUI representa la ventana de información del aeropuerto propio del gestor.
  */
 public class InfoAeropuertoPropioGUI extends JFrame {
-    private static final long serialVersionUID = 1L;
-    private final GestorGUI geGUI;
-    private final AirportManager manager;
-    private DefaultListModel<String> model;
-    private JList<String> listaDatos;
-    private JComboBox<String> selector;
+	/** Identificador único para la serialización del objeto */
+	private static final long serialVersionUID = 1L;
+	/** Referencia al gestor de interfaz gráfica */
+	private final GestorGUI geGUI;
+	/** Gestor principal que maneja la lógica del aeropuerto */
+	private final AirportManager manager;
+	/** Modelo de datos para la lista de elementos mostrados */
+	private DefaultListModel<String> model;
+	/** Componente gráfico que muestra datos en forma de lista */
+	private JList<String> listaDatos;
+	/** ComboBox que permite seleccionar distintas opciones */
+	private JComboBox<String> selector;
 
     /**
      * Constructor de la clase InfoAeropuertoPropioGUI
@@ -171,6 +177,7 @@ public class InfoAeropuertoPropioGUI extends JFrame {
                 } else {
                     model.addElement("No hay modos de embarque disponibles.");
                 }
+                break;
 
             case "Pistas":
                 if (manager.getAeropuerto().getPistas() != null) {

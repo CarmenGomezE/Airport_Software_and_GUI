@@ -23,15 +23,24 @@ import src.airportmanager.vuelo.Vuelo;
  * La clase GestorGUI representa la ventana principal del gestor.
  */
 public class GestorGUI extends JFrame {
-    private static final long serialVersionUID = 1L;
-    private Gestor AeGestor;
-    private DefaultListModel<String> modeloLista;
-    private JList<String> listaVuelos;
-    private AirportManager AeManager;
-    private JComboBox<String> comboUsuarios;
-    private JComboBox<String> comboInfra;
-    private String usuarioSeleccionado;
-    private String infraestructuraSeleccionada;
+	/** Identificador único para la serialización del objeto */
+	private static final long serialVersionUID = 1L;
+	/** Referencia al gestor principal de lógica de la aplicación */
+	private Gestor AeGestor;
+	/** Modelo de datos para la lista de vuelos */
+	private DefaultListModel<String> modeloLista;
+	/** Componente gráfico que muestra la lista de vuelos */
+	private JList<String> listaVuelos;
+	/** Referencia al gestor de aeropuertos */
+	private AirportManager AeManager;
+	/** ComboBox que permite seleccionar un usuario del sistema */
+	private JComboBox<String> comboUsuarios;
+	/** ComboBox que permite seleccionar una infraestructura disponible */
+	private JComboBox<String> comboInfra;
+	/** Nombre del usuario actualmente seleccionado */
+	private String usuarioSeleccionado;
+	/** Nombre de la infraestructura actualmente seleccionada */
+	private String infraestructuraSeleccionada;
     /** Formateador de date time */
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 

@@ -44,8 +44,13 @@ public class EstadisticasGestor implements Serializable {
     /** Mapa que almacena el tiempo de uso de cada hangar (en minutos) */
     private Map<Hangar, Double> horasUsoHangar;
     
+    /** Horas diarias que opera el aeropuerto */
     double horasOperacionDiarias;
+    
+    /** Dias del mes al que se le generan estadísticas */
     int diasDelMes;
+    
+    /** Horas mensuales que opera el aeropuerto */
     double totalHorasOperacionMes;
 
     /**

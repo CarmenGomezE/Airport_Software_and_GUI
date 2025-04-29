@@ -1,6 +1,5 @@
 package src.airportmanager.gui.gestor;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -20,11 +19,13 @@ import src.airportmanager.usuario.Gestor;
  * La clase EstadisticasGestorGUI representa la ventana de las estadísticas del aeropuerto del gestor.
  */
 public class EstadisticasGestorGUI extends JFrame{
-
+	/** Identificador de versión de clase */
+	private static final long serialVersionUID = 1L;
+	/** Gestor */
 	private final Gestor gestor;
-	private final GestorGUI gestorGUI;
-	private final AirportManager manager;
+	/** Modelo de lista por defecto */
 	private DefaultListModel<String> model;
+	/** Botón refrescar */
 	private JButton botonRefrescar; 
 
 	/**
@@ -34,9 +35,7 @@ public class EstadisticasGestorGUI extends JFrame{
 	 * @param gestor el gestor
 	 */
 	public EstadisticasGestorGUI(AirportManager manager, GestorGUI gestorGUI, Gestor gestor) {
-		this.gestorGUI = gestorGUI;
 		this.gestor = gestor; 
-		this.manager = manager;
 
 		setTitle("Panel de estadísticas del Gestor");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

@@ -1,21 +1,13 @@
 package src.airportmanager.gui.gestor;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -33,10 +25,8 @@ import src.airportmanager.usuario.Gestor;
  * La clase GestionUsuariosControladorGUI representa la ventana de gestión usuarios (Controlador) del gestor
  */
 public class GestionUsuariosControladorGUI extends JFrame{
+	/** Identificador de versión de clase */
 	private static final long serialVersionUID = 1L;
-	private final GestorGUI gestorGUI;
-	private final Gestor gestor;
-
 	/**
 	 * Constructor de la clase GestionUsuariosControladorGUI
 	 * @param manager el manager
@@ -44,10 +34,6 @@ public class GestionUsuariosControladorGUI extends JFrame{
 	 * @param gestor el gestor
 	 */
 	public GestionUsuariosControladorGUI(AirportManager manager, GestorGUI gestorGUI, Gestor gestor) {
-		this.gestor = gestor;
-		this.gestorGUI = gestorGUI;
-		
-		
 		 setTitle("Panel de gestión de usuarios (Controlador) del Gestor");
 	     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	     setExtendedState(JFrame.MAXIMIZED_BOTH);

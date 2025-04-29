@@ -1,46 +1,33 @@
 package src.airportmanager.gui.gestor;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import src.airportmanager.AirportManager;
 import src.airportmanager.gui.ConfiguracionUI;
-import src.airportmanager.terminal.PuertaEmbarque;
 import src.airportmanager.usuario.Gestor;
 
 /**
  * La clase GestionInfraestructurasHangarGUI representa la ventana de gestión de infraestructura (Hangar) del gestor.
  */
 public class GestionInfraestructurasHangarGUI extends JFrame{
+	/** Identificador de versión de clase */
 	private static final long serialVersionUID = 1L;
-	private final GestorGUI gestorGUI;
-	private final Gestor gestor;
-	private JCheckBox mercaPeligrosa;
+	/** Tipo seleccionado */
 	private String tipoSeleccionado;
 
 	/**
@@ -50,9 +37,6 @@ public class GestionInfraestructurasHangarGUI extends JFrame{
 	 * @param gestor el gestor
 	 */
 	public GestionInfraestructurasHangarGUI(AirportManager manager, GestorGUI gestorGUI, Gestor gestor) {
-		this.gestor = gestor;
-		this.gestorGUI = gestorGUI;
-		
 		setTitle("Panel de gestión de infraestructura (hangar) del Gestor");
 	    setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	    setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -110,16 +94,12 @@ public class GestionInfraestructurasHangarGUI extends JFrame{
     	    @Override
     	    public void actionPerformed(ActionEvent e) {
     	        tipoSeleccionado = (String) tipoHangar.getSelectedItem();
-    	        
-    	        // Limpia el panel opcional antes de añadir cosas nuevas
     	        panelOpcional.removeAll();
 
     	        if (tipoSeleccionado.equals("Mercancías")) {
     	            checkPeligroso.setBackground(ConfiguracionUI.COLOR_FONDO);
     	            panelOpcional.add(checkPeligroso);
     	        }
-
-    	        // Actualiza la interfaz
     	        panelOpcional.revalidate();
     	        panelOpcional.repaint();
     	    }

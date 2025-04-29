@@ -33,9 +33,8 @@ import src.airportmanager.usuario.Gestor;
  * La clase GestionUsuariosOperadorGUI representa la ventana de gstión de usuarios (Operador de la aerolínea) del gestor
  */
 public class GestionUsuariosOperadorGUI extends JFrame{
+	/** Identificador de versión de clase */
 	private static final long serialVersionUID = 1L;
-	private final GestorGUI gestorGUI;
-	private final Gestor gestor;
 
 	/**
 	 * Constructor de la clase GestionUsuariosOperadorGUI
@@ -44,9 +43,6 @@ public class GestionUsuariosOperadorGUI extends JFrame{
 	 * @param gestor el gestor
 	 */
 	public GestionUsuariosOperadorGUI(AirportManager manager, GestorGUI gestorGUI, Gestor gestor) { 
-		this.gestor = gestor;
-		this.gestorGUI = gestorGUI;
-		
 		 setTitle("Panel de gestión de usuarios (Controlador) del Gestor");
 	     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	     setExtendedState(JFrame.MAXIMIZED_BOTH);

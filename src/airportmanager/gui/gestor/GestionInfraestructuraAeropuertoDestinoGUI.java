@@ -1,23 +1,14 @@
 package src.airportmanager.gui.gestor;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -34,10 +25,8 @@ import src.airportmanager.usuario.Gestor;
  * La clase GestionInfraestructuraAeropuertoDestinoGUI representa la ventana de gestión de la infraestructura: Aeropuerto Destino
  */
 public class GestionInfraestructuraAeropuertoDestinoGUI extends JFrame {
-	
+	/** Identificador de versión de clase */
 	private static final long serialVersionUID = 1L;
-	private final GestorGUI gestorGUI;
-	private final Gestor gestor;
 	
 	/**
 	 * Constructor de la clase GestionInfraestructuraAeropuertoDestinoGUI
@@ -46,9 +35,6 @@ public class GestionInfraestructuraAeropuertoDestinoGUI extends JFrame {
 	 * @param gestor el gestor
 	 */
 	public GestionInfraestructuraAeropuertoDestinoGUI(AirportManager manager, GestorGUI gestorGUI, Gestor gestor) {
-		this.gestor = gestor;
-		this.gestorGUI = gestorGUI;
-		
 		setTitle("Panel de gestión de infraestructura (aeropuerto de destino) del Gestor");
 	    setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	    setExtendedState(JFrame.MAXIMIZED_BOTH);

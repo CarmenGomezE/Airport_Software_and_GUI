@@ -24,14 +24,17 @@ import src.airportmanager.usuario.Gestor;
  * La clase GestionFacturasGUI representa la ventana de la gestión de facturas del gestor.
  */
 public class GestionFacturasGUI extends JFrame {
+	/** Identificador de versión de clase*/
 	private static final long serialVersionUID = 1L;
+	/** Gestor*/
 	private final Gestor gestor;
-	private final GestorGUI gestorGUI;
-
+	/** Combo box de aerolineas*/
 	private JComboBox<String> comboAerolineas;
-
+	/** Aerolinea seleccionada */
 	private String aerolineaSeleccionada;
+	/** Modelo de lista por defecto*/
 	private DefaultListModel<String> model;
+	/** Boton refrescar */
 	private JButton botonRefrescar;
 
 	/**
@@ -41,7 +44,6 @@ public class GestionFacturasGUI extends JFrame {
 	 * @param gestor el gestor
 	 */
 	public GestionFacturasGUI(AirportManager manager, GestorGUI gestorGUI, Gestor gestor) {
-		this.gestorGUI = gestorGUI;
 		this.gestor = gestor;
 
 		setTitle("Panel de gestión de facturas del Gestor");

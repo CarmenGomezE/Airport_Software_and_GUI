@@ -17,9 +17,8 @@ import src.airportmanager.vuelo.Vuelo;
  * La clase BuscarVuelosGestorGUI representa la ventana de buscar vuelos del gestor.
  */
 public class BuscarVueloGestorGUI extends JFrame {
+	/** Identificador de versión de clase */
     private static final long serialVersionUID = 1L;
-    private final GestorGUI gesGUI;
-    private final Gestor gestor;
     /** Formateador de date time */
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
@@ -30,8 +29,6 @@ public class BuscarVueloGestorGUI extends JFrame {
      * @param gestor el gestor
      */
     public BuscarVueloGestorGUI(AirportManager manager, GestorGUI gesGUI, Gestor gestor) {
-        this.gesGUI = gesGUI;
-        this.gestor = gestor;
 
         setTitle("Panel de buscar vuelos del Controlador");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

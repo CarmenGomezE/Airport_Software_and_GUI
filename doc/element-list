@@ -6,6 +6,8 @@ src.airportmanager.estadisticas
 src.airportmanager.exceptions
 src.airportmanager.factura
 src.airportmanager.gui
+src.airportmanager.gui.controlador
+src.airportmanager.gui.gestor
 src.airportmanager.gui.operador
 src.airportmanager.hangar
 src.airportmanager.notificacion
