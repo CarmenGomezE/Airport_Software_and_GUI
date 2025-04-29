@@ -36,6 +36,8 @@ public class ControladorGUI extends JFrame {
 	private JList<String> listaVuelos;
 	/** Aplicación */
 	private AirportManager AeManager;
+	  /** Formateador de date time */
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
 	/**
 	 * Constructor de la clase ControladorGUI.
@@ -214,17 +216,17 @@ public class ControladorGUI extends JFrame {
             	if (v.getEstado().equals(EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE)) {
             		Duration tiempo = Duration.between(v.getHistorialEstadoVuelo().getHoraCambio(EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE), LocalTime.now());
             		if (tiempo.toMinutes() >= 10) {
-            			modeloLista.addElement("Vuelo: "+v+" | Hora: "+v.getHora()+" | Estado: "+ v.getEstado()+" | Esperando pista durante más de 10 min");
+            			modeloLista.addElement("Vuelo: "+v+" | Hora: "+v.getHora().format(formatter)+" | Estado: "+ v.getEstado()+" | Esperando pista durante más de 10 min");
             		}
             	} else if (v.getEstado().equals(EstadoVuelo.RETRASADO)) {
-                	modeloLista.addElement("Vuelo: "+v+" | Hora: "+v.getHora()+" | Estado: "+ v.getEstado() +" | Retrasado");
+                	modeloLista.addElement("Vuelo: "+v+" | Hora: "+v.getHora().format(formatter)+" | Estado: "+ v.getEstado() +" | Retrasado");
             	} else if (v.getEstado().equals(EstadoVuelo.OPERATIVO)) {
             		Duration tiempo = Duration.between(LocalTime.now(), v.getHora());
             		if (tiempo.toMinutes() <= 60) {
-            			modeloLista.addElement("Vuelo: "+v+" | Hora: "+v.getHora()+" | Estado: "+ v.getEstado()+" | Salida en menos de 1 hora");
+            			modeloLista.addElement("Vuelo: "+v+" | Hora: "+v.getHora().format(formatter)+" | Estado: "+ v.getEstado()+" | Salida en menos de 1 hora");
             		}
             	} else {
-                	modeloLista.addElement("Vuelo: "+v+" | Hora: "+v.getHora()+" | Estado: "+ v.getEstado());
+                	modeloLista.addElement("Vuelo: "+v+" | Hora: "+v.getHora().format(formatter)+" | Estado: "+ v.getEstado());
                 }
                 AeManager.verificarYActualizarVuelo(v);
             }  

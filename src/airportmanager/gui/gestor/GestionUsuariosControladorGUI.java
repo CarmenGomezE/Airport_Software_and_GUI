@@ -83,7 +83,7 @@ public class GestionUsuariosControladorGUI extends JFrame{
          formulario.add(ConfiguracionUI.crearCampoConLabel("Nombre:", campoNombre));
          formulario.add(ConfiguracionUI.crearCampoConLabel("Dni:", campoDni));
          formulario.add(ConfiguracionUI.crearCampoConLabel("Contraseña:", campoContrasena));
-         formulario.add(ConfiguracionUI.crearCampoConLabel("Terminal:", campoTerminal));
+         formulario.add(ConfiguracionUI.crearCampoConLabel("Terminal:", campoTerminal)); 
          
          JButton botonAgregarControlador = ConfiguracionUI.crearBotonCentrado("Agregar controlador");
             

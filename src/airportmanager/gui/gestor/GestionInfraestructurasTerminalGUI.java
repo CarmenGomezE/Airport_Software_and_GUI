@@ -107,7 +107,7 @@ public class GestionInfraestructurasTerminalGUI extends JFrame{
     	        }
 
     	        panelOpcional.revalidate();
-    	        panelOpcional.repaint();
+    	        panelOpcional.repaint(); 
     	    }
     	});
 

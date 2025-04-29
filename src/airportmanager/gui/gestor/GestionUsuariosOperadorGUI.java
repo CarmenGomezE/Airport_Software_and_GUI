@@ -43,7 +43,7 @@ public class GestionUsuariosOperadorGUI extends JFrame{
 	 * @param gestorGUI el gestorGUI
 	 * @param gestor el gestor
 	 */
-	public GestionUsuariosOperadorGUI(AirportManager manager, GestorGUI gestorGUI, Gestor gestor) {
+	public GestionUsuariosOperadorGUI(AirportManager manager, GestorGUI gestorGUI, Gestor gestor) { 
 		this.gestor = gestor;
 		this.gestorGUI = gestorGUI;
 		

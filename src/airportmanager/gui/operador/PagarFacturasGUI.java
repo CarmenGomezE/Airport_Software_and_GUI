@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -204,7 +205,7 @@ public class PagarFacturasGUI extends JFrame {
      */
 	 private void actualizarLista() {
 	        modeloLista.clear();
-	        List<Factura> facturas = operador.getAerolinea().getFacturas();
+	        Set<Factura> facturas = operador.getAerolinea().getFacturas();
 	        for (Factura f : facturas) {
 	            modeloLista.addElement("Factura: " + f.getInvoiceIdentifier() + " | Estado: " + f.getEstado() + " | Precio: " + f.getPrice());
 	        }
