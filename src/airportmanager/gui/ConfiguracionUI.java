@@ -11,19 +11,29 @@ public class ConfiguracionUI {
 	
     /**Color de fondo azul clarito y azul oscuro para el botón*/
     public static final Color COLOR_FONDO = new Color(135, 206, 235); // Azul clarito
+    /**Color del panel*/
     public static final Color COLOR_PANEL = new Color(173, 216, 230); // Azul clarito
+    /**Color del texto*/
     public static final Color COLOR_TEXTO = Color.BLACK;
+    /**Color del input*/
     public static final Color COLOR_INPUT = Color.WHITE;
+    /**Color desplegable*/
     public static final Color COLOR_DESPLEGABLE = Color.LIGHT_GRAY;
+    /**Color boton login*/
     public static final Color COLOR_BOTON_LOGIN = new Color(70, 130, 180); // Azul más oscuro para el botón
 
+    /**Fuente título*/
     public static final Font FUENTE_TITULO = new Font("Arial", Font.BOLD, 80);
+    /**Fuente subtítulo*/
     public static final Font FUENTE_SUBTITULO = new Font("Arial", Font.BOLD, 22);
+    /**Fuente texto*/
     public static final Font FUENTE_TEXTO = new Font("Verdana", Font.PLAIN, 16);
+    /**Fuente botón*/
     public static final Font FUENTE_BOTON = new Font("Tahoma", Font.BOLD, 20);
+    /**Fuente campos*/
     public static final Font FUENTE_CAMPOS = new Font("SansSerif", Font.PLAIN, 14);
 
-    // Se quitan los bordes de los campos de texto y comboBox
+    /**Quitamos bordes de los campos de texto y comboBox*/
     public static final Border BORDE_VACIO = BorderFactory.createEmptyBorder();
 
     // Métodos para crear componentes
