@@ -83,6 +83,9 @@ public class Vuelo extends VueloProgramado {
      * @param nuevoEstado El nuevo estado del vuelo
      */
     public void cambiarEstado(EstadoVuelo nuevoEstado) {
+    	if(nuevoEstado==this.getHistorialEstadoVuelo().getUltimoEstadoAutomatico() || nuevoEstado==this.getHistorialEstadoVuelo().getUltimoEstadoManual()) {
+    		return;
+    	}
         this.historialEstadoVuelo.agregarCambioEstado(nuevoEstado, LocalTime.now());
     }
 

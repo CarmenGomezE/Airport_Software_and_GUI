@@ -1,6 +1,6 @@
 package src.airportmanager.gui.gestor;
 
-import java.awt.Component;
+
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -8,9 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.time.Month;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +24,7 @@ import src.airportmanager.usuario.Gestor;
  * La clase GestionFacturasGUI representa la ventana de la gestión de facturas del gestor.
  */
 public class GestionFacturasGUI extends JFrame {
+	private static final long serialVersionUID = 1L;
 	private final Gestor gestor;
 	private final GestorGUI gestorGUI;
 
@@ -88,17 +87,6 @@ public class GestionFacturasGUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				verListaFacturas();
-				/**Despues de refrescar que salga un boton de actualizado durante unos segundos para que aunque las facturas no cambien haga algo*/
-				botonRefrescar.setText("✅ Actualizado");
-				botonRefrescar.setEnabled(false); 
-
-				new Timer(2000, new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent evt) {
-						botonRefrescar.setText("🔄 Refrescar facturas");
-						botonRefrescar.setEnabled(true); 
-					}
-				}).start();
 			}
 		});
 		botonPanel.add(botonRefrescar);

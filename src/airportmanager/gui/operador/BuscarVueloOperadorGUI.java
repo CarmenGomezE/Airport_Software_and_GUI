@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -42,6 +43,8 @@ public class BuscarVueloOperadorGUI extends JFrame {
     private final OperadorGUI opGUI;
     /** Operador que accede */
     private final Operador operador;
+    /** Formateador de date time */
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
     /**
      * Constructor de la interfaz gráfica BuscarVueloOperadorGUI.
@@ -138,7 +141,7 @@ public class BuscarVueloOperadorGUI extends JFrame {
                         modeloResultados.addElement("No se encontraron vuelos.");
                     } else {
                         for (Vuelo v : resultados) {
-                            modeloResultados.addElement("Vuelo: " + v + " | Hora: " + v.getHora() + " | Estado: " + v.getEstado());
+                            modeloResultados.addElement("Vuelo: " + v + " | Hora: " + v.getHora().format(formatter) + " | Estado: " + v.getEstado());
                         }
                     }
                 } catch (IllegalArgumentException ex) {

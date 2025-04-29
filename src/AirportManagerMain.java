@@ -924,6 +924,7 @@ public class AirportManagerMain {
     	
 		airportManager.getGestor().aceptarVuelo(vueloFRK2234, terminalT1, controladorT1);
  		airportManager.getGestor().aceptarVuelo(vueloFRK8104, terminalT1, controladorT1);
+ 		/**
  		airportManager.getGestor().aceptarVuelo(vueloFRK8106, terminalT1, controladorT1);
  		airportManager.getGestor().aceptarVuelo(vueloFRK8108, terminalT1, controladorT1);
  		airportManager.getGestor().aceptarVuelo(vueloFRK8110, terminalT1, controladorT1);
@@ -955,7 +956,7 @@ public class AirportManagerMain {
 		airportManager.getGestor().aceptarVuelo(vueloIBE8109, terminalT2, controladorT2);
 		airportManager.getGestor().aceptarVuelo(vueloIBE8111, terminalT2, controladorT2);
 		airportManager.getGestor().aceptarVuelo(vueloIBE8113, terminalT2, controladorT2);
-		airportManager.getGestor().aceptarVuelo(vueloIBE8114, terminalT2, controladorT2);
+		airportManager.getGestor().aceptarVuelo(vueloIBE8114, terminalT2, controladorT2);*/
 	}
 
 	/**
@@ -972,7 +973,7 @@ public class AirportManagerMain {
     	ControladorAereo controladorT2= terminalT2.getControladores().get(0); 
     	
     	Vuelo vueloFRK2234= airportManager.getAeropuerto().getVuelosAceptados().get(10);
-		Vuelo vueloFRK8103= airportManager.getAeropuerto().getVuelosAceptados().get(17);
+		/**Vuelo vueloFRK8103= airportManager.getAeropuerto().getVuelosAceptados().get(17);*/
 		
 		System.out.println(operadorRyanair.getSolicitudesRecibidas());
 
@@ -985,6 +986,7 @@ public class AirportManagerMain {
 		operadorRyanair.aceptarSolicitud(operadorRyanair.getSolicitudesRecibidas().get(0));
 		
 		Vuelo vueloFRK8104= airportManager.getAeropuerto().getVuelosAceptados().get(11);
+		/**
 		Vuelo vueloFRK8106= airportManager.getAeropuerto().getVuelosAceptados().get(12);
 		Vuelo vueloFRK8108= airportManager.getAeropuerto().getVuelosAceptados().get(13);
 		Vuelo vueloFRK8110= airportManager.getAeropuerto().getVuelosAceptados().get(14);
@@ -1013,7 +1015,7 @@ public class AirportManagerMain {
 		Vuelo vueloIBE8109= airportManager.getAeropuerto().getVuelosAceptados().get(36);
 		Vuelo vueloIBE8111= airportManager.getAeropuerto().getVuelosAceptados().get(37);
 		Vuelo vueloIBE8113= airportManager.getAeropuerto().getVuelosAceptados().get(38);
-		Vuelo vueloIBE8114= airportManager.getAeropuerto().getVuelosAceptados().get(39);
+		Vuelo vueloIBE8114= airportManager.getAeropuerto().getVuelosAceptados().get(39);*/
 		
 		System.out.println("\nIniciando el proceso de cambio de estados de vuelos.");
 		System.out.println("Comenzamos con los estados de un vuelo de salida:");
@@ -1030,10 +1032,11 @@ public class AirportManagerMain {
 		controladorT1.cambiarEstadoVuelo(vueloFRK2234, EstadoVuelo.ESPERANDO_PISTA_DE_DESPEGUE);
 
 		System.out.println("\nVuelo FRK2234 se intenta cambiar a estado ESPERANDO_DESPEGUE");
-		controladorT1.cambiarEstadoVuelo(vueloFRK2234, EstadoVuelo.ESPERANDO_DESPEGUE);
+		
+		/**controladorT1.cambiarEstadoVuelo(vueloFRK2234, EstadoVuelo.ESPERANDO_DESPEGUE);*/
 
 		System.out.println("\nContinuamos con los estados de un vuelo de llegada:");
-
+		/**
 		System.out.println("Vuelo FRK8103 se intenta cambiar a estado ESPERANDO_PISTA_DE_ATERRIZAJE");
 		controladorT2.cambiarEstadoVuelo(vueloFRK8103, EstadoVuelo.ESPERANDO_PISTA_DE_ATERRIZAJE);
  
@@ -1053,7 +1056,7 @@ public class AirportManagerMain {
 		controladorT2.cambiarEstadoVuelo(vueloFRK8103, EstadoVuelo.OPERATIVO);
 		  
 		System.out.println("\nVuelo FRK8103 se intenta cambiar a estado AVION_A_HANGAR");
-		controladorT2.cambiarEstadoVuelo(vueloFRK8103, EstadoVuelo.AVION_A_HANGAR);
+		controladorT2.cambiarEstadoVuelo(vueloFRK8103, EstadoVuelo.AVION_A_HANGAR);*/
 		
 		System.out.println("Vamos a imprimir el historial de estados de cada vuelo:");
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
@@ -1061,11 +1064,11 @@ public class AirportManagerMain {
 		for (Entry<LocalTime, EstadoVuelo> entry : vueloFRK2234.getHistorialEstadoVuelo().getHistorial().entrySet()) {
 		    System.out.println("  - " + entry.getKey().format(formatter) + " → " + entry.getValue());
 		}
-
+		/**
 		System.out.println("\nHistorial de vuelo FRK8103:");
 		for (Entry<LocalTime, EstadoVuelo> entry : vueloFRK8103.getHistorialEstadoVuelo().getHistorial().entrySet()) { 
 		    System.out.println("  - " + entry.getKey().format(formatter) + " → " + entry.getValue());
-		}
+		}*/
 		
 
 		try {

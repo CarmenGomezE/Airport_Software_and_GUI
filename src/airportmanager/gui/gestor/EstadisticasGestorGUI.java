@@ -81,17 +81,6 @@ public class EstadisticasGestorGUI extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				actualizarEstadisticas();
-				/**Despues de refrescar que salga un boton de actualizado durante unos segundos para que aunque las estadisticas no cambien haga algo*/
-				botonRefrescar.setText("✅ Actualizado");
-				botonRefrescar.setEnabled(false); 
-
-				new Timer(2000, new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent evt) {
-						botonRefrescar.setText("🔄 Refrescar estadísticas");
-						botonRefrescar.setEnabled(true); 
-					}
-				}).start();
 			}
 		});
 		botonPanel.add(botonRefrescar);

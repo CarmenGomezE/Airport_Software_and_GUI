@@ -2,6 +2,7 @@ package src.airportmanager.gui.controlador;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.swing.*;
@@ -20,6 +21,8 @@ import src.airportmanager.vuelo.Vuelo;
 public class BuscarVueloControladorGUI extends JFrame {
 	/** Número de versión de la clase */
     private static final long serialVersionUID = 1L;
+    /** Formateador de date time */
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
     /**
      * Constructor de la clase BuscarVueloControladorGUI.
@@ -113,7 +116,7 @@ public class BuscarVueloControladorGUI extends JFrame {
                         modeloResultados.addElement("No se encontraron vuelos.");
                     } else {
                         for (Vuelo v : resultados) {
-                            modeloResultados.addElement("Vuelo: " + v + " | Hora: " + v.getHora() + " | Estado: " + v.getEstado());
+                            modeloResultados.addElement("Vuelo: " + v + " | Hora: " + v.getHora().format(formatter) + " | Estado: " + v.getEstado());
                         }
                     }
                 } catch (IllegalArgumentException ex) {

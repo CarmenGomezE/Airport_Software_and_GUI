@@ -202,18 +202,20 @@ public class AirportManager implements Serializable {
             }
         }
 
-        if (ordenarColaVuelos() != null) {
+        if (ordenarColaVuelos() != null && v.getHistorialEstadoVuelo().getUltimoEstadoAutomatico()!=EstadoVuelo.VUELO) {
             Vuelo vueloVuela = ordenarColaVuelos();
-            vueloVuela.cambiarEstado(EstadoVuelo.VUELO);
-            vueloVuela.getControlador().liberarPista(vueloVuela);
+            if(vueloVuela.getHistorialEstadoVuelo().getUltimoEstadoAutomatico()!=EstadoVuelo.VUELO) {
+            	vueloVuela.cambiarEstado(EstadoVuelo.VUELO);
+            	vueloVuela.getControlador().liberarPista(vueloVuela);
             
-            for (ControladorAereo controlador: vueloVuela.getTerminal().getControladores()) {
-                controlador.recibirNotificacionCambioEstado(vueloVuela);
+	            for (ControladorAereo controlador: vueloVuela.getTerminal().getControladores()) {
+	                controlador.recibirNotificacionCambioEstado(vueloVuela);
+	            }
+	            for (Operador o : vueloVuela.getOperadores()) {
+	                o.recibirNotificacionCambioEstado(vueloVuela);
+	            }
+	            gestor.recibirNotificacion(new Notificacion("El vuelo " + vueloVuela.getCodigo() + " ha cambiado su estado a " + vueloVuela.getEstado() + ".", TipoNotificacion.CAMBIO_ESTADO_VUELO));
             }
-            for (Operador o : vueloVuela.getOperadores()) {
-                o.recibirNotificacionCambioEstado(vueloVuela);
-            }
-            gestor.recibirNotificacion(new Notificacion("El vuelo " + vueloVuela.getCodigo() + " ha cambiado su estado a " + vueloVuela.getEstado() + ".", TipoNotificacion.CAMBIO_ESTADO_VUELO));
         }
     }
     
@@ -235,11 +237,8 @@ public class AirportManager implements Serializable {
         		iniciar=true;
         	}
         }
-
-        if (iniciar==true) {
-        	iniciarActualizacionCada5Min(vuelo);
-        }
-        if (iniciar && !temporizadores.containsKey(vuelo) && vuelo.getHistorialEstadoVuelo().getUltimoEstadoAutomatico()!=EstadoVuelo.VUELO && 
+        
+        if (iniciar==true && vuelo.getHistorialEstadoVuelo().getUltimoEstadoAutomatico()!=EstadoVuelo.VUELO && 
         		(vuelo.getHistorialEstadoVuelo().getUltimoEstadoManual()!=EstadoVuelo.OPERATIVO || vuelo.getHistorialEstadoVuelo().getUltimoEstadoManual()!=EstadoVuelo.AVION_A_HANGAR)) {
             iniciarActualizacionCada5Min(vuelo);
         }
@@ -253,6 +252,9 @@ public class AirportManager implements Serializable {
         Timer timer = new Timer();
         if (temporizadores == null) {
             temporizadores = new HashMap<>();
+        }
+        if(temporizadores.containsKey(v)) {
+        	return;
         }
         temporizadores.put(v, timer);
 
