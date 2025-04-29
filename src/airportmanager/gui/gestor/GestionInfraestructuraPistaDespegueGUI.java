@@ -90,6 +90,10 @@ public class GestionInfraestructuraPistaDespegueGUI extends JFrame{
 				
 				try {
 					gestor.darDeAltaPista(codigo, longitud, TipoPista.DESPEGUE);
+					JOptionPane.showMessageDialog(null, 
+						    "¡Pista de despegue dada de alta correctamente!", 
+						    "Éxito", 
+						    JOptionPane.INFORMATION_MESSAGE);
 				} catch (PistaYaExisteException e1) {
 					
 					e1.printStackTrace();
@@ -97,13 +101,7 @@ public class GestionInfraestructuraPistaDespegueGUI extends JFrame{
 	                        "Error: la pista de despegue ya existe.", 
 	                        "Pista de despegeue ya existente", 
 	                        JOptionPane.ERROR_MESSAGE);
-				}
-				
-				 JOptionPane.showMessageDialog(null, 
-						    "¡Pista de despegue dada de alta correctamente!", 
-						    "Éxito", 
-						    JOptionPane.INFORMATION_MESSAGE);
-				
+				}	
 			}
         	 
          });
