@@ -87,8 +87,8 @@ public class PagarFacturasGUI extends JFrame {
         panelIzquierdo.setPreferredSize(new Dimension(500, 600));
         panelIzquierdo.setBackground(ConfiguracionUI.COLOR_FONDO);
 
-        JLabel listaFacturasTitulo = new JLabel("Facturas de la aerolínea "+operador.getAerolinea().getNombre(), JLabel.CENTER);
-        listaFacturasTitulo.setFont(new Font("Arial", Font.BOLD, 24));
+        JLabel listaFacturasTitulo = ConfiguracionUI.crearTitulo("Facturas de la aerolínea "+operador.getAerolinea().getNombre());
+       
         panelIzquierdo.add(listaFacturasTitulo, BorderLayout.NORTH);
 
         modeloLista = new DefaultListModel<>();
@@ -101,7 +101,7 @@ public class PagarFacturasGUI extends JFrame {
         JPanel panelBotones = new JPanel(new GridLayout(1, 2, 10, 10));
         panelBotones.setBackground(ConfiguracionUI.COLOR_FONDO);
 
-        JButton botonRefrescar = new JButton("🔄 Refrescar facturas");
+        JButton botonRefrescar = ConfiguracionUI.crearBotonCentrado("🔄 Refrescar facturas");
         panelBotones.add(botonRefrescar);
         botonRefrescar.addActionListener(new ActionListener() {
             @Override
@@ -119,8 +119,8 @@ public class PagarFacturasGUI extends JFrame {
         panelDerecho.setPreferredSize(new Dimension(500, 600));
         panelDerecho.setBackground(ConfiguracionUI.COLOR_FONDO);
 
-        JLabel titulo = new JLabel("Operador: " + operador.getNombre(), JLabel.CENTER);
-        titulo.setFont(new Font("Arial", Font.BOLD, 22));
+        JLabel titulo = ConfiguracionUI.crearTitulo("Operador: " + operador.getNombre());
+      
         titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
         panelDerecho.add(titulo);
 
@@ -148,9 +148,8 @@ public class PagarFacturasGUI extends JFrame {
 
         panelDerecho.add(Box.createRigidArea(new Dimension(0, 20)));
 
-        JButton botonPagar = new JButton("Pagar factura");
-        botonPagar.setMaximumSize(new Dimension(1000, 800));
-        botonPagar.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JButton botonPagar = ConfiguracionUI.crearBotonCentrado("Pagar factura");
+       
         panelDerecho.add(botonPagar);
 
         panelDerecho.add(Box.createVerticalGlue());
