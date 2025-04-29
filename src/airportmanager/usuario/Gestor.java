@@ -254,6 +254,7 @@ public class Gestor extends Usuario {
         aeropuerto.addUsuario(controlador);
         terminal.agregarControlador(controlador);
         sistema.addCredencial(dni, controlador.getContrasena());
+        getAeropuerto().addUsuario(controlador);
     }
 
     /**
@@ -274,6 +275,7 @@ public class Gestor extends Usuario {
         aerolinea.setOperador(operador);
         aeropuerto.addUsuario(operador);
         sistema.addCredencial(dni, ""); 
+        getAeropuerto().addUsuario(operador);
     }
 
     /**

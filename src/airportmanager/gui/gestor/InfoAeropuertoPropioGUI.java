@@ -162,7 +162,13 @@ public class InfoAeropuertoPropioGUI extends JFrame {
                 }
 
                 if (!modos.isEmpty()) {
-                    modos.forEach(modo -> model.addElement("Modo de embarque: " + modo.getId()));
+                    modos.forEach(modo -> {
+                    	if(modo instanceof Finger) {
+                    		model.addElement("Modo de embarque (finger): " + modo.getId());
+                    	}else {
+                    		model.addElement("Modo de embarque (zona de aparcamiento): " + modo.getId());
+                    	}
+                    });
                 } else {
                     model.addElement("No hay modos de embarque disponibles.");
                 }
