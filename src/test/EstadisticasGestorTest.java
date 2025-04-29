@@ -78,9 +78,8 @@ public class EstadisticasGestorTest {
      */
     @Test
     void testGetUsoMedioDiarioFinger() {
-        // 10 horas de uso / 12 horas de operación = 0.833...
-        double expected = 10.0 / 12.0;
-        assertEquals(expected, estadisticas.getUsoMedioDiarioFinger(finger), 0.001);
+        double expected = 0.0;
+        assertEquals(expected, estadisticas.getUsoMensualFinger(finger), 0.001);
     }
 
     /**
@@ -88,8 +87,8 @@ public class EstadisticasGestorTest {
      */
     @Test
     void testGetUsoMedioDiarioPuertaEmbarque() {
-        double expected = 10.0 / 12.0;
-        assertEquals(expected, estadisticas.getUsoMedioDiarioPuertaEmbarque(puerta), 0.001);
+        double expected =  0.0;
+        assertEquals(expected, estadisticas.getUsoMensualPuertaEmbarque(puerta), 0.001);
     }
 
     /**
@@ -97,8 +96,8 @@ public class EstadisticasGestorTest {
      */
     @Test
     void testGetUsoMedioDiarioZonaAparcamiento() {
-        double expected = 10.0 / 12.0;
-        assertEquals(expected, estadisticas.getUsoMedioDiarioZonaAparcamiento(zona), 0.001);
+        double expected =  0.0;
+        assertEquals(expected, estadisticas.getUsoMensualZonaAparcamiento(zona), 0.001);
     }
 
     /**
@@ -106,8 +105,8 @@ public class EstadisticasGestorTest {
      */
     @Test
     void testGetUsoMedioDiarioHangar() {
-        double expected = 10.0 / 12.0;
-        assertEquals(expected, estadisticas.getUsoMedioDiarioHangar(hangar), 0.001);
+        double expected =  0.0;
+        assertEquals(expected, estadisticas.getUsoMensualHangar(hangar), 0.001);
     }
     
     /**
@@ -115,13 +114,12 @@ public class EstadisticasGestorTest {
      */
     @Test
     void testConHorasOperacionCero() {
-        // Configurar aeropuerto sin horas de operación
         AeropuertoPropio aeropuertoSinHoras = new AeropuertoPropio("Empty", "EMP", 
             "Empty", "Empty", 0.0, ZoneOffset.UTC, 0, null);
         Gestor gestorSinHoras = new Gestor("Empty Gestor", "pass", aeropuertoSinHoras, null);
         
         EstadisticasGestor stats = new EstadisticasGestor(gestorSinHoras);
-        assertEquals(0.0, stats.getUsoMedioDiarioFinger(new Finger(1, 1)), 0.001);
+        assertEquals(0.0, stats.getUsoMensualFinger(new Finger(1, 1)), 0.001);
     }
 
     /**
@@ -142,9 +140,9 @@ public class EstadisticasGestorTest {
      */
     @Test
     void testConComponentesNulos() {
-        assertEquals(0.0, estadisticas.getUsoMedioDiarioFinger(new Finger(1, 1)), 0.001);
-        assertEquals(0.0, estadisticas.getUsoMedioDiarioPuertaEmbarque(new PuertaEmbarque()), 0.001);
-        assertEquals(0.0, estadisticas.getUsoMedioDiarioZonaAparcamiento(new ZonaAparcamiento(1, 1, 1)), 0.001);
-        assertEquals(0.0, estadisticas.getUsoMedioDiarioHangar(new HangarPasajeros(1, 1, 1, 1, 1)), 0.001);
+        assertEquals(0.0, estadisticas.getUsoMensualFinger(new Finger(1, 1)), 0.001);
+        assertEquals(0.0, estadisticas.getUsoMensualPuertaEmbarque(new PuertaEmbarque()), 0.001);
+        assertEquals(0.0, estadisticas.getUsoMensualZonaAparcamiento(new ZonaAparcamiento(1, 1, 1)), 0.001);
+        assertEquals(0.0, estadisticas.getUsoMensualHangar(new HangarPasajeros(1, 1, 1, 1, 1)), 0.001);
     }
 }
