@@ -30,10 +30,8 @@ import src.airportmanager.usuario.Gestor;
  * La clase GestioNinfraestructuraAerolineaGUI representa la ventana de gestión de infraestructuras: Aerolínea del gestor.
  */
 public class GestionInfraestructuraAerolineaGUI extends JFrame{
-	
+	/** Identificador de versión de clase para la serialización*/
 	private static final long serialVersionUID = 1L;
-	private final GestorGUI gestorGUI;
-	private final Gestor gestor;
 
 	/**
 	 * Constructor de la clase GestionInfraestructuraAerolineaGUI
@@ -42,9 +40,6 @@ public class GestionInfraestructuraAerolineaGUI extends JFrame{
 	 * @param gestor el gestor
 	 */
 	public GestionInfraestructuraAerolineaGUI(AirportManager manager, GestorGUI gestorGUI, Gestor gestor) {
-		this.gestor = gestor;
-		this.gestorGUI = gestorGUI;
-		
 		 setTitle("Panel de gestión de infraestructuras (Aerolínea) del Gestor");
 	     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	     setExtendedState(JFrame.MAXIMIZED_BOTH);

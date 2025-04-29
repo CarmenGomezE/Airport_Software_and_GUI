@@ -22,10 +22,8 @@ import src.airportmanager.usuario.Gestor;
  * La clase GestionINfraestructuraPistaDespegueGUI representa la ventana de gestión de infraestructura (Pista de despegue) del gestor
  */
 public class GestionInfraestructuraPistaDespegueGUI extends JFrame{
-	
+	/** Identificador de versión de clase para la serialización*/
 	private static final long serialVersionUID = 1L;
-	private final GestorGUI gestorGUI;
-	private final Gestor gestor;
 
 	/**
 	 * Constructor de la clase GestionInfraestructuraPistaDespegueGUI
@@ -34,10 +32,6 @@ public class GestionInfraestructuraPistaDespegueGUI extends JFrame{
 	 * @param gestor el gestor
 	 */
 	public GestionInfraestructuraPistaDespegueGUI(AirportManager manager, GestorGUI gestorGUI, Gestor gestor) {
-		
-		this.gestor = gestor;
-		this.gestorGUI = gestorGUI;
-		
 		 setTitle("Panel de gestión de infraestructura (Pista de despegue) del gestor");
 	     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	     setExtendedState(JFrame.MAXIMIZED_BOTH);
