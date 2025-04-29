@@ -237,6 +237,7 @@ public class GestorTest {
      */
     @Test
     void testRecibirProposicionVuelo() {
+    	Gestor.setAntelacionMinimaDias(30);
         List<VueloProgramado> propuestas = new ArrayList<>();
         propuestas.add(vueloProgramado);
         

@@ -74,7 +74,7 @@ class EscalaTest {
 	 * Test method for {@link src.airportmanager.vuelo.Escala#getHoraSalida()}.
 	 */
 	@Test
-	void testGetHoraSalida() {  assertEquals(horaSalida, escala.getHoraSalida(), "Error la hora de salida no es correcta");fail("Not yet implemented");
+	void testGetHoraSalida() {  assertEquals(horaSalida, escala.getHoraSalida(), "Error la hora de salida no es correcta");
 	}
 
 }

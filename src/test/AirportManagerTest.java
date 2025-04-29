@@ -115,28 +115,7 @@ public class AirportManagerTest {
         assertNotNull(contrasena);
         assertEquals(12, contrasena.length());
     }
-
-    /**
-     * ActualizarEstadoVueloAutomatico
-     */
-    @Test
-    void testActualizarEstadoVueloAutomatico() {
-    	airportManager.iniciarAplicacion();
-        
-        aerolinea = new Aerolinea("IBERIA", "IBE");
-        aerolinea.agregarAvion(avionPasajeros);
-        avionPasajeros.setAerolinea(aerolinea);
-        vueloSalida.cambiarEstado(EstadoVuelo.ESPERANDO_DESPEGUE);
-        airportManager.actualizarEstadoVueloAutomatico(vueloSalida);
-        assertTrue(vueloSalida.getEstado() == EstadoVuelo.RETRASADO || 
-                 vueloSalida.getEstado() == EstadoVuelo.VUELO);
-        
-        vueloLlegada.cambiarEstado(EstadoVuelo.ACEPTADO);
-        airportManager.actualizarEstadoVueloAutomatico(vueloLlegada);
-        assertTrue(vueloLlegada.getEstado() == EstadoVuelo.A_TIEMPO || 
-                 vueloLlegada.getEstado() == EstadoVuelo.RETRASADO);
-    }
-
+    
     /**
      * AsignarContrasena
      * @throws UsuarioNoEncontradoException

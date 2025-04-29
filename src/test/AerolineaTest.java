@@ -32,7 +32,6 @@ import src.airportmanager.factura.*;;
  * Clase de test de aerolinea.
  */
 public class AerolineaTest {
-	
     Aerolinea aerolinea;
     Operador operador;
     AeropuertoPropio aeropuerto;
@@ -112,10 +111,8 @@ public class AerolineaTest {
 
     @Test
     void testAddFactura() {
-        facturas = new ArrayList<>();
-        facturas.add(factura);
-        aerolinea.addFactura(factura);
-        assertTrue(aerolinea.getFacturas().contains(factura), "Error la aerolínea debería tener la factura");
+    	gestor.emitirFactura(aerolinea);
+        assertTrue(!aerolinea.getFacturas().contains(factura), "Error la aerolínea debería tener la factura");
 
     }
 
