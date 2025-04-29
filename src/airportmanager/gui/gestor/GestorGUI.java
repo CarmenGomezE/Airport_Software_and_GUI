@@ -19,6 +19,9 @@ import src.airportmanager.usuario.Gestor;
 import src.airportmanager.vuelo.EstadoVuelo;
 import src.airportmanager.vuelo.Vuelo;
 
+/**
+ * La clase GestorGUI representa la ventana principal del gestor.
+ */
 public class GestorGUI extends JFrame {
     private static final long serialVersionUID = 1L;
     private Gestor AeGestor;
@@ -30,6 +33,12 @@ public class GestorGUI extends JFrame {
     private String usuarioSeleccionado;
     private String infraestructuraSeleccionada;
 
+    /**
+     * Constructor de la clase GestorGUI
+     * @param AirportGUI el airportManager
+     * @param manager el manager
+     * @param gestor el gestor
+     */
     public GestorGUI(AirportManagerGUI AirportGUI, AirportManager manager, Gestor gestor) {
         this.AeGestor = gestor;
         this.AeManager = manager;
@@ -62,8 +71,8 @@ public class GestorGUI extends JFrame {
         String formattedDate = LocalDate.now().format(formatter);
 
         /** Titulo de la lista de vuelos */
-        JLabel listaVuelosTitulo = new JLabel("Lista de vuelos (" + formattedDate + ")", JLabel.CENTER);
-        listaVuelosTitulo.setFont(new Font("Arial", Font.BOLD, 24));
+        JLabel listaVuelosTitulo = ConfiguracionUI.crearTitulo("Lista de vuelos (" + formattedDate + ")");
+      
         panelIzquierdo.add(listaVuelosTitulo, BorderLayout.NORTH);
         /** Lista de vuelos */
         modeloLista = new DefaultListModel<>();
@@ -98,7 +107,7 @@ public class GestorGUI extends JFrame {
 
         /** Botones de la lista */
         JPanel panelBotones = new JPanel(new GridLayout(1, 2, 10, 10));
-        JButton botonBuscarVuelos = new JButton("🔎 Buscar vuelos");
+        JButton botonBuscarVuelos = ConfiguracionUI.crearBotonCentrado("🔎 Buscar vuelos");
         panelBotones.add(botonBuscarVuelos);
         botonBuscarVuelos.addActionListener(new ActionListener() {
             @Override
@@ -108,7 +117,7 @@ public class GestorGUI extends JFrame {
             }
         });
 
-        JButton botonRefrescar = new JButton("🔄 Refrescar vuelos");
+        JButton botonRefrescar = ConfiguracionUI.crearBotonCentrado("🔄 Refrescar vuelos");
         panelBotones.add(botonRefrescar);
         botonRefrescar.addActionListener(new ActionListener() {
             @Override
@@ -125,13 +134,12 @@ public class GestorGUI extends JFrame {
         panelDerecho.setBackground(ConfiguracionUI.COLOR_FONDO);
 
         /** Título del operador */
-        JLabel titulo = new JLabel("Gestor del Aeropuerto Adolfo Suarez Madrid Barajas", JLabel.CENTER);
-        titulo.setFont(new Font("Arial", Font.BOLD, 22));
+        JLabel titulo = ConfiguracionUI.crearTitulo("Gestor del Aeropuerto Adolfo Suarez Madrid Barajas");
         panelDerecho.add(titulo);
 
         /** Botones */
         JPanel subPanelBotones = new JPanel(new GridLayout(1, 2, 10, 10));
-        JButton botonNotificaciones = new JButton("🔔 Notificaciones");
+        JButton botonNotificaciones = ConfiguracionUI.crearBotonCentrado("🔔 Notificaciones");
         subPanelBotones.add(botonNotificaciones);
         botonNotificaciones.addActionListener(new ActionListener() {
             @Override
@@ -140,7 +148,7 @@ public class GestorGUI extends JFrame {
                 new NotificacionesGestorGUI(manager, GestorGUI.this, gestor);
             }
         });
-        JButton botonCerrarSesion = new JButton("Cerrar sesión");
+        JButton botonCerrarSesion = ConfiguracionUI.crearBotonCentrado("Cerrar sesión");
         subPanelBotones.add(botonCerrarSesion);
         botonCerrarSesion.addActionListener(new ActionListener() {
             @Override
@@ -160,7 +168,7 @@ public class GestorGUI extends JFrame {
         panelDerecho.add(subPanelBotones);
 
         JPanel subPanelInfraestructura = new JPanel(new GridLayout(1, 2, 10, 10));
-        JButton botonGestionInfraestructura = new JButton("Gestión de infraestructura");
+        JButton botonGestionInfraestructura = ConfiguracionUI.crearBotonCentrado("Gestión de infraestructura");
         subPanelInfraestructura.add(botonGestionInfraestructura);
 
         String[] infras = { "Hangar", "Terminal", "Finger", "Zona de aparcamiento", "Pista de despegue",
@@ -245,7 +253,7 @@ public class GestorGUI extends JFrame {
 
         });
 
-        JButton botonConfiguracionAeropuerto = new JButton("Configuración del aeropuerto");
+        JButton botonConfiguracionAeropuerto = ConfiguracionUI.crearBotonCentrado("Configuración del aeropuerto");
         panelDerecho.add(botonConfiguracionAeropuerto);
         botonConfiguracionAeropuerto.addActionListener(new ActionListener() {
             @Override
@@ -256,7 +264,7 @@ public class GestorGUI extends JFrame {
         });
 
         JPanel subPanelUsuarios = new JPanel(new GridLayout(1, 2, 10, 10));
-        JButton botonGestionUsuarios = new JButton("Gestión usuarios");
+        JButton botonGestionUsuarios = ConfiguracionUI.crearBotonCentrado("Gestión usuarios");
         subPanelUsuarios.add(botonGestionUsuarios);
 
         String[] usuarios = { "Controlador", "Operador de la aerolínea" };
@@ -307,7 +315,7 @@ public class GestorGUI extends JFrame {
 
         });
 
-        JButton botonEstadisticas = new JButton("Estadísticas de la infraestructura");
+        JButton botonEstadisticas = ConfiguracionUI.crearBotonCentrado("Estadísticas de la infraestructura");
         panelDerecho.add(botonEstadisticas);
         botonEstadisticas.addActionListener(new ActionListener() {
             @Override
@@ -317,7 +325,7 @@ public class GestorGUI extends JFrame {
             }
         });
 
-        JButton botonGestionVuelos = new JButton("Gestión de vuelos");
+        JButton botonGestionVuelos = ConfiguracionUI.crearBotonCentrado("Gestión de vuelos");
         panelDerecho.add(botonGestionVuelos);
         botonGestionVuelos.addActionListener(new ActionListener() {
             @Override
@@ -327,7 +335,7 @@ public class GestorGUI extends JFrame {
             }
         });
 
-        JButton botonGestionFacturas = new JButton("Gestión de facturas");
+        JButton botonGestionFacturas = ConfiguracionUI.crearBotonCentrado("Gestión de facturas");
         panelDerecho.add(botonGestionFacturas);
         botonGestionFacturas.addActionListener(new ActionListener() {
             @Override
@@ -337,7 +345,7 @@ public class GestorGUI extends JFrame {
             }
         });
 
-        JButton botonVuelosAceptados = new JButton("Ver información del aeropuerto propio");
+        JButton botonVuelosAceptados = ConfiguracionUI.crearBotonCentrado("Ver información del aeropuerto propio");
         panelDerecho.add(botonVuelosAceptados);
         botonVuelosAceptados.addActionListener(new ActionListener() {
             @Override
@@ -356,6 +364,9 @@ public class GestorGUI extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Método auxiliar para actualizar la lista de vuelos.
+     */
     private void actualizarLista() {
         modeloLista.clear();
         List<Vuelo> vuelos = AeManager.getAeropuerto().getVuelosAceptados();

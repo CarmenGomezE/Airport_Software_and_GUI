@@ -15,6 +15,9 @@ import src.airportmanager.usuario.Gestor;
 import src.airportmanager.vuelo.Vuelo;
 import src.airportmanager.terminal.*;
 
+/**
+ * La clase InfoAeropuertoPropioGUI representa la ventana de información del aeropuerto propio del gestor.
+ */
 public class InfoAeropuertoPropioGUI extends JFrame {
     private static final long serialVersionUID = 1L;
     private final GestorGUI geGUI;
@@ -23,6 +26,12 @@ public class InfoAeropuertoPropioGUI extends JFrame {
     private JList<String> listaDatos;
     private JComboBox<String> selector;
 
+    /**
+     * Constructor de la clase InfoAeropuertoPropioGUI
+     * @param manager el manager
+     * @param gestorGUI el gestorGUI
+     * @param gestorAe el gestor del aeropuerto
+     */
     public InfoAeropuertoPropioGUI(AirportManager manager, GestorGUI gestorGUI, Gestor gestorAe) {
         this.geGUI = gestorGUI;
         this.manager = manager;
@@ -47,9 +56,8 @@ public class InfoAeropuertoPropioGUI extends JFrame {
         add(panel);
 
         /** TÍTULO */
-        JLabel titulo = new JLabel("Información del aeropuerto " + manager.getAeropuerto().getNombre(), JLabel.CENTER);
-        titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
-        titulo.setFont(new Font("Arial", Font.BOLD, 28));
+        JLabel titulo = ConfiguracionUI.crearTitulo("Información del aeropuerto " + manager.getAeropuerto().getNombre());
+        
         panel.add(titulo);
         panel.add(Box.createRigidArea(new Dimension(0, 30)));
 
@@ -77,10 +85,8 @@ public class InfoAeropuertoPropioGUI extends JFrame {
         JPanel botonPanel = new JPanel();
         botonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         botonPanel.setBackground(ConfiguracionUI.COLOR_FONDO);
-        JButton botonRefrescar = new JButton("🔄 Refrescar");
-        botonRefrescar.setBackground(ConfiguracionUI.COLOR_FONDO);
-        botonRefrescar.setFont(botonRefrescar.getFont().deriveFont(16f));
-
+        JButton botonRefrescar = ConfiguracionUI.crearBotonCentrado("🔄 Refrescar");
+      
         botonRefrescar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -104,6 +110,9 @@ public class InfoAeropuertoPropioGUI extends JFrame {
         actualizarDatos(); // Carga inicial
     }
 
+    /**
+     * Método auxiliar para actualizar los datos del aeropuerto.
+     */
     private void actualizarDatos() {
         model.clear();
         if (manager == null || manager.getAeropuerto() == null) {

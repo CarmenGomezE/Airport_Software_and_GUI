@@ -22,6 +22,9 @@ import src.airportmanager.factura.EstadoFactura;
 import src.airportmanager.gui.ConfiguracionUI;
 import src.airportmanager.usuario.Gestor;
 
+/**
+ * La clase GestionFacturasGUI representa la ventana de la gestión de facturas del gestor.
+ */
 public class GestionFacturasGUI extends JFrame {
 	private final Gestor gestor;
 	private final GestorGUI gestorGUI;
@@ -32,6 +35,12 @@ public class GestionFacturasGUI extends JFrame {
 	private DefaultListModel<String> model;
 	private JButton botonRefrescar;
 
+	/**
+	 * Constructor de la clase GestionFacturasGUI
+	 * @param manager el manager
+	 * @param gestorGUI el gestorGUI
+	 * @param gestor el gestor
+	 */
 	public GestionFacturasGUI(AirportManager manager, GestorGUI gestorGUI, Gestor gestor) {
 		this.gestorGUI = gestorGUI;
 		this.gestor = gestor;
@@ -55,9 +64,7 @@ public class GestionFacturasGUI extends JFrame {
 		panel.setBackground(ConfiguracionUI.COLOR_FONDO);
 		add(panel);
 
-		JLabel titulo = new JLabel("Facturación", JLabel.CENTER);
-		titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
-		titulo.setFont(new Font("Arial", Font.BOLD, 28));
+		JLabel titulo = ConfiguracionUI.crearTitulo("Facturación");
 		panel.add(titulo);
 		panel.add(Box.createRigidArea(new Dimension(0, 40)));
 
@@ -75,9 +82,8 @@ public class GestionFacturasGUI extends JFrame {
 		/**BOTON REFRESCAR*/
 		JPanel botonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		botonPanel.setBackground(ConfiguracionUI.COLOR_FONDO);
-		botonRefrescar = new JButton("🔄 Refrescar facturas"); 
-		botonRefrescar.setBackground(ConfiguracionUI.COLOR_FONDO);
-		botonRefrescar.setFont(botonRefrescar.getFont().deriveFont(16f));
+		botonRefrescar = ConfiguracionUI.crearBotonCentrado("🔄 Refrescar facturas");
+		
 		botonRefrescar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -121,9 +127,7 @@ public class GestionFacturasGUI extends JFrame {
 		aerolineaPanel.add(Box.createRigidArea(new Dimension(200, 0)));
 		
 		/**BOTON EMITIR FACTURA*/
-		JButton botonEmitirFactura = new JButton("Emitir factura");
-		botonEmitirFactura.setFont(new Font("Arial", Font.BOLD, 16));
-        botonEmitirFactura.setAlignmentX(Component.CENTER_ALIGNMENT);
+		JButton botonEmitirFactura = ConfiguracionUI.crearBotonCentrado("Emitir factura");
         
         botonEmitirFactura.addActionListener(new ActionListener() {
 			@Override
@@ -153,6 +157,9 @@ public class GestionFacturasGUI extends JFrame {
 		setVisible(true); 
 	}
 	
+	/**
+	 * Método auxiliar para ver la lista de las facturas
+	 */
 	private void verListaFacturas() {
 		model.clear();
 		Map<String, EstadoFactura> facturasEstado = gestor.cargarFacturas();
@@ -163,6 +170,10 @@ public class GestionFacturasGUI extends JFrame {
 		}
 	}
 	
+	/**
+	 * Método auxiliar para la selección de aerolíneas a la hora de emitir la factura.
+	 * @param aerolineaPanel el panel.
+	 */
 	private void seleccionAerolineas(JPanel aerolineaPanel) {
 		List<String> listaAerolineas = new ArrayList<>();
 		for (Aerolinea a : gestor.getAeropuerto().getAerolineas()) {

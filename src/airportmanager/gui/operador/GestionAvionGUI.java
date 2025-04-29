@@ -42,70 +42,61 @@ public class GestionAvionGUI extends JFrame {
         setResizable(false);
         setLocationRelativeTo(null);
 
-        JPanel panelPrincipal = new JPanel(new BorderLayout());
-        panelPrincipal.setBorder(BorderFactory.createEmptyBorder(20, 60, 20, 60));
-        panelPrincipal.setBackground(ConfiguracionUI.COLOR_FONDO);
+        JPanel panelPrincipal = ConfiguracionUI.crearPanelPrincipal();
         
         /** TÍTULO */
-        JLabel titulo = new JLabel("Dar de alta avión para la aerolínea "+operador.getAerolinea().getNombre(), JLabel.CENTER);
-        titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
-        titulo.setFont(new Font("Arial", Font.BOLD, 28));
+        JLabel titulo = ConfiguracionUI.crearTitulo("Dar de alta avión para la aerolínea "+operador.getAerolinea().getNombre());
         
-        JPanel cabecera = new JPanel();
-        cabecera.setLayout(new BoxLayout(cabecera, BoxLayout.Y_AXIS));
-        cabecera.setBackground(ConfiguracionUI.COLOR_FONDO);
-        cabecera.add(titulo);
-        cabecera.add(Box.createRigidArea(new Dimension(0, 20)));
+        JPanel cabecera = ConfiguracionUI.crearCabeceraPanel(titulo);
 
         panelPrincipal.add(cabecera, BorderLayout.NORTH);
 
-        JPanel formulario = new JPanel(new GridLayout(7, 2, 20, 30));
-        formulario.setBackground(ConfiguracionUI.COLOR_FONDO);
-
+        JPanel formulario = ConfiguracionUI.crearPanelTipoFormulario();
+    
         // Campos
-        JTextField campoMarca = crearCampoTexto();
+        JTextField campoMarca = ConfiguracionUI.crearCampoTexto();
         campoMarca.setPreferredSize(new Dimension(250, 5));
-        JTextField campoModelo = crearCampoTexto();
+        JTextField campoModelo = ConfiguracionUI.crearCampoTexto();
         campoModelo.setPreferredSize(new Dimension(250, 5));
-        JTextField campoAlto = crearCampoTexto();
+        JTextField campoAlto = ConfiguracionUI.crearCampoTexto();
         campoAlto.setPreferredSize(new Dimension(250, 5));
-        JTextField campoAncho = crearCampoTexto();
+        JTextField campoAncho = ConfiguracionUI.crearCampoTexto();
         campoAncho.setPreferredSize(new Dimension(250, 5));
-        JTextField campoLargo = crearCampoTexto();
+        JTextField campoLargo = ConfiguracionUI.crearCampoTexto();
         campoLargo.setPreferredSize(new Dimension(250, 5));
-        JTextField campoAutonomia = crearCampoTexto();
+        JTextField campoAutonomia = ConfiguracionUI.crearCampoTexto();
         campoAutonomia.setPreferredSize(new Dimension(250, 5));
-        JTextField campoAnoCompra = crearCampoTexto();
+        JTextField campoAnoCompra = ConfiguracionUI.crearCampoTexto();
         campoAnoCompra.setPreferredSize(new Dimension(250, 5));
-        JTextField campoFechaRevision = crearCampoTexto();
+        JTextField campoFechaRevision = ConfiguracionUI.crearCampoTexto();
         campoFechaRevision.setPreferredSize(new Dimension(250, 5));
-        JTextField campoMatricula = crearCampoTexto();
+        JTextField campoMatricula = ConfiguracionUI.crearCampoTexto();
         campoMatricula.setPreferredSize(new Dimension(250, 5));
 
         String[] tipos = { "Pasajeros", "Mercancías" };
         JComboBox<String> tipoAvion = new JComboBox<>(tipos);
 
-        JTextField campoCapacidadPasajeros = crearCampoTexto();
+        JTextField campoCapacidadPasajeros = ConfiguracionUI.crearCampoTexto();
         campoCapacidadPasajeros.setPreferredSize(new Dimension(250, 5));
-        JTextField campoCapacidadCarga = crearCampoTexto();
+        JTextField campoCapacidadCarga = ConfiguracionUI.crearCampoTexto();
         JCheckBox checkPeligroso = new JCheckBox("¿Mercancía peligrosa?");
         JCheckBox checkTemperatura = new JCheckBox("¿Control de temperatura?");
 
-        formulario.add(crearCampoConLabel("Marca:", campoMarca));
-        formulario.add(crearCampoConLabel("Modelo:", campoModelo));
-        formulario.add(crearCampoConLabel("Alto (m):", campoAlto));
-        formulario.add(crearCampoConLabel("Ancho (m):", campoAncho));
-        formulario.add(crearCampoConLabel("Largo (m):", campoLargo));
-        formulario.add(crearCampoConLabel("Autonomía (km):", campoAutonomia));
-        formulario.add(crearCampoConLabel("Año de compra:", campoAnoCompra));
-        formulario.add(crearCampoConLabel("Fecha última revisión (dd/MM/yyyy):", campoFechaRevision));
-        formulario.add(crearCampoConLabel("Matrícula:", campoMatricula));
-        formulario.add(crearCampoConLabel("Tipo de avión:", tipoAvion));
+        formulario.add(ConfiguracionUI.crearCampoConLabel("Marca:", campoMarca));
+        formulario.add(ConfiguracionUI.crearCampoConLabel("Modelo:", campoModelo));
+        formulario.add(ConfiguracionUI.crearCampoConLabel("Alto (m):", campoAlto));
+        formulario.add(ConfiguracionUI.crearCampoConLabel("Ancho (m):", campoAncho));
+        formulario.add(ConfiguracionUI.crearCampoConLabel("Largo (m):", campoLargo));
+        formulario.add(ConfiguracionUI.crearCampoConLabel("Autonomía (km):", campoAutonomia));
+        formulario.add(ConfiguracionUI.crearCampoConLabel("Año de compra:", campoAnoCompra));
+        formulario.add(ConfiguracionUI.crearCampoConLabel("Fecha última revisión (dd/MM/yyyy):", campoFechaRevision));
+        formulario.add(ConfiguracionUI.crearCampoConLabel("Matrícula:", campoMatricula));
+        formulario.add(ConfiguracionUI.crearCampoConLabel("Tipo de avión:", tipoAvion));
         
         JPanel panelOpcional = new JPanel();
         panelOpcional.setLayout(new BoxLayout(panelOpcional, BoxLayout.Y_AXIS));
         panelOpcional.setBackground(ConfiguracionUI.COLOR_FONDO);
-        panelOpcional.add(crearCampoConLabel("Capacidad máxima de carga (kg):", campoCapacidadCarga));
+        panelOpcional.add(ConfiguracionUI.crearCampoConLabel("Capacidad máxima de carga (kg):", campoCapacidadCarga));
         panelOpcional.setPreferredSize(new Dimension(250, 100));
         formulario.add(panelOpcional); 
         
@@ -113,9 +104,9 @@ public class GestionAvionGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 panelOpcional.removeAll();
                 if (tipoAvion.getSelectedItem().equals("Pasajeros")) {
-                    panelOpcional.add(crearCampoConLabel("Capacidad máxima de pasajeros:", campoCapacidadPasajeros));
+                    panelOpcional.add(ConfiguracionUI.crearCampoConLabel("Capacidad máxima de pasajeros:", campoCapacidadPasajeros));
                 } else {
-                    panelOpcional.add(crearCampoConLabel("Capacidad máxima de carga (kg):", campoCapacidadCarga));
+                    panelOpcional.add(ConfiguracionUI.crearCampoConLabel("Capacidad máxima de carga (kg):", campoCapacidadCarga));
                     panelOpcional.add(checkPeligroso, BorderLayout.EAST);
                     panelOpcional.add(checkTemperatura, BorderLayout.EAST);
                 }
@@ -124,9 +115,7 @@ public class GestionAvionGUI extends JFrame {
             }
         });
 
-        JButton botonRegistrar = new JButton("Dar de alta avión");
-        botonRegistrar.setFont(new Font("Arial", Font.BOLD, 18));
-        botonRegistrar.setBackground(new Color(200, 230, 255));
+        JButton botonRegistrar = ConfiguracionUI.crearBotonCentrado("Dar de alta avión");
 
         botonRegistrar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -182,28 +171,4 @@ public class GestionAvionGUI extends JFrame {
         setVisible(true);
     }
 
-    /** 
-     * Método que crea campos con título.
-     */
-    private JPanel crearCampoConLabel(String textoLabel, JComponent campo) {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBackground(ConfiguracionUI.COLOR_FONDO);
-        JLabel label = new JLabel(textoLabel);
-        label.setAlignmentX(Component.LEFT_ALIGNMENT);
-        campo.setAlignmentX(Component.LEFT_ALIGNMENT);
-        panel.add(label);
-        panel.add(Box.createVerticalStrut(5));
-        panel.add(campo);
-        return panel;
-    }
-    
-    /** 
-     * Método que crea campos de texto.
-     */
-    private JTextField crearCampoTexto() {
-        JTextField campo = new JTextField();
-        campo.setPreferredSize(new Dimension(200, 30));
-        return campo;
-    }
 }
