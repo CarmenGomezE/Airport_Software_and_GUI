@@ -1,14 +1,14 @@
 package src;
 
 import src.airportmanager.*;
-import src.airportmanager.gui.*;
+import src.airportmanager.app.AirportManager;
+import src.gui.*;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 import javax.swing.SwingUtilities;
-
 
 /**
  * La clase principal del programa. Es el punto de entrada de la aplicación.
@@ -21,14 +21,14 @@ import javax.swing.SwingUtilities;
  * @author Carmen Gómez, Claudia Municio, María Pozo.
  */
 public class Main {
-	/** Ruta al archivo donde se guarda el estado del aeropuerto */
+    /** Ruta al archivo donde se guarda el estado del aeropuerto */
     private static final String ARCHIVO_ESTADO = "resources/estado_airport_manager.dat";
-    
+
     /**
      * Constructor de la clase principal.
      */
-    public Main(){
-    	/** Constructor vacío*/
+    public Main() {
+        /** Constructor vacío */
     }
 
     /**
@@ -38,9 +38,9 @@ public class Main {
      */
     public static void main(String[] args) {
         try {
-            /**vaciarArchivo(ARCHIVO_ESTADO);*/
+            /** vaciarArchivo(ARCHIVO_ESTADO); */
             AirportManager manager = AirportManager.cargarEstado(ARCHIVO_ESTADO);
-            
+
             Runtime.getRuntime().addShutdownHook(new Thread(() -> {
                 try {
                     manager.guardarEstado(ARCHIVO_ESTADO);

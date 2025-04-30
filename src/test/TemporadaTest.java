@@ -8,29 +8,30 @@ import java.time.LocalTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import src.airportmanager.aeropuerto.Temporada;
+import src.airportmanager.app.aeropuerto.Temporada;
+
 /**
  * TemporadaTest
  */
 class TemporadaTest {
-	
+
 	Temporada temporada, temporada2, temporada3;
 
 	/**
 	 * Constructor
 	 */
 	public TemporadaTest() {
-		
+
 	}
-	
+
 	/**
 	 * Crea objetos
 	 */
 	@BeforeEach
 	void setUp() {
-		
+
 		temporada = new Temporada("01/06", "08:00", "22:00", "30/09");
-		temporada2 = new Temporada("01/10", "08:00", "23:00", "30/12"); 
+		temporada2 = new Temporada("01/10", "08:00", "23:00", "30/12");
 		temporada3 = new Temporada("07/01", "09:00", "14:00", "30/10");
 	}
 
@@ -67,7 +68,7 @@ class TemporadaTest {
 	}
 
 	/**
-	 *ComprobarTemporada
+	 * ComprobarTemporada
 	 */
 	@Test
 	void testComprobarTemporada() {
@@ -81,7 +82,8 @@ class TemporadaTest {
 	@Test
 	void testEstaEnTemporada() {
 		assertTrue(temporada.estaEnTemporada(LocalDate.of(2025, 7, 2)), "Error, esa fecha debería estar en temporada");
-		assertFalse(temporada.estaEnTemporada(LocalDate.of(2025, 4, 3)), "Error, esa fecha no debería estar en temporada");
+		assertFalse(temporada.estaEnTemporada(LocalDate.of(2025, 4, 3)),
+				"Error, esa fecha no debería estar en temporada");
 	}
 
 }

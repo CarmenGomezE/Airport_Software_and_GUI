@@ -10,17 +10,17 @@ import java.util.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import src.airportmanager.AirportManager;
-import src.airportmanager.aeropuerto.*;
+import src.airportmanager.app.AirportManager;
+import src.airportmanager.app.aeropuerto.*;
+import src.airportmanager.app.avion.*;
+import src.airportmanager.app.exceptions.FormatoDniIncorrectoException;
+import src.airportmanager.app.exceptions.TemporadasSolapadasException;
 import src.airportmanager.terminal.*;
 import src.airportmanager.hangar.*;
 import src.airportmanager.pista.Pista;
 import src.airportmanager.pista.TipoPista;
 import src.airportmanager.usuario.*;
 import src.airportmanager.vuelo.*;
-import src.airportmanager.avion.*;
-import src.airportmanager.exceptions.FormatoDniIncorrectoException;
-import src.airportmanager.exceptions.TemporadasSolapadasException;
 
 /**
  * AeropuertoPropioTest
@@ -52,90 +52,97 @@ class AeropuertoPropioTest {
 	private List<PuertaEmbarque> puertasList, puertasList2;
 	private Temporada temporada1, temporada2;
 	private List<Temporada> temporadas;
-	
+
 	/**
 	 * Constructor
 	 */
 	public AeropuertoPropioTest() {
-		
+
 	}
+
 	/**
 	 * Crea objetos
-	 * @throws FormatoDniIncorrectoException 
+	 * 
+	 * @throws FormatoDniIncorrectoException
 	 */
 	@BeforeEach
-	void setUp() throws FormatoDniIncorrectoException { 
-		aeropuertoPropio = new AeropuertoPropio("Barajas", "MAD", "Madrid", "España", 64.9, ZoneOffset.UTC, 2, DireccionRelativaCiudad.ESTE);
-		
-		
+	void setUp() throws FormatoDniIncorrectoException {
+		aeropuertoPropio = new AeropuertoPropio("Barajas", "MAD", "Madrid", "España", 64.9, ZoneOffset.UTC, 2,
+				DireccionRelativaCiudad.ESTE);
+
 		puertasList = new ArrayList<>();
 		puertasList2 = new ArrayList<>();
 		p1 = new PuertaEmbarque();
 		p2 = new PuertaEmbarque();
-		p3= new PuertaEmbarque();
-		p4= new PuertaEmbarque();
-				
-	
+		p3 = new PuertaEmbarque();
+		p4 = new PuertaEmbarque();
+
 		puertasList.add(p1);
 		puertasList.add(p3);
 		puertasList2.add(p2);
 		puertasList2.add(p4);
-		
-		
+
 		hangar1 = new HangarPasajeros(20, 34.5, 54.8, 60.9, 4.7);
 		hangar2 = new HangarPasajeros(25, 54.5, 59.8, 90.9, 4.2);
 		hangares = new ArrayList<>();
 		hangares.add(hangar1);
 		hangares.add(hangar2);
-		
+
 		zona1 = new ZonaAparcamiento(2.5, 7.9, 6.5);
 		zona2 = new ZonaAparcamiento(3.5, 6.9, 8.5);
 		zonas = new ArrayList<>();
 		zonas.add(zona1);
 		zonas.add(zona2);
-		
+
 		terminal1 = new TerminalPasajeros("T1", puertasList, 100);
 		terminal2 = new TerminalPasajeros("T2", puertasList2, 150);
 		terminales = new ArrayList<>();
 		terminales.add(terminal1);
 		terminales.add(terminal2);
-		
+
 		aerolinea1 = new Aerolinea("IBERIA", "IBE1");
 		aerolinea2 = new Aerolinea("RYANAIR", "RYN1");
 		aerolineas = new ArrayList<>();
 		aerolineas.add(aerolinea1);
 		aerolineas.add(aerolinea2);
-		
+
 		sistema = new AirportManager();
 		gestor = new Gestor("Lorena", "Lore76", aeropuertoPropio, sistema);
-		controlador = new ControladorAereo("Juan Pedro", "56872372J", "Juanpe44", aeropuertoPropio, gestor, terminal1, sistema);
+		controlador = new ControladorAereo("Juan Pedro", "56872372J", "Juanpe44", aeropuertoPropio, gestor, terminal1,
+				sistema);
 		operador = new Operador("Miguel", "56098976M", aerolinea1, aeropuertoPropio, gestor, sistema);
 		usuarios = new ArrayList<>();
 		usuarios.add(gestor);
 		usuarios.add(operador);
 		usuarios.add(controlador);
-		
+
 		avion = new AvionPasajeros("AIRBUS", "AIR7", 87.0, 67.9, 54.2, 900000, 2021, new Date(), "PSJWU78", 0);
-		vuelo1 = new Vuelo("V123", LocalDate.of(2023, 5, 12), null, null, LocalTime.of(7, 30), null, TipoCarga.PASAJEROS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO, Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avion, aeropuertoDestino1, aeropuertoPropio, null, operador);
-		vuelo2 = new Vuelo("V132", LocalDate.of(2024, 5, 12), null, null, LocalTime.of(10, 30), null, TipoCarga.PASAJEROS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO, Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avion, aeropuertoDestino1, aeropuertoPropio, null, operador);
+		vuelo1 = new Vuelo("V123", LocalDate.of(2023, 5, 12), null, null, LocalTime.of(7, 30), null,
+				TipoCarga.PASAJEROS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO, Periodicidad.PUNTUAL, TipoVuelo.SALIDA,
+				avion, aeropuertoDestino1, aeropuertoPropio, null, operador);
+		vuelo2 = new Vuelo("V132", LocalDate.of(2024, 5, 12), null, null, LocalTime.of(10, 30), null,
+				TipoCarga.PASAJEROS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO, Periodicidad.PUNTUAL, TipoVuelo.LLEGADA,
+				avion, aeropuertoDestino1, aeropuertoPropio, null, operador);
 		vuelos = new ArrayList<>();
 		vuelos.add(vuelo1);
 		vuelos.add(vuelo2);
-		
-		aeropuertoDestino1 = new AeropuertoDestino("Hearthrow", "LHR", "Londres", "Reino Unido", 56.9, ZoneOffset.of("+1"), 3, DireccionRelativaCiudad.SUR);
-		aeropuertoDestino2 = new AeropuertoDestino("Fuiminio", "FMR", "Roma", "Italia", 56.9, ZoneOffset.of("+1"), 3, DireccionRelativaCiudad.OESTE);
+
+		aeropuertoDestino1 = new AeropuertoDestino("Hearthrow", "LHR", "Londres", "Reino Unido", 56.9,
+				ZoneOffset.of("+1"), 3, DireccionRelativaCiudad.SUR);
+		aeropuertoDestino2 = new AeropuertoDestino("Fuiminio", "FMR", "Roma", "Italia", 56.9, ZoneOffset.of("+1"), 3,
+				DireccionRelativaCiudad.OESTE);
 		aeropuertosDestino = new ArrayList<>();
 		aeropuertosDestino.add(aeropuertoDestino1);
 		aeropuertosDestino.add(aeropuertoDestino2);
-		
+
 		pista1 = new Pista("P2", 10, TipoPista.ATERRIZAJE);
 		pista2 = new Pista("P1", 20, TipoPista.DESPEGUE);
 		pistas = new ArrayList<>();
 		pistas.add(pista1);
 		pistas.add(pista2);
-		
-		temporada1 = new Temporada("06/01", "08:00", "22:00", "30/09"); 
-		temporada2 = new Temporada("30/09", "08:00", "23:00", "30/12"); 
+
+		temporada1 = new Temporada("06/01", "08:00", "22:00", "30/09");
+		temporada2 = new Temporada("30/09", "08:00", "23:00", "30/12");
 
 		temporadas = new ArrayList<>();
 		temporadas.add(temporada1);
@@ -147,7 +154,8 @@ class AeropuertoPropioTest {
 	 */
 	@Test
 	void testGetHangares() {
-		assertTrue(aeropuertoPropio.getHangares().isEmpty(), "Error la lista de hangares al principio debería estar vacía");
+		assertTrue(aeropuertoPropio.getHangares().isEmpty(),
+				"Error la lista de hangares al principio debería estar vacía");
 	}
 
 	/**
@@ -155,7 +163,8 @@ class AeropuertoPropioTest {
 	 */
 	@Test
 	void testGetZonasAparcamiento() {
-		assertTrue(aeropuertoPropio.getZonasAparcamiento().isEmpty(), "Error la lista de zonas de aparcamiento al principio debería estar vacía");
+		assertTrue(aeropuertoPropio.getZonasAparcamiento().isEmpty(),
+				"Error la lista de zonas de aparcamiento al principio debería estar vacía");
 	}
 
 	/**
@@ -163,7 +172,8 @@ class AeropuertoPropioTest {
 	 */
 	@Test
 	void testGetTerminales() {
-		assertTrue(aeropuertoPropio.getTerminales().isEmpty(), "Error la lista de terminales al principio debería estar vacía");
+		assertTrue(aeropuertoPropio.getTerminales().isEmpty(),
+				"Error la lista de terminales al principio debería estar vacía");
 	}
 
 	/**
@@ -171,7 +181,8 @@ class AeropuertoPropioTest {
 	 */
 	@Test
 	void testGetUsuarios() {
-		assertTrue(aeropuertoPropio.getUsuarios().isEmpty(), "Error la lista de usuarios al principio debería estar vacía");
+		assertTrue(aeropuertoPropio.getUsuarios().isEmpty(),
+				"Error la lista de usuarios al principio debería estar vacía");
 	}
 
 	/**
@@ -187,7 +198,8 @@ class AeropuertoPropioTest {
 	 */
 	@Test
 	void testGetAerolineas() {
-		assertTrue(aeropuertoPropio.getAerolineas().isEmpty(), "Error la lista de aerolineas al principio debería estar vacía");
+		assertTrue(aeropuertoPropio.getAerolineas().isEmpty(),
+				"Error la lista de aerolineas al principio debería estar vacía");
 	}
 
 	/**
@@ -195,15 +207,17 @@ class AeropuertoPropioTest {
 	 */
 	@Test
 	void testGetVuelosAceptados() {
-		assertTrue(aeropuertoPropio.getVuelosAceptados().isEmpty(), "Error la lista de vuelos aceptados al principio debería estar vacía");
+		assertTrue(aeropuertoPropio.getVuelosAceptados().isEmpty(),
+				"Error la lista de vuelos aceptados al principio debería estar vacía");
 	}
-	
+
 	/**
 	 * GetAeropuertosDestino
 	 */
 	@Test
 	void testGetAeropuertosDestino() {
-		assertTrue(aeropuertoPropio.getAeropuertosDestino().isEmpty(), "Error la lista de aeropuertos de destino al principio debería estar vacía");
+		assertTrue(aeropuertoPropio.getAeropuertosDestino().isEmpty(),
+				"Error la lista de aeropuertos de destino al principio debería estar vacía");
 	}
 
 	/**
@@ -211,9 +225,9 @@ class AeropuertoPropioTest {
 	 */
 	@Test
 	void testGetPuertasEmbarque() {
-		assertTrue(aeropuertoPropio.getPuertasEmbarque().isEmpty(), "Error la lista de puertas de embarque al principio debería estar vacía");
+		assertTrue(aeropuertoPropio.getPuertasEmbarque().isEmpty(),
+				"Error la lista de puertas de embarque al principio debería estar vacía");
 	}
-
 
 	/**
 	 * AddHangar
@@ -232,7 +246,8 @@ class AeropuertoPropioTest {
 	void testAddZonaAparcamiento() {
 		aeropuertoPropio.addZonaAparcamiento(zona1);
 		aeropuertoPropio.addZonaAparcamiento(zona2);
-		assertEquals(zonas, aeropuertoPropio.getZonasAparcamiento(), "Error la lista de zonas de aparcamiento no es correcta");
+		assertEquals(zonas, aeropuertoPropio.getZonasAparcamiento(),
+				"Error la lista de zonas de aparcamiento no es correcta");
 	}
 
 	/**
@@ -293,7 +308,8 @@ class AeropuertoPropioTest {
 	void testAddAeropuertoDestino() {
 		aeropuertoPropio.addAeropuertoDestino(aeropuertoDestino1);
 		aeropuertoPropio.addAeropuertoDestino(aeropuertoDestino2);
-		assertEquals(aeropuertosDestino, aeropuertoPropio.getAeropuertosDestino(), "Error la lista de aeropuertos de destino no es correcta");
+		assertEquals(aeropuertosDestino, aeropuertoPropio.getAeropuertosDestino(),
+				"Error la lista de aeropuertos de destino no es correcta");
 	}
 
 	/**
@@ -301,14 +317,14 @@ class AeropuertoPropioTest {
 	 */
 	@Test
 	void testCalcularHorasEntre() {
-		LocalTime horaInicio = LocalTime.of(8, 0); 
-        LocalTime horaFin = LocalTime.of(20, 0);   
-        
-        double horasCalculadas = aeropuertoPropio.calcularHorasEntre(horaInicio, horaFin);
-        
-        assertEquals(12.0, horasCalculadas, 0.001, "Deberían ser 12 horas exactas");
+		LocalTime horaInicio = LocalTime.of(8, 0);
+		LocalTime horaFin = LocalTime.of(20, 0);
+
+		double horasCalculadas = aeropuertoPropio.calcularHorasEntre(horaInicio, horaFin);
+
+		assertEquals(12.0, horasCalculadas, 0.001, "Deberían ser 12 horas exactas");
 	}
-	
+
 	/**
 	 * GetNombre
 	 */
@@ -391,7 +407,8 @@ class AeropuertoPropioTest {
 	@Test
 	void testSetDistanciaCiudad() {
 		aeropuertoPropio.setDistanciaCiudad(25.9);
-		assertEquals(25.9, aeropuertoPropio.getDistanciaCiudad(), "Error la distancia a la ciudad no se asignó correctamente");
+		assertEquals(25.9, aeropuertoPropio.getDistanciaCiudad(),
+				"Error la distancia a la ciudad no se asignó correctamente");
 	}
 
 	/**
@@ -399,7 +416,8 @@ class AeropuertoPropioTest {
 	 */
 	@Test
 	void testGetDiferenciaHoraria() {
-		assertEquals(ZoneOffset.UTC, aeropuertoPropio.getDiferenciaHoraria(), "Error la diferencia horaria no es correcta");
+		assertEquals(ZoneOffset.UTC, aeropuertoPropio.getDiferenciaHoraria(),
+				"Error la diferencia horaria no es correcta");
 	}
 
 	/**
@@ -408,7 +426,8 @@ class AeropuertoPropioTest {
 	@Test
 	void testSetDiferenciaHoraria() {
 		aeropuertoPropio.setDiferenciaHoraria(ZoneOffset.of("+1"));
-		assertEquals(ZoneOffset.of("+1"), aeropuertoPropio.getDiferenciaHoraria(), "Error la diferencia horaria no se asignó correctamente");
+		assertEquals(ZoneOffset.of("+1"), aeropuertoPropio.getDiferenciaHoraria(),
+				"Error la diferencia horaria no se asignó correctamente");
 	}
 
 	/**
@@ -425,7 +444,8 @@ class AeropuertoPropioTest {
 	@Test
 	void testSetNumTemporadas() {
 		aeropuertoPropio.setNumTemporadas(3);
-		assertEquals(3, aeropuertoPropio.getNumTemporadas(), "Error el número de temporadas no se asignó correctamente");
+		assertEquals(3, aeropuertoPropio.getNumTemporadas(),
+				"Error el número de temporadas no se asignó correctamente");
 	}
 
 	/**
@@ -433,7 +453,8 @@ class AeropuertoPropioTest {
 	 */
 	@Test
 	void testGetDireccionCiudad() {
-		assertEquals(DireccionRelativaCiudad.ESTE, aeropuertoPropio.getDireccionCiudad(), "Error la direccion hacia la ciudad no es correcta");
+		assertEquals(DireccionRelativaCiudad.ESTE, aeropuertoPropio.getDireccionCiudad(),
+				"Error la direccion hacia la ciudad no es correcta");
 	}
 
 	/**
@@ -442,7 +463,8 @@ class AeropuertoPropioTest {
 	@Test
 	void testSetDireccionCiudad() {
 		aeropuertoPropio.setDireccionCiudad(DireccionRelativaCiudad.SUR);
-		assertEquals(DireccionRelativaCiudad.SUR, aeropuertoPropio.getDireccionCiudad(), "Error la dirección hacia la ciudad no se asignó correctamente");
+		assertEquals(DireccionRelativaCiudad.SUR, aeropuertoPropio.getDireccionCiudad(),
+				"Error la dirección hacia la ciudad no se asignó correctamente");
 	}
 
 	/**
@@ -450,7 +472,8 @@ class AeropuertoPropioTest {
 	 */
 	@Test
 	void testGetTemporadas() {
-		assertTrue(aeropuertoPropio.getTemporadas().isEmpty(), "Error, al principio la lista de temporadas debería estar vacía");
+		assertTrue(aeropuertoPropio.getTemporadas().isEmpty(),
+				"Error, al principio la lista de temporadas debería estar vacía");
 	}
 
 	/**
@@ -464,23 +487,23 @@ class AeropuertoPropioTest {
 
 	/**
 	 * AgregarTemporada
+	 * 
 	 * @throws TemporadasSolapadasException
 	 */
 	@Test
 	void testAgregarTemporada() throws TemporadasSolapadasException {
-	    
-	    aeropuertoPropio.agregarTemporada(temporada1);
-	    assertTrue(aeropuertoPropio.getTemporadas().contains(temporada1),
-	               "Error: la lista de temporadas debería contener la temporada añadida");
 
-	    TemporadasSolapadasException excepcion = assertThrows(TemporadasSolapadasException.class, () -> {
-	        aeropuertoPropio.agregarTemporada(temporada1); 
-	    });
+		aeropuertoPropio.agregarTemporada(temporada1);
+		assertTrue(aeropuertoPropio.getTemporadas().contains(temporada1),
+				"Error: la lista de temporadas debería contener la temporada añadida");
 
-	    assertEquals("La nueva temporada se solapa con otra existente", 
-	                 excepcion.getMessage(), 
-	                 "Error: No se lanzó la excepción esperada.");
+		TemporadasSolapadasException excepcion = assertThrows(TemporadasSolapadasException.class, () -> {
+			aeropuertoPropio.agregarTemporada(temporada1);
+		});
+
+		assertEquals("La nueva temporada se solapa con otra existente",
+				excepcion.getMessage(),
+				"Error: No se lanzó la excepción esperada.");
 	}
 
-	
 }
