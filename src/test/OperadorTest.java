@@ -12,10 +12,10 @@ import java.util.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import src.airportmanager.app.AirportManager;
-import src.airportmanager.app.aeropuerto.*;
-import src.airportmanager.app.avion.*;
-import src.airportmanager.app.exceptions.*;
+import src.airportmanager.AirportManager;
+import src.airportmanager.aeropuerto.*;
+import src.airportmanager.avion.*;
+import src.airportmanager.exceptions.*;
 import src.airportmanager.terminal.*;
 import src.airportmanager.hangar.*;
 import src.airportmanager.notificacion.Notificacion;
@@ -187,7 +187,7 @@ class OperadorTest {
 
         Avion avionRegistrado = aerolinea1.getAviones()
                 .stream()
-                .filter(a -> a.getMatricula().equals("PSJWU78"))
+                .filter(a -> a.getAerolinea().getNombre().equals("IBERIA"))
                 .findFirst()
                 .orElse(null);
 
@@ -200,7 +200,7 @@ class OperadorTest {
                 250.60, false, true);
         Avion avionRegistrado = aerolinea1.getAviones()
                 .stream()
-                .filter(a -> a.getMatricula().equals("PSJWU78"))
+                .filter(a -> a.getAerolinea().getNombre().equals("IBERIA"))
                 .findFirst()
                 .orElse(null);
         assertNotNull(avionRegistrado, "No se ha dado de alta correctamente el avión");

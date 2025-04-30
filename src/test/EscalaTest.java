@@ -11,9 +11,9 @@ import java.time.ZoneOffset;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import src.airportmanager.app.aeropuerto.AeropuertoDestino;
-import src.airportmanager.app.aeropuerto.AeropuertoPropio;
-import src.airportmanager.app.aeropuerto.DireccionRelativaCiudad;
+import src.airportmanager.aeropuerto.AeropuertoDestino;
+import src.airportmanager.aeropuerto.AeropuertoPropio;
+import src.airportmanager.aeropuerto.DireccionRelativaCiudad;
 import src.airportmanager.vuelo.Escala;
 
 /**

@@ -11,7 +11,7 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.*;
 
-import src.airportmanager.app.AirportManager;
+import src.airportmanager.AirportManager;
 import src.airportmanager.usuario.Gestor;
 import src.gui.ConfiguracionUI;
 

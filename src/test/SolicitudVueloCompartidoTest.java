@@ -8,10 +8,10 @@ import java.time.LocalTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import src.airportmanager.app.AirportManager;
-import src.airportmanager.app.avion.Aerolinea;
-import src.airportmanager.app.exceptions.FormatoDniIncorrectoException;
-import src.airportmanager.app.exceptions.SolicitudInvalidaExcepcion;
+import src.airportmanager.AirportManager;
+import src.airportmanager.avion.Aerolinea;
+import src.airportmanager.exceptions.FormatoDniIncorrectoException;
+import src.airportmanager.exceptions.SolicitudInvalidaExcepcion;
 import src.airportmanager.usuario.Operador;
 import src.airportmanager.vuelo.*;
 

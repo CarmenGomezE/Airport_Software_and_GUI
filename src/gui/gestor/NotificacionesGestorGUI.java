@@ -20,7 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
-import src.airportmanager.app.AirportManager;
+import src.airportmanager.AirportManager;
 import src.airportmanager.notificacion.Notificacion;
 import src.airportmanager.notificacion.TipoNotificacion;
 import src.airportmanager.usuario.Gestor;

@@ -15,9 +15,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import src.airportmanager.app.AirportManager;
-import src.airportmanager.app.exceptions.AeropuertoYaExisteException;
-import src.airportmanager.app.exceptions.TemporadasSolapadasException;
+import src.airportmanager.AirportManager;
+import src.airportmanager.exceptions.AeropuertoYaExisteException;
+import src.airportmanager.exceptions.TemporadasSolapadasException;
 import src.airportmanager.usuario.Gestor;
 import src.gui.ConfiguracionUI;
 

@@ -14,9 +14,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import src.airportmanager.app.AirportManager;
-import src.airportmanager.app.exceptions.FormatoDniIncorrectoException;
-import src.airportmanager.app.exceptions.UsuarioYaExisteException;
+import src.airportmanager.AirportManager;
+import src.airportmanager.exceptions.FormatoDniIncorrectoException;
+import src.airportmanager.exceptions.UsuarioYaExisteException;
 import src.airportmanager.terminal.Terminal;
 import src.airportmanager.usuario.Gestor;
 import src.gui.ConfiguracionUI;

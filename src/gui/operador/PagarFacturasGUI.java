@@ -25,7 +25,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import es.uam.eps.padsof.telecard.*;
-import src.airportmanager.app.AirportManager;
+import src.airportmanager.AirportManager;
 import src.airportmanager.factura.Factura;
 import src.airportmanager.usuario.Operador;
 import src.gui.ConfiguracionUI;

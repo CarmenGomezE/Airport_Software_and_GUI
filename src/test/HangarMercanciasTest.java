@@ -4,12 +4,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import src.airportmanager.*;
-import src.airportmanager.app.AirportManager;
-import src.airportmanager.app.aeropuerto.*;
-import src.airportmanager.app.avion.*;
-import src.airportmanager.app.exceptions.CargaAvionEquivocadaException;
-import src.airportmanager.app.exceptions.FormatoDniIncorrectoException;
+import src.airportmanager.AirportManager;
+import src.airportmanager.aeropuerto.*;
+import src.airportmanager.avion.*;
+import src.airportmanager.exceptions.CargaAvionEquivocadaException;
+import src.airportmanager.exceptions.FormatoDniIncorrectoException;
 import src.airportmanager.vuelo.*;
 import src.airportmanager.usuario.*;
 import src.airportmanager.hangar.*;

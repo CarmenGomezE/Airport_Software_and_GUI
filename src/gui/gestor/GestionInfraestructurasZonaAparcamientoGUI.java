@@ -11,7 +11,7 @@ import java.util.List;
 
 import javax.swing.*;
 
-import src.airportmanager.app.AirportManager;
+import src.airportmanager.AirportManager;
 import src.airportmanager.terminal.PuertaEmbarque;
 import src.airportmanager.usuario.Gestor;
 import src.gui.ConfiguracionUI;

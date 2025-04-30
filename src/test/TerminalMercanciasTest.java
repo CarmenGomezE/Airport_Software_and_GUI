@@ -8,9 +8,9 @@ import java.util.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import src.airportmanager.app.aeropuerto.AeropuertoPropio;
-import src.airportmanager.app.aeropuerto.DireccionRelativaCiudad;
-import src.airportmanager.app.exceptions.FormatoDniIncorrectoException;
+import src.airportmanager.aeropuerto.AeropuertoPropio;
+import src.airportmanager.aeropuerto.DireccionRelativaCiudad;
+import src.airportmanager.exceptions.FormatoDniIncorrectoException;
 import src.airportmanager.terminal.*;
 import src.airportmanager.usuario.*;
 

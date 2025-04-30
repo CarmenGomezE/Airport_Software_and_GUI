@@ -6,12 +6,12 @@ import org.junit.jupiter.api.Test;
 import java.time.*;
 import java.util.*;
 
-import src.airportmanager.app.AirportManager;
-import src.airportmanager.app.aeropuerto.*;
-import src.airportmanager.app.avion.*;
-import src.airportmanager.app.estadisticas.*;
-import src.airportmanager.app.exceptions.FormatoDniIncorrectoException;
-import src.airportmanager.app.exceptions.TemporadasSolapadasException;
+import src.airportmanager.AirportManager;
+import src.airportmanager.aeropuerto.*;
+import src.airportmanager.avion.*;
+import src.airportmanager.estadisticas.*;
+import src.airportmanager.exceptions.FormatoDniIncorrectoException;
+import src.airportmanager.exceptions.TemporadasSolapadasException;
 import src.airportmanager.usuario.*;
 import src.airportmanager.vuelo.*;
 

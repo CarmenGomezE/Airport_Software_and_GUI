@@ -7,7 +7,7 @@ import java.util.List;
 
 import javax.swing.*;
 
-import src.airportmanager.app.AirportManager;
+import src.airportmanager.AirportManager;
 import src.airportmanager.usuario.ControladorAereo;
 import src.airportmanager.usuario.CriterioBusqueda;
 import src.airportmanager.vuelo.Vuelo;

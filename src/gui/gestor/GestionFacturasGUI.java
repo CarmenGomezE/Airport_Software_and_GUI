@@ -13,8 +13,8 @@ import java.util.Map;
 
 import javax.swing.*;
 
-import src.airportmanager.app.AirportManager;
-import src.airportmanager.app.avion.Aerolinea;
+import src.airportmanager.AirportManager;
+import src.airportmanager.avion.Aerolinea;
 import src.airportmanager.factura.EstadoFactura;
 import src.airportmanager.usuario.Gestor;
 import src.gui.ConfiguracionUI;

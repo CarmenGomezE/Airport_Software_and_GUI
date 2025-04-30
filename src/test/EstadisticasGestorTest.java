@@ -7,9 +7,9 @@ import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import src.airportmanager.app.aeropuerto.*;
-import src.airportmanager.app.estadisticas.*;
-import src.airportmanager.app.exceptions.TemporadasSolapadasException;
+import src.airportmanager.aeropuerto.*;
+import src.airportmanager.estadisticas.*;
+import src.airportmanager.exceptions.TemporadasSolapadasException;
 import src.airportmanager.hangar.*;
 import src.airportmanager.terminal.*;
 import src.airportmanager.usuario.*;

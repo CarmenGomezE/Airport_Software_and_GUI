@@ -7,7 +7,7 @@ import java.util.Date;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import src.airportmanager.app.avion.AvionMercancias;
+import src.airportmanager.avion.AvionMercancias;
 
 /**
  * Clase de test de avion de mercancias.

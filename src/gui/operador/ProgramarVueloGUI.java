@@ -8,9 +8,9 @@ import java.time.*;
 import java.util.*;
 import java.util.List;
 
-import src.airportmanager.app.AirportManager;
-import src.airportmanager.app.aeropuerto.Aeropuerto;
-import src.airportmanager.app.avion.Avion;
+import src.airportmanager.AirportManager;
+import src.airportmanager.aeropuerto.Aeropuerto;
+import src.airportmanager.avion.Avion;
 import src.airportmanager.usuario.Operador;
 import src.airportmanager.vuelo.*;
 import src.gui.ConfiguracionUI;

@@ -1,6 +1,6 @@
 package src.test;
 
-import src.airportmanager.app.avion.*;
+import src.airportmanager.avion.*;
 import src.airportmanager.factura.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,9 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
-import es.uam.eps.padsof.invoices.IInvoiceInfo;
 import es.uam.eps.padsof.invoices.IResourceUsageInfo;
-import src.airportmanager.factura.*;
 
 /**
  * Clase FacturaTest
