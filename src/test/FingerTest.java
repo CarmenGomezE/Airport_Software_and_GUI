@@ -44,6 +44,8 @@ class FingerTest {
 
     }
 
+   
+
     /**
      * GetId
      */
@@ -62,6 +64,7 @@ class FingerTest {
         Vuelo vueloPequeno;
         LocalDate fecha;
         LocalTime hora, h;
+        Date revision;
         Calendar calendar;
         Avion avion;
         AeropuertoDestino aeropuertoDestino;
@@ -78,6 +81,7 @@ class FingerTest {
         h = LocalTime.of(11, 30, 0);
         calendar = Calendar.getInstance();
         calendar.set(2024, Calendar.JANUARY, 22);
+        revision = calendar.getTime();
         zone = ZoneOffset.of("+1");
         zone2 = ZoneOffset.of("+2");
 

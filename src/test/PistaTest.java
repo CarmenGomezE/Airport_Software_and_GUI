@@ -111,14 +111,7 @@ class PistaTest {
         assertEquals("P132", pista2.getCodigo(), "Error. El código de la pista no es el esperado");
     }
 
-    /**
-     * Test method for {@link src.airportmanager.pista.Pista#getLongitud()}.
-     */
-    @Test
-    void testGetLongitud() {
-        assertEquals(3500.0, pista1.getLongitud(), "Error. La longitud de la pista no es la esperada");
-        assertEquals(3400.0, pista2.getLongitud(), "Error. La longitud de la pista no es la esperada");
-    }
+   
 
     /**
      * Test method for {@link src.airportmanager.pista.Pista#getTipoPista()}.

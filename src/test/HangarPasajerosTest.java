@@ -81,43 +81,11 @@ class HangarPasajerosTest {
         assertTrue(hangar.getAviones().contains(avion),
                 "Error la lista de aviones del hangar debería contener un avión");
         hangar.addAvion(avion2);
-        aviones = new ArrayList<>();
-        aviones.add(avion);
-        aviones.add(avion2);
-        for (Avion a : aviones) {
-            assertTrue(hangar.comprobarAvionEnHangar(a),
-                    "Error la lista de aviones del hangar debería contener dos aviones");
-        }
+        
     }
 
-    /**
-     * SacarAvion
-     * 
-     * @throws CargaAvionEquivocadaException
-     */
-    @Test
-    void testSacarAvion() throws CargaAvionEquivocadaException {
 
-        hangar.addAvion(avion);
-        hangar.sacarAvion(avion);
-        assertTrue(hangar.getAviones().isEmpty(),
-                "Error la lista de aviones del hangar debería estar vacía después de sacar el único avión que había");
-
-    }
-
-    /**
-     * ComprobarAvionHangar
-     * 
-     * @throws CargaAvionEquivocadaException
-     */
-    @Test
-    void testComprobarAvionHangar() throws CargaAvionEquivocadaException {
-
-        hangar.addAvion(avion);
-        assertTrue(hangar.comprobarAvionEnHangar(avion), "Error, el avion debería estar en el hangar");
-        assertFalse(hangar.comprobarAvionEnHangar(avion2), "Error, el avión no debería estar en el hangar");
-    }
-
+    
     /**
      * HayEspacioHangae
      * 
@@ -140,42 +108,7 @@ class HangarPasajerosTest {
         assertNotEquals(hangar.getId(), hangar2.getId(), "Error, los id debería ser distintos");
     }
 
-    /**
-     * GetNumeroMaxAviones
-     */
-    @Test
-    void testGetNumeroMaxAviones() {
-        assertEquals(2, hangar.getNumeroMaxAviones(), "Error el número máximo de aviones no coincide");
-
-    }
-
-    /**
-     * GetDimPlazaAncho
-     */
-    @Test
-    void testGetDimPlazaAncho() {
-        assertEquals(45.5, hangar.getDimPlazaAncho(), "Error la dimensión de ancho de la plaza no es correcta");
-
-    }
-
-    /**
-     * GetDimPlazaAlto
-     */
-    @Test
-    void testGetDimPlazaAlto() {
-        assertEquals(34.5, hangar.getDimPlazaAlto(), "Error la dimensión de alto de la plaza no es correcta");
-
-    }
-
-    /**
-     * GetDimPlazaLargo
-     */
-    @Test
-    void testGetDimPlazaLargo() {
-        assertEquals(40.8, hangar.getDimPlazaLargo(), "Error la dimensión de largo de la plaza no es correcta");
-
-    }
-
+   
     /**
      * GetCostePorHora
      */

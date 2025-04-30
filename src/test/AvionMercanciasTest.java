@@ -30,12 +30,19 @@ class AvionMercanciasTest {
 
 	}
 
+	/**
+	 * GetCapacidadMaxCarga
+	 */
 	@Test
 	void testGetCapacidadMaxCarga() {
 		assertEquals(250.60, avionMercancias.getCapacidadMaxCarga(),
 				"Error el campo de capacidad máxima de carga no es correcto");
 	}
 
+
+	/**
+	 * GetMercaPeligrosa
+	 */
 	@Test
 	void testGetMercaPeligrosa() {
 		assertEquals(false, avionMercancias.getMercaPeligrosa(), "Error el campo de mercancías peligrosas");

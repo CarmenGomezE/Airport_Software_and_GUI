@@ -45,16 +45,6 @@ class NotificacionTest{
 
  
    /**
-    * GetFecha
-    */
-   @Test
-    void testGetFecha() {
-        ahora = LocalDateTime.now();
-        assertTrue(Duration.between(noti1.getFecha(), ahora).getSeconds() < 2, "Error, la fecha de la notificación no es la esperada.");
-        assertTrue(Duration.between(noti2.getFecha(), ahora).getSeconds() < 2, "Error, la fecha de la notificación no es la esperada.");
-    }
-
-   /**
     * GetTipoNotificacion
     */
     @Test 

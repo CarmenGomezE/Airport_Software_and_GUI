@@ -56,6 +56,7 @@ public class AerolineaTest {
     @BeforeEach
     void setUp() throws FormatoDniIncorrectoException {
 
+    	SistemaFacturacion s = new SistemaFacturacion(30.5, 10.2, 20.9);
         calendar = Calendar.getInstance();
         calendar.set(2024, Calendar.JANUARY, 22);
         fechaAvion = calendar.getTime();
@@ -70,7 +71,7 @@ public class AerolineaTest {
         operador = new Operador("Pedro", "57487643T", aerolinea, aeropuerto, gestor, sistema);
         aerolinea.setOperador(operador);
         gestor.establecerSistemaFacturacion();
-        facturas = gestor.getSistemaFacturacion().generarFactura(aerolinea);
+        facturas = s.generarFactura(aerolinea);
         avion = new AvionPasajeros("AIRBUS", "A3", 5.0, 5.5, 5.5, 600.000, 2020, null, null, 0);
         avion.setAerolinea(aerolinea);
         aerolinea.agregarAvion(avion);

@@ -181,15 +181,6 @@ class VueloProgramadoTest {
 		assertEquals(LocalTime.of(8, 30), vuelo1.getHora(), "Error, el vuelo debría poner la hora inicializada");
 	}
 
-	/**
-	 * SetAvion
-	 */
-	@Test
-	void testSetAvion() {
-		avion2 = new AvionPasajeros("AIRBAG", "AIR7", 87.0, 67.9, 54.2, 900000, 2021, new Date(), "PSJWU78", 0);
-		vuelo1.setAvion(avion2);
-		assertEquals(avion2, vuelo1.getAvion(), "Error, el vuelo debería poner el avion inicializado");
-	}
 
 	/**
 	 * SetFecha

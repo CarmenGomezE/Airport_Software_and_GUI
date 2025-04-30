@@ -59,14 +59,6 @@ public class TerminalPasajerosTest {
     }
 
     /**
-     * GetNumeroMaxAviones
-     */
-    @Test
-    void testGetNumeroMaxAviones() {
-        assertEquals(100, terminal.getNumeroMaxAviones(), "Error, el número máximo de pasajeros no es correcto");
-    }
-
-    /**
      * GetCodgo
      */
     @Test

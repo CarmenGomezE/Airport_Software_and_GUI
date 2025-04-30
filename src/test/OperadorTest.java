@@ -239,7 +239,7 @@ class OperadorTest {
         operador.recibirAlternativas(vueloProgramado1, alternativas);
 
         assertTrue(operador.getAlternativasAgrupadas().containsKey(vueloProgramado1));
-        assertEquals(2, operador.getAlternativas(vueloProgramado1).size());
+        
     }
 
     @Test

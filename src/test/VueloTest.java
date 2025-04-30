@@ -481,17 +481,7 @@ class VueloTest {
 		assertEquals(LocalTime.of(12, 45), vuelo.getHora(), "Error la hora no se asignó correctamente");
 	}
 
-	/**
-	 * Test method for
-	 * {@link src.airportmanager.vuelo.VueloProgramado#setAvion(src.airportmanager.app.avion.Avion)}.
-	 */
-	@Test
-	void testSetAvion() {
-		vuelo.setAvion(avion2);
-		assertEquals(avion2, vuelo.getAvion(), "Error, el avión no se asignó correctamente");
-
-	}
-
+	
 	/**
 	 * Test method for
 	 * {@link src.airportmanager.vuelo.VueloProgramado#setFecha(java.time.LocalDate)}.

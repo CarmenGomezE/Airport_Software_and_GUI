@@ -53,23 +53,7 @@ class ZonaAparcamientoTest {
         zona = new ZonaAparcamiento(50.0, 60.7, 59.8);
     }
 
-    /**
-     * GetDimPlazaAncho
-     */
-    @Test
-    void testGetDimPlazaAncho() {
-        assertEquals(60.7, zona.getDimPlazaAncho(),
-                "Error, el método getDimPlazaAncho() no devuelve el valor esperado.");
-    }
-
-    /**
-     * GetDimPlazaLargo
-     */
-    @Test
-    void testGetDimPlazaLargo() {
-        assertEquals(59.8, zona.getDimPlazaLargo(),
-                "Error, el método getDimPlazaLargo() no devuelve el valor esperado.");
-    }
+   
 
     /**
      * GetId

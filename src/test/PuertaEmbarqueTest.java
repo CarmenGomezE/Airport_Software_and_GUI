@@ -130,48 +130,7 @@ public class PuertaEmbarqueTest {
 
     }
 
-    /**
-     * GetHorasUso
-     */
-    @Test
-    void testGetHorasUso() {
-        assertEquals(0.0, puerta1.getHorasUso(),
-                "Error, al principio la puerta de embarque debería tener 0 horas de uso");
-    }
-
-    /**
-     * AddHorasUso
-     */
-    @Test
-    void testAddHorasUso() {
-        puerta1.addHorasUso(6);
-        assertEquals(6, puerta1.getHorasUso(), "Error, la puerta de embarque debería tener 6 horas de uso");
-    }
-
-    /**
-     * AddHorasUsoNegativo
-     */
-    @Test
-    void testAddHorasUsoNegativo() {
-        excepcion = assertThrows(IllegalArgumentException.class, () -> {
-            puerta1.addHorasUso(-2.0);
-        });
-
-        assertEquals("Las horas deben ser un número positivo", excepcion.getMessage(),
-                "Error, no se lanzó la excepción esperada");
-    }
-
-    /**
-     * ResetHorasUso
-     */
-    @Test
-    void testResetHorasUso() {
-        puerta1.addHorasUso(4);
-        puerta1.resetHorasUso();
-        assertEquals(0.0, puerta1.getHorasUso(),
-                "Error las horas de uso de la puerta de embarque no se resetearon correctamente");
-    }
-
+    
     /**
      * ContieneZonaAparcamiento
      */

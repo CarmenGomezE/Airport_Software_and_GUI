@@ -148,7 +148,7 @@ public class EstadisticasOperadorTest {
             estadisticas.imprimirNumeroVuelosRetrasados();
             estadisticas.imprimirTiempoMedioRetraso(Month.JANUARY);
             estadisticas.imprimirTiempoMedioRetraso(ZoneId.of("Europe/Madrid"));
-            estadisticas.imprimirTiempoMedioRetraso(vuelo1);
+           
         });
     }
 

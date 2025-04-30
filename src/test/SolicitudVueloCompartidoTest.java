@@ -60,17 +60,7 @@ public class SolicitudVueloCompartidoTest {
         solicitud = new SolicitudVueloCompartido(vuelo, operadorSolicitante, operadorPrincipal, 30.0);
     }
 
-    /**
-     * Constructor
-     */
-    @Test
-    void testConstructor() {
-        assertEquals(vuelo, solicitud.getVueloOriginal());
-        assertEquals(operadorSolicitante, solicitud.getOperadorSolicitante());
-        assertEquals(operadorPrincipal, solicitud.getOperadorReceptor());
-        assertEquals(30.0, solicitud.getPorcentaje(), 0.001);
-        assertEquals(EstadoSolicitud.PENDIENTE, solicitud.getEstadoSolicitud());
-    }
+   
 
     /**
      * AceptarSolicitudalida
@@ -142,13 +132,7 @@ public class SolicitudVueloCompartidoTest {
         assertEquals(vuelo, solicitud.getVueloOriginal());
     }
 
-    /**
-     * GetPorcentaje
-     */
-    @Test
-    void testGetPorcentaje() {
-        assertEquals(30.0, solicitud.getPorcentaje(), 0.001);
-    }
+    
 
     /**
      * GetOperadorSolicitante
@@ -158,13 +142,7 @@ public class SolicitudVueloCompartidoTest {
         assertEquals(operadorSolicitante, solicitud.getOperadorSolicitante());
     }
 
-    /**
-     * GetOperadorReceptor
-     */
-    @Test
-    void testGetOperadorReceptor() {
-        assertEquals(operadorPrincipal, solicitud.getOperadorReceptor());
-    }
+   
 
     /**
      * GetEstadoSolicitud

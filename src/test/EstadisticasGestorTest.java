@@ -65,10 +65,6 @@ public class EstadisticasGestorTest {
         aeropuerto.addHangar(hangar);
         aeropuerto.addTerminal(terminal);
 
-        finger.addHorasUso(10.0);
-        puerta.addHorasUso(10.0);
-        zona.addHorasUso(10.0);
-        hangar.addHorasUso(10.0);
 
         gestor = new Gestor("Test Gestor", "password", aeropuerto, null);
 

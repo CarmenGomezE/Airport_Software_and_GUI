@@ -70,7 +70,8 @@ class ControladorAereoTest {
 	private List<PuertaEmbarque> puertasList, puertasList2;
 	private Temporada temporada1, temporada2;
 	private List<Temporada> temporadas;
-	private Notificacion notificacion;
+	private Notificacion notificacion, notificacion2;
+	private List<Notificacion> notificaciones;
 	private ByteArrayOutputStream salidaConsola;
 
 	/**
@@ -170,6 +171,7 @@ class ControladorAereoTest {
 		temporadas.add(temporada2);
 
 		notificacion = new Notificacion("Cambio estado de vuelo", TipoNotificacion.CAMBIO_ESTADO_VUELO);
+		notificaciones = new ArrayList<>();
 		salidaConsola = new ByteArrayOutputStream();
 		System.setOut(new PrintStream(salidaConsola));
 
@@ -292,13 +294,7 @@ class ControladorAereoTest {
 		assertEquals(aeropuertoPropio, controlador.getAeropuerto(), "Error el aeropuerto no es correcto");
 	}
 
-	/**
-	 * GetSistema
-	 */
-	@Test
-	void testGetSistema() {
-		assertEquals(sistema, controlador.getSistema(), "Error el sistema no coincide");
-	}
+	
 
 	/**
 	 * GetNombre

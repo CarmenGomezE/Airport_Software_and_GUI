@@ -90,6 +90,7 @@ public class GestorTest {
         assertFalse(aerolinea.getOperador().getNotificaciones().isEmpty());
     }
 
+   
     /**
      * BuscarUsuarioPorDNI
      */
@@ -98,10 +99,10 @@ public class GestorTest {
         aeropuerto.addUsuario(operador);
         UsuarioConDni encontrado = gestor.buscarUsuarioPorDni("12345678A");
         assertEquals(operador, encontrado);
-
         assertNull(gestor.buscarUsuarioPorDni("DNI_INEXISTENTE"));
     }
 
+   
     /**
      * DarDeAltaAerolinea
      */
@@ -295,4 +296,5 @@ public class GestorTest {
         gestor.recibirNotificacion(notificacion);
         assertEquals(1, gestor.getNotificaciones().size());
     }
+
 }
