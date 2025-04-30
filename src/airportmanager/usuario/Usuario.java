@@ -76,15 +76,6 @@ public abstract class Usuario implements Serializable {
     }
 
     /**
-     * Método para obtener el sistema.
-     * 
-     * @return El sistema.
-     */
-    public AirportManager getSistema() {
-        return sistema;
-    }
-
-    /**
      * Método para obtener el nombre de un usuario.
      * 
      * @return El nombre del usuario.
@@ -156,17 +147,6 @@ public abstract class Usuario implements Serializable {
         }
 
         System.out.println("+----------------------+----------------------+");
-    }
-
-    /**
-     * Método para recargar la lista de vuelos del usuario con sus estados.
-     */
-    public void recargarListaVuelos() {
-        System.out.println("Refrescando lista de vuelos...");
-        for (Vuelo v : aeropuerto.getVuelosAceptados()) {
-            sistema.actualizarEstadoVueloAutomatico(v);
-        }
-        verListaVuelos();
     }
 
     /**

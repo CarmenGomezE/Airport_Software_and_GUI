@@ -785,23 +785,6 @@ public class Operador extends UsuarioConDni {
         recibirNotificacion(new Notificacion("Solicitud para compartir el vuelo con código " + vuelo.getCodigo() + ".", TipoNotificacion.SOLICITUD_COMPARTIR_VUELO));
     }
 
-    /**
-     * Método que devuelve las alternativas del Operador.
-     * 
-     * @param vueloOriginal vuelo del que se han generado las alternativas.
-     * @return Lista de alternativas.
-     */
-    public List<Vuelo> getAlternativas(VueloProgramado vueloOriginal) {
-        List<Vuelo> alternativas = alternativasPorVuelo.get(vueloOriginal);
-        
-        if (alternativas == null || alternativas.isEmpty()) {
-            System.out.println("No hay alternativas propuestas para este vuelo.");
-            return Collections.emptyList();
-        }
-
-        return Collections.unmodifiableList(alternativas);
-    }
-
 	/**
      * Método que devuelve las solicitudes de vuelo recibidas del Operador.
      * 
