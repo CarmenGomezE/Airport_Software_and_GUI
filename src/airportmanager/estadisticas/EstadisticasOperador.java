@@ -209,13 +209,4 @@ public class EstadisticasOperador implements Serializable {
     public void imprimirTiempoMedioRetraso(ZoneId franjaHoraria) {
         System.out.println("Tiempo medio de retraso: " + getTiempoMedioRetrasoPorFranjaHoraria(franjaHoraria) + " minutos.");
     }
-
-    /**
-     * Método que imprime el tiempo medio para un vuelo.
-     * 
-     * @param vuelo Vuelo.
-     */
-    public void imprimirTiempoMedioRetraso(Vuelo vuelo) {
-        System.out.println("Tiempo medio de retraso:" + getTiempoMedioRetrasoPorVuelo(vuelo) + " minutos.");
-    }
 }

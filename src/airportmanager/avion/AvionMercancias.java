@@ -61,15 +61,6 @@ public class AvionMercancias extends Avion {
     }
 
     /**
-     * Método que devuelve si un AvionMercancias necesita control de temperatura.
-     * 
-     * @return True en caso de que necesite control de temperatura.
-     */
-    public boolean getControlTemperatura() {
-        return this.controlTemperatura;
-    }
-
-    /**
      * Método que devuelve si un AvionMercancias transporta mercancias peligrosas.
      * 
      * @return True en caso de que transporte mercancías peligrosas
