@@ -37,7 +37,7 @@ public class Temporada implements Serializable {
      * @param horarioCierre   Horario de cierre de la temporada.
      * @param fechaFin        Fecha de fin de la temporada
      */
-    public Temporada(String fechaInicio, String fechaFin, String horarioApertura, String horarioCierre) {
+    public Temporada(String fechaInicio, String horarioApertura, String horarioCierre, String fechaFin) {
         int thisYear = LocalDate.now().getYear();
         try {
             this.fechaInicio = MonthDay.parse(fechaInicio, formatoFecha).atYear(thisYear);
