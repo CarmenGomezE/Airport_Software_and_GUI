@@ -166,17 +166,6 @@ public class Gestor extends Usuario {
         }
     }
 
-
-    /**
-     * Método para consultar el estado de una factura.
-     * 
-     * @param factura Factura que se quiere consultar.
-     * @return Estado de una factura en concreto.
-     */
-    public EstadoFactura verEstadoFactura(Factura factura) {
-        return factura.getEstado();
-    }
-
     /**
      * Método para buscar un usuarioConDni por dni.
      * 
@@ -194,28 +183,6 @@ public class Gestor extends Usuario {
             }
         }
         return null;
-    }
-
-    /**
-     * Método para notificar de un problema con la contraseña del usuario del que se
-     * recive el dni.
-     * 
-     * @param dni Dni del usuario que tiene problemas.
-     * 
-     */
-    public void notificarProblemaContrasena(String dni) {
-        Usuario usuario;
-        Notificacion notificacion;
-        usuario = buscarUsuarioPorDni(dni);
-
-        if (usuario != null) {
-            notificacion = new Notificacion("Problema con la contraseña. Contacta con el gestor", TipoNotificacion.OLVIDO_CONTRASENA);
-            usuario.recibirNotificacion(notificacion);
-        }
-
-        else {
-            System.out.println("Usuario con DNI" + dni + "no encontrado.");
-        }
     }
 
     /**
@@ -1001,47 +968,6 @@ public class Gestor extends Usuario {
 		}
 		
 	}
-    
-    /**
-     * Método que establece el coste base de los vuelos de salida desde el
-     * aeropuerto.
-     * 
-     * @param nuevocosteBaseVueloSalida El nuevo coste base para los vuelos de
-     *                                  salida.
-     */
-    public  void setCosteBaseVueloSalida(double nuevocosteBaseVueloSalida) {
-    	costeBaseVueloSalida = nuevocosteBaseVueloSalida;
-        if (sistemaFacturacion != null) {
-            sistemaFacturacion.setCosteBaseVueloSalida(nuevocosteBaseVueloSalida);
-        }
-    }
-
-    /**
-     * Método que establece el coste base de los vuelos de llegada al aeropuerto.
-     * 
-     * @param nuevocosteBaseVueloLlegada El nuevo coste base para los vuelos de
-     *                                   llegada.
-     */
-    public void setCosteBaseVueloLlegada(double nuevocosteBaseVueloLlegada) {
-    	costeBaseVueloLlegada = nuevocosteBaseVueloLlegada;
-        if (sistemaFacturacion != null) {
-            sistemaFacturacion.setCosteBaseVueloLlegada(nuevocosteBaseVueloLlegada);
-        }
-    }
-
-    /**
-     * Método que establece el recargo adicional para los vuelos de aviones de
-     * mercancías.
-     * 
-     * @param nuevorecargoAvionMercancias El nuevo recargo que se aplicará a los
-     *                                    vuelos de aviones de mercancías.
-     */
-    public void setRecargoAvionMercancias(double nuevorecargoAvionMercancias) {
-    	recargoAvionMercancias = nuevorecargoAvionMercancias;
-        if (sistemaFacturacion != null) {
-            sistemaFacturacion.setRecargoAvionMercancias(nuevorecargoAvionMercancias);
-        }
-    }
 
     /**
      * Método que devuelve los tipos de notificación que puede recibir el gestor.
@@ -1051,16 +977,6 @@ public class Gestor extends Usuario {
      */
     public List<TipoNotificacion> getTiposPermitidosNotificaciones() {
         return tiposPermitidosNotificaciones;
-    }
-
-    /**
-     * Método para añadir un tipo de notificación a los que puede recibir.
-     * 
-     * @param tiposPermitidosNotificaciones Tipo de notificación.
-     * 
-     */
-    public void addTiposPermitidosNotificaciones(TipoNotificacion tiposPermitidosNotificaciones) {
-        this.tiposPermitidosNotificaciones.add(tiposPermitidosNotificaciones);
     }
 
     /**
@@ -1106,16 +1022,6 @@ public class Gestor extends Usuario {
      */
 	public static void setRangoMinutosMaximoCambioVuelo(int i) {
 		rangoMinutosMaximoCambioVuelo=i;
-	}
-
-	/**
-     * Método que devuelve el sistema de facturación.
-     * 
-     * @return Sistema de Facturaicón
-     * 
-     */
-	public SistemaFacturacion getSistemaFacturacion() {
-		return sistemaFacturacion;
 	}
 
 	/**
