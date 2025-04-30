@@ -78,16 +78,20 @@ Proyecto que implementa la interfaz gráfica para un software de gestión de un 
 		- NOTIFICACIONES:
 		- DAR DE ALTA HANGAR:
 			- mercancías:
+				tipo= mercancias,
+				n
 			- pasajeros:
 		- DAR DE ALTA TERMINAL:
 			- mercancías:
 			- pasajeros:
 		- DAR DE ALTA FINGER:
+			
 		- DAR DE ALTA ZONA DE APARCAMIENTO:
 		- DAR DE ALTA PISTA DESPEGUE:
 		- DAR DE ALTA PISTA ATERRIZAJE:
 		- DAR DE ALTA AEROLÍNEA:
 		- DAR DE ALTA AEROPUERTO DE DESTINO:
+			fichero:
 		- DAR DE ALTA CONTROLADOR:
 		- DAR DE ALTA OPERADOR:
 		- CONFIGURACIÓN DEL AEROPUERTO PROPIO:
