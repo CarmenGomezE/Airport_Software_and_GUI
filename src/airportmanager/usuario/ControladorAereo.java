@@ -766,7 +766,6 @@ public class ControladorAereo extends UsuarioConDni {
     	
 		if(notificacion.getTipoNotificacion()==TipoNotificacion.CAMBIO_ESTADO_VUELO) {
 			 notificaciones.add(notificacion);
-			 System.out.println("Nueva notificación: " + notificacion.getMensaje());
 		}
     }
     

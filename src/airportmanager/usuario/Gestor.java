@@ -912,7 +912,6 @@ public class Gestor extends Usuario {
     	for(TipoNotificacion tipo: getTiposPermitidosNotificaciones() )	{
     		if(notificacion.getTipoNotificacion()==tipo) {
     			 notificaciones.add(notificacion);
-    			 System.out.println("Nueva notificación: " + notificacion.getMensaje());
     		}
     	}
     }

@@ -806,7 +806,6 @@ public class Operador extends UsuarioConDni {
 				|| notificacion.getTipoNotificacion()==TipoNotificacion.OPCIONES_REPROGRAMAR_VUELO || notificacion.getTipoNotificacion()==TipoNotificacion.SOLICITUD_COMPARTIR_VUELO 
 				|| notificacion.getTipoNotificacion()==TipoNotificacion.OLVIDO_CONTRASENA) {
 			 notificaciones.add(notificacion);
-			 System.out.println("Nueva notificación: " + notificacion.getMensaje());
 		}
     }
 
