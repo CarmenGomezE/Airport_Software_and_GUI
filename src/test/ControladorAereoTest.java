@@ -70,8 +70,7 @@ class ControladorAereoTest {
 	private List<PuertaEmbarque> puertasList, puertasList2;
 	private Temporada temporada1, temporada2;
 	private List<Temporada> temporadas;
-	private Notificacion notificacion, notificacion2;
-	private List<Notificacion> notificaciones;
+	private Notificacion notificacion;
 	private ByteArrayOutputStream salidaConsola;
 
 	/**
@@ -171,7 +170,6 @@ class ControladorAereoTest {
 		temporadas.add(temporada2);
 
 		notificacion = new Notificacion("Cambio estado de vuelo", TipoNotificacion.CAMBIO_ESTADO_VUELO);
-		notificaciones = new ArrayList<>();
 		salidaConsola = new ByteArrayOutputStream();
 		System.setOut(new PrintStream(salidaConsola));
 
