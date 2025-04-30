@@ -36,7 +36,12 @@ public class ConfiguracionUI {
     /**Quitamos bordes de los campos de texto y comboBox*/
     public static final Border BORDE_VACIO = BorderFactory.createEmptyBorder();
 
-    // Métodos para crear componentes
+    /**
+     *Constructor de la clase de configuración de la interfaz.
+     */
+    public ConfiguracionUI(){
+    	/** Constructor vacío*/
+    }
     /**
      * Método estático que crea una etiqueta
      * @param texto el texto a poner en la etiqueta.
