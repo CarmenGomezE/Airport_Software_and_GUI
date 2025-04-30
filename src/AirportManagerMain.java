@@ -1312,8 +1312,6 @@ public class AirportManagerMain {
 		operadorIberia.getEstadisticasOperador().imprimirNumeroVuelosRetrasados();
 		operadorIberia.getEstadisticasOperador().imprimirTiempoMedioRetraso(Month.MARCH);
 		operadorIberia.getEstadisticasOperador().imprimirTiempoMedioRetraso(ZoneId.of("Europe/Madrid"));
-		operadorIberia.getEstadisticasOperador()
-				.imprimirTiempoMedioRetraso(airportManager.getAeropuerto().getVuelosAceptados().get(6));
 
 		System.out.println("\nEstadísticas del gestor de Barajas.");
 		gestorBarajas.getEstadisticasAeropuerto().cargarDatosEstadisticas();
