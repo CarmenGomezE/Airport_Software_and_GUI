@@ -9,7 +9,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import src.airportmanager.app.AirportManager;
+import src.airportmanager.AirportManager;
 import src.airportmanager.usuario.Operador;
 import src.airportmanager.vuelo.EstadoVuelo;
 import src.airportmanager.vuelo.Vuelo;

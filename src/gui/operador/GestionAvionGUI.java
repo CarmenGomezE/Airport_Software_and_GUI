@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.*;
 
-import src.airportmanager.app.AirportManager;
+import src.airportmanager.AirportManager;
 import src.airportmanager.usuario.Operador;
 import src.gui.ConfiguracionUI;
 

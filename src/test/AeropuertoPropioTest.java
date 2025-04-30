@@ -10,11 +10,11 @@ import java.util.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import src.airportmanager.app.AirportManager;
-import src.airportmanager.app.aeropuerto.*;
-import src.airportmanager.app.avion.*;
-import src.airportmanager.app.exceptions.FormatoDniIncorrectoException;
-import src.airportmanager.app.exceptions.TemporadasSolapadasException;
+import src.airportmanager.AirportManager;
+import src.airportmanager.aeropuerto.*;
+import src.airportmanager.avion.*;
+import src.airportmanager.exceptions.FormatoDniIncorrectoException;
+import src.airportmanager.exceptions.TemporadasSolapadasException;
 import src.airportmanager.terminal.*;
 import src.airportmanager.hangar.*;
 import src.airportmanager.pista.Pista;

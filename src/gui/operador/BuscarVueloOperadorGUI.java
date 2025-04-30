@@ -1,6 +1,5 @@
 package src.gui.operador;
 
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -24,7 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-import src.airportmanager.app.AirportManager;
+import src.airportmanager.AirportManager;
 import src.airportmanager.usuario.CriterioBusqueda;
 import src.airportmanager.usuario.Operador;
 import src.airportmanager.vuelo.Vuelo;

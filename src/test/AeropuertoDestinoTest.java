@@ -9,10 +9,10 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import src.airportmanager.app.aeropuerto.AeropuertoDestino;
-import src.airportmanager.app.aeropuerto.DireccionRelativaCiudad;
-import src.airportmanager.app.aeropuerto.Temporada;
-import src.airportmanager.app.exceptions.TemporadasSolapadasException;
+import src.airportmanager.aeropuerto.AeropuertoDestino;
+import src.airportmanager.aeropuerto.DireccionRelativaCiudad;
+import src.airportmanager.aeropuerto.Temporada;
+import src.airportmanager.exceptions.TemporadasSolapadasException;
 
 /**
  * AeropuertoDestinoTest

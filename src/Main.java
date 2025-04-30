@@ -1,7 +1,6 @@
 package src;
 
-import src.airportmanager.*;
-import src.airportmanager.app.AirportManager;
+import src.airportmanager.AirportManager;
 import src.gui.*;
 
 import java.io.File;

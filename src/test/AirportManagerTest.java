@@ -13,9 +13,9 @@ import src.airportmanager.terminal.PuertaEmbarque;
 import src.airportmanager.terminal.TerminalPasajeros;
 import src.airportmanager.usuario.Operador;
 import src.airportmanager.vuelo.*;
-import src.airportmanager.app.AirportManager;
-import src.airportmanager.app.avion.*;
-import src.airportmanager.app.exceptions.*;
+import src.airportmanager.AirportManager;
+import src.airportmanager.avion.*;
+import src.airportmanager.exceptions.*;
 
 /**
  * AirporManagerTest

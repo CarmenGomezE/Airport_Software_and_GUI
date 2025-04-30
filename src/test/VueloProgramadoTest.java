@@ -12,10 +12,9 @@ import java.util.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import src.airportmanager.app.aeropuerto.*;
-import src.airportmanager.app.avion.*;
+import src.airportmanager.aeropuerto.*;
+import src.airportmanager.avion.*;
 import src.airportmanager.vuelo.*;
-import src.airportmanager.usuario.*;
 
 /**
  * VueloProgramado test

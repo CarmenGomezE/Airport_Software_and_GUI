@@ -7,9 +7,8 @@ import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import src.airportmanager.app.AirportManager;
-import src.airportmanager.app.exceptions.*;
+import src.airportmanager.AirportManager;
+import src.airportmanager.exceptions.*;
 import src.airportmanager.usuario.*;
 import src.gui.controlador.ControladorGUI;
 import src.gui.gestor.GestorGUI;

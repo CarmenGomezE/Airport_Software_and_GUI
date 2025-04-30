@@ -8,7 +8,7 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
-import src.airportmanager.app.AirportManager;
+import src.airportmanager.AirportManager;
 import src.airportmanager.usuario.Gestor;
 import src.airportmanager.vuelo.Vuelo;
 import src.gui.ConfiguracionUI;

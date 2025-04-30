@@ -12,9 +12,9 @@ import java.util.List;
 
 import javax.swing.*;
 
-import src.airportmanager.app.AirportManager;
-import src.airportmanager.app.aeropuerto.DireccionRelativaCiudad;
-import src.airportmanager.app.aeropuerto.Temporada;
+import src.airportmanager.AirportManager;
+import src.airportmanager.aeropuerto.DireccionRelativaCiudad;
+import src.airportmanager.aeropuerto.Temporada;
 import src.airportmanager.usuario.Gestor;
 import src.gui.ConfiguracionUI;
 

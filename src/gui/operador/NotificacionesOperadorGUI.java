@@ -1,8 +1,6 @@
 package src.gui.operador;
 
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,7 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
-import src.airportmanager.app.AirportManager;
+import src.airportmanager.AirportManager;
 import src.airportmanager.notificacion.Notificacion;
 import src.airportmanager.usuario.Operador;
 import src.gui.ConfiguracionUI;

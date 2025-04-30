@@ -8,7 +8,7 @@ import java.time.LocalTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import src.airportmanager.app.aeropuerto.Temporada;
+import src.airportmanager.aeropuerto.Temporada;
 
 /**
  * TemporadaTest

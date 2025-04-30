@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import src.airportmanager.app.AirportManager;
+import src.airportmanager.AirportManager;
 import src.airportmanager.usuario.Operador;
 import src.airportmanager.vuelo.Vuelo;
 import src.gui.ConfiguracionUI;

@@ -26,7 +26,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import src.airportmanager.app.AirportManager;
+import src.airportmanager.AirportManager;
 import src.airportmanager.usuario.Gestor;
 import src.airportmanager.vuelo.VueloProgramado;
 import src.gui.ConfiguracionUI;
