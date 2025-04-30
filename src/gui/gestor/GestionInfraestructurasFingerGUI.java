@@ -120,6 +120,11 @@ public class GestionInfraestructurasFingerGUI extends JFrame {
 					}
 
 					gestor.darDeAltaFinger(altura, coste, puertas);
+					JOptionPane.showMessageDialog(null,
+							"¡Finger dado de alta correctamente!",
+							"Éxito",
+							JOptionPane.INFORMATION_MESSAGE);
+
 
 				} catch (NumberFormatException e1) {
 					JOptionPane.showMessageDialog(null,
@@ -128,11 +133,7 @@ public class GestionInfraestructurasFingerGUI extends JFrame {
 							JOptionPane.ERROR_MESSAGE);
 				}
 
-				JOptionPane.showMessageDialog(null,
-						"¡Finger dado de alta correctamente!",
-						"Éxito",
-						JOptionPane.INFORMATION_MESSAGE);
-
+				
 			}
 
 		});

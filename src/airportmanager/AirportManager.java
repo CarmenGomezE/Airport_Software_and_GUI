@@ -273,12 +273,10 @@ public class AirportManager implements Serializable {
                 if (vueloYaSalio || estadoFinal) {
                     timer.cancel();
                     temporizadores.remove(v);
-                    System.out.println("Se cancela el timer del vuelo " + v.getCodigo());
                 }
             }
         };
         timer.scheduleAtFixedRate(tarea, 0, 5 * 60 * 1000);
-        System.out.println("Temporizador iniciado para el vuelo " + v.getCodigo());
     }
 
      /**

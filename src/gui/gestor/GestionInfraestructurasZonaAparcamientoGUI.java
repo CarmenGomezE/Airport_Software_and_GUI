@@ -118,14 +118,16 @@ public class GestionInfraestructurasZonaAparcamientoGUI extends JFrame {
 							return;
 						}
 
-						JOptionPane.showMessageDialog(null,
-								"¡Zona de aparcamiento dada de alta correctamente!",
-								"Éxito",
-								JOptionPane.INFORMATION_MESSAGE);
+						
 
 					}
 
 					gestor.darDeAltaZonaAparcamiento(ancho, coste, largo, puertas);
+					
+					JOptionPane.showMessageDialog(null,
+							"¡Zona de aparcamiento dada de alta correctamente!",
+							"Éxito",
+							JOptionPane.INFORMATION_MESSAGE);
 
 				} catch (NumberFormatException e1) {
 					JOptionPane.showMessageDialog(null,

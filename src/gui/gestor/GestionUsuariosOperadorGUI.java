@@ -101,6 +101,10 @@ public class GestionUsuariosOperadorGUI extends JFrame {
 				}
 				try {
 					gestor.darDeAltaOperador(nombre, dni, aerolinea);
+					JOptionPane.showMessageDialog(null,
+							"¡Operador dado de alta correctamente en la aerolínea " + aerolinea.getNombre() + "!",
+							"Éxito",
+							JOptionPane.INFORMATION_MESSAGE);
 				} catch (UsuarioYaExisteException e1) {
 					e1.printStackTrace();
 					JOptionPane.showMessageDialog(null,
@@ -115,10 +119,7 @@ public class GestionUsuariosOperadorGUI extends JFrame {
 							JOptionPane.ERROR_MESSAGE);
 				}
 
-				JOptionPane.showMessageDialog(null,
-						"¡Operador dado de alta correctamente en la aerolínea " + aerolinea.getNombre() + "!",
-						"Éxito",
-						JOptionPane.INFORMATION_MESSAGE);
+				
 
 			}
 
