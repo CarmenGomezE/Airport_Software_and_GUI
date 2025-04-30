@@ -26,15 +26,6 @@ public class Finger extends ModoEmbarque {
     }
 
     /**
-     * Método que devuelve la dimensión de alto del finger.
-     * 
-     * @return Dimensión de alto del finger.
-     */
-    public double getDimAlto() {
-        return this.dimAlto;
-    } 
-
-    /**
      * Método para comprobar si un avion entra en el finger.
      * 
      * @param vuelo El vuelo que tiene el avion que va a conectarse al finger.

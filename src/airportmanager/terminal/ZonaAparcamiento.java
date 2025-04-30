@@ -30,24 +30,6 @@ public class ZonaAparcamiento extends ModoEmbarque {
     }
 
     /**
-     * Método que devuelve la dimensión de ancho de la plaza de aparcamiento.
-     * 
-     * @return Dimensión de ancho de la plaza.
-     */
-    public double getDimPlazaAncho() {
-        return this.dimPlazaAncho;
-    }
-
-    /**
-     * Método que devuelve la dimensión de largo de la plaza de aparcamiento.
-     * 
-     * @return Dimensión de largo de la plaza.
-     */
-    public double getDimPlazaLargo() {
-        return this.dimPlazaLargo;
-    }
-
-    /**
      * Método para comprobar si un avion entra en la zona de aparcamiento.
      * 
      * @param vuelo El vuelo que tiene el avion que va a entrar en la zona de
