@@ -145,7 +145,6 @@ Proyecto que implementa la interfaz gráfica para un software de gestión de un 
 			- dni: "27839181J",
 			- aerolínea: "Vueling".
 		- CONFIGURACIÓN DEL AEROPUERTO PROPIO:
-<<<<<<< HEAD
 			- nombre= " ",
 			- codigo= " ",
 			- país= " ",
@@ -154,22 +153,20 @@ Proyecto que implementa la interfaz gráfica para un software de gestión de un 
 			- direccion ciudad= " ",
 			- diferencia horaria= " ",
 			- TEMPORADA: (" ", " ", " ", " ").
-=======
-   			- Nombre: Aeropuerto Adolfo Suárez Madrid Barajas
-   			- Código: MAD
-   			- Ciudad más cercana: Madrid
-   			- País: España
-   			- Distancia a la ciudad más cercana: 10.5
-   			- Dirección relativa a la ciudad: Este
-   			- Diferencia horaria: 0
-   			- Agregar temporada (si lo marcas:)
-   				- Fecha de inicio: 01/06
-   				- Fecha de fin: 02/11
-   				- Horario de apertura: 09:30
-   				- Horario de cierre: 23:45
+			Reestablecer los datos iniciales:
+			- Nombre: Aeropuerto Adolfo Suárez Madrid Barajas
+			- Código: MAD
+			- Ciudad más cercana: Madrid
+			- País: España
+			- Distancia a la ciudad más cercana: 10.5
+			- Dirección relativa a la ciudad: Este
+			- Diferencia horaria: 0
+			- Agregar temporada (si lo marcas:)
+				- Fecha de inicio: 01/06
+				- Fecha de fin: 02/11
+				- Horario de apertura: 09:30
+				- Horario de cierre: 23:45
    
-   
->>>>>>> branch 'main' of https://github.com/CarmenGomezE/padsoft.git
 		- ESTADÍSTICAS DE LA INFRAESTRUCTURA:
 			Ver estadísticas
 		- GESTIÓN DE VUELOS:
