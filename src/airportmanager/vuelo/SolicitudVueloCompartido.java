@@ -56,30 +56,12 @@ public class SolicitudVueloCompartido implements Serializable {
     }
 
     /**
-     * Método que devuelve el porcentaje de la solicitud.
-     * 
-     * @return Porcentaje de carga a compartir de la solicitud.
-     */
-    public double getPorcentaje() {
-        return this.porcentajeCarga;
-    }
-
-    /**
      * Método que devuelve el operador que hace la solicitud.
      * 
      * @return Operador solicitante.
      */
     public Operador getOperadorSolicitante() {
         return this.operadorSolicita;
-    }
-
-    /**
-     * Método que devuelve el operador que recibe la solicitud.
-     * 
-     * @return Operador receptor.
-     */
-    public Operador getOperadorReceptor() {
-        return this.operadorReceptor;
     }
 
     /**

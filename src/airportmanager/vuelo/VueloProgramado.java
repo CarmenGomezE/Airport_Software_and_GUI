@@ -235,18 +235,6 @@ public class VueloProgramado implements Serializable {
     }
 
     /**
-     * Método que establece una nuevo avion para el VueloProgramado.
-     * 
-     * @param avion Nuevo avion del vuelo.
-     */
-    public void setAvion(Avion avion) {
-    	if (avion == null) {
-	        throw new IllegalArgumentException("El avion del vuelo no puede ser nula.");
-	    }
-        this.avion = avion;
-    }
-
-    /**
      * Método que establece una nueva fecha para el VueloProgramado.
      * 
      * @param nuevaFecha Nueva fecha del vuelo.

@@ -106,15 +106,4 @@ public class HistorialEstadoVuelo implements Serializable {
         }
         return ultimaHora;
     }
-
-    /**
-     * Verifica si un estado de vuelo ya está presente en el historial.
-     * 
-     * @param vuelo Estado de vuelo a buscar.
-     * @return true si el estado está en el historial, false en caso contrario.
-     */
-    public boolean contains(EstadoVuelo vuelo) {
-        return historial.containsValue(vuelo);
-    }
-
 }
