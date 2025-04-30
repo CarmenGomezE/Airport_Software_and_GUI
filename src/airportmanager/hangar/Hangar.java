@@ -63,42 +63,6 @@ public abstract class Hangar implements Serializable {
     }
 
     /**
-     * Método para obtener el número máximo de aviones del hangar.
-     * 
-     * @return Número máximo de aviones del hangar.
-     */
-    public int getNumeroMaxAviones() {
-        return numeroMaxAviones;
-    }
-
-    /**
-     * Método para obtener el ancho de cada plaza del hangar.
-     * 
-     * @return Ancho de cada plaza del hangar.
-     */
-    public double getDimPlazaAncho() {
-        return dimPlazaAncho;
-    }
-
-    /**
-     * Método para obtener el alto de cada plaza del hangar.
-     * 
-     * @return Alto de cada plaza del hangar.
-     */
-    public double getDimPlazaAlto() {
-        return dimPlazaAlto;
-    }
-
-    /**
-     * Método para obtener el largo de cada plaza del hangar.
-     * 
-     * @return Largo de cada plaza del hangar.
-     */
-    public double getDimPlazaLargo() {
-        return dimPlazaLargo;
-    }
-
-    /**
      * Método para obtener el coste por hora del hangar.
      * 
      * @return Coste por hora del hangar.
@@ -166,23 +130,4 @@ public abstract class Hangar implements Serializable {
      * @throws CargaAvionEquivocadaException carga no válida. 
      */
     public abstract void addAvion(Avion avion) throws CargaAvionEquivocadaException;
-
-    /**
-     * Método para comprobar si un avión está en el hangar.
-     * 
-     * @param avion Avión a comprobar.
-     * 
-     * @return true si está, false si no.
-     * @throws CargaAvionEquivocadaException carga no válida. 
-     */
-    public abstract boolean comprobarAvionEnHangar(Avion avion) throws CargaAvionEquivocadaException;
-
-    /**
-     * Método para sacar un avión del hangar.
-     * 
-     * @param avion Avión que sale del hangar.
-     * @throws CargaAvionEquivocadaException  carga no válida. 
-     */
-    public abstract void sacarAvion(Avion avion) throws CargaAvionEquivocadaException;
-
 }

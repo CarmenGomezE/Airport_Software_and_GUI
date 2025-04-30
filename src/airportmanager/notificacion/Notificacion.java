@@ -46,15 +46,6 @@ public class Notificacion implements Serializable {
     }
 
     /**
-     * Método que devuelve la fecha de la notificación.
-     * 
-     * @return Fecha de la notificación.
-     */
-    public LocalDateTime getFecha() {
-        return this.fecha;
-    }
-
-    /**
      * Método que devuelve el tipo de la notificación.
      * 
      * @return Tipo de notificación.

@@ -27,15 +27,4 @@ public class TerminalPasajeros extends Terminal {
         super(codigo, puertaEmbarque);
         this.numeroMaxPasajeros = numeroMaxPasajeros;
     }
-
-    /**
-     * Método para obtener el número máximo de pasajeros de la terminal de
-     * pasajeros.
-     * 
-     * @return Número máximo de la terminal de pasajeros.
-     */
-    public int getNumeroMaxAviones() {
-        return numeroMaxPasajeros;
-    }
-
 }

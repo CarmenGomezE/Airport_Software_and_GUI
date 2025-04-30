@@ -49,15 +49,6 @@ public class Pista implements Serializable {
     }
 
     /**
-     * Método que devuelve la longitud de la pista.
-     * 
-     * @return Longitud de la pista.
-     */
-    public double getLongitud() {
-        return this.longitud;
-    }
-
-    /**
      * Método que devuelve el tipo de la pista.
      * 
      * @return Tipo de la pista.

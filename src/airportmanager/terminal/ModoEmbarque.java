@@ -15,8 +15,6 @@ public abstract class ModoEmbarque implements Serializable {
 	/** Número de versión de la clase */
 	private static final long serialVersionUID = 1L;
 
-    /** Horas de uso de una zona de aparcamiento */
-    private double horasUso;
     /** Identificador de una zona de aparcamiento */
     private int id;
     /** Coste por hora del modo de embarque */
@@ -35,33 +33,7 @@ public abstract class ModoEmbarque implements Serializable {
     public ModoEmbarque(double costePorHora) {
         this.costePorHora = costePorHora;
         this.vuelo = null;
-        this.horasUso = 0;
         this.id = contador++;
-    }
-
-     /**
-     * Método que devuelve las horas de uso de la zona de aparcamiento.
-     * 
-     * @return Horas de uso de la zona de aparcamiento.
-     */
-    public double getHorasUso() {
-        return this.horasUso;
-    }
-
-    /**
-     * Método que suma horas de uso de la zona de aparcamiento.
-     * 
-     * @param horas Horas de uso.
-     */
-    public void addHorasUso(double horas) {
-        this.horasUso += horas;
-    }
-
-    /**
-     * Método que devuelve resetea las horas de uso.
-     */
-    public void horasUsoReset() {
-        this.horasUso = 0;
     }
 
     /**
@@ -73,14 +45,6 @@ public abstract class ModoEmbarque implements Serializable {
         return this.id;
     }
 
-    /**
-     * Método que devuelve el coste por hora de un modo de embarque.
-     * 
-     * @return Coste por hora del modo de embarque.
-     */
-    public double getCostePorHora() {
-        return costePorHora;
-    }
 
     /**
      * Método que devuelve el vuelo que ocupa un modo de embarque.

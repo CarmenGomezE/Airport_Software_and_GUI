@@ -51,39 +51,10 @@ public class HangarPasajeros extends Hangar {
     	if (avion instanceof AvionPasajeros == false) {
     		throw new CargaAvionEquivocadaException("El avión debe ser de pasajeros para añadirlo.");
     	}
-        aviones.add((AvionPasajeros) avion);
-    }
 
-    /**
-     * Método para sacar un avión del hangar.
-     * 
-     * @param avion Avión que sale del hangar.
-     */
-    @Override
-    public void sacarAvion(Avion avion) throws CargaAvionEquivocadaException {
-    	if (avion instanceof AvionPasajeros == false) {
-    		throw new CargaAvionEquivocadaException("El avión debe ser de pasajeros para sacarlo.");
-    	}
-        aviones.remove(avion);
-    }
-
-    /**
-     * Método para comprobar si un avión está en el hangar.
-     * 
-     * @param avion Avión a comprobar.
-     * 
-     * @return true si está, false si no.
-     * @throws CargaAvionEquivocadaException carga no válida.
-     */
-    @Override
-    public boolean comprobarAvionEnHangar(Avion avion) throws CargaAvionEquivocadaException {
-    	if (avion == null) {
-    		throw new IllegalArgumentException("El avión no puede ser nulo.");
-    	}
-    	if (avion instanceof AvionPasajeros == false) {
-    		throw new CargaAvionEquivocadaException("El avión debe ser de pasajeros para comprobar si está en el hangar.");
-    	}
-        return aviones.contains((AvionPasajeros)avion);
+        if (hayEspacioEnHangar()) {
+            aviones.add((AvionPasajeros) avion);
+        }
     }
 
     /**

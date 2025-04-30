@@ -79,12 +79,6 @@ public class EstadisticasGestor implements Serializable {
      * puerta de embarque, zona de aparcamiento y hangar) y las guarda en los 
      * mapas correspondientes.
      */
-    /**
-     * Carga los datos necesarios para las estadísticas del gestor.
-     * Este método calcula las horas de uso de cada infraestructura (finger, 
-     * puerta de embarque, zona de aparcamiento y hangar) y las guarda en los 
-     * mapas correspondientes.
-     */
     public void cargarDatosEstadisticas() {
         YearMonth mesActual = YearMonth.now();
 

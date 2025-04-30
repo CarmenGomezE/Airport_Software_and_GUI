@@ -20,8 +20,6 @@ public class PuertaEmbarque implements Serializable {
     private List<ZonaAparcamiento> zonasAparcamiento;
     /** Finger conectados a la puerta de embarque */
     private Finger finger;
-    /** Número de horas de uso de la puerta de embarque */
-    private double horasUso;
     /** Vuelo que ocupa la puerta de embarque */
     private Vuelo vuelo;
 
@@ -31,7 +29,6 @@ public class PuertaEmbarque implements Serializable {
     public PuertaEmbarque() {
         this.id = contadorId++;
         this.zonasAparcamiento = new ArrayList<>();
-        this.horasUso = 0;
         this.vuelo = null;
         this.finger=null;
     }
@@ -62,36 +59,7 @@ public class PuertaEmbarque implements Serializable {
     public Finger getFinger() {
         return finger;
     }
-
-    /**
-     * Método para obtener el número de horas de uso de la puerta de embarque.
-     * 
-     * @return Número de horas de uso de la puerta de embarque.
-     */
-    public double getHorasUso() {
-        return horasUso;
-    }
-
-    /**
-     * Método para añadir horas de uso a la puerta de embarque.
-     * 
-     * @param horas Horas que se suman.
-     */
-    public void addHorasUso(double horas) {
-        if (horas <= 0) {
-            throw new IllegalArgumentException("Las horas deben ser un número positivo");
-        }
-
-        horasUso += horas;
-    }
-
-    /**
-     * Método para reiniciar a 0 las horas de uso de la puerta de embarque.
-     */
-    public void resetHorasUso() {
-        horasUso = 0;
-    }
-
+    
     /**
      * Método para añadir una zona de aparcamiento a una puerta de embarque.
      * 

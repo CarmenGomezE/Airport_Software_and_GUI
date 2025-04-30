@@ -48,45 +48,6 @@ public class HangarMercancias extends Hangar {
     }
 
     /**
-     * Método para obtener el permiso para mercancías peligrosas.
-     * 
-     * @return true si el hangar de mercancías tiene permiso para mercancías
-     *         peligrosas o false si no.
-     */
-    public boolean getMercaPeligrosa() {
-        return mercaPeligrosa;
-    }
-
-    /**
-     * Método para sacar un avión del hangar.
-     * 
-     * @param avion Avión que sale del hangar.
-     */
-    @Override
-    public void sacarAvion(Avion avion) {
-        aviones.remove((AvionMercancias)avion); 
-    }
-
-    /**
-     * Método para comprobar si un avión está en el hangar.
-     * 
-     * @param avion Avión a comprobar.
-     * 
-     * @return true si está, false si no.
-     * @throws CargaAvionEquivocadaException carga inválida
-     */
-    @Override
-    public boolean comprobarAvionEnHangar(Avion avion) throws CargaAvionEquivocadaException {
-    	if (avion == null) {
-    		throw new IllegalArgumentException("El avión no puede ser nulo.");
-    	}
-    	if (avion instanceof AvionMercancias == false) {
-    		throw new CargaAvionEquivocadaException("El avión debe ser de mercancías para comprobar si está en el hangar.");
-    	}
-        return aviones.contains((AvionMercancias)avion);
-    }
-
-    /**
      * Método para ver si hay espacio en el hangar.
      * 
      * @return true si hay espacio, false si no.
@@ -122,11 +83,16 @@ public class HangarMercancias extends Hangar {
      * Método para añadir un avion al hangar.
      * 
      * @param avion Avion que se añade al hangar.
+     * @throws CargaAvionEquivocadaException Tipo de carga equivocado.
      */
     @Override
-	public void addAvion(Avion avion) {
-        this.aviones.add((AvionMercancias) avion);
-
+	public void addAvion(Avion avion) throws CargaAvionEquivocadaException {
+        if (avion instanceof AvionPasajeros == false) {
+    		throw new CargaAvionEquivocadaException("El avión debe ser de pasajeros para añadirlo.");
+    	}
+        
+        if (hayEspacioEnHangar()) {
+            this.aviones.add((AvionMercancias) avion);
+        }
     }
-
 }
