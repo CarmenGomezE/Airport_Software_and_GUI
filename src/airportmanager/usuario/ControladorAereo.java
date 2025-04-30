@@ -101,14 +101,6 @@ public class ControladorAereo extends UsuarioConDni {
             if (vuelo.getControlador() != this) {
                 throw new VueloNoDelUsuarioException("Este vuelo no está asignado a este usuario.");
             }
-            if(vuelo.getPista()!=null ){
-            	System.out.println("ANTES Código: "+vuelo.getCodigo()+" Pista: "+vuelo.getPista().getCodigo());
-            } if(vuelo.getPuertaEmbarque()!=null ){
-            	System.out.println("ANTES Código: "+vuelo.getCodigo()+" Puerta: "+vuelo.getPuertaEmbarque().getId());
-            } if( vuelo.getModoEmbarque()!=null){
-            	System.out.println("ANTES Código: "+vuelo.getCodigo()+" Modo embarque: "+vuelo.getModoEmbarque().getId());
-            }
-
             switch (estado) {
                 case ESPERANDO_DESPEGUE:
                     cambiarEstadoEsperandoDespegue(vuelo);
@@ -157,15 +149,6 @@ public class ControladorAereo extends UsuarioConDni {
         } catch (Exception e) { 
             System.out.println("Error inesperado: " + e.getMessage());  
         }
-        
-        if(vuelo.getPista()!=null ){
-        	System.out.println("DESPUES Código: "+vuelo.getCodigo()+" Pista: "+vuelo.getPista().getCodigo());
-        } if(vuelo.getPuertaEmbarque()!=null ){
-        	System.out.println("DESPUES Código: "+vuelo.getCodigo()+" Puerta: "+vuelo.getPuertaEmbarque().getId());
-        } if( vuelo.getModoEmbarque()!=null){
-        	System.out.println("DESPUES Código: "+vuelo.getCodigo()+" Modo embarque: "+vuelo.getModoEmbarque().getId());
-        }
-        System.out.println("\n");
     }
     
     /**
