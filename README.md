@@ -1,28 +1,110 @@
-# ENTREGA 3.2 - INTERFAZ GRÁFICA
+# ✈️ ENTREGA 3.2 - INTERFAZ GRÁFICA
 
-# INICIO DE SESIÓN:
-# 
-#
+Proyecto que implementa la interfaz gráfica para un software de gestión de un aeropuerto.
+---
 
-# CONTROLADOR:
-# Cambios de estado
-#
+## Contenido del proyecto
 
-# OPERADOR:
-# Cambios de estado
-#
+- Autenticación de usuarios por rol.
+- Interfaz gráfica para cada tipo de usuario.
 
-# GESTOR:
-# Cambios de estado
-#
+---
 
+## Estructura del proyecto
 
-# TODOS:
-# Para la búsqueda por criterios, introducir por ejemplo:
-# Código= "IBE1721"
-# Origen= "España"
-# Destino= "España"
-# Fecha= "(Fecha del día de hoy con formato dd/MM/yyyy)"
-# Hora de llegada= "10:00"
-# Hora de salida= "10:00"
-# Terminal= "T1"
+/src 
+	/airportmanager
+		/aeropuerto
+		/avion
+		/estadisticas
+		/excepciones
+		/factura
+		/hangar
+		/notificacion
+		/pista
+		/terminal
+		/usuario
+		/vuelo
+	/gui
+		/controlador
+		/operador
+		/gestor
+	/test
+/resources
+/doc
+/facturas
+
+---
+
+## Requisitos del sistema
+
+- Java 8 o superior
+- IDE recomendado: Eclipse
+- Sistema operativo: Windows / Linux / macOS
+
+---
+
+## Ejecución del programa
+
+1. Descargar el proyecto
+2. Ejecutar el archivo Main.java para que arranque la interfaz.
+(Se incluye un archivo prueba_interfaz.dat con datos cargados para poder probar el funcionamiento).
+3. Probar la interfaz. A continuación se describen posibles acciones para probar la interfaz.
+	
+	3.1. VENTANA PRINCIPAL:
+		- INICIO DE SESIÓN:
+			usuario: tipo: contraseña:
+		- RESTABLECER CONTRASEÑA:
+		- CERRAR EL PROGRAMA: cerrando la ventana. 
+		
+	3.2 VENTANA DEL CONTROLADOR:
+	- NOTIFICACIONES:
+		- CAMBIO DE ESTADO:
+	
+	3.3 VENTANA DEL OPERADOR:
+		- NOTIFICACIONES:
+		- CAMBIO DE ESTADO:
+		- DAR DE ALTA AVIÓN:
+			- mercancías:
+			- pasajeros:
+		- PROGRAMAR UN VUELO:
+		- COMPARTIR UN VUELO:
+		- SOLICITAR COMPARTIR VUELO:
+		- ESTADÍSTICAS DE LOS VUELOS:
+		- ALTERNATIVAS A LOS VUELOS PROPUESTOS:
+		- PAGAR FACTURAS AEROLÍNEA:
+	
+	3.4 VENTANA DEL GESTOR:
+		- NOTIFICACIONES:
+		- DAR DE ALTA HANGAR:
+			- mercancías:
+			- pasajeros:
+		- DAR DE ALTA TERMINAL:
+			- mercancías:
+			- pasajeros:
+		- DAR DE ALTA FINGER:
+		- DAR DE ALTA ZONA DE APARCAMIENTO:
+		- DAR DE ALTA PISTA DESPEGUE:
+		- DAR DE ALTA PISTA ATERRIZAJE:
+		- DAR DE ALTA AEROLÍNEA:
+		- DAR DE ALTA AEROPUERTO DE DESTINO:
+		- DAR DE ALTA CONTROLADOR:
+		- DAR DE ALTA OPERADOR:
+		- CONFIGURACIÓN DEL AEROPUERTO PROPIO:
+		- ESTADÍSTICAS DE LA INFRAESTRUCTURA:
+		- GESTIÓN DE VUELOS:
+		- GESTIÓN DE FACTURAS:
+		- VER INFORMACIÓN DEL AEROPUERTO PROPIO:
+	
+	3.5 COMÚN TODOS LOS USUARIOS:
+		- BÚSQUEDA DE VUELOS POR CRITERIO:
+			código: "IBE1721", 
+			origen= "España", 
+			destino= "España", 
+			fecha= "(fecha de hoy formato dd/mm/yyyy)", 
+			hora de llegada= "10:00", 
+			hora de salida= "10:00", 
+			terminal= "T1".
+		- REFRESCAR LISTA VUELOS: botón refrescar.
+		- CIERRE DE SESIÓN: botón cerrar sesión.
+	
