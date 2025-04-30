@@ -123,7 +123,7 @@ public class Gestor extends Usuario {
      * @param aerolinea Aerolinea a la que se le emite una nueva factura.
      */
     public void emitirFactura(Aerolinea aerolinea) {
-        List<Factura> facturas = this.sistemaFacturacion.generarFactura(aerolinea);
+        List<Factura> facturas = this.sistemaFacturacion.generarFactura(aerolinea);  
         
         if (facturas == null || facturas.isEmpty()) {
             System.out.println("No hay facturas para la aerolínea.");

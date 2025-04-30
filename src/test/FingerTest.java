@@ -34,7 +34,7 @@ class FingerTest {
     void setUp() {
 
         puerta1 = new PuertaEmbarque();
-        puerta2 = new PuertaEmbarque();
+        puerta2 = new PuertaEmbarque(); 
 
         puertas = new HashSet<PuertaEmbarque>();
         puertas.add(puerta1);

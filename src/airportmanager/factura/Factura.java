@@ -1,6 +1,7 @@
 package src.airportmanager.factura;
 
 import java.util.*;
+import java.io.File;
 import java.io.Serializable;
 import java.time.*;
 import java.time.format.*;
@@ -34,6 +35,8 @@ public class Factura implements IInvoiceInfo , Serializable {
     private List<IResourceUsageInfo> recursos;
     /** Estado de la factura */
     private EstadoFactura estado;
+    /** Logo de la compañia */
+    private static String companyLogo=  System.getProperty("user.dir") + File.separator + "resources" +File.separator + "logo.png";
 
     /**
      * Constructor de la clase Factura.
@@ -72,7 +75,7 @@ public class Factura implements IInvoiceInfo , Serializable {
      * @return Logo de la aerolinea de la factura.
      */
     public String getCompanyLogo() {
-        return "./resources/logo.jpg";
+        return companyLogo;
     }
 
     /**
