@@ -43,7 +43,6 @@ public class Main {
             Runtime.getRuntime().addShutdownHook(new Thread(() -> {
                 try {
                     manager.guardarEstado(ARCHIVO_ESTADO);
-                    System.out.println("Estado guardado automáticamente al cerrar.");
                 } catch (Exception e) {
                     System.err.println("Error al guardar el estado al cerrar: " + e.getMessage());
                 }
