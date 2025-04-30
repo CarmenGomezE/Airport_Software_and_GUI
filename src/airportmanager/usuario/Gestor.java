@@ -916,6 +916,16 @@ public class Gestor extends Usuario {
     		}
     	}
     }
+    
+    /**
+     * Método que devuelve el sistema de facturación.
+     * 
+     * @return Sistema de Facturaicón
+     * 
+     */
+	public SistemaFacturacion getSistemaFacturacion() {
+		return sistemaFacturacion;
+	}
 
     /**
      * Método que inicia sesión del gestor.
