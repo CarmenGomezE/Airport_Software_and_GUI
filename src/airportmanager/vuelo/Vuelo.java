@@ -301,7 +301,6 @@ public class Vuelo extends VueloProgramado {
         horaCambio = this.historialEstadoVuelo.getHoraCambio(EstadoVuelo.ESPERANDO_DESPEGUE);
      
         if (horaCambio == null) {
-            System.out.println("No se encontró hora de cambio para ESPERANDO_DESPEGUE.");
             return 0;
         }
 

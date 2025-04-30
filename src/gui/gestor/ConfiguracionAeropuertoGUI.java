@@ -89,8 +89,8 @@ public class ConfiguracionAeropuertoGUI extends JFrame {
         temporadaPanel.setVisible(false);
         temporadaPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
 
-        temporadaPanel.add(ConfiguracionUI.crearCampoConLabel("Fecha de inicio (YYYY-MM-DD)", campoInicio));
-        temporadaPanel.add(ConfiguracionUI.crearCampoConLabel("Fecha de fin (YYYY-MM-DD)", campoFin));
+        temporadaPanel.add(ConfiguracionUI.crearCampoConLabel("Fecha de inicio (MM/dd)", campoInicio));
+        temporadaPanel.add(ConfiguracionUI.crearCampoConLabel("Fecha de fin (MM/dd)", campoFin));
         temporadaPanel.add(ConfiguracionUI.crearCampoConLabel("Horario de apertura (HH:mm)", campoApertura));
         temporadaPanel.add(ConfiguracionUI.crearCampoConLabel("Horario de cierre (HH:mm)", campoCierre));
 

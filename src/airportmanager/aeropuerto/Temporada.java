@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.MonthDay;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 /**
  * La clase Temporada representa las distintas temporadas que puede tener el
@@ -36,14 +37,33 @@ public class Temporada implements Serializable {
      * @param horarioCierre   Horario de cierre de la temporada.
      * @param fechaFin        Fecha de fin de la temporada
      */
-    public Temporada(String fechaInicio, String horarioApertura, String horarioCierre, String fechaFin) {
+    public Temporada(String fechaInicio, String fechaFin, String horarioApertura, String horarioCierre) {
         int thisYear = LocalDate.now().getYear();
-        this.fechaInicio = MonthDay.parse(fechaInicio, formatoFecha).atYear(thisYear);
-        this.fechaFin = MonthDay.parse(fechaFin, formatoFecha).atYear(thisYear);
+        try {
+            this.fechaInicio = MonthDay.parse(fechaInicio, formatoFecha).atYear(thisYear);
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Error al parsear fechaInicio: " + fechaInicio, e);
+        }
 
-        this.horarioApertura = LocalTime.parse(horarioApertura, formatoHora);
-        this.horarioCierre = LocalTime.parse(horarioCierre, formatoHora);
+        try {
+            this.fechaFin = MonthDay.parse(fechaFin, formatoFecha).atYear(thisYear);
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Error al parsear fechaFin: " + fechaFin, e);
+        }
+
+        try {
+            this.horarioApertura = LocalTime.parse(horarioApertura, formatoHora);
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Error al parsear horarioApertura: " + horarioApertura, e);
+        }
+
+        try {
+            this.horarioCierre = LocalTime.parse(horarioCierre, formatoHora);
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Error al parsear horarioCierre: " + horarioCierre, e);
+        }
     }
+
 
     /**
      * Método para obtener la fecha de inicio de una temporada.
