@@ -696,7 +696,7 @@ public class Operador extends UsuarioConDni {
         }
 
         SolicitudVueloCompartido solicitud = new SolicitudVueloCompartido(vuelo, this, operadorReceptor,
-                porcentajeCarga);
+                porcentajeCarga);  
         
         for (SolicitudVueloCompartido solicitudEnviada : solicitudesEnviadas) {
             if (solicitud.getVueloOriginal().equals(vuelo) && solicitudEnviada.getEstadoSolicitud() == EstadoSolicitud.PENDIENTE) {

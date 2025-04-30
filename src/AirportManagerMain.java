@@ -852,7 +852,7 @@ public class AirportManagerMain {
 	 * Método que genera la lista de vuelos del día.
 	 */
 	private static void generarListaVuelosDia() throws SolicitudInvalidaExcepcion, OperacionInvalidaException {
-		Operador operadorRyanair = (Operador) airportManager.getGestor().buscarUsuarioPorDni("50738890L");
+		Operador operadorRyanair = airportManager.getAeropuerto().getAerolineas().get(2).getOperador();
 		Operador operadorIberia = airportManager.getAeropuerto().getAerolineas().get(0).getOperador();
 
 		operadorRyanair.darDeAltaAvionPasajeros("Boeing", "787", 12.5, 30.5, 40.0, 3500, 2020, new Date(), "FR_HGR",
@@ -914,95 +914,95 @@ public class AirportManagerMain {
 		Aeropuerto aeFKennedy = airportManager.getAeropuerto().getAeropuertosDestino().get(3);
 		Aeropuerto aeMalaga = airportManager.getAeropuerto().getAeropuertosDestino().get(0);
 
-		VueloProgramado vueloFRK2234 = new Vuelo("FRK2234", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+		Vuelo vueloFRK2234 = new Vuelo("FRK2234", LocalDate.now(), LocalDate.now(), LocalDate.now(),
 				LocalTime.now().minusMinutes(42), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
 				Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionFR_HGR, aeTokio, aePropio, null, operadorRyanair);
-		VueloProgramado vueloFRK8103 = new Vuelo("FRK8103", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+		Vuelo vueloFRK8103 = new Vuelo("FRK8103", LocalDate.now(), LocalDate.now(), LocalDate.now(),
 				LocalTime.now().minusMinutes(28), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
 				Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionFR_HGS, aePropio, aeMallorca, null, operadorRyanair);
-		VueloProgramado vueloFRK4152 = new Vuelo("FRK4152", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+		Vuelo vueloFRK4152 = new Vuelo("FRK4152", LocalDate.now(), LocalDate.now(), LocalDate.now(),
 				LocalTime.now().minusMinutes(28), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
 				Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionFR_HGS, aePropio, aeCairo, null, operadorRyanair);
-		VueloProgramado vueloFRK8104 = new Vuelo("FRK8104", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+		Vuelo vueloFRK8104 = new Vuelo("FRK8104", LocalDate.now(), LocalDate.now(), LocalDate.now(),
 				LocalTime.now().minusMinutes(42), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
 				Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionFR_HGU, aeTokio, aePropio, null, operadorRyanair);
-		VueloProgramado vueloFRK8105 = new Vuelo("FRK8105", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+		Vuelo vueloFRK8105 = new Vuelo("FRK8105", LocalDate.now(), LocalDate.now(), LocalDate.now(),
 				LocalTime.now().minusMinutes(28), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
 				Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionFR_HGT, aePropio, aeFKennedy, null, operadorRyanair);
-		VueloProgramado vueloFRK8106 = new Vuelo("FRK8106", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+		Vuelo vueloFRK8106 = new Vuelo("FRK8106", LocalDate.now(), LocalDate.now(), LocalDate.now(),
 				LocalTime.now().minusMinutes(28), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
 				Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionFR_HGS, aePropio, aeCairo, null, operadorRyanair);
-		VueloProgramado vueloFRK8107 = new Vuelo("FRK8107", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+		Vuelo vueloFRK8107 = new Vuelo("FRK8107", LocalDate.now(), LocalDate.now(), LocalDate.now(),
 				LocalTime.now().minusMinutes(28), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
 				Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionFR_HGP, aePropio, aeMallorca, null, operadorRyanair);
-		VueloProgramado vueloFRK8108 = new Vuelo("FRK8108", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+		Vuelo vueloFRK8108 = new Vuelo("FRK8108", LocalDate.now(), LocalDate.now(), LocalDate.now(),
 				LocalTime.now().minusMinutes(42), null, TipoCarga.PASAJEROS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
 				Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionFR_HGC, aeMallorca, aePropio, null, operadorRyanair);
-		VueloProgramado vueloFRK8109 = new Vuelo("FRK8109", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+		Vuelo vueloFRK8109 = new Vuelo("FRK8109", LocalDate.now(), LocalDate.now(), LocalDate.now(),
 				LocalTime.now().plusMinutes(40), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
 				Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionFR_HGT, aeCairo, aePropio, null, operadorRyanair);
-		VueloProgramado vueloFRK8110 = new Vuelo("FRK8110", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+		Vuelo vueloFRK8110 = new Vuelo("FRK8110", LocalDate.now(), LocalDate.now(), LocalDate.now(),
 				LocalTime.now().plusMinutes(42), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
 				Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionFR_HGQ, aeMalaga, aePropio, null, operadorRyanair);
-		VueloProgramado vueloFRK8111 = new Vuelo("FRK8111", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+		Vuelo vueloFRK8111 = new Vuelo("FRK8111", LocalDate.now(), LocalDate.now(), LocalDate.now(),
 				LocalTime.now().minusMinutes(42), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
 				Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionFR_HGP, aeMalaga, aePropio, null, operadorRyanair);
-		VueloProgramado vueloFRK8112 = new Vuelo("FRK8112", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+		Vuelo vueloFRK8112 = new Vuelo("FRK8112", LocalDate.now(), LocalDate.now(), LocalDate.now(),
 				LocalTime.now().plusMinutes(28), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
 				Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionFR_HGU, aePropio, aeMalaga, null, operadorRyanair);
-		VueloProgramado vueloFRK8113 = new Vuelo("FRK8113", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+		Vuelo vueloFRK8113 = new Vuelo("FRK8113", LocalDate.now(), LocalDate.now(), LocalDate.now(),
 				LocalTime.now().minusMinutes(28), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
 				Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionFR_HGM, aePropio, aeFKennedy, null, operadorRyanair);
-		VueloProgramado vueloFRK8114 = new Vuelo("FRK8114", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+		Vuelo vueloFRK8114 = new Vuelo("FRK8114", LocalDate.now(), LocalDate.now(), LocalDate.now(),
 				LocalTime.now().plusMinutes(28), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
 				Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionFR_HGM, aePropio, aeFKennedy, null, operadorRyanair);
-		VueloProgramado vueloFRK8115 = new Vuelo("FRK8115", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+		Vuelo vueloFRK8115 = new Vuelo("FRK8115", LocalDate.now(), LocalDate.now(), LocalDate.now(),
 				LocalTime.now().plusMinutes(28), null, TipoCarga.PASAJEROS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
 				Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionFR_HGC, aePropio, aeFKennedy, null, operadorRyanair);
 
-		VueloProgramado vueloIBE2234 = new Vuelo("IBE2234", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+		Vuelo vueloIBE2234 = new Vuelo("IBE2234", LocalDate.now(), LocalDate.now(), LocalDate.now(),
 				LocalTime.now().plusMinutes(42), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
 				Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionIB_HGR, aeTokio, aePropio, null, operadorRyanair);
-		VueloProgramado vueloIBE8103 = new Vuelo("IBE8103", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+		Vuelo vueloIBE8103 = new Vuelo("IBE8103", LocalDate.now(), LocalDate.now(), LocalDate.now(),
 				LocalTime.now().plusMinutes(28), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
 				Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionIB_HGS, aePropio, aeMallorca, null, operadorRyanair);
-		VueloProgramado vueloIBE4152 = new Vuelo("IBE4152", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+		Vuelo vueloIBE4152 = new Vuelo("IBE4152", LocalDate.now(), LocalDate.now(), LocalDate.now(),
 				LocalTime.now().minusMinutes(28), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
 				Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionIB_HGS, aePropio, aeCairo, null, operadorRyanair);
-		VueloProgramado vueloIBE8104 = new Vuelo("IBE8104", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+		Vuelo vueloIBE8104 = new Vuelo("IBE8104", LocalDate.now(), LocalDate.now(), LocalDate.now(),
 				LocalTime.now().minusMinutes(42), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
 				Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionIB_HGU, aeTokio, aePropio, null, operadorRyanair);
-		VueloProgramado vueloIBE8105 = new Vuelo("IBE8105", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+		Vuelo vueloIBE8105 = new Vuelo("IBE8105", LocalDate.now(), LocalDate.now(), LocalDate.now(),
 				LocalTime.now().plusMinutes(28), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
 				Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionIB_HGT, aePropio, aeFKennedy, null, operadorRyanair);
-		VueloProgramado vueloIBE8106 = new Vuelo("IBE8106", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+		Vuelo vueloIBE8106 = new Vuelo("IBE8106", LocalDate.now(), LocalDate.now(), LocalDate.now(),
 				LocalTime.now().minusMinutes(28), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
 				Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionIB_HGS, aePropio, aeCairo, null, operadorRyanair);
-		VueloProgramado vueloIBE8107 = new Vuelo("IBE8107", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+		Vuelo vueloIBE8107 = new Vuelo("IBE8107", LocalDate.now(), LocalDate.now(), LocalDate.now(),
 				LocalTime.now().plusMinutes(28), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
 				Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionIB_HGP, aePropio, aeMallorca, null, operadorRyanair);
-		VueloProgramado vueloIBE8108 = new Vuelo("IBE8108", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+		Vuelo vueloIBE8108 = new Vuelo("IBE8108", LocalDate.now(), LocalDate.now(), LocalDate.now(),
 				LocalTime.now().minusMinutes(42), null, TipoCarga.PASAJEROS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
 				Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionIB_HGC, aeMallorca, aePropio, null, operadorRyanair);
-		VueloProgramado vueloIBE8109 = new Vuelo("IBE8109", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+		Vuelo vueloIBE8109 = new Vuelo("IBE8109", LocalDate.now(), LocalDate.now(), LocalDate.now(),
 				LocalTime.now().minusMinutes(42), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
 				Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionIB_HGT, aeCairo, aePropio, null, operadorRyanair);
-		VueloProgramado vueloIBE8110 = new Vuelo("IBE8110", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+		Vuelo vueloIBE8110 = new Vuelo("IBE8110", LocalDate.now(), LocalDate.now(), LocalDate.now(),
 				LocalTime.now().plusMinutes(42), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
 				Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionIB_HGQ, aeMalaga, aePropio, null, operadorRyanair);
-		VueloProgramado vueloIBE8111 = new Vuelo("IBE8111", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+		Vuelo vueloIBE8111 = new Vuelo("IBE8111", LocalDate.now(), LocalDate.now(), LocalDate.now(),
 				LocalTime.now().minusMinutes(42), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
 				Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avionIB_HGP, aeMalaga, aePropio, null, operadorRyanair);
-		VueloProgramado vueloIBE8112 = new Vuelo("IBE8112", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+		Vuelo vueloIBE8112 = new Vuelo("IBE8112", LocalDate.now(), LocalDate.now(), LocalDate.now(),
 				LocalTime.now().plusMinutes(28), null, TipoCarga.PASAJEROS, TipoModoEmbarque.FINGER,
 				Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionIB_HGU, aePropio, aeMalaga, null, operadorRyanair);
-		VueloProgramado vueloIBE8113 = new Vuelo("IBE8113", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+		Vuelo vueloIBE8113 = new Vuelo("IBE8113", LocalDate.now(), LocalDate.now(), LocalDate.now(),
 				LocalTime.now().plusMinutes(28), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
 				Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionIB_HGM, aePropio, aeFKennedy, null, operadorRyanair);
-		VueloProgramado vueloIBE8114 = new Vuelo("IBE8114", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+		Vuelo vueloIBE8114 = new Vuelo("IBE8114", LocalDate.now(), LocalDate.now(), LocalDate.now(),
 				LocalTime.now().plusMinutes(28), null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
 				Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionIB_HGM, aePropio, aeFKennedy, null, operadorRyanair);
-		VueloProgramado vueloIBE8115 = new Vuelo("IBE8115", LocalDate.now(), LocalDate.now(), LocalDate.now(),
+		Vuelo vueloIBE8115 = new Vuelo("IBE8115", LocalDate.now(), LocalDate.now(), LocalDate.now(),
 				LocalTime.now().plusMinutes(28), null, TipoCarga.PASAJEROS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO,
 				Periodicidad.PUNTUAL, TipoVuelo.LLEGADA, avionIB_HGC, aePropio, aeFKennedy, null, operadorRyanair);
 
@@ -1015,11 +1015,10 @@ public class AirportManagerMain {
 		airportManager.getGestor().aceptarVuelo(vueloFRK2234, terminalT1, controladorT1);
 		airportManager.getGestor().aceptarVuelo(vueloFRK8104, terminalT1, controladorT1);
 		
-		 airportManager.getGestor().aceptarVuelo(vueloFRK8106, terminalT1,
-		  controladorT1);
-		  airportManager.getGestor().aceptarVuelo(vueloFRK8108, terminalT1,
-		  controladorT1);
-		  airportManager.getGestor().aceptarVuelo(vueloFRK8110, terminalT1,
+		 airportManager.getGestor().aceptarVuelo(vueloFRK8106, terminalT1,controladorT1);
+		 airportManager.getGestor().aceptarVuelo(vueloFRK8108, terminalT1,controladorT1);
+		 
+		 airportManager.getGestor().aceptarVuelo(vueloFRK8110, terminalT1,
 		  controladorT1);
 		  airportManager.getGestor().aceptarVuelo(vueloFRK8112, terminalT1,
 		  controladorT1);
@@ -1092,13 +1091,9 @@ public class AirportManagerMain {
 		ControladorAereo controladorT1 = terminalT1.getControladores().get(0);
 		ControladorAereo controladorT2 = terminalT2.getControladores().get(0);
 
-		Vuelo vueloFRK2234 = airportManager.getAeropuerto().getVuelosAceptados().get(10);
-		/**
-		 * Vuelo vueloFRK8103=
-		 * airportManager.getAeropuerto().getVuelosAceptados().get(17);
-		 */
-
-		System.out.println(operadorRyanair.getSolicitudesRecibidas());
+		Vuelo vueloFRK2234 = airportManager.getAeropuerto().getVuelosAceptados().get(11);
+		Vuelo vueloFRK8104 = airportManager.getAeropuerto().getVuelosAceptados().get(12);
+		Vuelo vueloFRK8103 = airportManager.getAeropuerto().getVuelosAceptados().get(18);
 
 		try {
 			operadorIberia.solicitarCompartirVuelo(vueloFRK2234, operadorRyanair, 30);
@@ -1107,10 +1102,7 @@ public class AirportManagerMain {
 		}
 
 		operadorRyanair.aceptarSolicitud(operadorRyanair.getSolicitudesRecibidas().get(0));
-
-		Vuelo vueloFRK8104 = airportManager.getAeropuerto().getVuelosAceptados().get(11);
-		Vuelo vueloFRK8103 = airportManager.getAeropuerto().getVuelosAceptados().get(17);
-
+		
 		System.out.println("\nIniciando el proceso de cambio de estados de vuelos.");
 		System.out.println("Comenzamos con los estados de un vuelo de salida:");
 		System.out.println("Vuelo FRK2234: Estado cambiado a EN_PREPARACION_PARA_DESPEGAR");

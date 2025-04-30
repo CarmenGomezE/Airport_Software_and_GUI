@@ -105,7 +105,7 @@ public class Vuelo extends VueloProgramado {
      * @return Tiempo de retraso del vuelo.
      */
     public double getRetraso() {
-        return this.tiempoRetraso;
+        return this.tiempoRetraso; 
     }
 
     /**
