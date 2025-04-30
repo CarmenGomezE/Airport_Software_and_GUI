@@ -147,7 +147,7 @@ public class InfoAeropuertoPropioGUI extends JFrame {
             case "Hangares":
                 if (manager.getAeropuerto().getHangares() != null) {
                     manager.getAeropuerto().getHangares().forEach(hangar -> model.addElement(
-                            "Hangar: " + hangar.getId() + " con " + hangar.getNumeroMaxAviones() + " plazas"));
+                            "Hangar: " + hangar.getId()));
                 }
                 break;
 
@@ -184,8 +184,7 @@ public class InfoAeropuertoPropioGUI extends JFrame {
 
             case "Pistas":
                 if (manager.getAeropuerto().getPistas() != null) {
-                    manager.getAeropuerto().getPistas().forEach(pista -> model.addElement("Pista: " + pista.getCodigo()
-                            + " de longitud: " + pista.getLongitud() + " y tipo: " + pista.getTipoPista()));
+                    manager.getAeropuerto().getPistas().forEach(pista -> model.addElement("Pista: " + pista.getCodigo() + " y tipo: " + pista.getTipoPista()));
                 }
                 break;
 
