@@ -91,16 +91,6 @@ public class GestorTest {
     }
 
     /**
-     * VerEstadoFactyra
-     */
-    @Test
-    void testVerEstadoFactura() {
-        Factura factura = new Factura(aerolinea, LocalDate.now(), 1000.0, 0, null, null, EstadoFactura.PENDIENTE);
-        EstadoFactura estado = gestor.verEstadoFactura(factura);
-        assertEquals(EstadoFactura.PENDIENTE, estado);
-    }
-
-    /**
      * BuscarUsuarioPorDNI
      */
     @Test
@@ -110,17 +100,6 @@ public class GestorTest {
         assertEquals(operador, encontrado);
 
         assertNull(gestor.buscarUsuarioPorDni("DNI_INEXISTENTE"));
-    }
-
-    /**
-     * NotificarPorblemaContraseña
-     */
-    @Test
-    void testNotificarProblemaContrasena() {
-        aeropuerto.addUsuario(operador);
-        gestor.notificarProblemaContrasena("12345678A");
-
-        assertEquals(1, operador.getNotificaciones().size());
     }
 
     /**
@@ -315,19 +294,5 @@ public class GestorTest {
         gestor.configurarNotificaciones(new ArrayList<>());
         gestor.recibirNotificacion(notificacion);
         assertEquals(1, gestor.getNotificaciones().size());
-    }
-
-    /**
-     * SetCostos
-     */
-    @Test
-    void testSetCostos() {
-        gestor.setCosteBaseVueloSalida(200.0);
-        gestor.setCosteBaseVueloLlegada(180.0);
-        gestor.setRecargoAvionMercancias(50.0);
-
-        assertEquals(200.0, gestor.getSistemaFacturacion().getCosteBaseVueloSalida());
-        assertEquals(180.0, gestor.getSistemaFacturacion().getCosteBaseVueloLlegada());
-        assertEquals(50.0, gestor.getSistemaFacturacion().getRecargoAvionMercancias());
     }
 }

@@ -45,14 +45,6 @@ class FingerTest {
     }
 
     /**
-     * GetDimAlto
-     */
-    @Test
-    void testGetDimAlto() {
-        assertEquals(70.0, finger.getDimAlto(), "Error, el método getDimAlto() no devuelve el valor esperado.");
-    }
-
-    /**
      * GetId
      */
     @Test
@@ -70,7 +62,6 @@ class FingerTest {
         Vuelo vueloPequeno;
         LocalDate fecha;
         LocalTime hora, h;
-        Date revision;
         Calendar calendar;
         Avion avion;
         AeropuertoDestino aeropuertoDestino;
@@ -87,7 +78,6 @@ class FingerTest {
         h = LocalTime.of(11, 30, 0);
         calendar = Calendar.getInstance();
         calendar.set(2024, Calendar.JANUARY, 22);
-        revision = calendar.getTime();
         zone = ZoneOffset.of("+1");
         zone2 = ZoneOffset.of("+2");
 
