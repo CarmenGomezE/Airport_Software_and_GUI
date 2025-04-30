@@ -1,5 +1,6 @@
 package src.test;
 
+import src.airportmanager.app.avion.*;
 import src.airportmanager.factura.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,40 +15,40 @@ import java.util.*;
 
 import es.uam.eps.padsof.invoices.IInvoiceInfo;
 import es.uam.eps.padsof.invoices.IResourceUsageInfo;
-import src.airportmanager.avion.*;
 import src.airportmanager.factura.*;
 
 /**
  * Clase FacturaTest
  */
-class FacturaTest{
+class FacturaTest {
 
 	private Factura factura;
 	private Aerolinea aerolinea;
 	private List<IResourceUsageInfo> recursos;
 	private UsoRecursos recurso1, recurso2;
-	
+
 	/**
 	 * Constructor
 	 */
 	public FacturaTest() {
-		
+
 	}
-	
+
 	/**
 	 * Crea los objetos necesarios
 	 */
 	@BeforeEach
 	void setUp() {
-		
+
 		recursos = new ArrayList<>();
-		recurso1 = new UsoRecursos("CPU", 10.0, 20);  
-        recurso2 = new UsoRecursos("RAM", 5.0, 30);  
-        recursos.add(recurso1);
-        recursos.add(recurso2);
-       
+		recurso1 = new UsoRecursos("CPU", 10.0, 20);
+		recurso2 = new UsoRecursos("RAM", 5.0, 30);
+		recursos.add(recurso1);
+		recursos.add(recurso2);
+
 		aerolinea = new Aerolinea("IBERIA", "IB");
-		factura = new Factura(aerolinea, LocalDate.of(2020,3 , 14), 5.0, 2.0, "FACT1", recursos, EstadoFactura.PENDIENTE);
+		factura = new Factura(aerolinea, LocalDate.of(2020, 3, 14), 5.0, 2.0, "FACT1", recursos,
+				EstadoFactura.PENDIENTE);
 	}
 
 	/**
@@ -94,7 +95,7 @@ class FacturaTest{
 	 * 
 	 * TestGetBasePrice
 	 */
-	 
+
 	@Test
 	void testGetBasePrice() {
 		assertEquals(5.0, factura.getBasePrice(), "Error el precio base no es correcto");
@@ -138,7 +139,7 @@ class FacturaTest{
 	 */
 	@Test
 	void testGetPrice() {
-		assertEquals(10*20+5*30, factura.getPrice(), "Error el precio no se calculó correctamente");
+		assertEquals(10 * 20 + 5 * 30, factura.getPrice(), "Error el precio no se calculó correctamente");
 	}
 
 }

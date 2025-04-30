@@ -5,13 +5,12 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.time.ZoneOffset;
 import java.util.*;
 
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import src.airportmanager.aeropuerto.AeropuertoPropio;
-import src.airportmanager.aeropuerto.DireccionRelativaCiudad;
-import src.airportmanager.exceptions.FormatoDniIncorrectoException;
+import src.airportmanager.app.aeropuerto.AeropuertoPropio;
+import src.airportmanager.app.aeropuerto.DireccionRelativaCiudad;
+import src.airportmanager.app.exceptions.FormatoDniIncorrectoException;
 import src.airportmanager.terminal.*;
 import src.airportmanager.usuario.*;
 
@@ -28,16 +27,18 @@ public class TerminalMercanciasTest {
     AeropuertoPropio aeropuertoPropio;
     ZoneOffset zone;
     Gestor gestor;
+
     /**
-	 * Constructor
-	 */
-	public TerminalMercanciasTest() {
-		
-	}
-	
+     * Constructor
+     */
+    public TerminalMercanciasTest() {
+
+    }
+
     /**
      * Crea objetos
-     * @throws FormatoDniIncorrectoException 
+     * 
+     * @throws FormatoDniIncorrectoException
      */
     @BeforeEach
     void setUp() throws FormatoDniIncorrectoException {
@@ -47,7 +48,8 @@ public class TerminalMercanciasTest {
         puertas = new ArrayList<>();
         puertas.add(puerta);
         terminal = new TerminalMercancias("T1", puertas);
-        aeropuertoPropio = new AeropuertoPropio("Barajas", "MAD", "Madrid", "España", 35.0, zone, 3, DireccionRelativaCiudad.ESTE);
+        aeropuertoPropio = new AeropuertoPropio("Barajas", "MAD", "Madrid", "España", 35.0, zone, 3,
+                DireccionRelativaCiudad.ESTE);
         gestor = new Gestor("Pedro", "Pedrito10", aeropuertoPropio, null);
         controlador = new ControladorAereo("Juan", "56387476T", "juanito87", aeropuertoPropio, gestor, terminal, null);
         aeropuertoPropio.addTerminal(terminal);
@@ -58,7 +60,7 @@ public class TerminalMercanciasTest {
     /**
      * GetCodigo
      */
-    @Test 
+    @Test
     void testGetCodigo() {
         assertEquals("T1", terminal.getCodigo(), "Error el código de la terminal no es correcto");
     }
@@ -68,7 +70,8 @@ public class TerminalMercanciasTest {
      */
     @Test
     void testGetPuertasEmbarque() {
-        assertTrue(terminal.getPuertasEmbarque().contains(puerta), "Error, la terminal debería contener la puerta de embarque asignada.");
+        assertTrue(terminal.getPuertasEmbarque().contains(puerta),
+                "Error, la terminal debería contener la puerta de embarque asignada.");
     }
 
     /**
@@ -83,7 +86,8 @@ public class TerminalMercanciasTest {
         puertas.add(puerta);
         puertas.add(puerta2);
 
-        assertTrue(terminal.getPuertasEmbarque().containsAll(puertas), "Error, la terminal debería contener ambas puertas de embarque.");
+        assertTrue(terminal.getPuertasEmbarque().containsAll(puertas),
+                "Error, la terminal debería contener ambas puertas de embarque.");
     }
 
     /**
@@ -91,9 +95,10 @@ public class TerminalMercanciasTest {
      */
     @Test
     void testGetControladores() {
-        assertTrue(terminal.getControladores().isEmpty(), "Error: al principio la lista de controladores debería estar vacía.");
+        assertTrue(terminal.getControladores().isEmpty(),
+                "Error: al principio la lista de controladores debería estar vacía.");
     }
-   
+
     /**
      * AddControladres
      */
@@ -103,7 +108,8 @@ public class TerminalMercanciasTest {
         terminal.agregarControlador(controlador);
         controladores = new ArrayList<>();
         controladores.add(controlador);
-        assertTrue(terminal.getControladores().contains(controlador), "Error, la terminal debería contener al controlador agregado.");
-        
+        assertTrue(terminal.getControladores().contains(controlador),
+                "Error, la terminal debería contener al controlador agregado.");
+
     }
 }

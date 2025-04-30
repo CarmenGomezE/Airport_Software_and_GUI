@@ -7,12 +7,13 @@ import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import src.airportmanager.aeropuerto.*;
-import src.airportmanager.estadisticas.*;
-import src.airportmanager.exceptions.TemporadasSolapadasException;
+import src.airportmanager.app.aeropuerto.*;
+import src.airportmanager.app.estadisticas.*;
+import src.airportmanager.app.exceptions.TemporadasSolapadasException;
 import src.airportmanager.hangar.*;
 import src.airportmanager.terminal.*;
 import src.airportmanager.usuario.*;
+
 /**
  * EstadisticasgestorTest
  */
@@ -30,24 +31,25 @@ public class EstadisticasGestorTest {
     private List<PuertaEmbarque> puertas;
 
     /**
-	 * Constructor
-	 */
-	public EstadisticasGestorTest() {
-		
-	}
-	
+     * Constructor
+     */
+    public EstadisticasGestorTest() {
+
+    }
+
     /**
      * Crea objetos
+     * 
      * @throws TemporadasSolapadasException
      */
     @BeforeEach
     void setUp() throws TemporadasSolapadasException {
-        aeropuerto = new AeropuertoPropio("Test Airport", "TST", "Test City", 
-            "Test Country", 10.0, ZoneOffset.UTC, 1, DireccionRelativaCiudad.NORTE);
-        
+        aeropuerto = new AeropuertoPropio("Test Airport", "TST", "Test City",
+                "Test Country", 10.0, ZoneOffset.UTC, 1, DireccionRelativaCiudad.NORTE);
+
         temporada = new Temporada("01/01", "08:00", "20:00", "31/12");
         aeropuerto.agregarTemporada(temporada);
-        
+
         puertas = new ArrayList<>();
         puerta = new PuertaEmbarque();
         finger = new Finger(10.0, 20.0);
@@ -56,20 +58,20 @@ public class EstadisticasGestorTest {
         aeropuerto.addZonaAparcamiento(zona);
         puerta.setFinger(finger);
         puertas.add(puerta);
-        
+
         terminal = new TerminalPasajeros("T1", puertas, 200);
-        
+
         hangar = new HangarPasajeros(5, 50.0, 20.0, 60.0, 100.0);
         aeropuerto.addHangar(hangar);
         aeropuerto.addTerminal(terminal);
-        
+
         finger.addHorasUso(10.0);
         puerta.addHorasUso(10.0);
         zona.addHorasUso(10.0);
         hangar.addHorasUso(10.0);
-        
+
         gestor = new Gestor("Test Gestor", "password", aeropuerto, null);
-        
+
         estadisticas = gestor.getEstadisticasAeropuerto();
     }
 
@@ -87,7 +89,7 @@ public class EstadisticasGestorTest {
      */
     @Test
     void testGetUsoMedioDiarioPuertaEmbarque() {
-        double expected =  0.0;
+        double expected = 0.0;
         assertEquals(expected, estadisticas.getUsoMensualPuertaEmbarque(puerta), 0.001);
     }
 
@@ -96,7 +98,7 @@ public class EstadisticasGestorTest {
      */
     @Test
     void testGetUsoMedioDiarioZonaAparcamiento() {
-        double expected =  0.0;
+        double expected = 0.0;
         assertEquals(expected, estadisticas.getUsoMensualZonaAparcamiento(zona), 0.001);
     }
 
@@ -105,19 +107,19 @@ public class EstadisticasGestorTest {
      */
     @Test
     void testGetUsoMedioDiarioHangar() {
-        double expected =  0.0;
+        double expected = 0.0;
         assertEquals(expected, estadisticas.getUsoMensualHangar(hangar), 0.001);
     }
-    
+
     /**
      * ConHorasOperacioncero
      */
     @Test
     void testConHorasOperacionCero() {
-        AeropuertoPropio aeropuertoSinHoras = new AeropuertoPropio("Empty", "EMP", 
-            "Empty", "Empty", 0.0, ZoneOffset.UTC, 0, null);
+        AeropuertoPropio aeropuertoSinHoras = new AeropuertoPropio("Empty", "EMP",
+                "Empty", "Empty", 0.0, ZoneOffset.UTC, 0, null);
         Gestor gestorSinHoras = new Gestor("Empty Gestor", "pass", aeropuertoSinHoras, null);
-        
+
         EstadisticasGestor stats = new EstadisticasGestor(gestorSinHoras);
         assertEquals(0.0, stats.getUsoMensualFinger(new Finger(1, 1)), 0.001);
     }

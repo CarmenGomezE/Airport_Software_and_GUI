@@ -8,10 +8,10 @@ import java.time.LocalTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import src.airportmanager.AirportManager;
-import src.airportmanager.avion.Aerolinea;
-import src.airportmanager.exceptions.FormatoDniIncorrectoException;
-import src.airportmanager.exceptions.SolicitudInvalidaExcepcion;
+import src.airportmanager.app.AirportManager;
+import src.airportmanager.app.avion.Aerolinea;
+import src.airportmanager.app.exceptions.FormatoDniIncorrectoException;
+import src.airportmanager.app.exceptions.SolicitudInvalidaExcepcion;
 import src.airportmanager.usuario.Operador;
 import src.airportmanager.vuelo.*;
 
@@ -26,34 +26,37 @@ public class SolicitudVueloCompartidoTest {
     private SolicitudVueloCompartido solicitud;
     private AirportManager sistema;
     private Aerolinea aerolinea1, aerolinea2;
-    
+
     /**
-	 * Constructor
-	 */
-	public SolicitudVueloCompartidoTest() {
-		
-	}
-	
+     * Constructor
+     */
+    public SolicitudVueloCompartidoTest() {
+
+    }
+
     /**
      * Crea objetos
-     * @throws FormatoDniIncorrectoException 
+     * 
+     * @throws FormatoDniIncorrectoException
      */
     @BeforeEach
     void setUp() throws FormatoDniIncorrectoException {
-    	sistema = new AirportManager();
-    	sistema.iniciarAplicacion();
-    	
-    	aerolinea1 = new Aerolinea("Iberia", "IBE");
-    	aerolinea2 = new Aerolinea("AirFrance", "AFR");
-    	
-        operadorPrincipal = new Operador("Operador Principal", "12345678A", aerolinea1, sistema.getAeropuerto(), sistema.getGestor(), sistema);
-        operadorSolicitante = new Operador("Operador Solicitante", "87654321B", aerolinea2, sistema.getAeropuerto(), sistema.getGestor(), sistema);
-        
-        vuelo = new Vuelo("VY123", LocalDate.now(), null, null, 
-            LocalTime.now(), null, TipoCarga.PASAJEROS, 
-            TipoModoEmbarque.FINGER, Periodicidad.PUNTUAL, TipoVuelo.SALIDA, 
-            null, null, null, null, operadorPrincipal);
-        
+        sistema = new AirportManager();
+        sistema.iniciarAplicacion();
+
+        aerolinea1 = new Aerolinea("Iberia", "IBE");
+        aerolinea2 = new Aerolinea("AirFrance", "AFR");
+
+        operadorPrincipal = new Operador("Operador Principal", "12345678A", aerolinea1, sistema.getAeropuerto(),
+                sistema.getGestor(), sistema);
+        operadorSolicitante = new Operador("Operador Solicitante", "87654321B", aerolinea2, sistema.getAeropuerto(),
+                sistema.getGestor(), sistema);
+
+        vuelo = new Vuelo("VY123", LocalDate.now(), null, null,
+                LocalTime.now(), null, TipoCarga.PASAJEROS,
+                TipoModoEmbarque.FINGER, Periodicidad.PUNTUAL, TipoVuelo.SALIDA,
+                null, null, null, null, operadorPrincipal);
+
         solicitud = new SolicitudVueloCompartido(vuelo, operadorSolicitante, operadorPrincipal, 30.0);
     }
 
@@ -71,9 +74,10 @@ public class SolicitudVueloCompartidoTest {
 
     /**
      * AceptarSolicitudalida
+     * 
      * @throws SolicitudInvalidaExcepcion
      */
-    
+
     @Test
     void testAceptarSolicitudValida() throws SolicitudInvalidaExcepcion {
         solicitud.aceptar();
@@ -87,21 +91,20 @@ public class SolicitudVueloCompartidoTest {
     @Test
     void testAceptarSolicitudInvalidaPorcentajeExcedido() {
         SolicitudVueloCompartido solicitudInvalida = new SolicitudVueloCompartido(
-            vuelo, operadorSolicitante, operadorPrincipal, 80.0);
-        
+                vuelo, operadorSolicitante, operadorPrincipal, 80.0);
+
         assertThrows(SolicitudInvalidaExcepcion.class, () -> solicitudInvalida.aceptar());
         assertEquals(EstadoSolicitud.RECHAZADA, solicitudInvalida.getEstadoSolicitud());
     }
 
-    
     /**
      * AceptarSolicitudInvaldiaPorcentajeMiniko
      */
     @Test
     void testAceptarSolicitudInvalidaPorcentajeMinimo() {
         SolicitudVueloCompartido solicitudInvalida = new SolicitudVueloCompartido(
-            vuelo, operadorSolicitante, operadorPrincipal, 60.0);
-        
+                vuelo, operadorSolicitante, operadorPrincipal, 60.0);
+
         assertThrows(SolicitudInvalidaExcepcion.class, () -> solicitudInvalida.aceptar());
         assertEquals(EstadoSolicitud.RECHAZADA, solicitudInvalida.getEstadoSolicitud());
     }
@@ -118,15 +121,16 @@ public class SolicitudVueloCompartidoTest {
 
     /**
      * EsSolicitudValida
+     * 
      * @throws SolicitudInvalidaExcepcion
      */
     @Test
     void testEsSolicitudValida() throws SolicitudInvalidaExcepcion {
         assertTrue(solicitud.esSolicitudValida());
-        
+
         SolicitudVueloCompartido solicitudInvalida = new SolicitudVueloCompartido(
-            vuelo, operadorSolicitante, operadorPrincipal, 80.0);
-        
+                vuelo, operadorSolicitante, operadorPrincipal, 80.0);
+
         assertThrows(SolicitudInvalidaExcepcion.class, () -> solicitudInvalida.esSolicitudValida());
     }
 

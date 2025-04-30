@@ -5,16 +5,16 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.time.ZoneOffset;
 import java.util.*;
 
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import src.airportmanager.AirportManager;
-import src.airportmanager.aeropuerto.AeropuertoPropio;
-import src.airportmanager.aeropuerto.DireccionRelativaCiudad;
-import src.airportmanager.exceptions.FormatoDniIncorrectoException;
+import src.airportmanager.app.AirportManager;
+import src.airportmanager.app.aeropuerto.AeropuertoPropio;
+import src.airportmanager.app.aeropuerto.DireccionRelativaCiudad;
+import src.airportmanager.app.exceptions.FormatoDniIncorrectoException;
 import src.airportmanager.terminal.*;
 import src.airportmanager.usuario.*;
+
 /**
  * TerminalPasajerosTests
  */
@@ -29,17 +29,19 @@ public class TerminalPasajerosTest {
     ZoneOffset zone;
     Gestor gestor;
     AirportManager sistema;
+
     /**
-	 * Constructor
-	 */
-	public TerminalPasajerosTest() {
-		
-	}
-	
-   /**
-    * Crea objetos necesarios
- * @throws FormatoDniIncorrectoException 
-    */
+     * Constructor
+     */
+    public TerminalPasajerosTest() {
+
+    }
+
+    /**
+     * Crea objetos necesarios
+     * 
+     * @throws FormatoDniIncorrectoException
+     */
     @BeforeEach
     void setUp() throws FormatoDniIncorrectoException {
 
@@ -48,13 +50,14 @@ public class TerminalPasajerosTest {
         puertas = new ArrayList<>();
         puertas.add(puerta);
         terminal = new TerminalPasajeros("T1", puertas, 100);
-        aeropuertoPropio = new AeropuertoPropio("Barajas", "MAD", "Madrid", "España", 35.0, zone, 3, DireccionRelativaCiudad.ESTE);
+        aeropuertoPropio = new AeropuertoPropio("Barajas", "MAD", "Madrid", "España", 35.0, zone, 3,
+                DireccionRelativaCiudad.ESTE);
         sistema = new AirportManager();
         gestor = new Gestor("Pedro", "Pedrito10", aeropuertoPropio, sistema);
-        controlador = new ControladorAereo("Juan", "56387476T", "juanito87", aeropuertoPropio, gestor, terminal, sistema);
+        controlador = new ControladorAereo("Juan", "56387476T", "juanito87", aeropuertoPropio, gestor, terminal,
+                sistema);
     }
 
-    
     /**
      * GetNumeroMaxAviones
      */
@@ -66,17 +69,18 @@ public class TerminalPasajerosTest {
     /**
      * GetCodgo
      */
-    @Test 
+    @Test
     void testGetCodigo() {
         assertEquals("T1", terminal.getCodigo(), "Error el código de la terminal no es correcto");
     }
-    
+
     /**
      * GetPuertasEmbarque
      */
     @Test
     void testGetPuertasEmbarque() {
-        assertTrue(terminal.getPuertasEmbarque().contains(puerta), "Error, la terminal debería contener la puerta de embarque asignada.");
+        assertTrue(terminal.getPuertasEmbarque().contains(puerta),
+                "Error, la terminal debería contener la puerta de embarque asignada.");
     }
 
     /**
@@ -91,7 +95,8 @@ public class TerminalPasajerosTest {
         puertas.add(puerta);
         puertas.add(puerta2);
 
-        assertTrue(terminal.getPuertasEmbarque().containsAll(puertas), "Error, la terminal debería contener ambas puertas de embarque.");
+        assertTrue(terminal.getPuertasEmbarque().containsAll(puertas),
+                "Error, la terminal debería contener ambas puertas de embarque.");
     }
 
     /**
@@ -99,9 +104,10 @@ public class TerminalPasajerosTest {
      */
     @Test
     void testGetControladores() {
-        assertTrue(terminal.getControladores().isEmpty(), "Error: al principio la lista de controladores debería estar vacía.");
+        assertTrue(terminal.getControladores().isEmpty(),
+                "Error: al principio la lista de controladores debería estar vacía.");
     }
-    
+
     /**
      * AddControladores
      */
@@ -111,7 +117,8 @@ public class TerminalPasajerosTest {
         terminal.agregarControlador(controlador);
         controladores = new ArrayList<>();
         controladores.add(controlador);
-        assertTrue(terminal.getControladores().contains(controlador), "Error, la terminal debería contener al controlador agregado.");
-        
+        assertTrue(terminal.getControladores().contains(controlador),
+                "Error, la terminal debería contener al controlador agregado.");
+
     }
 }

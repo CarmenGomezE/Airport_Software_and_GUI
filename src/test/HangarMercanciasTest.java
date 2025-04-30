@@ -5,19 +5,21 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import src.airportmanager.*;
-import src.airportmanager.avion.*;
-import src.airportmanager.exceptions.CargaAvionEquivocadaException;
-import src.airportmanager.exceptions.FormatoDniIncorrectoException;
+import src.airportmanager.app.AirportManager;
+import src.airportmanager.app.aeropuerto.*;
+import src.airportmanager.app.avion.*;
+import src.airportmanager.app.exceptions.CargaAvionEquivocadaException;
+import src.airportmanager.app.exceptions.FormatoDniIncorrectoException;
 import src.airportmanager.vuelo.*;
-import src.airportmanager.aeropuerto.*;
 import src.airportmanager.usuario.*;
 import src.airportmanager.hangar.*;
 import java.time.*;
 import java.util.*;
+
 /**
  * HnagarPasajerosTest
  */
-class HangarMercanciasTest{
+class HangarMercanciasTest {
 
     private HangarMercancias hangar, hangar2;
     private Avion avion, avion2;
@@ -36,14 +38,14 @@ class HangarMercanciasTest{
     private Gestor gestor;
     private AirportManager sistema;
     private Vuelo vueloConMercaPeligrosa, vueloSinMercaPeligrosa;
-    
+
     /**
-	 * Constructor
-	 */
-	public HangarMercanciasTest() {
-		
-	}
-	
+     * Constructor
+     */
+    public HangarMercanciasTest() {
+
+    }
+
     /**
      * Crea Objetos
      */
@@ -54,8 +56,10 @@ class HangarMercanciasTest{
 
         hangar = new HangarMercancias(2, 45.5, 34.5, 40.8, 5.0, false);
         hangar2 = new HangarMercancias(3, 43.8, 46.9, 35.0, 5.5, false);
-        avion = new AvionMercancias("BOEING", "767-300ER", 35.5, 67.3, 34.8, 90098.5, 2022, calendar.getTime(), "83472PL", 0, false, false);
-        avion2 = new AvionMercancias("AIRBUS", "8863-JDID", 67.9, 45.5, 34.5, 78009, 2024, calendar.getTime(), "98378KL", 0, false, false);
+        avion = new AvionMercancias("BOEING", "767-300ER", 35.5, 67.3, 34.8, 90098.5, 2022, calendar.getTime(),
+                "83472PL", 0, false, false);
+        avion2 = new AvionMercancias("AIRBUS", "8863-JDID", 67.9, 45.5, 34.5, 78009, 2024, calendar.getTime(),
+                "98378KL", 0, false, false);
 
     }
 
@@ -64,28 +68,33 @@ class HangarMercanciasTest{
      */
     @Test
     void testGetAviones() {
-        assertTrue(hangar.getAviones().isEmpty(), "Error, la lista de aviones del hangar al principio debería estar vacía");
+        assertTrue(hangar.getAviones().isEmpty(),
+                "Error, la lista de aviones del hangar al principio debería estar vacía");
     }
 
     /**
      * AddAvion
+     * 
      * @throws CargaAvionEquivocadaException
      */
     @Test
     void testAddAvion() throws CargaAvionEquivocadaException {
         hangar.addAvion(avion);
-        assertTrue(hangar.getAviones().contains(avion), "Error la lista de aviones del hangar debería contener un avión");
+        assertTrue(hangar.getAviones().contains(avion),
+                "Error la lista de aviones del hangar debería contener un avión");
         hangar.addAvion(avion2);
         aviones = new ArrayList<>();
         aviones.add(avion);
         aviones.add(avion2);
-        for(Avion a:aviones) {
-        	assertTrue(hangar.comprobarAvionEnHangar(a), "Error la lista de aviones del hangar debería contener dos aviones");
+        for (Avion a : aviones) {
+            assertTrue(hangar.comprobarAvionEnHangar(a),
+                    "Error la lista de aviones del hangar debería contener dos aviones");
         }
     }
 
     /**
      * SacarAvion
+     * 
      * @throws CargaAvionEquivocadaException
      */
     @Test
@@ -93,12 +102,14 @@ class HangarMercanciasTest{
 
         hangar.addAvion(avion);
         hangar.sacarAvion(avion);
-        assertTrue(hangar.getAviones().isEmpty(), "Error la lista de aviones del hangar debería estar vacía después de sacar el único avión que había");
+        assertTrue(hangar.getAviones().isEmpty(),
+                "Error la lista de aviones del hangar debería estar vacía después de sacar el único avión que había");
 
     }
 
     /**
      * ComprobarAvionHangar
+     * 
      * @throws CargaAvionEquivocadaException
      */
     @Test
@@ -111,6 +122,7 @@ class HangarMercanciasTest{
 
     /**
      * HayEspacioHangar
+     * 
      * @throws CargaAvionEquivocadaException
      */
     @Test
@@ -154,7 +166,7 @@ class HangarMercanciasTest{
     @Test
     void testGetDimPlazaAlto() {
         assertEquals(34.5, hangar.getDimPlazaAlto(), "Error la dimensión de alto de la plaza no es correcta");
-        
+
     }
 
     /**
@@ -163,7 +175,7 @@ class HangarMercanciasTest{
     @Test
     void testGetDimPlazaLargo() {
         assertEquals(40.8, hangar.getDimPlazaLargo(), "Error la dimensión de largo de la plaza no es correcta");
-        
+
     }
 
     /**
@@ -172,7 +184,7 @@ class HangarMercanciasTest{
     @Test
     void testGetCostePorHora() {
         assertEquals(5.0, hangar.getCostePorHora(), "Error el coste por hora del hangar no es correcto");
-        
+
     }
 
     /**
@@ -181,7 +193,7 @@ class HangarMercanciasTest{
     @Test
     void testGetHorasUso() {
         assertEquals(0, hangar.getHorasUso(), "Error al principio las horas de uso del hangar deberían estar a 0");
-        
+
     }
 
     /**
@@ -191,7 +203,7 @@ class HangarMercanciasTest{
     void testAddHorasUso() {
         hangar.addHorasUso(5);
         assertEquals(5, hangar.getHorasUso(), "Error las horas del uso del hangar no son correctas");
-  
+
     }
 
     /**
@@ -202,7 +214,7 @@ class HangarMercanciasTest{
         hangar.addHorasUso(5);
         hangar.resetHorasUso();
         assertEquals(0, hangar.getHorasUso(), "Error las horas del uso del hangar no se resetearon correctamente");
-  
+
     }
 
     /**
@@ -210,55 +222,55 @@ class HangarMercanciasTest{
      */
     @Test
     void testComprobarTamano() {
-   
 
         fecha = LocalDate.of(2024, 03, 22);
-        hora = LocalTime.of(9,30, 0);
-        h = LocalTime.of(11,30, 0);
+        hora = LocalTime.of(9, 30, 0);
+        h = LocalTime.of(11, 30, 0);
         calendar = Calendar.getInstance();
         calendar.set(2024, Calendar.JANUARY, 22);
         revision = calendar.getTime();
         zone = ZoneOffset.of("+1");
         zone2 = ZoneOffset.of("+2");
 
-        aeropuertoPropio = new AeropuertoPropio("barajas", "MAD", "Madrid", "España", 25.0, zone2, 3, DireccionRelativaCiudad.ESTE);
+        aeropuertoPropio = new AeropuertoPropio("barajas", "MAD", "Madrid", "España", 25.0, zone2, 3,
+                DireccionRelativaCiudad.ESTE);
         sistema = new AirportManager();
         gestor = new Gestor("Miguel", "P8NOKYW", aeropuertoPropio, sistema);
         aerolinea = new Aerolinea("Ryanair", "RT2");
         try {
-			operador = new Operador("Jesus", "52648274K", aerolinea, aeropuertoPropio, gestor, sistema);
-		} catch (FormatoDniIncorrectoException e) {
-			fail();
-		}
-        aeropuertoDestino = new AeropuertoDestino("Fuimicino", "FCO", "Roma", "Italia", 30.0, zone, 2, DireccionRelativaCiudad.NORTE);
+            operador = new Operador("Jesus", "52648274K", aerolinea, aeropuertoPropio, gestor, sistema);
+        } catch (FormatoDniIncorrectoException e) {
+            fail();
+        }
+        aeropuertoDestino = new AeropuertoDestino("Fuimicino", "FCO", "Roma", "Italia", 30.0, zone, 2,
+                DireccionRelativaCiudad.NORTE);
         escala = new Escala(aeropuertoPropio, aeropuertoDestino, hora, h);
         avion = new AvionPasajeros("AIRBUS", "C42", 30.00, 30.0, 30.0, 60.000, 2020, revision, "JLN2000", 0);
-        vueloPequeno = new Vuelo("V123", fecha, null, null, hora, null, TipoCarga.MERCANCIAS, TipoModoEmbarque.ZONA_DE_APARCAMIENTO, Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avion, aeropuertoDestino, aeropuertoPropio, escala, operador);
+        vueloPequeno = new Vuelo("V123", fecha, null, null, hora, null, TipoCarga.MERCANCIAS,
+                TipoModoEmbarque.ZONA_DE_APARCAMIENTO, Periodicidad.PUNTUAL, TipoVuelo.SALIDA, avion, aeropuertoDestino,
+                aeropuertoPropio, escala, operador);
 
         assertTrue(hangar.comprobarTamano(vueloPequeno), "Error. El avion debería caber");
-    
+
     }
-    
+
     /**
      * ComprobarMercanciaPeligrosa
      */
     @Test
     void testComprobarMercaPeligrosa() {
-    	vueloConMercaPeligrosa = new Vuelo("VM123", LocalDate.now(), null, null, 
-                LocalTime.of(10, 30), null, TipoCarga.MERCANCIAS, 
-                TipoModoEmbarque.ZONA_DE_APARCAMIENTO, Periodicidad.PUNTUAL, TipoVuelo.SALIDA, 
+        vueloConMercaPeligrosa = new Vuelo("VM123", LocalDate.now(), null, null,
+                LocalTime.of(10, 30), null, TipoCarga.MERCANCIAS,
+                TipoModoEmbarque.ZONA_DE_APARCAMIENTO, Periodicidad.PUNTUAL, TipoVuelo.SALIDA,
                 avion, aeropuertoDestino, aeropuertoPropio, null, operador);
-                
-            vueloSinMercaPeligrosa = new Vuelo("VM456", LocalDate.now(), null, null, 
-                LocalTime.of(12, 30), null, TipoCarga.MERCANCIAS, 
-                TipoModoEmbarque.ZONA_DE_APARCAMIENTO, Periodicidad.PUNTUAL, TipoVuelo.SALIDA, 
+
+        vueloSinMercaPeligrosa = new Vuelo("VM456", LocalDate.now(), null, null,
+                LocalTime.of(12, 30), null, TipoCarga.MERCANCIAS,
+                TipoModoEmbarque.ZONA_DE_APARCAMIENTO, Periodicidad.PUNTUAL, TipoVuelo.SALIDA,
                 avion2, aeropuertoDestino, aeropuertoPropio, null, operador);
         assertTrue(hangar.comprobarMercaPeligrosa(vueloConMercaPeligrosa));
         assertTrue(hangar.comprobarMercaPeligrosa(vueloSinMercaPeligrosa));
-        
-        
-    }
-    
 
+    }
 
 }
