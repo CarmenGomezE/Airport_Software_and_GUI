@@ -81,6 +81,10 @@ public class GestionInfraestructuraAeropuertoDestinoGUI extends JFrame {
 
                 try {
                     gestor.darDeAltaAeropuertoDestino(nombreFichero);
+                    JOptionPane.showMessageDialog(null,
+                            "¡Aeropuerto de destino dado de alta correctamente!",
+                            "Éxito",
+                            JOptionPane.INFORMATION_MESSAGE);
 
                 } catch (IOException e1) {
                     e1.printStackTrace();
@@ -102,10 +106,7 @@ public class GestionInfraestructuraAeropuertoDestinoGUI extends JFrame {
                             JOptionPane.ERROR_MESSAGE);
                 }
 
-                JOptionPane.showMessageDialog(null,
-                        "¡Aeropuerto de destino dado de alta correctamente!",
-                        "Éxito",
-                        JOptionPane.INFORMATION_MESSAGE);
+                
 
             }
         });
