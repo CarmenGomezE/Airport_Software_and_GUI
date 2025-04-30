@@ -294,7 +294,6 @@ public class Vuelo extends VueloProgramado {
         LocalTime horaCambio;
         
         if (this.getEstado() != EstadoVuelo.ESPERANDO_DESPEGUE) {
-            System.out.println("Estado no es ESPERANDO_DESPEGUE, estado actual: " + this.getEstado());
             return 0;
         }
 

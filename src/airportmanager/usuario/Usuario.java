@@ -98,7 +98,7 @@ public abstract class Usuario implements Serializable {
      * 
      * @return Las notificaciones del usuario.
      */
-    public List<Notificacion> getNotificaciones() {
+    public List<Notificacion> getNotificaciones() { 
         return notificaciones;
     }
 

@@ -61,7 +61,7 @@ public class Gestor extends Usuario {
     /** Mensaje de la interfaz. */
     private String mensajeGUI;
     /** Formateador de local date */
-    private transient DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private transient DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
     /** Formateador de local time */
     private transient DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm");
     
@@ -907,7 +907,7 @@ public class Gestor extends Usuario {
      * @param notificacion Notificación que se recibe.
      * 
      */
-    @Override
+    @Override 
     public void recibirNotificacion(Notificacion notificacion) {
     	for(TipoNotificacion tipo: getTiposPermitidosNotificaciones() )	{
     		if(notificacion.getTipoNotificacion()==tipo) {

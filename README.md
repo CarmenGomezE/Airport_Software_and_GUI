@@ -79,7 +79,6 @@ Proyecto que implementa la interfaz gráfica para un software de gestión de un 
 			- código= "FRK8106",
 			- estado= FIN_DEL_EMBARQUE.
 			Después, volver a la pantalla principal y actualizar la lista de vuelos.
-			
 		- DAR DE ALTA AVIÓN:
 			- mercancías:
 			- pasajeros:
@@ -93,6 +92,7 @@ Proyecto que implementa la interfaz gráfica para un software de gestión de un 
 	3.4 VENTANA DEL GESTOR:
 		- NOTIFICACIONES: 
 			Seleccionar los tipos que se quieren recibir.
+			
 		- DAR DE ALTA HANGAR:
 			- mercancías:
 				- tipo= mercancias,
@@ -108,6 +108,7 @@ Proyecto que implementa la interfaz gráfica para un software de gestión de un 
 				- dimLargo= "4500",
 				- dimAncho="2500",
 				- coste="1000".
+				
 		- DAR DE ALTA TERMINAL:
 			- mercancías:
 				- código= "T3",
@@ -115,65 +116,81 @@ Proyecto que implementa la interfaz gráfica para un software de gestión de un 
 			- pasajeros:
 				- código= "T4",
 				- puertas de embarque= (Pulsar 2 veces el botón de puertas de embarque) "P12,P13".
+				
 		- DAR DE ALTA FINGER:
 			- altura= "5",
 			- coste= "200",
 			- puertas embarque= "P3".
+			
 		- DAR DE ALTA ZONA DE APARCAMIENTO:
 			- coste= "100",
 			- dimAlto= "1500",
 			- dimLargo= "4500",
 			- puertas embarque= "P1,P2,P5".
+			
 		- DAR DE ALTA PISTA DESPEGUE:
 			- código= "P3",
 			- longitud= "3000".
+			
 		- DAR DE ALTA PISTA ATERRIZAJE:
 			- código= "P4",
 			- longitud= "2000".
+			
 		- DAR DE ALTA AEROLÍNEA:
 			- nombre: "Vueling",
 			- código= "VUE".
+			
 		- DAR DE ALTA AEROPUERTO DE DESTINO:
 			- nombre fichero= "resources/otro_aeropuerto_destino.txt".
+			
 		- DAR DE ALTA CONTROLADOR:
 			- nombre: "Juan Suárez",
 			- dni: "57392734K",
 			- contraseña: "SoyControlador",
 			- terminal: "T3".
+			
 		- DAR DE ALTA OPERADOR:
 			- nombre: "Luis López",
 			- dni: "27839181J",
 			- aerolínea: "Vueling".
+			
 		- CONFIGURACIÓN DEL AEROPUERTO PROPIO:
-			- nombre= " ",
-			- codigo= " ",
-			- país= " ",
-			- ciudad= " ",
-			- distancia ciudad= " ",
-			- direccion ciudad= " ",
-			- diferencia horaria= " ",
-			- TEMPORADA: (" ", " ", " ", " ").
-			Reestablecer los datos iniciales:
-			- Nombre: Aeropuerto Adolfo Suárez Madrid Barajas
-			- Código: MAD
-			- Ciudad más cercana: Madrid
-			- País: España
-			- Distancia a la ciudad más cercana: 10.5
-			- Dirección relativa a la ciudad: Este
-			- Diferencia horaria: 0
+			- nombre= "Heatrhtow",
+			- codigo= "LHR",
+			- país= "Reino Unido",
+			- ciudad= "Londres",
+			- distancia ciudad= "24",
+			- direccion ciudad= "Sur",
+			- diferencia horaria= "+1",
 			- Agregar temporada (si lo marcas:)
-				- Fecha de inicio: 01/06
-				- Fecha de fin: 02/11
-				- Horario de apertura: 09:30
-				- Horario de cierre: 23:45
-   
+				- Fecha de inicio: "01/06"
+				- Fecha de fin: "02/11"
+				- Horario de apertura: "09:30"
+				- Horario de cierre: "23:45"
+			Reestablecer los datos iniciales:
+			- Nombre: "Aeropuerto Adolfo Suárez Madrid Barajas"
+			- Código: "MAD"
+			- Ciudad más cercana: "Madrid"
+			- País: "España"
+			- Distancia a la ciudad más cercana: "10.5"
+			- Dirección relativa a la ciudad: "Este"
+			- Diferencia horaria: "0"
+			- Agregar temporada (si lo marcas:)
+				- Fecha de inicio: "01/06"
+				- Fecha de fin: "02/11"
+				- Horario de apertura: "09:30"
+				- Horario de cierre: "23:45"
+				
 		- ESTADÍSTICAS DE LA INFRAESTRUCTURA:
 			Ver estadísticas
+			
 		- GESTIÓN DE VUELOS:
 			Primero se deben programar los vuelos desde algún operador.
 			********FALTA********
+			
 		- GESTIÓN DE FACTURAS:
 			Selecciona Iberia y emite la contraseña.
+			
 		- VER INFORMACIÓN DEL AEROPUERTO PROPIO:
 			Consultar vuelos, infraestructura y usuarios del aeropuerto.
 	

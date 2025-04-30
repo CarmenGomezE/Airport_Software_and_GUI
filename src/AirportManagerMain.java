@@ -1230,6 +1230,9 @@ public class AirportManagerMain {
 		gestorBarajas.configurarNotificaciones(nuevaConfiguracion);
 		gestorBarajas.recibirNotificacion(notificacionCambioEstado);
 
+		nuevaConfiguracion.add(TipoNotificacion.CAMBIO_ESTADO_VUELO);
+		gestorBarajas.configurarNotificaciones(nuevaConfiguracion);
+		
 		System.out.println("\nSegundo comprobamos otras situaciones.");
 		System.out.println("Al operador de AirFrance con un vuelo de su aerolinea.");
 		operadorAirFrance.recibirNotificacionCambioEstado(airportManager.getAeropuerto().getVuelosAceptados().get(6));
