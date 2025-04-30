@@ -1,1 +1,1 @@
-Aeropuerto Internacional de El Cairo;CAI;El Cairo;Egipto;14;NORTE;+2;2;31/10;08:00-22:00;30/03;31/03;06:00-23:00;30/10
+Aeropuerto Internacional de Nadi;NAN;Nadi;Fiyi;1;SUR;+12;1;31/10;06:00-20:00;30/03;31/03;05:00-22:00;30/10
