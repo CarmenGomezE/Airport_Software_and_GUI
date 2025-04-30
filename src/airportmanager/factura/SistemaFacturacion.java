@@ -127,33 +127,6 @@ public class SistemaFacturacion implements Serializable {
         return aerolinea.getCodigo() + String.format("%06d", contadorFactura++);
     }
     
-    /** 
-     * Método para obtener el coste base de un vuelo de salida.
-     * 
-     * @return El coste base de un vuelo de salida.
-     */
-    public double getCosteBaseVueloSalida() {
-    	return costeBaseVueloSalida;
-    }
-    
-    /**
-     * Método para obtener el coste base de un vuelo de llegada.
-     * 
-     * @return El coste base de un vuelo de llegada.
-     */
-    public double getCosteBaseVueloLlegada() {
-    	return costeBaseVueloLlegada;
-    }
-    
-    /**
-     * Método para obtener el recargo de un avión de mercancías.
-     * 
-     * @return El recargo de un avión de mercancías.
-     */
-    public double getRecargoAvionMercancias() {
-    	return recargoAvionMercancias;
-    }
-    
     /**
      * Método para modificar el coste base de un vuelo de salida..
      * 
