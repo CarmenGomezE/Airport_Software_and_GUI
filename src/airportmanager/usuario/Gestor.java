@@ -137,7 +137,8 @@ public class Gestor extends Usuario {
             }
 
             try {
-                String facturaDir = "/Users/carmen/git/padsoft/facturas/";
+            	String userDir = System.getProperty("user.dir");
+            	String facturaDir = userDir + File.separator + "facturas" + File.separator;
                 File directorio = new File(facturaDir);
                 
                 if (!directorio.exists() && !directorio.mkdirs()) {
