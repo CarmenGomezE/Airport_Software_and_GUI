@@ -187,7 +187,7 @@ class OperadorTest {
 
         Avion avionRegistrado = aerolinea1.getAviones()
                 .stream()
-                .filter(a -> a.getMatricula().equals("PSJWU78"))
+                .filter(a -> a.getAerolinea().getNombre().equals("IBERIA"))
                 .findFirst()
                 .orElse(null);
 
@@ -200,7 +200,7 @@ class OperadorTest {
                 250.60, false, true);
         Avion avionRegistrado = aerolinea1.getAviones()
                 .stream()
-                .filter(a -> a.getMatricula().equals("PSJWU78"))
+                .filter(a -> a.getAerolinea().getNombre().equals("IBERIA"))
                 .findFirst()
                 .orElse(null);
         assertNotNull(avionRegistrado, "No se ha dado de alta correctamente el avión");
