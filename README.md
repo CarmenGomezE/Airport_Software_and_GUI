@@ -95,6 +95,20 @@ Proyecto que implementa la interfaz gráfica para un software de gestión de un 
 		- DAR DE ALTA CONTROLADOR:
 		- DAR DE ALTA OPERADOR:
 		- CONFIGURACIÓN DEL AEROPUERTO PROPIO:
+   			- Nombre: Aeropuerto Adolfo Suárez Madrid Barajas
+   			- Código: MAD
+   			- Ciudad más cercana: Madrid
+   			- País: España
+   			- Distancia a la ciudad más cercana: 10.5
+   			- Dirección relativa a la ciudad: Este
+   			- Diferencia horaria: 0
+   			- Agregar temporada (si lo marcas:)
+   				- Fecha de inicio: 01/06
+   				- Fecha de fin: 02/11
+   				- Horario de apertura: 09:30
+   				- Horario de cierre: 23:45
+   
+   
 		- ESTADÍSTICAS DE LA INFRAESTRUCTURA:
 		- GESTIÓN DE VUELOS:
 		- GESTIÓN DE FACTURAS:
