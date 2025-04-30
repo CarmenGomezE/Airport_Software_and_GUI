@@ -70,24 +70,6 @@ public abstract class Avion implements Serializable {
     }
 
     /**
-     * Método que devuelve la marca de un Avion.
-     * 
-     * @return Marca.
-     */
-    public String getMarca() {
-        return this.marca;
-    }
-
-    /**
-     * Método que devuelve el modelo de un Avion.
-     * 
-     * @return Modelo.
-     */
-    public String getModelo() {
-        return this.modelo;
-    }
-
-    /**
      * Método que devuelve la dimensión de altura de un Avion.
      * 
      * @return La dimensión de altura.
@@ -112,42 +94,6 @@ public abstract class Avion implements Serializable {
      */
     public double getDimLargo() {
         return this.dimLargo;
-    }
-
-    /**
-     * Método que devuelve la autonomia de un Avion.
-     * 
-     * @return Autonomía.
-     */
-    public double getAutonomia() {
-        return this.autonomia;
-    }
-
-    /**
-     * Método que devuelve año de compra de un Avion.
-     * 
-     * @return Año de compra.
-     */
-    public int getAnoCompra() {
-        return this.anoCompra;
-    }
-
-    /**
-     * Método que devuelve la fecha de la última revisión de un Avion.
-     * 
-     * @return Fecha de última revisión.
-     */
-    public Date getFechaUltimaRevision() {
-        return this.fechaUltimaRevision;
-    }
-
-    /**
-     * Método que devuelve la matrícula de un Avion.
-     * 
-     * @return Matrícula.
-     */
-    public String getMatricula() {
-        return this.matricula;
     }
 
     /**
