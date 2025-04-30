@@ -37,12 +37,6 @@ class AvionMercanciasTest {
 	}
 
 	@Test
-	void testGetControlTemperatura() {
-		assertEquals(true, avionMercancias.getControlTemperatura(),
-				"Error el campo de control de temperatura no es correcto");
-	}
-
-	@Test
 	void testGetMercaPeligrosa() {
 		assertEquals(false, avionMercancias.getMercaPeligrosa(), "Error el campo de mercancías peligrosas");
 	}

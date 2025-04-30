@@ -119,6 +119,15 @@ public abstract class Usuario implements Serializable {
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
     }
+    
+    /**
+     * Método para obtener el sistema.
+     * 
+     * @return El sistema.
+     */
+    public AirportManager getSistema() {
+        return sistema;
+    }
 
     /**
      * Método para imprimir la lista de vuelos del usuario con sus estados.
