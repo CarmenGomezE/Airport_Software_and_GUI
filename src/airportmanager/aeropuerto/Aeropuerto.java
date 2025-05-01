@@ -14,8 +14,8 @@ import src.airportmanager.exceptions.TemporadasSolapadasException;
  */
 public abstract class Aeropuerto implements Serializable {
 
-	/** Número de versión de la clase */
-	private static final long serialVersionUID = 1L;
+    /** Número de versión de la clase */
+    private static final long serialVersionUID = 1L;
     /** Nombre del aeropuerto */
     private String nombre;
     /** Código del aeropuerto */
@@ -48,7 +48,7 @@ public abstract class Aeropuerto implements Serializable {
      * @param direccionCiudad   Dirección relativa a la ciudad más cercana del
      *                          aeropuerto.
      */
-    public Aeropuerto(String nombre, String codigo, String ciudad, String pais, double distanciaCiudad, 
+    public Aeropuerto(String nombre, String codigo, String ciudad, String pais, double distanciaCiudad,
             ZoneOffset diferenciaHoraria, int numTemporadas, DireccionRelativaCiudad direccionCiudad) {
         this.nombre = nombre;
         this.codigo = codigo;
@@ -198,9 +198,11 @@ public abstract class Aeropuerto implements Serializable {
     }
 
     /**
-     * Método para modificar la dirección relativa a la ciudad más cercana de un aeropuerto.
+     * Método para modificar la dirección relativa a la ciudad más cercana de un
+     * aeropuerto.
      * 
-     * @param direccionCiudad La dirección relativa a la ciudad más cercana del aeropuerto.
+     * @param direccionCiudad La dirección relativa a la ciudad más cercana del
+     *                        aeropuerto.
      */
     public void setDireccionCiudad(DireccionRelativaCiudad direccionCiudad) {
         this.direccionCiudad = direccionCiudad;
@@ -231,27 +233,27 @@ public abstract class Aeropuerto implements Serializable {
      * @throws TemporadasSolapadasException temporadas se solapan.
      */
     public void agregarTemporada(Temporada nuevaTemporada) throws TemporadasSolapadasException {
-    	if (nuevaTemporada == null) {
-    	    throw new IllegalArgumentException("La nueva temporada no puede ser nula");
-    	}
+        if (nuevaTemporada == null) {
+            throw new IllegalArgumentException("La nueva temporada no puede ser nula");
+        }
 
-    	for (Temporada t : getTemporadas()) {
-    	    if (t.comprobarTemporada(nuevaTemporada)) {
-    	        throw new TemporadasSolapadasException("La nueva temporada se solapa con otra existente");
-    	    }
-    	}
+        for (Temporada t : getTemporadas()) {
+            if (t.comprobarTemporada(nuevaTemporada)) {
+                throw new TemporadasSolapadasException("La nueva temporada se solapa con otra existente");
+            }
+        }
 
-    	temporadas.add(nuevaTemporada);
+        temporadas.add(nuevaTemporada);
 
-    	temporadas.sort(Comparator.comparing(
-    	    Temporada::getFechaInicio));
+        temporadas.sort(Comparator.comparing(
+                Temporada::getFechaInicio));
 
-    	numTemporadas=temporadas.size();
+        numTemporadas = temporadas.size();
     }
-    
+
     @Override
     public String toString() {
-    	return nombre;
+        return nombre;
     }
 
 }
