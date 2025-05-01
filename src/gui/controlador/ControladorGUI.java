@@ -225,6 +225,10 @@ public class ControladorGUI extends JFrame {
                         modeloLista.addElement("Vuelo: " + v + " | Hora: " + v.getHora().format(formatter)
                                 + " | Estado: " + v.getEstado() + " | Esperando pista durante más de 10 min");
                     }
+                    else {
+                        modeloLista.addElement("Vuelo: " + v + " | Hora: " + v.getHora().format(formatter) + " | Estado: "
+                                + v.getEstado());
+                    }
                 } else if (v.getEstado().equals(EstadoVuelo.RETRASADO)) {
                     modeloLista.addElement("Vuelo: " + v + " | Hora: " + v.getHora().format(formatter) + " | Estado: "
                             + v.getEstado() + " | Retrasado");
@@ -234,11 +238,15 @@ public class ControladorGUI extends JFrame {
                         modeloLista.addElement("Vuelo: " + v + " | Hora: " + v.getHora().format(formatter)
                                 + " | Estado: " + v.getEstado() + " | Salida en menos de 1 hora");
                     }
+                    else {
+                        modeloLista.addElement("Vuelo: " + v + " | Hora: " + v.getHora().format(formatter) + " | Estado: "
+                                + v.getEstado());
+                    }
                 } else {
                     modeloLista.addElement("Vuelo: " + v + " | Hora: " + v.getHora().format(formatter) + " | Estado: "
                             + v.getEstado());
                 }
-                AeManager.verificarYActualizarVuelo(v);
+                AeManager.verificarYActualizarVuelo(v); 
             }
         }
     }

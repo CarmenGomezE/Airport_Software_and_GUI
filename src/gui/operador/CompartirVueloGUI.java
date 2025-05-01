@@ -135,7 +135,7 @@ public class CompartirVueloGUI extends JFrame {
 
                 try {
                     operador.solicitarCompartirVuelo(vuelo, vuelo.getOperadorPrincipal(), porcentaje);
-                    JOptionPane.showMessageDialog(null, "Estado cambiado correctamente.");
+                    JOptionPane.showMessageDialog(null, "Solicitud emitida correctamente.");
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Error al cambiar el estado del vuelo: " + ex.getMessage(),
                             "Error", JOptionPane.ERROR_MESSAGE);

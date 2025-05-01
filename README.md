@@ -48,7 +48,7 @@ Proyecto que implementa la interfaz gráfica para un software de gestión de un 
 
 1. Descargar el proyecto
 2. Ejecutar la interfaz. La interfaz se ejecuta desde el archivo Main.java, que carga los datos de prueba_interfaz.dat. Si se desea cargar otro fichero, incluirlo en /resources y modificar la variable ARCHIVO_ESTADO de Main.java.
-3. Probar la interfaz. A continuación se describen posibles acciones para probar la interfaz.
+3. Probar la interfaz. A continuación se describen posibles acciones para probar la interfaz.	
 	
 ## 3.1. VENTANA PRINCIPAL:
 		- INICIO DE SESIÓN:
@@ -72,6 +72,7 @@ Proyecto que implementa la interfaz gráfica para un software de gestión de un 
 		- NOTIFICACIONES:
 			Ver notificaciones.
 		- CAMBIO DE ESTADO:
+			Primero se deben programar los vuelos.
 			(Controlador con dni=12345678L)(Si al crearlos no se le han asignado a este, al que se le hayan asignado).
 			- código= "IBE1235",
 			- estado= ESPERANDO_PISTA_DE_DESPEGUE.
@@ -102,6 +103,7 @@ Proyecto que implementa la interfaz gráfica para un software de gestión de un 
 		- NOTIFICACIONES:
 			Ver notificaciones.
 		- CAMBIO DE ESTADO:
+			Primero se deben programar los vuelos.
 			(Operador con dni=50738890L)
 			- código= "FRK8106",
 			- estado= EN_PREPARACION_PARA_DESPEGAR.
@@ -150,7 +152,8 @@ Proyecto que implementa la interfaz gráfica para un software de gestión de un 
 				- control de temperatura: (Seleccionar).
 				
 		- PROGRAMAR UN VUELO:
-		Se recomienda programar 4 vuelos a la misma hora para ver como se gestionan.
+		Se recomienda programar 6 vuelos a la misma hora para ver como se gestionan.
+		NOTA: La antelación mínima para programar vuelos está puesta a 0 días para poder programar vuelos y probar el cambio de estado de estos.
 		(Controlador con dni=12345678A)
 			Vuelo1:
 			- código= "IBE1234",
@@ -193,7 +196,7 @@ Proyecto que implementa la interfaz gráfica para un software de gestión de un 
 			- aeropuerto de salida/llegada= "Málaga",
 			- días recurrente= (Seleccionar martes y jueves).
 
-    			Vuelo4:
+    		Vuelo4:
 			- código= "IBE1237",
 			- fecha= "(día de hoy yyyy-mm-dd)",
 			- fecha inicio="(día de hoy yyyy-mm-dd)",
@@ -203,12 +206,38 @@ Proyecto que implementa la interfaz gráfica para un software de gestión de un 
 			- modo embarque= "zona de aparcamiento",
 			- periodidicad= "puntual",
 			- tipo de vuelo= "salida",
-			- avión=  "EC-HGS",
+			- avión=  "EC-KBX",
 			- aeropuerto de salida/llegada= "El Cairo".
+			
+			Vuelo5:
+			- código= "IBE1238",
+			- fecha= "(día de hoy yyyy-mm-dd)",
+			- fecha inicio= "(día de hoy yyyy-mm-dd)",
+			- fecha fin= "(día de hoy yyyy-mm-dd)",
+			- hora= "(Dentro de 20 minutos HH:mm)",
+			- tipo carga= "pasajeros",
+			- modo embarque= "zona de aparcamiento",
+			- periodidicad= "puntual",
+			- tipo de vuelo= "salida",
+			- avión= "IB_HGC",
+			- aeropuerto de salida/llegada= "El part".
+			
+			Vuelo6:
+			- código= "IBE1231",
+			- fecha= "(día de hoy yyyy-mm-dd)",
+			- fecha inicio= "(día de hoy yyyy-mm-dd)",
+			- fecha fin= "(día de hoy yyyy-mm-dd)",
+			- hora= "(Dentro de 20 minutos HH:mm)",
+			- tipo carga= "pasajeros",
+			- modo embarque= "zona de aparcamiento",
+			- periodidicad= "puntual",
+			- tipo de vuelo= "salida",
+			- avión= "IB_HGC",
+			- aeropuerto de salida/llegada= "Mallorca".
 			
 		- COMPARTIR UN VUELO:
 			(Controlador con dni=12345678A)
-			- código= "IBE1234", ACEPTAR.
+			- código= "IBE1238", ACEPTAR.
 			
 		- SOLICITAR COMPARTIR VUELO:
 			(Operador con dni=50738890L)
@@ -220,8 +249,8 @@ Proyecto que implementa la interfaz gráfica para un software de gestión de un 
 			
 		- ALTERNATIVAS A LOS VUELOS PROPUESTOS:
 			Para aceptar se debe introducir el código de la aternativa, sin embarqo, para rechazar se debe introducir el código del vuelo al que se le han generado 				alternativas. Entonces se podría hacer:
-			- código= "IBE1234-A1", ACEPTAR.
-			- código= "IBE1234", RECHAZAR.
+			- código= "(código alternativa)", ACEPTAR.
+			- código= "(código vuelo)", RECHAZAR.
 			
 		- PAGAR FACTURAS AEROLÍNEA:
 			(Generar primero la factura desde el gestor)
@@ -329,7 +358,8 @@ Proyecto que implementa la interfaz gráfica para un software de gestión de un 
 			Primero se deben programar los vuelos desde algún operador.
 			- código= "IBE1234",GESTIONAR.
 			- código= "IBE1235",GESTIONAR.
-			- código= "IBE1236", GESTIONAR.
+			- código= "IBE1236-2025-05-01", GESTIONAR.
+			(Los vuelos recurrentes tienen el mismo dódigo acompañado de la fecha para que sea más sencillo identificarlos).
 			- código= "IBE1237", GESTIONAR.
 		
 		- GESTIÓN DE FACTURAS:

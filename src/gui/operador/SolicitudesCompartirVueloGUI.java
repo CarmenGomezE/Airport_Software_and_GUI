@@ -130,7 +130,7 @@ public class SolicitudesCompartirVueloGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String codigo = campoCodigo.getText().trim();
                 if (codigo.isEmpty()) {
-                    JOptionPane.showMessageDialog(SolicitudesCompartirVueloGUI.this, "Introduce un código de vuelo.");
+                    JOptionPane.showMessageDialog(SolicitudesCompartirVueloGUI.this, "Introduce un código de solicitud.");
                     return;
                 }
 

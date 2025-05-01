@@ -188,7 +188,7 @@ public class ProgramarVueloGUI extends JFrame {
         boton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    String codigo = campoCodigo.getText().trim();
+                    String codigo = campoCodigo.getText().trim(); 
                     LocalDate fecha = LocalDate.parse(campoFecha.getText().trim());
                     LocalDate fechaInicio = LocalDate.parse(campoFechaInicio.getText().trim());
                     LocalDate fechaFin = LocalDate.parse(campoFechaFin.getText().trim());

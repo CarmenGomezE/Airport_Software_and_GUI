@@ -3,10 +3,6 @@ package src;
 import src.airportmanager.AirportManager;
 import src.gui.*;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
 import javax.swing.SwingUtilities;
 
 /**
@@ -21,7 +17,7 @@ import javax.swing.SwingUtilities;
  */
 public class Main {
     /** Ruta al archivo donde se guarda el estado del aeropuerto */
-    private static final String ARCHIVO_ESTADO = "resources/estado_airport_manager.dat";
+    private static final String ARCHIVO_ESTADO = "resources/prueba_interfaz.dat";
 
     /**
      * Constructor de la clase principal.
@@ -37,8 +33,7 @@ public class Main {
      */
     public static void main(String[] args) {
         try {
-            /** vaciarArchivo(ARCHIVO_ESTADO); */
-            AirportManager manager = AirportManager.cargarEstado("resources/estado_airport_manager.dat");
+            AirportManager manager = AirportManager.cargarEstado(ARCHIVO_ESTADO);
 
             Runtime.getRuntime().addShutdownHook(new Thread(() -> {
                 try {
@@ -62,31 +57,6 @@ public class Main {
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println("Error al cargar el estado del aeropuerto o iniciar la aplicación: " + e.getMessage());
-        }
-    }
-
-    /**
-     * Método para vaciar el archivo de estado del aeropuerto.
-     * 
-     * Este método elimina el contenido del archivo especificado, pero no
-     * elimina el archivo en sí. Útil para reiniciar el estado de la aplicación.
-     * 
-     * @param archivo Ruta del archivo que se desea vaciar.
-     */
-    public static void vaciarArchivo(String archivo) {
-        try {
-            File file = new File(archivo);
-            System.out.println("\nIntentando vaciar el archivo: " + file.getAbsolutePath());
-
-            file.getParentFile().mkdirs();
-
-            try (FileOutputStream fos = new FileOutputStream(file)) {
-                fos.close();
-                System.out.println("El archivo ha sido vaciado correctamente.");
-            }
-        } catch (IOException e) {
-            System.err.println("Error al vaciar el archivo: " + e.getMessage());
-            e.printStackTrace();
         }
     }
 }
