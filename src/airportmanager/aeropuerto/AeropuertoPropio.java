@@ -37,6 +37,8 @@ public class AeropuertoPropio extends Aeropuerto {
     private List<Vuelo> vuelosAceptados;
     /** Aeropuertos de destino del aeropuerto propio */
     private List<AeropuertoDestino> aeropuertosDestino;
+    /** Puertas de embarque del aeropuerto propio */
+	private List<PuertaEmbarque> puertasEmbarque;
 
     /**
      * Constructor de la clase AeropuertoPropio.
@@ -64,6 +66,7 @@ public class AeropuertoPropio extends Aeropuerto {
         this.aerolineas = new ArrayList<>();
         this.vuelosAceptados = new ArrayList<>();
         this.aeropuertosDestino = new ArrayList<>();
+        this.puertasEmbarque = new ArrayList<>();
     }
 
     /**
@@ -148,6 +151,7 @@ public class AeropuertoPropio extends Aeropuerto {
 
         for (Terminal t : terminales) {
             puertasEmbarque.addAll(t.getPuertasEmbarque());
+            puertasEmbarque.addAll(this.puertasEmbarque);
         }
 
         return puertasEmbarque;
@@ -306,6 +310,18 @@ public class AeropuertoPropio extends Aeropuerto {
 			}
 		}
 		return fingers;
+	}
+
+	/**
+     * Método que añade una puerta de embarque sin terminal.
+     * @param p	Nueva puerta de embarque.
+     */
+	public void addPuertaDeEmbarque(PuertaEmbarque p) {
+		if(this.puertasEmbarque==null) {
+			this.puertasEmbarque= new ArrayList<>();
+		}
+		this.puertasEmbarque.add(p);
+		
 	}
  
 }

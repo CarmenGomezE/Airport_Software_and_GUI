@@ -206,7 +206,7 @@ public class GestionInfraestructurasTerminalGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				PuertaEmbarque p = new PuertaEmbarque();
-
+				gestor.getAeropuerto().addPuertaDeEmbarque(p);
 				JOptionPane.showMessageDialog(null,
 						"¡Puerta con id: " + p.getId() + " creada correctamente",
 						"Éxito",
