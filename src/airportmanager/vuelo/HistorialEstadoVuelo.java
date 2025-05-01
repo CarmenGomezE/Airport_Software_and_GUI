@@ -64,12 +64,14 @@ public class HistorialEstadoVuelo implements Serializable {
             return null;
         }
         
-        for (Map.Entry<LocalTime, EstadoVuelo> entry : historial.descendingMap().entrySet()) {
+        NavigableMap<LocalTime, EstadoVuelo> copia = new TreeMap<>();
+        copia=historial;
+        for (Map.Entry<LocalTime, EstadoVuelo> entry : copia.descendingMap().entrySet()) {
             if (!entry.getValue().esAutomatico()) {
                 return entry.getValue();
             }
         }
-        return null;
+        return null; 
     }
     
     /**

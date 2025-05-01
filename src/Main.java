@@ -38,7 +38,7 @@ public class Main {
     public static void main(String[] args) {
         try {
             /** vaciarArchivo(ARCHIVO_ESTADO); */
-            AirportManager manager = AirportManager.cargarEstado(ARCHIVO_ESTADO);
+            AirportManager manager = AirportManager.cargarEstado("resources/estado_airport_manager.dat");
 
             Runtime.getRuntime().addShutdownHook(new Thread(() -> {
                 try {

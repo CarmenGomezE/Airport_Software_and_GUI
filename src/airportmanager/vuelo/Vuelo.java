@@ -302,8 +302,6 @@ public class Vuelo extends VueloProgramado {
         if (horaCambio == null) {
             return 0;
         }
-
-        System.out.println("Hora de cambio: " + horaCambio);
         
         long minutos = Duration.between(horaCambio, LocalTime.now()).toMinutes();
         

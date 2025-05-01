@@ -905,7 +905,7 @@ public class AirportManagerMain {
 		Avion avionIB_HGP = airportManager.getAeropuerto().getAerolineas().get(0).getAviones().get(4);
 		Avion avionIB_HGC = airportManager.getAeropuerto().getAerolineas().get(0).getAviones().get(5);
 		Avion avionIB_HGM = airportManager.getAeropuerto().getAerolineas().get(0).getAviones().get(6);
-		Avion avionIB_HGQ = airportManager.getAeropuerto().getAerolineas().get(0).getAviones().get(7);
+		Avion avionIB_HGQ = airportManager.getAeropuerto().getAerolineas().get(0).getAviones().get(7); 
 
 		AeropuertoPropio aePropio = airportManager.getAeropuerto();
 		Aeropuerto aeTokio = airportManager.getAeropuerto().getAeropuertosDestino().get(6);
@@ -1091,9 +1091,9 @@ public class AirportManagerMain {
 		ControladorAereo controladorT1 = terminalT1.getControladores().get(0);
 		ControladorAereo controladorT2 = terminalT2.getControladores().get(0);
 
-		Vuelo vueloFRK2234 = airportManager.getAeropuerto().getVuelosAceptados().get(11);
-		Vuelo vueloFRK8104 = airportManager.getAeropuerto().getVuelosAceptados().get(12);
-		Vuelo vueloFRK8103 = airportManager.getAeropuerto().getVuelosAceptados().get(18);
+		Vuelo vueloFRK2234 = airportManager.getAeropuerto().getVuelosAceptados().get(10);
+		Vuelo vueloFRK8104 = airportManager.getAeropuerto().getVuelosAceptados().get(11);
+		Vuelo vueloFRK8103 = airportManager.getAeropuerto().getVuelosAceptados().get(17);
 
 		try {
 			operadorIberia.solicitarCompartirVuelo(vueloFRK2234, operadorRyanair, 30);

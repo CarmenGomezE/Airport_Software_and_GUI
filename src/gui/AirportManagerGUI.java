@@ -193,8 +193,7 @@ public class AirportManagerGUI extends JFrame {
                                 break;
 
                             case "Controlador aéreo":
-                                ControladorAereo controlador = (ControladorAereo) airportManager.getGestor()
-                                        .buscarUsuarioPorDni(dni);
+                                ControladorAereo controlador = (ControladorAereo) airportManager.getGestor().buscarUsuarioPorDni(dni);
                                 controlador.iniciarSesion(dni, passwordStr);
                                 dispose();
                                 new ControladorGUI(AirportManagerGUI.this, manager, controlador);

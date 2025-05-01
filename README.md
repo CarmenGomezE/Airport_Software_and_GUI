@@ -72,33 +72,29 @@ Proyecto que implementa la interfaz gráfica para un software de gestión de un 
 		- NOTIFICACIONES:
 			Ver notificaciones.
 		- CAMBIO DE ESTADO:
-			(Controlador con dni=12345678L)
-			- código= "FRK2234",
-			- estado= ESPERANDO_DESPEGUE.
-			Después, volver a la pantalla principal y actualizar la lista de vuelos 2 veces.
-			
-			- código= "FRK8106",
+			(Controlador con dni=12345678L)(Si al crearlos no se le han asignado a este, al que se le hayan asignado).
+			- código= "IBE1235",
 			- estado= ESPERANDO_PISTA_DE_DESPEGUE.
 			Después, volver a la pantalla principal y actualizar la lista de vuelos.
-			- código= "FRK8106",
+			- código= "IBE1235",
 			- estado= ESPERANDO_DESPEGUE.
 			Después, volver a la pantalla principal y actualizar la lista de vuelos 2 veces.
 			
-			- código= "IBE2234",
+			- código= "IBE1234",
 			- estado= ESPERANDO_PISTA_DE_ATERRIZAJE.
 			Después, volver a la pantalla principal y actualizar la lista de vuelos.
-			- código= "IBE2234",
+			- código= "IBE1234",
 			- estado= ESPERANDO_ATERRIZAJE.
 			Después, volver a la pantalla principal y actualizar la lista de vuelos.
-			- código= "IBE2234",
+			- código= "IBE1234",
 			- estado= ATERRIZAJE.
 			Después, volver a la pantalla principal y actualizar la lista de vuelos.
 			
 			(Primero hay que cambiar el desembarque desde el operador)
-			- código= "IBE2234",
+			- código= "IBE1234",
 			- estado= OPERATIVO.
 			Después, volver a la pantalla principal y actualizar la lista de vuelos.
-			- código= "IBE2234",
+			- código= "IBE1234",
 			- estado= AVION_A_HANGAR.
 			Después, volver a la pantalla principal y actualizar la lista de vuelos.
 			
@@ -118,10 +114,10 @@ Proyecto que implementa la interfaz gráfica para un software de gestión de un 
 			Después, volver a la pantalla principal y actualizar la lista de vuelos.
 			
 			(Controlador con dni=12345678A)
-			- código= "IBE2234",
+			- código= "IBE1234",
 			- estado= INICIO_DESEMBARQUE.
 			Después, volver a la pantalla principal y actualizar la lista de vuelos.
-			- código= "IBE2234",
+			- código= "IBE1234",
 			- estado= FIN_DESEMBARQUE.
 			Después, volver a la pantalla principal y actualizar la lista de vuelos.
 			
@@ -157,23 +153,23 @@ Proyecto que implementa la interfaz gráfica para un software de gestión de un 
 		Se recomienda programar 4 vuelos a la misma hora para ver como se gestionan.
 		(Controlador con dni=12345678A)
 			- código= "IBE1234",
-			- fecha= "2025-05-04",
-			- fecha inicio= "2025-05-04",
-			- fecha fin= "2025-05-04",
-			- hora= "12:00",
+			- fecha= "(día de hoy yyyy-mm-dd)",
+			- fecha inicio= "(día de hoy yyyy-mm-dd)",
+			- fecha fin= "(día de hoy yyyy-mm-dd)",
+			- hora= "(Dentro de 20 minutos HH:mm)",
 			- tipo carga= "pasajeros",
 			- modo embarque= "finger",
 			- periodidicad= "puntual",
 			- tipo de vuelo= "llegada",
 			- avión=  "EC-HGR",
 			- aeropuerto de salida/llegada= "Kennedy",
-			- escala= "El Cairo", "12:00", "14:00".
+			- escala= "El Cairo", "(Dentro de 20 minutos HH:mm)", "(Dentro de 2 horas y 20 minutos HH:mm)".
 			
 			- código= "IBE1235",
-			- fecha= "2025-05-04",
-			- fecha inicio= "2025-05-04",
-			- fecha fin= "2025-05-04",
-			- hora= "12:00",
+			- fecha= "(día de hoy yyyy-mm-dd)",
+			- fecha inicio= "(día de hoy yyyy-mm-dd)",
+			- fecha fin= "(día de hoy yyyy-mm-dd)",
+			- hora= "(Dentro de 20 minutos HH:mm)",
 			- tipo carga= "pasajeros",
 			- modo embarque= "zona de aparcamiento",
 			- periodidicad= "puntual",
@@ -182,10 +178,10 @@ Proyecto que implementa la interfaz gráfica para un software de gestión de un 
 			- aeropuerto de salida/llegada= "Málaga".
 			
 			- código= "IBE1236",
-			- fecha= "2025-05-04",
+			- fecha= "(día de hoy yyyy-mm-dd)",
 			- fecha inicio= "2025-05-04",
 			- fecha fin= "2025-05-06",
-			- hora= "12:00",
+			- hora= "(Dentro de 20 minutos HH:mm)",
 			- tipo carga= "mercancias",
 			- modo embarque= "zona de aparcamiento",
 			- periodidicad= "recurrente",
@@ -195,10 +191,10 @@ Proyecto que implementa la interfaz gráfica para un software de gestión de un 
 			- días recurrente= (Seleccionar martes y jueves).
 			
 			- código= "IBE1237",
-			- fecha= "2025-05-04",
-			- fecha inicio="2025-05-04",
-			- fecha fin="2025-05-04",
-			- hora= "12:00",
+			- fecha= "(día de hoy yyyy-mm-dd)",
+			- fecha inicio="(día de hoy yyyy-mm-dd)",
+			- fecha fin="(día de hoy yyyy-mm-dd)",
+			- hora= "(Dentro de 20 minutos HH:mm)",
 			- tipo carga= "mercancias",
 			- modo embarque= "zona de aparcamiento",
 			- periodidicad= "puntual",
