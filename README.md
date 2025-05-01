@@ -2,14 +2,6 @@
 
 Proyecto que implementa la interfaz gráfica para un software de gestión de un aeropuerto.
 ---
-
-## Contenido del proyecto
-
-- Autenticación de usuarios por rol.
-- Interfaz gráfica para cada tipo de usuario.
-
----
-
 ## Estructura del proyecto
 
 /src 
@@ -36,18 +28,11 @@ Proyecto que implementa la interfaz gráfica para un software de gestión de un 
 
 ---
 
-## Requisitos del sistema
-
-- Java 8 o superior
-- IDE recomendado: Eclipse
-- Sistema operativo: Windows / Linux / macOS
-
----
-
 ## Ejecución del programa
 
 1. Descargar el proyecto
 2. Ejecutar la interfaz. La interfaz se ejecuta desde el archivo Main.java, que carga los datos de prueba_interfaz.dat. Si se desea cargar otro fichero, incluirlo en /resources y modificar la variable ARCHIVO_ESTADO de Main.java.
+NOTA: hay otro .dat, estado_airport_manager.dat donde se carga AiportManagerMain.java que es un main que se ejecuta unicamente en la terminal, se puede cargar ese estado también.
 3. Probar la interfaz. A continuación se describen posibles acciones para probar la interfaz.	
 	
 ## 3.1. VENTANA PRINCIPAL:
