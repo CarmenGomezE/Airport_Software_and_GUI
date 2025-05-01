@@ -146,7 +146,7 @@ public class GestorGUI extends JFrame {
         panelDerecho.setBackground(ConfiguracionUI.COLOR_FONDO);
 
         /** Título del operador */
-        JLabel titulo = ConfiguracionUI.crearTitulo("Gestor del Aeropuerto Adolfo Suarez Madrid Barajas");
+        JLabel titulo = ConfiguracionUI.crearTitulo(manager.getAeropuerto().getNombre());
         panelDerecho.add(titulo);
 
         /** Botones */
@@ -399,10 +399,10 @@ public class GestorGUI extends JFrame {
                         modeloLista.addElement("Vuelo: " + v + " | Hora: " + v.getHora().format(formatter)
                                 + " | Estado: " + v.getEstado()
                                 + " | Esperando pista durante más de 10 min");
-                    }
-                    else {
-                        modeloLista.addElement("Vuelo: " + v + " | Hora: " + v.getHora().format(formatter) + " | Estado: "
-                                + v.getEstado());
+                    } else {
+                        modeloLista
+                                .addElement("Vuelo: " + v + " | Hora: " + v.getHora().format(formatter) + " | Estado: "
+                                        + v.getEstado());
                     }
                 } else if (v.getEstado().equals(EstadoVuelo.RETRASADO)) {
                     modeloLista.addElement(
@@ -414,16 +414,16 @@ public class GestorGUI extends JFrame {
                         modeloLista.addElement("Vuelo: " + v + " | Hora: " + v.getHora().format(formatter)
                                 + " | Estado: " + v.getEstado()
                                 + " | Salida en menos de 1 hora");
-                    }
-                    else {
-                        modeloLista.addElement("Vuelo: " + v + " | Hora: " + v.getHora().format(formatter) + " | Estado: "
-                                + v.getEstado());
+                    } else {
+                        modeloLista
+                                .addElement("Vuelo: " + v + " | Hora: " + v.getHora().format(formatter) + " | Estado: "
+                                        + v.getEstado());
                     }
                 } else {
                     modeloLista.addElement("Vuelo: " + v + " | Hora: " + v.getHora().format(formatter) + " | Estado: "
                             + v.getEstado());
                 }
-                AeManager.verificarYActualizarVuelo(v); 
+                AeManager.verificarYActualizarVuelo(v);
             }
         }
     }
