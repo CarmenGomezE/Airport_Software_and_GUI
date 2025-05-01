@@ -155,6 +155,7 @@ Proyecto que implementa la interfaz gráfica para un software de gestión de un 
 				
 		- PROGRAMAR UN VUELO:
 		Se recomienda programar 4 vuelos a la misma hora para ver como se gestionan.
+		(Controlador con dni=12345678A)
 			- código= "IBE1234",
 			- fecha= "2025-05-04",
 			- fecha inicio= "2025-05-04",
@@ -206,11 +207,28 @@ Proyecto que implementa la interfaz gráfica para un software de gestión de un 
 			- aeropuerto de salida/llegada= "El Cairo".
 			
 		- COMPARTIR UN VUELO:
+			(Controlador con dni=12345678A)
+			- código= "IBE1234", ACEPTAR.
 			
 		- SOLICITAR COMPARTIR VUELO:
+			(Operador con dni=50738890L)
+			- código= "IBE1234",
+			- porcentaje= "20".
+			
 		- ESTADÍSTICAS DE LOS VUELOS:
+			Ver estadísticas y seleccionar, mes, franja o vuelos.
+			
 		- ALTERNATIVAS A LOS VUELOS PROPUESTOS:
+			Para aceptar se debe introducir el código de la aternativa, sin embarqo, para rechazar se debe introducir el código del vuelo al que se le 			han generado alternativas. Entonces se podría hacer:
+			- código= "IBE1234-A1", ACEPTAR.
+			- código= "IBE1234", RECHAZAR.
+			
 		- PAGAR FACTURAS AEROLÍNEA:
+			(Generar primero la factura desde el gestor)
+			(Operador con dni=12345678A)
+			- código= "IBE000001",
+			- número de tarjeta= (Número de 16 dígitos).
+			Refrescar para verificar que se ha pagado.
 	
 	3.4 VENTANA DEL GESTOR:
 		- NOTIFICACIONES: 
@@ -306,17 +324,17 @@ Proyecto que implementa la interfaz gráfica para un software de gestión de un 
 				
 		- ESTADÍSTICAS DE LA INFRAESTRUCTURA:
 			Ver estadísticas
-			
+		
 		- GESTIÓN DE VUELOS:
 			Primero se deben programar los vuelos desde algún operador.
 			- código= "IBE1234",GESTIONAR.
 			- código= "IBE1235",GESTIONAR.
 			- código= "IBE1236", GESTIONAR..
-		
+	
 			- código= "IBE1237",
-			
+		
 		- GESTIÓN DE FACTURAS:
-			Selecciona Iberia y emite la contraseña.
+			Selecciona Iberia y emite la f.
 			
 		- VER INFORMACIÓN DEL AEROPUERTO PROPIO:
 			Consultar vuelos, infraestructura y usuarios del aeropuerto.

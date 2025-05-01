@@ -3,7 +3,6 @@ package src.gui.operador;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -127,7 +126,7 @@ public class PagarFacturasGUI extends JFrame {
 
         panelDerecho.add(Box.createRigidArea(new Dimension(0, 10)));
 
-        JLabel labelCodigo = new JLabel("Código de vuelo:");
+        JLabel labelCodigo = new JLabel("Código de factura:");
         labelCodigo.setAlignmentX(Component.CENTER_ALIGNMENT);
         panelDerecho.add(labelCodigo);
 
