@@ -1,5 +1,8 @@
 package src.airportmanager.hangar;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import src.airportmanager.avion.Avion;
@@ -13,8 +16,8 @@ import src.airportmanager.vuelo.Vuelo;
  */
 public abstract class Hangar implements Serializable {
 
-	/** Número de versión de la clase */
-	private static final long serialVersionUID = 1L;
+    /** Número de versión de la clase */
+    private static final long serialVersionUID = 1L;
     /** Contador para el identificador del hangar */
     private static int contadorId = 1;
 
@@ -32,6 +35,8 @@ public abstract class Hangar implements Serializable {
     private double costePorHora;
     /** Número de horas de uso del hangar */
     private double horasUso;
+    /** Guarda el contador para el identificador de la zona de aparcamiento */
+    private int contadorGuardado;
 
     /**
      * Constructor de la clase Hangar.
@@ -51,6 +56,29 @@ public abstract class Hangar implements Serializable {
         this.dimPlazaLargo = dimPlazaLargo;
         this.costePorHora = costePorHora;
         this.horasUso = 0;
+    }
+
+    /**
+     * Método para guardar el contador.
+     * 
+     * @param oos Output Stream.
+     * @throws IOException Excepcion al leer.
+     */
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        contadorGuardado = contadorId;
+        oos.defaultWriteObject();
+    }
+
+    /**
+     * Método para cargar el contador.
+     * 
+     * @param ois Input Stream.
+     * @throws IOException            Excepcion al leer.
+     * @throws ClassNotFoundException Clase no encontrada.
+     */
+    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        ois.defaultReadObject();
+        contadorId = contadorGuardado;
     }
 
     /**
@@ -109,7 +137,7 @@ public abstract class Hangar implements Serializable {
      */
     public boolean comprobarTamano(Vuelo vuelo) {
         if (vuelo.getAvion().getDimAlto() <= dimPlazaAlto && vuelo.getAvion().getDimAncho() <= dimPlazaAncho
-                && vuelo.getAvion().getDimLargo() <= dimPlazaLargo) { 
+                && vuelo.getAvion().getDimLargo() <= dimPlazaLargo) {
             return true;
         }
 
@@ -127,7 +155,7 @@ public abstract class Hangar implements Serializable {
      * Método para añadir un avion al hangar.
      * 
      * @param avion Avion que se añade al hangar.
-     * @throws CargaAvionEquivocadaException carga no válida. 
+     * @throws CargaAvionEquivocadaException carga no válida.
      */
     public abstract void addAvion(Avion avion) throws CargaAvionEquivocadaException;
 }

@@ -1,8 +1,12 @@
 package src.airportmanager.terminal;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.*;
 import src.airportmanager.vuelo.Vuelo;
+
 /**
  * La clase PuertaEmbarque representa las puertas de embarque del aeropuerto.
  * 
@@ -10,8 +14,8 @@ import src.airportmanager.vuelo.Vuelo;
  */
 public class PuertaEmbarque implements Serializable {
 
-	/** Número de versión de la clase */
-	private static final long serialVersionUID = 1L;
+    /** Número de versión de la clase */
+    private static final long serialVersionUID = 1L;
     /** Contador para el identificador */
     private static int contadorId = 1;
     /** Código único de la puerta de embarque */
@@ -22,6 +26,8 @@ public class PuertaEmbarque implements Serializable {
     private Finger finger;
     /** Vuelo que ocupa la puerta de embarque */
     private Vuelo vuelo;
+    /** Guarda el contador para el identificador de la zona de aparcamiento */
+    private int contadorGuardado;
 
     /**
      * Constructor de la clase PuertaEmbarque.
@@ -30,7 +36,30 @@ public class PuertaEmbarque implements Serializable {
         this.id = contadorId++;
         this.zonasAparcamiento = new ArrayList<>();
         this.vuelo = null;
-        this.finger=null;
+        this.finger = null;
+    }
+
+    /**
+     * Método para guardar el contador.
+     * 
+     * @param oos Output Stream.
+     * @throws IOException Excepcion al leer.
+     */
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        contadorGuardado = contadorId;
+        oos.defaultWriteObject();
+    }
+
+    /**
+     * Método para cargar el contador.
+     * 
+     * @param ois Input Stream.
+     * @throws IOException            Excepcion al leer.
+     * @throws ClassNotFoundException Clase no encontrada.
+     */
+    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        ois.defaultReadObject();
+        contadorId = contadorGuardado;
     }
 
     /**
@@ -59,7 +88,7 @@ public class PuertaEmbarque implements Serializable {
     public Finger getFinger() {
         return finger;
     }
-    
+
     /**
      * Método para añadir una zona de aparcamiento a una puerta de embarque.
      * 
@@ -83,7 +112,7 @@ public class PuertaEmbarque implements Serializable {
             throw new IllegalArgumentException("El finger no puede ser null");
         }
 
-        this.finger=finger;
+        this.finger = finger;
     }
 
     /**
@@ -113,7 +142,7 @@ public class PuertaEmbarque implements Serializable {
     public boolean contieneZonaAparcamiento(ZonaAparcamiento zona) {
         return zonasAparcamiento.contains(zona);
     }
-    
+
     /**
      * Método to string.
      * 
@@ -121,6 +150,6 @@ public class PuertaEmbarque implements Serializable {
      */
     @Override
     public String toString() {
-    	return "Puerta: "+id;
+        return "Puerta: " + id;
     }
 }
