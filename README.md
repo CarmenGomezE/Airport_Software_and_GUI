@@ -221,6 +221,7 @@ NOTA: hay otro .dat, estado_airport_manager.dat donde se carga AiportManagerMain
 			- aeropuerto de salida/llegada= "Mallorca".
 			
 		- COMPARTIR UN VUELO:
+			Antes haber solicitado compartir el vuelo.
 			(Controlador con dni=12345678A)
 			- código= "IBE1238", ACEPTAR.
 			
