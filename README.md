@@ -47,14 +47,25 @@ Proyecto que implementa la interfaz gráfica para un software de gestión de un 
 ## Ejecución del programa
 
 1. Descargar el proyecto
-2. Ejecutar el archivo Main.java para que arranque la interfaz.
-(Se incluye un archivo prueba_interfaz.dat con datos cargados para poder probar el funcionamiento).
+2. Ejecutar la interfaz. La interfaz se ejecuta desde el archivo Main.java, que carga los datos de prueba_interfaz.dat. Si se desea cargar otro fichero, incluirlo en /resources y modificar la variable ARCHIVO_ESTADO de Main.java.
 3. Probar la interfaz. A continuación se describen posibles acciones para probar la interfaz.
 	
 	3.1. VENTANA PRINCIPAL:
 		- INICIO DE SESIÓN:
-			usuario: tipo: contraseña:
+			usuario: 12345678A		tipo: Operador (Iberia)		 contraseña: UsuarioNuevo
+			usuario: 87654321B		tipo: Operador (AirFrance)		 contraseña: (Establecer la primera vez que se acceda)
+			usuario: 50738890L		tipo: Operador (Ryanair)		 contraseña: SoyOperador
+			usuario: 12345678L		tipo: Controlador (T1)		 	 contraseña: SoyControlador
+			usuario: 12335678C		tipo: Controlador (T1)		 	 contraseña: UsuarioNuevo
+			usuario: 12345623T		tipo: Controlador (T2)			 contraseña: SoyControlador
+			usuario: 17445678F		tipo: Controlador (T2)			 contraseña: SoyControlador
+			usuario: 12312678K		tipo: Controlador (T2)			 contraseña: SoyControlador
+			
+			En general, al crear los usuarios se estableceran las contraseñas "SoyControlador" y "SoyGestor", y al 
+			generar una nueva contraseña "SoyNuevoGestor" o "UsuarioNuevo".
+			
 		- RESTABLECER CONTRASEÑA:
+			Pulsar el botón y obtener nueva contraseña.
 		- CERRAR EL PROGRAMA: cerrando la ventana. 
 		
 	3.2 VENTANA DEL CONTROLADOR:
@@ -66,10 +77,36 @@ Proyecto que implementa la interfaz gráfica para un software de gestión de un 
 			- estado= ESPERANDO_DESPEGUE.
 			Después, volver a la pantalla principal y actualizar la lista de vuelos 2 veces.
 			
+			- código= "FRK8106",
+			- estado= ESPERANDO_PISTA_DE_DESPEGUE.
+			Después, volver a la pantalla principal y actualizar la lista de vuelos.
+			- código= "FRK8106",
+			- estado= ESPERANDO_DESPEGUE.
+			Después, volver a la pantalla principal y actualizar la lista de vuelos 2 veces.
+			
+			- código= "IBE2234",
+			- estado= ESPERANDO_PISTA_DE_ATERRIZAJE.
+			Después, volver a la pantalla principal y actualizar la lista de vuelos.
+			- código= "IBE2234",
+			- estado= ESPERANDO_ATERRIZAJE.
+			Después, volver a la pantalla principal y actualizar la lista de vuelos.
+			- código= "IBE2234",
+			- estado= ATERRIZAJE.
+			Después, volver a la pantalla principal y actualizar la lista de vuelos.
+			
+			(Primero hay que cambiar el desembarque desde el operador)
+			- código= "IBE2234",
+			- estado= OPERATIVO.
+			Después, volver a la pantalla principal y actualizar la lista de vuelos.
+			- código= "IBE2234",
+			- estado= AVION_A_HANGAR.
+			Después, volver a la pantalla principal y actualizar la lista de vuelos.
+			
 	3.3 VENTANA DEL OPERADOR:
 		- NOTIFICACIONES:
 			Ver notificaciones.
 		- CAMBIO DE ESTADO:
+			(Operador con dni=50738890L)
 			- código= "FRK8106",
 			- estado= EN_PREPARACION_PARA_DESPEGAR.
 			Después, volver a la pantalla principal y actualizar la lista de vuelos.
@@ -79,11 +116,97 @@ Proyecto que implementa la interfaz gráfica para un software de gestión de un 
 			- código= "FRK8106",
 			- estado= FIN_DEL_EMBARQUE.
 			Después, volver a la pantalla principal y actualizar la lista de vuelos.
+			
+			(Controlador con dni=12345678A)
+			- código= "IBE2234",
+			- estado= INICIO_DESEMBARQUE.
+			Después, volver a la pantalla principal y actualizar la lista de vuelos.
+			- código= "IBE2234",
+			- estado= FIN_DESEMBARQUE.
+			Después, volver a la pantalla principal y actualizar la lista de vuelos.
+			
 		- DAR DE ALTA AVIÓN:
+			- pasajeros: 
+				- marca= "Boeing",
+				- modelo= "737",
+				- alto= "15",
+				- ancho= "30.5",
+				- largo= "60",
+				- autonomía= "5000",
+				- año de compra= "2024",
+				- fecha de última revisión= "01/01/2025"
+				- matrícula= "EC-HJK",
+				- tipo de avión= "Pasajeros"
+				- capacidad pasajeros= "60".
 			- mercancías:
-			- pasajeros:
+			 	- marca= "Airbus",
+				- modelo= "300",
+				- alto= "18",
+				- ancho= "35",
+				- largo= "80.5",
+				- autonomía= "10000",
+				- año de compra= "2025",
+				- fecha de última revisión= "01/03/2025"
+				- matrícula= "EC-HLP",
+				- tipo de avión= "Mercancías"
+				- capacidad carga= "20000".
+				- mercancías peligrosas: (Seleccionar),
+				- control de temperatura: (Seleccionar).
+				
 		- PROGRAMAR UN VUELO:
+		Se recomienda programar 4 vuelos a la misma hora para ver como se gestionan.
+			- código= "IBE1234",
+			- fecha= "2025-05-04",
+			- fecha inicio= "2025-05-04",
+			- fecha fin= "2025-05-04",
+			- hora= "12:00",
+			- tipo carga= "pasajeros",
+			- modo embarque= "finger",
+			- periodidicad= "puntual",
+			- tipo de vuelo= "llegada",
+			- avión=  "EC-HGR",
+			- aeropuerto de salida/llegada= "Kennedy",
+			- escala= "El Cairo", "12:00", "14:00".
+			
+			- código= "IBE1235",
+			- fecha= "2025-05-04",
+			- fecha inicio= "2025-05-04",
+			- fecha fin= "2025-05-04",
+			- hora= "12:00",
+			- tipo carga= "pasajeros",
+			- modo embarque= "zona de aparcamiento",
+			- periodidicad= "puntual",
+			- tipo de vuelo= "salida",
+			- avión= "IB_HGC",
+			- aeropuerto de salida/llegada= "Málaga".
+			
+			- código= "IBE1236",
+			- fecha= "2025-05-04",
+			- fecha inicio= "2025-05-04",
+			- fecha fin= "2025-05-06",
+			- hora= "12:00",
+			- tipo carga= "mercancias",
+			- modo embarque= "zona de aparcamiento",
+			- periodidicad= "recurrente",
+			- tipo de vuelo= "salida",
+			- avión=  "IB_HGS",
+			- aeropuerto de salida/llegada= "Málaga",
+			- días recurrente= (Seleccionar martes y jueves).
+			
+			- código= "IBE1237",
+			- fecha= "2025-05-04",
+			- fecha inicio="2025-05-04",
+			- fecha fin="2025-05-04",
+			- hora= "12:00",
+			- tipo carga= "mercancias",
+			- modo embarque= "zona de aparcamiento",
+			- periodidicad= "puntual",
+			- tipo de vuelo= "salida",
+			- avión=  "EC-HGS",
+			- aeropuerto de salida/llegada= "El Cairo".
+			
 		- COMPARTIR UN VUELO:
+			
 		- SOLICITAR COMPARTIR VUELO:
 		- ESTADÍSTICAS DE LOS VUELOS:
 		- ALTERNATIVAS A LOS VUELOS PROPUESTOS:
@@ -186,7 +309,11 @@ Proyecto que implementa la interfaz gráfica para un software de gestión de un 
 			
 		- GESTIÓN DE VUELOS:
 			Primero se deben programar los vuelos desde algún operador.
-			********FALTA********
+			- código= "IBE1234",GESTIONAR.
+			- código= "IBE1235",GESTIONAR.
+			- código= "IBE1236", GESTIONAR..
+		
+			- código= "IBE1237",
 			
 		- GESTIÓN DE FACTURAS:
 			Selecciona Iberia y emite la contraseña.

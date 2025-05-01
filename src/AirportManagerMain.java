@@ -297,7 +297,7 @@ public class AirportManagerMain {
 			System.err.println("Error al dar de alta controlador: " + e.getMessage());
 		}
 		try {
-			airportManager.getGestor().darDeAltaControlador("Victoria Ramirez", "12335678C", terminalT1);
+			airportManager.getGestor().darDeAltaControlador("Victoria Ramirez", "12335678C", terminalT1); 
 		} catch (UsuarioYaExisteException | FormatoDniIncorrectoException e) {
 			System.err.println("Error al dar de alta controlador: " + e.getMessage());
 		}
