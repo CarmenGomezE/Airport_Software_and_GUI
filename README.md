@@ -90,13 +90,13 @@ NOTA: hay otro .dat, estado_airport_manager.dat donde se carga AiportManagerMain
 		- CAMBIO DE ESTADO:
 			Primero se deben programar los vuelos.
 			(Operador con dni=50738890L)
-			- código= "FRK8106",
+			- código= "IBE1235",
 			- estado= EN_PREPARACION_PARA_DESPEGAR.
 			Después, volver a la pantalla principal y actualizar la lista de vuelos.
-			- código= "FRK8106",
+			- código= "IBE1235",
 			- estado= INICIO_DEL_EMBARQUE.
 			Después, volver a la pantalla principal y actualizar la lista de vuelos.
-			- código= "FRK8106",
+			- código= "IBE1235",
 			- estado= FIN_DEL_EMBARQUE.
 			Después, volver a la pantalla principal y actualizar la lista de vuelos.
 			
