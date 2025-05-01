@@ -10,9 +10,9 @@ import javax.swing.border.*;
 public class ConfiguracionUI {
 
     /** Color de fondo azul clarito y azul oscuro para el botón */
-    public static final Color COLOR_FONDO = new Color(135, 206, 235); // Azul clarito
+    public static final Color COLOR_FONDO = new Color(135, 206, 235);
     /** Color del panel */
-    public static final Color COLOR_PANEL = new Color(173, 216, 230); // Azul clarito
+    public static final Color COLOR_PANEL = new Color(173, 216, 230);
     /** Color del texto */
     public static final Color COLOR_TEXTO = Color.BLACK;
     /** Color del input */
@@ -20,7 +20,7 @@ public class ConfiguracionUI {
     /** Color desplegable */
     public static final Color COLOR_DESPLEGABLE = Color.LIGHT_GRAY;
     /** Color boton login */
-    public static final Color COLOR_BOTON_LOGIN = new Color(70, 130, 180); // Azul más oscuro para el botón
+    public static final Color COLOR_BOTON_LOGIN = new Color(70, 130, 180);
 
     /** Fuente título */
     public static final Font FUENTE_TITULO = new Font("Arial", Font.BOLD, 80);
@@ -65,10 +65,10 @@ public class ConfiguracionUI {
     public static JButton crearBoton(String texto) {
         JButton boton = new JButton(texto);
         boton.setFont(FUENTE_BOTON);
-        boton.setBackground(COLOR_BOTON_LOGIN); // Azul más oscuro para el botón
-        boton.setForeground(Color.BLACK); // Color de texto blanco
+        boton.setBackground(COLOR_BOTON_LOGIN);
+        boton.setForeground(Color.BLACK);
         boton.setFocusPainted(false);
-        boton.setBorder(BORDE_VACIO); // Se quita el borde
+        boton.setBorder(BORDE_VACIO);
         return boton;
     }
 
@@ -82,7 +82,7 @@ public class ConfiguracionUI {
         JTextField campo = new JTextField(columnas);
         campo.setFont(FUENTE_CAMPOS);
         campo.setBackground(COLOR_INPUT);
-        campo.setBorder(BORDE_VACIO); // Se quita el borde
+        campo.setBorder(BORDE_VACIO);
         return campo;
     }
 
@@ -97,7 +97,7 @@ public class ConfiguracionUI {
         JTextArea area = new JTextArea(filas, columnas);
         area.setFont(FUENTE_CAMPOS);
         area.setBackground(COLOR_INPUT);
-        area.setBorder(BORDE_VACIO); // Se quita el borde
+        area.setBorder(BORDE_VACIO);
         return area;
     }
 
@@ -108,8 +108,8 @@ public class ConfiguracionUI {
      */
     public static JPanel crearPanel() {
         JPanel panel = new JPanel();
-        panel.setBackground(COLOR_PANEL); // Azul clarito
-        panel.setBorder(BORDE_VACIO); // Se quita el borde
+        panel.setBackground(COLOR_PANEL);
+        panel.setBorder(BORDE_VACIO);
         return panel;
     }
 
@@ -124,7 +124,7 @@ public class ConfiguracionUI {
         JComboBox<T> comboBox = new JComboBox<>(elementos);
         comboBox.setFont(FUENTE_CAMPOS);
         comboBox.setBackground(COLOR_DESPLEGABLE);
-        comboBox.setBorder(BORDE_VACIO); // Se quita el borde
+        comboBox.setBorder(BORDE_VACIO);
         return comboBox;
     }
 

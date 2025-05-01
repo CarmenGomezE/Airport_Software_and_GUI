@@ -55,7 +55,6 @@ public class GestionAvionGUI extends JFrame {
 
         JPanel formulario = ConfiguracionUI.crearPanelTipoFormulario();
 
-        // Campos
         JTextField campoMarca = ConfiguracionUI.crearCampoTexto();
         campoMarca.setPreferredSize(new Dimension(250, 5));
         JTextField campoModelo = ConfiguracionUI.crearCampoTexto();

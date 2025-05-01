@@ -115,7 +115,7 @@ public class InfoAeropuertoPropioGUI extends JFrame {
         });
 
         setVisible(true);
-        actualizarDatos(); // Carga inicial
+        actualizarDatos();
     }
 
     /**
@@ -184,7 +184,8 @@ public class InfoAeropuertoPropioGUI extends JFrame {
 
             case "Pistas":
                 if (manager.getAeropuerto().getPistas() != null) {
-                    manager.getAeropuerto().getPistas().forEach(pista -> model.addElement("Pista: " + pista.getCodigo() + " y tipo: " + pista.getTipoPista()));
+                    manager.getAeropuerto().getPistas().forEach(pista -> model
+                            .addElement("Pista: " + pista.getCodigo() + " y tipo: " + pista.getTipoPista()));
                 }
                 break;
 

@@ -168,7 +168,6 @@ public class GestionVueloGUI extends JFrame {
 
         panelDerecho.add(Box.createVerticalGlue());
 
-        // Crear el área de texto y su scroll
         textAreaMensajes = new JTextArea(5, 30);
         textAreaMensajes.setEditable(false);
         textAreaMensajes.setLineWrap(true);
