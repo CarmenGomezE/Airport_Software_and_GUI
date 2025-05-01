@@ -152,7 +152,7 @@ Proyecto que implementa la interfaz gráfica para un software de gestión de un 
 		- PROGRAMAR UN VUELO:
 		Se recomienda programar 4 vuelos a la misma hora para ver como se gestionan.
 		(Controlador con dni=12345678A)
-  			Vuelo1:
+			Vuelo1:
 			- código= "IBE1234",
 			- fecha= "(día de hoy yyyy-mm-dd)",
 			- fecha inicio= "(día de hoy yyyy-mm-dd)",
@@ -164,14 +164,9 @@ Proyecto que implementa la interfaz gráfica para un software de gestión de un 
 			- tipo de vuelo= "llegada",
 			- avión=  "EC-HGR",
 			- aeropuerto de salida/llegada= "Kennedy",
-<<<<<<< HEAD
 			- escala= "El Cairo", "(Dentro de 20 minutos HH:mm)", "(Dentro de 2 horas y 20 minutos HH:mm)".
 			
-=======
-			- escala= "El Cairo", "12:00", "14:00".
-
-   			Vuelo2:
->>>>>>> branch 'main' of https://github.com/CarmenGomezE/padsoft.git
+			Vuelo2:
 			- código= "IBE1235",
 			- fecha= "(día de hoy yyyy-mm-dd)",
 			- fecha inicio= "(día de hoy yyyy-mm-dd)",
@@ -184,7 +179,7 @@ Proyecto que implementa la interfaz gráfica para un software de gestión de un 
 			- avión= "IB_HGC",
 			- aeropuerto de salida/llegada= "Málaga".
 			
-   			Vuelo3:
+			Vuelo3:
 			- código= "IBE1236",
 			- fecha= "(día de hoy yyyy-mm-dd)",
 			- fecha inicio= "2025-05-04",
