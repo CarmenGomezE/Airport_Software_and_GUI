@@ -88,66 +88,53 @@ public class ControladorAereo extends UsuarioConDni {
      * 
      * @param vuelo  Vuelo al que se le cambia el estado. 
      * @param estado Nuevo estado del vuelo.
+     * @throws VueloNoDelUsuarioException no es del usuario.
+     * @throws EstadoEquivocadoException estado no correcto al que cambiar.
+     * @throws NoPistasDisponiblesException no hay pistas disponibles.
+     * @throws CargaAvionEquivocadaException el avion y su carga son de tipos distintos.
+     * @throws NoHangaresDisponiblesException no hay hangares disponibles.
+     * @throws VueloEnMenosDe1HoraException hay un vuelo en menos de una hora.
+     * @throws NoFingerMercanciasException no se puede asignar un figner a un vuelo de mercancias.
+     * @throws NoModosPuertasEmbarqueDisponiblesException  no hay modos o puertas de embarque disponibles.
+     * @throws NoVueloEnMenosDe1HoraException no hay un vuelo en menos de una hora.
+     * @throws EstadoNoDelUsuarioException estado que el usuario no puede cambiar.
      * @throws IllegalArgumentException argumento no válido.
      */
     @Override
-    public void cambiarEstadoVuelo(Vuelo vuelo, EstadoVuelo estado) {
+    public void cambiarEstadoVuelo(Vuelo vuelo, EstadoVuelo estado) throws VueloNoDelUsuarioException, EstadoEquivocadoException, NoPistasDisponiblesException, VueloEnMenosDe1HoraException, NoHangaresDisponiblesException, CargaAvionEquivocadaException, NoVueloEnMenosDe1HoraException, NoModosPuertasEmbarqueDisponiblesException, NoFingerMercanciasException, EstadoNoDelUsuarioException {
         if (vuelo == null || estado == null) {
             System.out.println("Error: El vuelo y el nuevo estado no pueden ser null.");
             return;
         }
 
-        try {
-            if (vuelo.getControlador() != this) {
-                throw new VueloNoDelUsuarioException("Este vuelo no está asignado a este usuario.");
-            }
-            switch (estado) {
-                case ESPERANDO_DESPEGUE:
-                    cambiarEstadoEsperandoDespegue(vuelo);
-                    break;
-                case ESPERANDO_PISTA_DE_DESPEGUE:
-                    cambiarEstadoEsperandoPistaDespegue(vuelo);
-                    break;
-                case ESPERANDO_PISTA_DE_ATERRIZAJE:
-                    cambiarEstadoEsperandoPistaAterrizaje(vuelo);
-                    break;
-                case ESPERANDO_ATERRIZAJE:
-                    cambiarEstadoEsperandoAterrizaje(vuelo);
-                    break; 
-                case ATERRIZAJE:
-                    cambiarEstadoAterrizaje(vuelo);
-                    break;
-                case AVION_A_HANGAR:
-                    cambiarEstadoAHangar(vuelo);
-                    break;
-                case OPERATIVO:
-                    cambiarEstadoOperativo(vuelo);
-                    break;
-                default:
-                    throw new EstadoNoDelUsuarioException("Este usuario no puede cambiar a ese estado.");
-            }
-        } catch (VueloNoDelUsuarioException e) {
-            System.out.println("Error: " + e.getMessage()); 
-        } catch (EstadoNoDelUsuarioException e) {
-            System.out.println("Error: " + e.getMessage());
-        } catch (EstadoEquivocadoException e) {
-            System.out.println("Error: " + e.getMessage());
-        } catch (NoPistasDisponiblesException e) {
-            System.out.println("Error: " + e.getMessage());
-        } catch (NoVueloEnMenosDe1HoraException e) {
-            System.out.println("Error: " + e.getMessage());
-        } catch (VueloEnMenosDe1HoraException e) {
-            System.out.println("Error: " + e.getMessage());
-        } catch (NoFingerMercanciasException e) {
-            System.out.println("Error: " + e.getMessage());
-        } catch (NoModosPuertasEmbarqueDisponiblesException e) {
-            System.out.println("Error: " + e.getMessage());
-        } catch (NoHangaresDisponiblesException e) {
-            System.out.println("Error: " + e.getMessage());
-        } catch (CargaAvionEquivocadaException e) {
-            System.out.println("Error: " + e.getMessage());
-        } catch (Exception e) { 
-            System.out.println("Error inesperado: " + e.getMessage());  
+        if (vuelo.getControlador() != this) {
+            throw new VueloNoDelUsuarioException("Este vuelo no está asignado a este usuario.");
+        }
+        
+        switch (estado) {
+            case ESPERANDO_DESPEGUE:
+                cambiarEstadoEsperandoDespegue(vuelo);
+                break;
+             case ESPERANDO_PISTA_DE_DESPEGUE:
+                cambiarEstadoEsperandoPistaDespegue(vuelo);
+                break;
+             case ESPERANDO_PISTA_DE_ATERRIZAJE:
+            	 cambiarEstadoEsperandoPistaAterrizaje(vuelo);
+                 break;
+             case ESPERANDO_ATERRIZAJE:
+                 cambiarEstadoEsperandoAterrizaje(vuelo);
+                 break; 
+             case ATERRIZAJE:
+                 cambiarEstadoAterrizaje(vuelo);
+                 break;
+             case AVION_A_HANGAR:
+                 cambiarEstadoAHangar(vuelo);
+                 break;
+             case OPERATIVO:
+                 cambiarEstadoOperativo(vuelo);
+                 break;
+             default:
+                 throw new EstadoNoDelUsuarioException("Este usuario no puede cambiar a ese estado.");
         }
     }
     

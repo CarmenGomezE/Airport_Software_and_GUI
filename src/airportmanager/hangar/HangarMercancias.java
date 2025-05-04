@@ -87,8 +87,8 @@ public class HangarMercancias extends Hangar {
      */
     @Override
 	public void addAvion(Avion avion) throws CargaAvionEquivocadaException {
-        if (avion instanceof AvionPasajeros == false) {
-    		throw new CargaAvionEquivocadaException("El avión debe ser de pasajeros para añadirlo.");
+        if (avion instanceof AvionMercancias == false) {
+    		throw new CargaAvionEquivocadaException("El avión debe ser de mercancías para añadirlo.");
     	}
         
         if (hayEspacioEnHangar()) {
