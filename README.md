@@ -50,7 +50,7 @@ NOTA: hay otro .dat, estado_airport_manager.dat donde se carga AiportManagerMain
 			generar una nueva contraseña "SoyNuevoGestor" o "UsuarioNuevo".
 			
 		- RESTABLECER CONTRASEÑA:
-			Pulsar el botón y obtener nueva contraseña. PAra restablecer la contraseña de un usuario con dni, poner primero el dni y luego pulsar el botón.
+			Pulsar el botón y obtener nueva contraseña. Para restablecer la contraseña de un usuario con dni, poner primero el dni y luego pulsar el botón.
 		- CERRAR EL PROGRAMA: cerrando la ventana. 
 		
 ## 3.2 VENTANA DEL CONTROLADOR:
