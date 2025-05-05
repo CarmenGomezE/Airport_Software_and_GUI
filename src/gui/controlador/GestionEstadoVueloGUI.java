@@ -93,7 +93,7 @@ public class GestionEstadoVueloGUI extends JFrame {
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
         String[] estados = { "Esperando despegue", "Esperando pista de despegue", "Esperando pista de aterrizaje",
-                "Esperando aterrizaje", "Aterrizaje", "Avion al  hangar", "Operativo" };
+                "Esperando aterrizaje", "Aterrizaje", "Avión al hangar", "Operativo" };
         JComboBox<String> comboEstados = new JComboBox<>(estados);
         comboEstados.setMaximumSize(new Dimension(Integer.MAX_VALUE, 35));
         comboEstados.setFont(new Font("Arial", Font.PLAIN, 16));
