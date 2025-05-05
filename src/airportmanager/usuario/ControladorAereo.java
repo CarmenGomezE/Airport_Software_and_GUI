@@ -701,7 +701,7 @@ public class ControladorAereo extends UsuarioConDni {
      * @return true si tiene un vuelo en menos de una hora, false si no.
      */
     private boolean verificarVueloMenosHora(Avion avion) {
-        LocalDateTime ahora = LocalDateTime.now();
+        LocalTime ahora = LocalTime.now();
 
         for (Vuelo vuelo : aeropuerto.getVuelosAceptados()) {
             if (vuelo.getAvion().equals(avion) && vuelo.getTipoVuelo() == TipoVuelo.SALIDA) {
