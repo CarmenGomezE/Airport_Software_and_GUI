@@ -50,7 +50,7 @@ NOTA: hay otro .dat, estado_airport_manager.dat donde se carga AiportManagerMain
 			generar una nueva contraseña "SoyNuevoGestor" o "UsuarioNuevo".
 			
 		- RESTABLECER CONTRASEÑA:
-			Pulsar el botón y obtener nueva contraseña.
+			Pulsar el botón y obtener nueva contraseña. PAra restablecer la contraseña de un usuario con dni, poner primero el dni y luego pulsar el botón.
 		- CERRAR EL PROGRAMA: cerrando la ventana. 
 		
 ## 3.2 VENTANA DEL CONTROLADOR:
@@ -89,7 +89,7 @@ NOTA: hay otro .dat, estado_airport_manager.dat donde se carga AiportManagerMain
 			Ver notificaciones.
 		- CAMBIO DE ESTADO:
 			Primero se deben programar los vuelos.
-			(Operador con dni=50738890L)
+			(Operador con dni=12345678A)
 			- código= "IBE1235",
 			- estado= EN_PREPARACION_PARA_DESPEGAR.
 			Después, volver a la pantalla principal y actualizar la lista de vuelos.
@@ -100,7 +100,7 @@ NOTA: hay otro .dat, estado_airport_manager.dat donde se carga AiportManagerMain
 			- estado= FIN_DEL_EMBARQUE.
 			Después, volver a la pantalla principal y actualizar la lista de vuelos.
 			
-			(Controlador con dni=12345678A)
+			(Operador con dni=12345678A)
 			- código= "IBE1234",
 			- estado= INICIO_DESEMBARQUE.
 			Después, volver a la pantalla principal y actualizar la lista de vuelos.
@@ -139,7 +139,7 @@ NOTA: hay otro .dat, estado_airport_manager.dat donde se carga AiportManagerMain
 		- PROGRAMAR UN VUELO:
 		Se recomienda programar 6 vuelos a la misma hora para ver como se gestionan.
 		NOTA: La antelación mínima para programar vuelos está puesta a 0 días para poder programar vuelos y probar el cambio de estado de estos.
-		(Controlador con dni=12345678A)
+		(Operador con dni=12345678A)
 			Vuelo1:
 			- código= "IBE1234",
 			- fecha= "(día de hoy yyyy-mm-dd)",
@@ -222,8 +222,8 @@ NOTA: hay otro .dat, estado_airport_manager.dat donde se carga AiportManagerMain
 			
 		- COMPARTIR UN VUELO:
 			Antes haber solicitado compartir el vuelo.
-			(Controlador con dni=12345678A)
-			- código= "IBE1238", ACEPTAR.
+			(Operador con dni=12345678A)
+			- código= "IBE1234", ACEPTAR.
 			
 		- SOLICITAR COMPARTIR VUELO:
 			(Operador con dni=50738890L)
@@ -272,6 +272,7 @@ NOTA: hay otro .dat, estado_airport_manager.dat donde se carga AiportManagerMain
 			- pasajeros:
 				- código= "T4",
 				- puertas de embarque= (Pulsar 2 veces el botón de puertas de embarque) "P12,P13".
+				- aforo= 300
 				
 		- DAR DE ALTA FINGER:
 			- altura= "5",
